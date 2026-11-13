@@ -105,13 +105,13 @@ export const useUserCurrentTicketOverviews = () => {
   )
 
   const overviewHandler = new QueryHandler(
-    useUserCurrentTicketOverviewsQuery(
-      {
+    useUserCurrentTicketOverviewsQuery({
+      variables: {
         withTicketCount: false,
         ignoreUserConditions: false,
       },
-      () => ({ enabled: hasAgentOrCustomerPermission.value }),
-    ),
+      enabled: () => hasAgentOrCustomerPermission.value,
+    }),
   )
 
   initializeOverviewsSubscriptions(overviewHandler)

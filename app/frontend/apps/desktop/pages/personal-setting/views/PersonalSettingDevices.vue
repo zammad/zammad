@@ -60,7 +60,7 @@ const { waitForVariantConfirmation } = useConfirmation()
 
 const deleteDevice = (device: UserDevice) => {
   const deviceDeleteMutation = new MutationHandler(
-    useUserCurrentDeviceDeleteMutation(() => ({
+    useUserCurrentDeviceDeleteMutation({
       variables: {
         deviceId: device.id,
       },
@@ -68,7 +68,7 @@ const deleteDevice = (device: UserDevice) => {
         cache.evict({ id: cache.identify(device) })
         cache.gc()
       },
-    })),
+    }),
     {
       errorNotificationMessage: __('The device could not be deleted.'),
     },

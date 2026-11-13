@@ -91,14 +91,10 @@ const customerTicketsTabs = computed(() => [
 const activeCustomerTicketsTab = ref<'user' | 'organization'>('user')
 
 const customerTicketsSubscription = new SubscriptionHandler(
-  useTicketByCustomerUpdatesSubscription(
-    () => ({
-      customerId: userId.value,
-    }),
-    {
-      enabled: hasPermission('ticket.agent'),
-    },
-  ),
+  useTicketByCustomerUpdatesSubscription({
+    variables: { customerId: userId },
+    enabled: hasPermission('ticket.agent'),
+  }),
 )
 
 customerTicketsSubscription.onResult(({ data }) => {

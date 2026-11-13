@@ -5,9 +5,7 @@ import { KnowledgeBaseCategoryGridAttributesFragmentDoc } from '../fragments/kno
 import { KnowledgeBaseCategoryPolicyFragmentDoc } from '../fragments/knowledgeBaseCategoryPolicy.api';
 import { KnowledgeBaseCategoryPreInfoFragmentDoc } from '../fragments/knowledgeBaseCategoryPreInfo.api';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseCategoryUpdateDocument = gql`
     mutation knowledgeBaseCategoryUpdate($categoryId: ID!, $input: KnowledgeBaseCategoryInput!, $locale: String!) {
@@ -28,7 +26,7 @@ export const KnowledgeBaseCategoryUpdateDocument = gql`
 ${KnowledgeBaseCategoryPolicyFragmentDoc}
 ${KnowledgeBaseCategoryPreInfoFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useKnowledgeBaseCategoryUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseCategoryUpdateMutation, Types.KnowledgeBaseCategoryUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseCategoryUpdateMutation, Types.KnowledgeBaseCategoryUpdateMutationVariables>> = {}) {
+export function useKnowledgeBaseCategoryUpdateMutation(options: VueApolloComposable.useMutation.Options<Types.KnowledgeBaseCategoryUpdateMutation, Types.KnowledgeBaseCategoryUpdateMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.KnowledgeBaseCategoryUpdateMutation, Types.KnowledgeBaseCategoryUpdateMutationVariables>(KnowledgeBaseCategoryUpdateDocument, options);
 }
-export type KnowledgeBaseCategoryUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.KnowledgeBaseCategoryUpdateMutation, Types.KnowledgeBaseCategoryUpdateMutationVariables>;
+export type KnowledgeBaseCategoryUpdateMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.KnowledgeBaseCategoryUpdateMutation, Types.KnowledgeBaseCategoryUpdateMutationVariables>;

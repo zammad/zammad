@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { KnowledgeBaseAnswerTranslationFragmentDoc } from '../../../knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const LinkUpdatesDocument = gql`
     subscription linkUpdates($objectId: ID!, $targetType: String!) {
@@ -31,7 +29,7 @@ export const LinkUpdatesDocument = gql`
   }
 }
     ${KnowledgeBaseAnswerTranslationFragmentDoc}`;
-export function useLinkUpdatesSubscription(variables: Types.LinkUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.LinkUpdatesSubscriptionVariables> | ReactiveFunction<Types.LinkUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables>(LinkUpdatesDocument, variables, options);
+export function useLinkUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables>(LinkUpdatesDocument, options);
 }
-export type LinkUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables>;
+export type LinkUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.LinkUpdatesSubscription, Types.LinkUpdatesSubscriptionVariables>;

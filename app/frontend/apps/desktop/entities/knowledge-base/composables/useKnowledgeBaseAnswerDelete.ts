@@ -48,7 +48,7 @@ export const useKnowledgeBaseAnswerDelete = () => {
     if (!confirmed) return
 
     const deleteMutation = new MutationHandler(
-      useKnowledgeBaseAnswerDeleteMutation(() => ({
+      useKnowledgeBaseAnswerDeleteMutation({
         variables: { answerId: answer.id },
         update(cache, { data }) {
           if (!data?.knowledgeBaseAnswerDelete?.success) return
@@ -96,7 +96,7 @@ export const useKnowledgeBaseAnswerDelete = () => {
           cache.evict({ id: cache.identify({ __typename: 'KnowledgeBaseAnswer', id: answer.id }) })
           cache.gc()
         },
-      })),
+      }),
     )
 
     // Whichever view is currently open *on this exact answer* - the reader, or its own edit tab.

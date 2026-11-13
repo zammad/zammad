@@ -18,10 +18,10 @@ export const useChatPreferencesStore = defineStore('chatPreferences', () => {
   const { isEnabled, ownRunningSessions } = storeToRefs(useChatAgentStore())
 
   const preferencesQuery = new QueryHandler(
-    useChatPreferencesQuery(() => ({
-      enabled: isEnabled.value,
+    useChatPreferencesQuery({
+      enabled: isEnabled,
       fetchPolicy: 'cache-and-network',
-    })),
+    }),
     {
       // The limit is a guard, not a reason to interrupt the agent.
       errorShowNotification: false,

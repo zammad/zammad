@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketUpdateBulkDocument = gql`
     mutation ticketUpdateBulk($selector: TicketBulkSelectorInput!, $perform: TicketBulkPerformInput!) {
@@ -16,7 +14,7 @@ export const TicketUpdateBulkDocument = gql`
   }
 }
     `;
-export function useTicketUpdateBulkMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketUpdateBulkMutation, Types.TicketUpdateBulkMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketUpdateBulkMutation, Types.TicketUpdateBulkMutationVariables>> = {}) {
+export function useTicketUpdateBulkMutation(options: VueApolloComposable.useMutation.Options<Types.TicketUpdateBulkMutation, Types.TicketUpdateBulkMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TicketUpdateBulkMutation, Types.TicketUpdateBulkMutationVariables>(TicketUpdateBulkDocument, options);
 }
-export type TicketUpdateBulkMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketUpdateBulkMutation, Types.TicketUpdateBulkMutationVariables>;
+export type TicketUpdateBulkMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TicketUpdateBulkMutation, Types.TicketUpdateBulkMutationVariables>;

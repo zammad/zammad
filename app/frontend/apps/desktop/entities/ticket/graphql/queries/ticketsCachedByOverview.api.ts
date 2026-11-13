@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ObjectAttributeValuesFragmentDoc } from '../../../../../../shared/graphql/fragments/objectAttributeValues.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketsCachedByOverviewDocument = gql`
     query ticketsCachedByOverview($overviewId: ID!, $orderBy: String, $orderDirection: EnumOrderDirection, $cursor: String, $pageSize: Int = 25, $cacheTtl: Int!, $renewCache: Boolean, $knownCollectionSignature: String) {
@@ -96,10 +94,10 @@ export const TicketsCachedByOverviewDocument = gql`
   }
 }
     ${ObjectAttributeValuesFragmentDoc}`;
-export function useTicketsCachedByOverviewQuery(variables: Types.TicketsCachedByOverviewQueryVariables | VueCompositionApi.Ref<Types.TicketsCachedByOverviewQueryVariables> | ReactiveFunction<Types.TicketsCachedByOverviewQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>(TicketsCachedByOverviewDocument, variables, options);
+export function useTicketsCachedByOverviewQuery(options: VueApolloComposable.useQuery.Options<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>(TicketsCachedByOverviewDocument, options);
 }
-export function useTicketsCachedByOverviewLazyQuery(variables?: Types.TicketsCachedByOverviewQueryVariables | VueCompositionApi.Ref<Types.TicketsCachedByOverviewQueryVariables> | ReactiveFunction<Types.TicketsCachedByOverviewQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>(TicketsCachedByOverviewDocument, variables, options);
+export function useTicketsCachedByOverviewLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>(TicketsCachedByOverviewDocument, options);
 }
-export type TicketsCachedByOverviewQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>;
+export type TicketsCachedByOverviewQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.TicketsCachedByOverviewQuery, Types.TicketsCachedByOverviewQueryVariables>;

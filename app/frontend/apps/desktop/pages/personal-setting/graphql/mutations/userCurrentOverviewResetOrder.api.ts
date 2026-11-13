@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentOverviewResetOrderDocument = gql`
     mutation userCurrentOverviewResetOrder {
@@ -20,7 +18,7 @@ export const UserCurrentOverviewResetOrderDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useUserCurrentOverviewResetOrderMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentOverviewResetOrderMutation, Types.UserCurrentOverviewResetOrderMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentOverviewResetOrderMutation, Types.UserCurrentOverviewResetOrderMutationVariables>> = {}) {
+export function useUserCurrentOverviewResetOrderMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentOverviewResetOrderMutation, Types.UserCurrentOverviewResetOrderMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentOverviewResetOrderMutation, Types.UserCurrentOverviewResetOrderMutationVariables>(UserCurrentOverviewResetOrderDocument, options);
 }
-export type UserCurrentOverviewResetOrderMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentOverviewResetOrderMutation, Types.UserCurrentOverviewResetOrderMutationVariables>;
+export type UserCurrentOverviewResetOrderMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentOverviewResetOrderMutation, Types.UserCurrentOverviewResetOrderMutationVariables>;

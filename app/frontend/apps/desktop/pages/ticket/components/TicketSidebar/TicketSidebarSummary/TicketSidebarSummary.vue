@@ -172,15 +172,13 @@ const watchTicketArticleCount = () => {
 
 const activateTicketSummarySubscription = () => {
   const ticketSummarySubscription = new SubscriptionHandler(
-    useTicketAiAssistanceSummaryUpdatesSubscription(
-      {
+    useTicketAiAssistanceSummaryUpdatesSubscription({
+      variables: {
         ticketId: ticketId.value,
         locale: user?.preferences?.locale || config.value.locale_default,
       },
-      () => ({
-        enabled: isProviderConfigured.value && runWhenSidebarIsActive.value,
-      }),
-    ),
+      enabled: () => isProviderConfigured.value && runWhenSidebarIsActive.value,
+    }),
   )
 
   ticketSummarySubscription.onSubscribed().then(() => {

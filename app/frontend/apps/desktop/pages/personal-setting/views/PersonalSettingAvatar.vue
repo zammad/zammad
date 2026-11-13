@@ -212,9 +212,9 @@ const selectAvatar = (avatar: Avatar) => {
   modifyDefaultAvatarCache(cache, avatar, true)
 
   const accountAvatarSelectMutation = new MutationHandler(
-    useUserCurrentAvatarSelectMutation(() => ({
+    useUserCurrentAvatarSelectMutation({
       variables: { id: avatar.id },
-    })),
+    }),
     {
       errorNotificationMessage: __('The avatar could not be selected.'),
     },

@@ -19,19 +19,17 @@ export const useTicketExternalIssueTracker = (
   const skipNextLinkUpdate = ref(false)
 
   const issueTrackerQuery = new QueryHandler(
-    useTicketExternalReferencesIssueTrackerItemListQuery(
-      () => ({
+    useTicketExternalReferencesIssueTrackerItemListQuery({
+      variables: () => ({
         ticketId,
         issueTrackerType,
         issueTrackerLinks: ticketId ? undefined : links.value,
       }),
-      () => ({
-        enabled:
-          screenType === TicketSidebarScreenType.TicketCreate ? links.value.length > 0 : !!ticketId,
-        fetchPolicy:
-          screenType === TicketSidebarScreenType.TicketCreate ? 'cache-first' : 'cache-and-network',
-      }),
-    ),
+      enabled: () =>
+        screenType === TicketSidebarScreenType.TicketCreate ? links.value.length > 0 : !!ticketId,
+      fetchPolicy:
+        screenType === TicketSidebarScreenType.TicketCreate ? 'cache-first' : 'cache-and-network',
+    }),
     {
       errorShowNotification: false,
     },

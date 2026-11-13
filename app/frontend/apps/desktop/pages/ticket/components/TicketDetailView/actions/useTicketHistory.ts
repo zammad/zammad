@@ -12,7 +12,7 @@ const openTicketHistoryFlyout = (ticketId: string) => {
   openFlyout(TICKET_HISTORY_FLYOUT_NAME, {
     name: TICKET_HISTORY_FLYOUT_NAME,
     type: EnumObjectManagerObjects.Ticket,
-    query: () => useTicketHistoryQuery(() => ({ ticketId })),
+    query: () => useTicketHistoryQuery({ variables: { ticketId } }),
   })
 }
 

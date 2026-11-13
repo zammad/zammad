@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentTwoFactorUpdatesDocument = gql`
     subscription userCurrentTwoFactorUpdates {
@@ -18,7 +16,7 @@ export const UserCurrentTwoFactorUpdatesDocument = gql`
   }
 }
     `;
-export function useUserCurrentTwoFactorUpdatesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentTwoFactorUpdatesSubscription, Types.UserCurrentTwoFactorUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentTwoFactorUpdatesSubscription, Types.UserCurrentTwoFactorUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentTwoFactorUpdatesSubscription, Types.UserCurrentTwoFactorUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.UserCurrentTwoFactorUpdatesSubscription, Types.UserCurrentTwoFactorUpdatesSubscriptionVariables>(UserCurrentTwoFactorUpdatesDocument, {}, options);
+export function useUserCurrentTwoFactorUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.UserCurrentTwoFactorUpdatesSubscription, Types.UserCurrentTwoFactorUpdatesSubscriptionVariables> = {}) {
+  return VueApolloComposable.useSubscription<Types.UserCurrentTwoFactorUpdatesSubscription, Types.UserCurrentTwoFactorUpdatesSubscriptionVariables>(UserCurrentTwoFactorUpdatesDocument, options);
 }
-export type UserCurrentTwoFactorUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.UserCurrentTwoFactorUpdatesSubscription, Types.UserCurrentTwoFactorUpdatesSubscriptionVariables>;
+export type UserCurrentTwoFactorUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.UserCurrentTwoFactorUpdatesSubscription, Types.UserCurrentTwoFactorUpdatesSubscriptionVariables>;

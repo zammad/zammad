@@ -3,9 +3,7 @@ import * as Types from '#shared/graphql/types.ts';
 import gql from 'graphql-tag';
 import { UserDetailAttributesFragmentDoc } from '../../../../../../../shared/graphql/fragments/userDetailAttributes.api';
 import { ObjectAttributeValuesFragmentDoc } from '../../../../../../../shared/graphql/fragments/objectAttributeValues.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserInfoForPopoverDocument = gql`
     query userInfoForPopover($userId: ID!, $secondaryOrganizationsCount: Int, $after: String) {
@@ -15,10 +13,10 @@ export const UserInfoForPopoverDocument = gql`
 }
     ${UserDetailAttributesFragmentDoc}
 ${ObjectAttributeValuesFragmentDoc}`;
-export function useUserInfoForPopoverQuery(variables: Types.UserInfoForPopoverQueryVariables | VueCompositionApi.Ref<Types.UserInfoForPopoverQueryVariables> | ReactiveFunction<Types.UserInfoForPopoverQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>(UserInfoForPopoverDocument, variables, options);
+export function useUserInfoForPopoverQuery(options: VueApolloComposable.useQuery.Options<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>(UserInfoForPopoverDocument, options);
 }
-export function useUserInfoForPopoverLazyQuery(variables?: Types.UserInfoForPopoverQueryVariables | VueCompositionApi.Ref<Types.UserInfoForPopoverQueryVariables> | ReactiveFunction<Types.UserInfoForPopoverQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>(UserInfoForPopoverDocument, variables, options);
+export function useUserInfoForPopoverLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>(UserInfoForPopoverDocument, options);
 }
-export type UserInfoForPopoverQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>;
+export type UserInfoForPopoverQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.UserInfoForPopoverQuery, Types.UserInfoForPopoverQueryVariables>;

@@ -32,10 +32,10 @@ export const useCtiSidebar = createSharedComposable(() => {
   const isEnabled = computed(() => isIntegrationEnabled.value && session.hasPermission('cti.agent'))
 
   const sidebarQuery = new QueryHandler(
-    useCtiSidebarQuery(() => ({
-      enabled: isEnabled.value,
+    useCtiSidebarQuery({
+      enabled: isEnabled,
       fetchPolicy: 'cache-and-network',
-    })),
+    }),
     {
       // A counter in the navigation is no place for an error notification.
       errorCallback: () => false,

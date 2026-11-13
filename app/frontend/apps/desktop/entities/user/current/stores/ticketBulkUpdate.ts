@@ -142,9 +142,9 @@ export const useTicketBulkUpdateStore = defineStore('ticketBulkUpdate', () => {
   // Subscribe to live updates pushed by the backend as the bulk operation progresses.
   // Only active for agents, as bulk update is an agent-only feature.
   const statusSubscription = new SubscriptionHandler(
-    useUserCurrentTicketBulkUpdateStatusUpdatesSubscription(() => ({
-      enabled: hasAgentPermission.value,
-    })),
+    useUserCurrentTicketBulkUpdateStatusUpdatesSubscription({
+      enabled: () => hasAgentPermission.value,
+    }),
   )
 
   statusSubscription.onResult((result) => {

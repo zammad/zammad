@@ -28,7 +28,7 @@ const props = defineProps<Props>()
 
 const calendarEventsQuery = new QueryHandler(
   useCalendarIcsFileEventsQuery({
-    fileId: props.fileId,
+    variables: { fileId: props.fileId },
   }),
 )
 const calendarEventsQueryResult = calendarEventsQuery.result()

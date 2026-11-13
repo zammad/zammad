@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserSignupVerifyDocument = gql`
     mutation userSignupVerify($token: String!) {
@@ -16,7 +14,7 @@ export const UserSignupVerifyDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useUserSignupVerifyMutation(options: VueApolloComposable.UseMutationOptions<Types.UserSignupVerifyMutation, Types.UserSignupVerifyMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserSignupVerifyMutation, Types.UserSignupVerifyMutationVariables>> = {}) {
+export function useUserSignupVerifyMutation(options: VueApolloComposable.useMutation.Options<Types.UserSignupVerifyMutation, Types.UserSignupVerifyMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserSignupVerifyMutation, Types.UserSignupVerifyMutationVariables>(UserSignupVerifyDocument, options);
 }
-export type UserSignupVerifyMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserSignupVerifyMutation, Types.UserSignupVerifyMutationVariables>;
+export type UserSignupVerifyMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserSignupVerifyMutation, Types.UserSignupVerifyMutationVariables>;

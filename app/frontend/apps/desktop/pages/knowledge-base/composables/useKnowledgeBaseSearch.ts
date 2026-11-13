@@ -29,7 +29,7 @@ export const useKnowledgeBaseSearch = (options: {
 
   // A blank term has nothing to search for, so entering the page fires
   //   nothing until the user actually typed something.
-  const searching = () => ({ enabled: Boolean(query.value.trim()) })
+  const searching = () => Boolean(query.value.trim())
 
   // One search per kind of content, because one search returns one kind. Both always run: that is
   //   what gives each tab a real count of its own, and it means switching to the other kind has
@@ -39,16 +39,16 @@ export const useKnowledgeBaseSearch = (options: {
   //   refetch, and no count blinking while the other one answers.
   const searchFor = (searchEntity: EnumKnowledgeBaseSearchEntity) =>
     new QueryHandler(
-      useKnowledgeBaseSearchQuery(
-        () => ({
-          query: query.value,
+      useKnowledgeBaseSearchQuery({
+        variables: {
+          query,
           entity: searchEntity,
-          categoryId: categoryId?.value,
-          locale: locale?.value,
+          categoryId,
+          locale,
           pageSize: SEARCH_PAGE_SIZE,
-        }),
-        searching,
-      ),
+        },
+        enabled: searching,
+      }),
       {
         // A category the user may not browse is answered with a 403; the browse
         //   composable redirects to the root, so just swallow the toast here to
@@ -165,7 +165,7 @@ export const useKnowledgeBaseSearch = (options: {
     if (scope && affected.length > 0 && !affected.includes(scope)) return
 
     // Pin the refetch to the current args explicitly, like the sibling composables do, rather
-    //   than relying on what the reactive query function last pushed into the query. Both
+    //   than relying on what the reactive variables last pushed into the query. Both
     //   searches, each with its own kind: the tab that is not shown would keep a stale count.
     const args = {
       query: query.value,

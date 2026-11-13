@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseContentUpdatesDocument = gql`
     subscription knowledgeBaseContentUpdates {
@@ -15,7 +13,7 @@ export const KnowledgeBaseContentUpdatesDocument = gql`
   }
 }
     `;
-export function useKnowledgeBaseContentUpdatesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.KnowledgeBaseContentUpdatesSubscription, Types.KnowledgeBaseContentUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.KnowledgeBaseContentUpdatesSubscription, Types.KnowledgeBaseContentUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.KnowledgeBaseContentUpdatesSubscription, Types.KnowledgeBaseContentUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.KnowledgeBaseContentUpdatesSubscription, Types.KnowledgeBaseContentUpdatesSubscriptionVariables>(KnowledgeBaseContentUpdatesDocument, {}, options);
+export function useKnowledgeBaseContentUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.KnowledgeBaseContentUpdatesSubscription, Types.KnowledgeBaseContentUpdatesSubscriptionVariables> = {}) {
+  return VueApolloComposable.useSubscription<Types.KnowledgeBaseContentUpdatesSubscription, Types.KnowledgeBaseContentUpdatesSubscriptionVariables>(KnowledgeBaseContentUpdatesDocument, options);
 }
-export type KnowledgeBaseContentUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.KnowledgeBaseContentUpdatesSubscription, Types.KnowledgeBaseContentUpdatesSubscriptionVariables>;
+export type KnowledgeBaseContentUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.KnowledgeBaseContentUpdatesSubscription, Types.KnowledgeBaseContentUpdatesSubscriptionVariables>;

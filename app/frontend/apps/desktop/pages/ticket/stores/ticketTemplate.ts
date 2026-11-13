@@ -29,12 +29,10 @@ export const useTicketTemplateStore = defineStore('ticketTemplate', () => {
   )
 
   const templateListQuery = new QueryHandler(
-    useTemplatesQuery(
-      () => ({
-        onlyActive: true,
-      }),
-      () => ({ enabled }),
-    ),
+    useTemplatesQuery({
+      variables: { onlyActive: true },
+      enabled,
+    }),
   )
 
   templateListQuery.subscribeToMore<

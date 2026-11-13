@@ -108,7 +108,8 @@ const fetchOptions = {
 }
 
 const ticketsQuery = new QueryHandler(
-  useTicketsCachedByOverviewQuery(ticketsQueryVariables, {
+  useTicketsCachedByOverviewQuery({
+    variables: ticketsQueryVariables,
     fetchPolicy: 'cache-and-network',
     nextFetchPolicy: 'cache-and-network',
     context: {

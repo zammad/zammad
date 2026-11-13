@@ -4,9 +4,7 @@ import gql from 'graphql-tag';
 import { KnowledgeBaseCategoryPolicyFragmentDoc } from '../fragments/knowledgeBaseCategoryPolicy.api';
 import { KnowledgeBaseCategoryPreInfoFragmentDoc } from '../fragments/knowledgeBaseCategoryPreInfo.api';
 import { KnowledgeBaseCategoryGridAttributesFragmentDoc } from '../fragments/knowledgeBaseCategoryGridAttributes.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseCategorySubcategoriesDocument = gql`
     query knowledgeBaseCategorySubcategories($categoryId: ID, $locale: String, $sortingMode: EnumKnowledgeBaseSortingMode) {
@@ -42,10 +40,10 @@ export const KnowledgeBaseCategorySubcategoriesDocument = gql`
     ${KnowledgeBaseCategoryPolicyFragmentDoc}
 ${KnowledgeBaseCategoryPreInfoFragmentDoc}
 ${KnowledgeBaseCategoryGridAttributesFragmentDoc}`;
-export function useKnowledgeBaseCategorySubcategoriesQuery(variables: Types.KnowledgeBaseCategorySubcategoriesQueryVariables | VueCompositionApi.Ref<Types.KnowledgeBaseCategorySubcategoriesQueryVariables> | ReactiveFunction<Types.KnowledgeBaseCategorySubcategoriesQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>(KnowledgeBaseCategorySubcategoriesDocument, variables, options);
+export function useKnowledgeBaseCategorySubcategoriesQuery(options: VueApolloComposable.useQuery.Options<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables> = {}) {
+  return VueApolloComposable.useQuery<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>(KnowledgeBaseCategorySubcategoriesDocument, options);
 }
-export function useKnowledgeBaseCategorySubcategoriesLazyQuery(variables: Types.KnowledgeBaseCategorySubcategoriesQueryVariables | VueCompositionApi.Ref<Types.KnowledgeBaseCategorySubcategoriesQueryVariables> | ReactiveFunction<Types.KnowledgeBaseCategorySubcategoriesQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>(KnowledgeBaseCategorySubcategoriesDocument, variables, options);
+export function useKnowledgeBaseCategorySubcategoriesLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>(KnowledgeBaseCategorySubcategoriesDocument, options);
 }
-export type KnowledgeBaseCategorySubcategoriesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>;
+export type KnowledgeBaseCategorySubcategoriesQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.KnowledgeBaseCategorySubcategoriesQuery, Types.KnowledgeBaseCategorySubcategoriesQueryVariables>;

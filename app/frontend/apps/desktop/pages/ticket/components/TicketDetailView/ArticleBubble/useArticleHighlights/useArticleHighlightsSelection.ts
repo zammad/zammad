@@ -267,8 +267,10 @@ export const useArticleHighlightsSelection = (
 
     try {
       await mutate({
-        articleId: articleId.value,
-        highlight: updated.length > 0 ? updated : null,
+        variables: {
+          articleId: articleId.value,
+          highlight: updated.length > 0 ? updated : null,
+        },
       })
 
       const selectedText = extractText(context.anchors, context.startIndex, context.endIndex)

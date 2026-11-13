@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const SearchTaskbarItemStateUpdatesDocument = gql`
     subscription searchTaskbarItemStateUpdates($taskbarItemId: ID!) {
@@ -25,7 +23,7 @@ export const SearchTaskbarItemStateUpdatesDocument = gql`
   }
 }
     `;
-export function useSearchTaskbarItemStateUpdatesSubscription(variables: Types.SearchTaskbarItemStateUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.SearchTaskbarItemStateUpdatesSubscriptionVariables> | ReactiveFunction<Types.SearchTaskbarItemStateUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.SearchTaskbarItemStateUpdatesSubscription, Types.SearchTaskbarItemStateUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.SearchTaskbarItemStateUpdatesSubscription, Types.SearchTaskbarItemStateUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.SearchTaskbarItemStateUpdatesSubscription, Types.SearchTaskbarItemStateUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.SearchTaskbarItemStateUpdatesSubscription, Types.SearchTaskbarItemStateUpdatesSubscriptionVariables>(SearchTaskbarItemStateUpdatesDocument, variables, options);
+export function useSearchTaskbarItemStateUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.SearchTaskbarItemStateUpdatesSubscription, Types.SearchTaskbarItemStateUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.SearchTaskbarItemStateUpdatesSubscription, Types.SearchTaskbarItemStateUpdatesSubscriptionVariables>(SearchTaskbarItemStateUpdatesDocument, options);
 }
-export type SearchTaskbarItemStateUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.SearchTaskbarItemStateUpdatesSubscription, Types.SearchTaskbarItemStateUpdatesSubscriptionVariables>;
+export type SearchTaskbarItemStateUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.SearchTaskbarItemStateUpdatesSubscription, Types.SearchTaskbarItemStateUpdatesSubscriptionVariables>;

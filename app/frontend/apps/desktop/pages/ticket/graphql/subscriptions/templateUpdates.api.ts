@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TemplateUpdatesDocument = gql`
     subscription templateUpdates($onlyActive: Boolean!) {
@@ -15,7 +13,7 @@ export const TemplateUpdatesDocument = gql`
   }
 }
     `;
-export function useTemplateUpdatesSubscription(variables: Types.TemplateUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.TemplateUpdatesSubscriptionVariables> | ReactiveFunction<Types.TemplateUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.TemplateUpdatesSubscription, Types.TemplateUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.TemplateUpdatesSubscription, Types.TemplateUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.TemplateUpdatesSubscription, Types.TemplateUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.TemplateUpdatesSubscription, Types.TemplateUpdatesSubscriptionVariables>(TemplateUpdatesDocument, variables, options);
+export function useTemplateUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.TemplateUpdatesSubscription, Types.TemplateUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.TemplateUpdatesSubscription, Types.TemplateUpdatesSubscriptionVariables>(TemplateUpdatesDocument, options);
 }
-export type TemplateUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.TemplateUpdatesSubscription, Types.TemplateUpdatesSubscriptionVariables>;
+export type TemplateUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.TemplateUpdatesSubscription, Types.TemplateUpdatesSubscriptionVariables>;

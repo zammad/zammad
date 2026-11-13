@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentAvatarUpdatesDocument = gql`
     subscription userCurrentAvatarUpdates {
@@ -20,7 +18,7 @@ export const UserCurrentAvatarUpdatesDocument = gql`
   }
 }
     `;
-export function useUserCurrentAvatarUpdatesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>(UserCurrentAvatarUpdatesDocument, {}, options);
+export function useUserCurrentAvatarUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables> = {}) {
+  return VueApolloComposable.useSubscription<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>(UserCurrentAvatarUpdatesDocument, options);
 }
-export type UserCurrentAvatarUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>;
+export type UserCurrentAvatarUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.UserCurrentAvatarUpdatesSubscription, Types.UserCurrentAvatarUpdatesSubscriptionVariables>;

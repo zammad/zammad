@@ -81,7 +81,7 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
 // No `errorNotificationMessage`: what the service refuses is worth reading - that the state has
 //   already been reached, or that the changes would not run in the order they take effect - and a
 //   generic "could not be added" would bury it.
-const addMutation = new MutationHandler(useKnowledgeBaseAnswerVisibilityScheduleAddMutation({}))
+const addMutation = new MutationHandler(useKnowledgeBaseAnswerVisibilityScheduleAddMutation())
 
 const { notify } = useNotifications()
 

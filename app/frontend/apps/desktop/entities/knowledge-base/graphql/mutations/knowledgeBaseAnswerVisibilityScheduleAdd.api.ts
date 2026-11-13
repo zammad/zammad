@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseAnswerVisibilityScheduleAddDocument = gql`
     mutation knowledgeBaseAnswerVisibilityScheduleAdd($answerId: ID!, $visibility: EnumKnowledgeBaseSchedulableVisibility!, $scheduledAt: ISO8601DateTime!) {
@@ -26,7 +24,7 @@ export const KnowledgeBaseAnswerVisibilityScheduleAddDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useKnowledgeBaseAnswerVisibilityScheduleAddMutation(options: VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseAnswerVisibilityScheduleAddMutation, Types.KnowledgeBaseAnswerVisibilityScheduleAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseAnswerVisibilityScheduleAddMutation, Types.KnowledgeBaseAnswerVisibilityScheduleAddMutationVariables>> = {}) {
+export function useKnowledgeBaseAnswerVisibilityScheduleAddMutation(options: VueApolloComposable.useMutation.Options<Types.KnowledgeBaseAnswerVisibilityScheduleAddMutation, Types.KnowledgeBaseAnswerVisibilityScheduleAddMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.KnowledgeBaseAnswerVisibilityScheduleAddMutation, Types.KnowledgeBaseAnswerVisibilityScheduleAddMutationVariables>(KnowledgeBaseAnswerVisibilityScheduleAddDocument, options);
 }
-export type KnowledgeBaseAnswerVisibilityScheduleAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.KnowledgeBaseAnswerVisibilityScheduleAddMutation, Types.KnowledgeBaseAnswerVisibilityScheduleAddMutationVariables>;
+export type KnowledgeBaseAnswerVisibilityScheduleAddMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.KnowledgeBaseAnswerVisibilityScheduleAddMutation, Types.KnowledgeBaseAnswerVisibilityScheduleAddMutationVariables>;

@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ReferencingTicketFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/referencingTicket.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketChecklistDocument = gql`
     query ticketChecklist($ticketId: ID!) {
@@ -26,10 +24,10 @@ export const TicketChecklistDocument = gql`
   }
 }
     ${ReferencingTicketFragmentDoc}`;
-export function useTicketChecklistQuery(variables: Types.TicketChecklistQueryVariables | VueCompositionApi.Ref<Types.TicketChecklistQueryVariables> | ReactiveFunction<Types.TicketChecklistQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>(TicketChecklistDocument, variables, options);
+export function useTicketChecklistQuery(options: VueApolloComposable.useQuery.Options<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>(TicketChecklistDocument, options);
 }
-export function useTicketChecklistLazyQuery(variables?: Types.TicketChecklistQueryVariables | VueCompositionApi.Ref<Types.TicketChecklistQueryVariables> | ReactiveFunction<Types.TicketChecklistQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>(TicketChecklistDocument, variables, options);
+export function useTicketChecklistLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>(TicketChecklistDocument, options);
 }
-export type TicketChecklistQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>;
+export type TicketChecklistQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.TicketChecklistQuery, Types.TicketChecklistQueryVariables>;

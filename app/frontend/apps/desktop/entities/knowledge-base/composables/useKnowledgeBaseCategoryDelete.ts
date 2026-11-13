@@ -49,7 +49,7 @@ export const useKnowledgeBaseCategoryDelete = () => {
     const opened = isOpenedCategory(category.id)
 
     const deleteMutation = new MutationHandler(
-      useKnowledgeBaseCategoryDeleteMutation(() => ({
+      useKnowledgeBaseCategoryDeleteMutation({
         variables: { categoryId: category.id },
         update(cache, { data }) {
           // A refused delete is an ordinary payload with user errors, so Apollo runs this
@@ -67,7 +67,7 @@ export const useKnowledgeBaseCategoryDelete = () => {
         //   active browse query still carries the deleted category's id, which the backend
         //   can no longer answer — the navigation itself triggers the parent's fetch.
         refetchQueries: opened ? [] : ['knowledgeBaseCategorySubcategories'],
-      })),
+      }),
     )
 
     try {

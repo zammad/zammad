@@ -57,7 +57,7 @@ export const useChatConversation = (
 ) => {
   // The subscription does not replay what was said while the connection was down.
   const sessionQuery = new QueryHandler(
-    useChatSessionQuery(() => ({ sessionId: toValue(sessionId) }), { fetchPolicy: 'network-only' }),
+    useChatSessionQuery({ variables: { sessionId }, fetchPolicy: 'network-only' }),
     { triggerRefetchOnConnectionReconnect: true },
   )
 
@@ -242,11 +242,11 @@ export const useChatConversation = (
   )
 
   const updatesSubscription = new SubscriptionHandler(
-    useChatSessionUpdatesSubscription(
-      () => ({ sessionId: toValue(sessionId) }),
+    useChatSessionUpdatesSubscription({
+      variables: { sessionId },
       // Search finds many sessions that are over; a transfer is presumed only, so its end still comes.
-      () => ({ enabled: !isOver.value }),
-    ),
+      enabled: () => !isOver.value,
+    }),
     {
       // A reconnect subscribes again, which the server refuses for a session that went elsewhere or
       //   waits in a queue; the window already says so. Before the session is loaded, its query tells.

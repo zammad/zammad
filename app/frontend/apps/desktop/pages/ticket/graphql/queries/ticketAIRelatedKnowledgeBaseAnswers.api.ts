@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { KnowledgeBaseAnswerTranslationFragmentDoc } from '../../../../entities/knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketAiRelatedKnowledgeBaseAnswersDocument = gql`
     query ticketAIRelatedKnowledgeBaseAnswers($ticketId: ID!, $includeDraftsAndArchived: Boolean, $includeLinkedAnswers: Boolean) {
@@ -23,10 +21,10 @@ export const TicketAiRelatedKnowledgeBaseAnswersDocument = gql`
   }
 }
     ${KnowledgeBaseAnswerTranslationFragmentDoc}`;
-export function useTicketAiRelatedKnowledgeBaseAnswersQuery(variables: Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables | VueCompositionApi.Ref<Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables> | ReactiveFunction<Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>(TicketAiRelatedKnowledgeBaseAnswersDocument, variables, options);
+export function useTicketAiRelatedKnowledgeBaseAnswersQuery(options: VueApolloComposable.useQuery.Options<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>(TicketAiRelatedKnowledgeBaseAnswersDocument, options);
 }
-export function useTicketAiRelatedKnowledgeBaseAnswersLazyQuery(variables?: Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables | VueCompositionApi.Ref<Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables> | ReactiveFunction<Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>(TicketAiRelatedKnowledgeBaseAnswersDocument, variables, options);
+export function useTicketAiRelatedKnowledgeBaseAnswersLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>(TicketAiRelatedKnowledgeBaseAnswersDocument, options);
 }
-export type TicketAiRelatedKnowledgeBaseAnswersQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>;
+export type TicketAiRelatedKnowledgeBaseAnswersQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.TicketAiRelatedKnowledgeBaseAnswersQuery, Types.TicketAiRelatedKnowledgeBaseAnswersQueryVariables>;

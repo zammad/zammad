@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const CtiCallPickupDocument = gql`
     subscription ctiCallPickup {
@@ -23,7 +21,7 @@ export const CtiCallPickupDocument = gql`
   }
 }
     `;
-export function useCtiCallPickupSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.CtiCallPickupSubscription, Types.CtiCallPickupSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.CtiCallPickupSubscription, Types.CtiCallPickupSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.CtiCallPickupSubscription, Types.CtiCallPickupSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.CtiCallPickupSubscription, Types.CtiCallPickupSubscriptionVariables>(CtiCallPickupDocument, {}, options);
+export function useCtiCallPickupSubscription(options: VueApolloComposable.useSubscription.Options<Types.CtiCallPickupSubscription, Types.CtiCallPickupSubscriptionVariables> = {}) {
+  return VueApolloComposable.useSubscription<Types.CtiCallPickupSubscription, Types.CtiCallPickupSubscriptionVariables>(CtiCallPickupDocument, options);
 }
-export type CtiCallPickupSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.CtiCallPickupSubscription, Types.CtiCallPickupSubscriptionVariables>;
+export type CtiCallPickupSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.CtiCallPickupSubscription, Types.CtiCallPickupSubscriptionVariables>;

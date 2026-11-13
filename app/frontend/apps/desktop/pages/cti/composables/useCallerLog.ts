@@ -21,10 +21,11 @@ type Connection = CtiLogsQuery['ctiLogs']
 
 export const useCallerLog = (enabled: Ref<boolean>) => {
   const logsQuery = new QueryHandler(
-    useCtiLogsQuery({ pageSize: CALLER_LOG_PAGE_SIZE }, () => ({
-      enabled: enabled.value,
+    useCtiLogsQuery({
+      variables: { pageSize: CALLER_LOG_PAGE_SIZE },
+      enabled,
       fetchPolicy: 'cache-and-network',
-    })),
+    }),
     {
       // The view has its own error state, so the generic notification stays quiet.
       errorCallback: () => false,

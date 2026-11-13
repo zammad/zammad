@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketsStatsMonthlyByCustomerDocument = gql`
     query TicketsStatsMonthlyByCustomer($customerId: ID!) {
@@ -16,10 +14,10 @@ export const TicketsStatsMonthlyByCustomerDocument = gql`
   }
 }
     `;
-export function useTicketsStatsMonthlyByCustomerQuery(variables: Types.TicketsStatsMonthlyByCustomerQueryVariables | VueCompositionApi.Ref<Types.TicketsStatsMonthlyByCustomerQueryVariables> | ReactiveFunction<Types.TicketsStatsMonthlyByCustomerQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>(TicketsStatsMonthlyByCustomerDocument, variables, options);
+export function useTicketsStatsMonthlyByCustomerQuery(options: VueApolloComposable.useQuery.Options<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>(TicketsStatsMonthlyByCustomerDocument, options);
 }
-export function useTicketsStatsMonthlyByCustomerLazyQuery(variables?: Types.TicketsStatsMonthlyByCustomerQueryVariables | VueCompositionApi.Ref<Types.TicketsStatsMonthlyByCustomerQueryVariables> | ReactiveFunction<Types.TicketsStatsMonthlyByCustomerQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>(TicketsStatsMonthlyByCustomerDocument, variables, options);
+export function useTicketsStatsMonthlyByCustomerLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>(TicketsStatsMonthlyByCustomerDocument, options);
 }
-export type TicketsStatsMonthlyByCustomerQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>;
+export type TicketsStatsMonthlyByCustomerQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.TicketsStatsMonthlyByCustomerQuery, Types.TicketsStatsMonthlyByCustomerQueryVariables>;

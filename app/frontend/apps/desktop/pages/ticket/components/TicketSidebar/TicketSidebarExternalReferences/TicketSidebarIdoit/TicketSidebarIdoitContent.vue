@@ -54,22 +54,20 @@ const { open } = useFlyout({
 })
 
 const objectListQuery = new QueryHandler(
-  useTicketExternalReferencesIdoitObjectListQuery(
-    () => ({
+  useTicketExternalReferencesIdoitObjectListQuery({
+    variables: () => ({
       ticketId: props.ticketId,
       idoitObjectIds: props.ticketId ? undefined : props.objectIds,
     }),
-    () => ({
-      enabled:
-        props.screenType === TicketSidebarScreenType.TicketCreate
-          ? props.objectIds?.length > 0
-          : !!props.ticketId,
-      fetchPolicy:
-        props.screenType === TicketSidebarScreenType.TicketCreate
-          ? 'cache-first'
-          : 'cache-and-network',
-    }),
-  ),
+    enabled: () =>
+      props.screenType === TicketSidebarScreenType.TicketCreate
+        ? props.objectIds?.length > 0
+        : !!props.ticketId,
+    fetchPolicy:
+      props.screenType === TicketSidebarScreenType.TicketCreate
+        ? 'cache-first'
+        : 'cache-and-network',
+  }),
   {
     errorShowNotification: false,
   },

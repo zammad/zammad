@@ -19,19 +19,17 @@ export const useKnowledgeBaseAnswerLiveUserList = (
   taskbarKey: MaybeRefOrGetter<string | undefined>,
 ) => {
   const liveUserSubscription = new SubscriptionHandler(
-    useKnowledgeBaseAnswerLiveUserUpdatesSubscription(
-      () => ({
+    useKnowledgeBaseAnswerLiveUserUpdatesSubscription({
+      variables: () => ({
         key: toValue(taskbarKey) as string,
         app: EnumTaskbarApp.Desktop,
       }),
-      () => ({
-        // Same reason as the ticket list: an answer opened a second time is already in the
-        // subscription cache, and reading it back through the proxy throws. Nothing needs the
-        // cache here - the list only ever comes from the server.
-        fetchPolicy: 'no-cache',
-        enabled: Boolean(toValue(taskbarKey)),
-      }),
-    ),
+      // Same reason as the ticket list: an answer opened a second time is already in the
+      // subscription cache, and reading it back through the proxy throws. Nothing needs the
+      // cache here - the list only ever comes from the server.
+      fetchPolicy: 'no-cache',
+      enabled: () => Boolean(toValue(taskbarKey)),
+    }),
   )
 
   return useTaskbarLiveUserList(

@@ -72,7 +72,7 @@ const TestComponent = defineComponent({
     api = useKnowledgeBaseAiSuggestedAnswers(ref(ticketId), {
       queryEnabled: toRef(props, 'queryEnabled'),
       subscriptionEnabled: toRef(props, 'subscriptionEnabled'),
-      fetchPolicy: toRef(props, 'fetchPolicy'),
+      fetchPolicy: props.fetchPolicy,
       includeDraftsAndArchived: props.includeDraftsAndArchived,
       includeLinkedAnswers: props.includeLinkedAnswers,
       articleCount: () => ticketArticleCount.value,

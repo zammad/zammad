@@ -32,7 +32,7 @@ setTitle(__('Connect channels'))
 
 const emailAddressesQuery = new QueryHandler(
   useEmailAddressesQuery({
-    onlyActive: true,
+    variables: { onlyActive: true },
   }),
 )
 const emailAddressesResult = emailAddressesQuery.result()

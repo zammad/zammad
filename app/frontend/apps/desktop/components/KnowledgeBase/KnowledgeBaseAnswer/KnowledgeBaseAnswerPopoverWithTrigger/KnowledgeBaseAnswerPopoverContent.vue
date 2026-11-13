@@ -22,10 +22,11 @@ const props = defineProps<Props>()
 //   renders its slot behind `v-if`), which is what makes the loading lazy - a list of ten items
 //   fetches nothing until one of them is actually opened.
 const answerQuery = new QueryHandler(
-  useKnowledgeBaseAnswerInfoForPopoverQuery(
-    () => ({ answerId: props.answerId, locale: props.locale }),
-    () => ({ enabled: !!props.answerId, fetchPolicy: 'cache-and-network' }),
-  ),
+  useKnowledgeBaseAnswerInfoForPopoverQuery({
+    variables: () => ({ answerId: props.answerId, locale: props.locale }),
+    enabled: () => !!props.answerId,
+    fetchPolicy: 'cache-and-network',
+  }),
 )
 
 const result = answerQuery.result()

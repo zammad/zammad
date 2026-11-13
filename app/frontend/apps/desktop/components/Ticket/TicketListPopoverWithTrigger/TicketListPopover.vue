@@ -25,10 +25,11 @@ interface Props {
 const props = defineProps<Props>()
 
 const ticketsByFilterQuery = new QueryHandler(
-  useTicketsByCustomerQuery(
-    () => props.filters,
-    () => ({ enabled: !props.noResults, fetchPolicy: 'cache-and-network' }),
-  ),
+  useTicketsByCustomerQuery({
+    variables: () => props.filters,
+    enabled: () => !props.noResults,
+    fetchPolicy: 'cache-and-network',
+  }),
 )
 
 const ticketsByCustomerResult = ticketsByFilterQuery.result()

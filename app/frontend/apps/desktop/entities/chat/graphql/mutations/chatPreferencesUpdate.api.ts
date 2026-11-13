@@ -4,9 +4,7 @@ import gql from 'graphql-tag';
 import { ChatPreferencesAttributesFragmentDoc } from '../fragments/chatPreferencesAttributes.api';
 import { ChatTopicAttributesFragmentDoc } from '../fragments/chatTopicAttributes.api';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChatPreferencesUpdateDocument = gql`
     mutation chatPreferencesUpdate($preferences: ChatPreferencesInput!) {
@@ -22,7 +20,7 @@ export const ChatPreferencesUpdateDocument = gql`
     ${ChatPreferencesAttributesFragmentDoc}
 ${ChatTopicAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useChatPreferencesUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.ChatPreferencesUpdateMutation, Types.ChatPreferencesUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChatPreferencesUpdateMutation, Types.ChatPreferencesUpdateMutationVariables>> = {}) {
+export function useChatPreferencesUpdateMutation(options: VueApolloComposable.useMutation.Options<Types.ChatPreferencesUpdateMutation, Types.ChatPreferencesUpdateMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChatPreferencesUpdateMutation, Types.ChatPreferencesUpdateMutationVariables>(ChatPreferencesUpdateDocument, options);
 }
-export type ChatPreferencesUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChatPreferencesUpdateMutation, Types.ChatPreferencesUpdateMutationVariables>;
+export type ChatPreferencesUpdateMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChatPreferencesUpdateMutation, Types.ChatPreferencesUpdateMutationVariables>;

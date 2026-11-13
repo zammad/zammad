@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const SearchCountsDocument = gql`
     query searchCounts($search: String!, $onlyIn: [EnumSearchableModels!]!, $filters: [SelectorObjectInput!]) {
@@ -13,10 +11,10 @@ export const SearchCountsDocument = gql`
   }
 }
     `;
-export function useSearchCountsQuery(variables: Types.SearchCountsQueryVariables | VueCompositionApi.Ref<Types.SearchCountsQueryVariables> | ReactiveFunction<Types.SearchCountsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.SearchCountsQuery, Types.SearchCountsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>(SearchCountsDocument, variables, options);
+export function useSearchCountsQuery(options: VueApolloComposable.useQuery.Options<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>(SearchCountsDocument, options);
 }
-export function useSearchCountsLazyQuery(variables?: Types.SearchCountsQueryVariables | VueCompositionApi.Ref<Types.SearchCountsQueryVariables> | ReactiveFunction<Types.SearchCountsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.SearchCountsQuery, Types.SearchCountsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>(SearchCountsDocument, variables, options);
+export function useSearchCountsLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>(SearchCountsDocument, options);
 }
-export type SearchCountsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>;
+export type SearchCountsQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.SearchCountsQuery, Types.SearchCountsQueryVariables>;

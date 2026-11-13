@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketChecklistItemUpsertDocument = gql`
     mutation ticketChecklistItemUpsert($checklistId: ID!, $checklistItemId: ID, $input: TicketChecklistItemInput!) {
@@ -37,7 +35,7 @@ export const TicketChecklistItemUpsertDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTicketChecklistItemUpsertMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketChecklistItemUpsertMutation, Types.TicketChecklistItemUpsertMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketChecklistItemUpsertMutation, Types.TicketChecklistItemUpsertMutationVariables>> = {}) {
+export function useTicketChecklistItemUpsertMutation(options: VueApolloComposable.useMutation.Options<Types.TicketChecklistItemUpsertMutation, Types.TicketChecklistItemUpsertMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TicketChecklistItemUpsertMutation, Types.TicketChecklistItemUpsertMutationVariables>(TicketChecklistItemUpsertDocument, options);
 }
-export type TicketChecklistItemUpsertMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketChecklistItemUpsertMutation, Types.TicketChecklistItemUpsertMutationVariables>;
+export type TicketChecklistItemUpsertMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TicketChecklistItemUpsertMutation, Types.TicketChecklistItemUpsertMutationVariables>;

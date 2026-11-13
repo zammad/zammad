@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentTicketScreenBehaviorDocument = gql`
     mutation userCurrentTicketScreenBehavior($behavior: EnumTicketScreenBehavior!) {
@@ -16,7 +14,7 @@ export const UserCurrentTicketScreenBehaviorDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useUserCurrentTicketScreenBehaviorMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentTicketScreenBehaviorMutation, Types.UserCurrentTicketScreenBehaviorMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentTicketScreenBehaviorMutation, Types.UserCurrentTicketScreenBehaviorMutationVariables>> = {}) {
+export function useUserCurrentTicketScreenBehaviorMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentTicketScreenBehaviorMutation, Types.UserCurrentTicketScreenBehaviorMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentTicketScreenBehaviorMutation, Types.UserCurrentTicketScreenBehaviorMutationVariables>(UserCurrentTicketScreenBehaviorDocument, options);
 }
-export type UserCurrentTicketScreenBehaviorMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentTicketScreenBehaviorMutation, Types.UserCurrentTicketScreenBehaviorMutationVariables>;
+export type UserCurrentTicketScreenBehaviorMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentTicketScreenBehaviorMutation, Types.UserCurrentTicketScreenBehaviorMutationVariables>;

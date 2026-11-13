@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const BetaUiSendFeedbackDocument = gql`
     mutation betaUiSendFeedback($input: BetaUiFeedbackInput!) {
@@ -12,7 +10,7 @@ export const BetaUiSendFeedbackDocument = gql`
   }
 }
     `;
-export function useBetaUiSendFeedbackMutation(options: VueApolloComposable.UseMutationOptions<Types.BetaUiSendFeedbackMutation, Types.BetaUiSendFeedbackMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.BetaUiSendFeedbackMutation, Types.BetaUiSendFeedbackMutationVariables>> = {}) {
+export function useBetaUiSendFeedbackMutation(options: VueApolloComposable.useMutation.Options<Types.BetaUiSendFeedbackMutation, Types.BetaUiSendFeedbackMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.BetaUiSendFeedbackMutation, Types.BetaUiSendFeedbackMutationVariables>(BetaUiSendFeedbackDocument, options);
 }
-export type BetaUiSendFeedbackMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.BetaUiSendFeedbackMutation, Types.BetaUiSendFeedbackMutationVariables>;
+export type BetaUiSendFeedbackMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.BetaUiSendFeedbackMutation, Types.BetaUiSendFeedbackMutationVariables>;

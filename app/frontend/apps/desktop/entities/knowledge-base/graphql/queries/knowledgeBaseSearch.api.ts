@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseSearchDocument = gql`
     query knowledgeBaseSearch($query: String!, $entity: EnumKnowledgeBaseSearchEntity!, $categoryId: ID, $locale: String, $pageSize: Int = 30, $cursor: String) {
@@ -65,10 +63,10 @@ export const KnowledgeBaseSearchDocument = gql`
   }
 }
     `;
-export function useKnowledgeBaseSearchQuery(variables: Types.KnowledgeBaseSearchQueryVariables | VueCompositionApi.Ref<Types.KnowledgeBaseSearchQueryVariables> | ReactiveFunction<Types.KnowledgeBaseSearchQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>(KnowledgeBaseSearchDocument, variables, options);
+export function useKnowledgeBaseSearchQuery(options: VueApolloComposable.useQuery.Options<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>(KnowledgeBaseSearchDocument, options);
 }
-export function useKnowledgeBaseSearchLazyQuery(variables?: Types.KnowledgeBaseSearchQueryVariables | VueCompositionApi.Ref<Types.KnowledgeBaseSearchQueryVariables> | ReactiveFunction<Types.KnowledgeBaseSearchQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>(KnowledgeBaseSearchDocument, variables, options);
+export function useKnowledgeBaseSearchLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>(KnowledgeBaseSearchDocument, options);
 }
-export type KnowledgeBaseSearchQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>;
+export type KnowledgeBaseSearchQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.KnowledgeBaseSearchQuery, Types.KnowledgeBaseSearchQueryVariables>;

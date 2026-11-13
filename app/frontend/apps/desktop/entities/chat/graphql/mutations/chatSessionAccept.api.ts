@@ -5,9 +5,7 @@ import { ChatSessionAttributesFragmentDoc } from '../fragments/chatSessionAttrib
 import { ChatTopicAttributesFragmentDoc } from '../fragments/chatTopicAttributes.api';
 import { ChatAgentAttributesFragmentDoc } from '../fragments/chatAgentAttributes.api';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChatSessionAcceptDocument = gql`
     mutation chatSessionAccept($topicId: ID) {
@@ -24,7 +22,7 @@ export const ChatSessionAcceptDocument = gql`
 ${ChatTopicAttributesFragmentDoc}
 ${ChatAgentAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useChatSessionAcceptMutation(options: VueApolloComposable.UseMutationOptions<Types.ChatSessionAcceptMutation, Types.ChatSessionAcceptMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChatSessionAcceptMutation, Types.ChatSessionAcceptMutationVariables>> = {}) {
+export function useChatSessionAcceptMutation(options: VueApolloComposable.useMutation.Options<Types.ChatSessionAcceptMutation, Types.ChatSessionAcceptMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChatSessionAcceptMutation, Types.ChatSessionAcceptMutationVariables>(ChatSessionAcceptDocument, options);
 }
-export type ChatSessionAcceptMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChatSessionAcceptMutation, Types.ChatSessionAcceptMutationVariables>;
+export type ChatSessionAcceptMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChatSessionAcceptMutation, Types.ChatSessionAcceptMutationVariables>;

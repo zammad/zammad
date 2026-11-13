@@ -28,10 +28,11 @@ interface Props {
 const props = defineProps<Props>()
 
 const userInfoForPopoverQuery = new QueryHandler(
-  useUserInfoForPopoverQuery(
-    () => ({ userId: props.userAvatar.id, secondaryOrganizationsCount: 5 }),
-    () => ({ enabled: !!props.userAvatar.id, fetchPolicy: 'cache-and-network' }),
-  ),
+  useUserInfoForPopoverQuery({
+    variables: () => ({ userId: props.userAvatar.id, secondaryOrganizationsCount: 5 }),
+    enabled: () => !!props.userAvatar.id,
+    fetchPolicy: 'cache-and-network',
+  }),
 )
 
 const userResult = userInfoForPopoverQuery.result()

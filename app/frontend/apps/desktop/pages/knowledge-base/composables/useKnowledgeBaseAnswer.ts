@@ -59,15 +59,15 @@ export const useKnowledgeBaseAnswer = (
   const onScreen = shallowRef(true)
 
   const knowledgeBaseAnswerQuery = new QueryHandler(
-    useKnowledgeBaseAnswerQuery(
-      () => ({
+    useKnowledgeBaseAnswerQuery({
+      variables: () => ({
         answerId: answerId?.value as string,
         locale: locale?.value,
         withBodyForEditing,
         withNavigation,
       }),
-      () => ({ enabled: Boolean(answerId?.value) }),
-    ),
+      enabled: () => Boolean(answerId?.value),
+    }),
     {
       // Opening an answer the user may not read (stale link, revoked access, an
       //   unpublished answer, a permission change) is answered with a 403 — route
@@ -314,8 +314,8 @@ export const useKnowledgeBaseAnswer = (
   //   which would navigate away from the answer the user is currently reading just
   //   because a neighbour is out of reach.
   const prefetchNeighbourAnswer = (answerId: Ref<string | undefined>) => {
-    useKnowledgeBaseAnswerQuery(
-      () => ({
+    useKnowledgeBaseAnswerQuery({
+      variables: () => ({
         answerId: answerId.value as string,
         locale: locale?.value,
         // Inherited, not hardcoded: the identity that makes this a cache hit includes the
@@ -323,13 +323,11 @@ export const useKnowledgeBaseAnswer = (
         withBodyForEditing,
         withNavigation,
       }),
-      () => ({
-        enabled: Boolean(answerId.value),
-        // Only a neighbour that is genuinely new costs a request; stepping back
-        //   through already visited answers stays entirely in the cache.
-        fetchPolicy: 'cache-first',
-      }),
-    )
+      enabled: () => Boolean(answerId.value),
+      // Only a neighbour that is genuinely new costs a request; stepping back
+      //   through already visited answers stays entirely in the cache.
+      fetchPolicy: 'cache-first',
+    })
   }
 
   prefetchNeighbourAnswer(neighbourAnswerId('previousAnswer'))

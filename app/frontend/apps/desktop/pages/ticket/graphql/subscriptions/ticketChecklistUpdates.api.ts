@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ReferencingTicketFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/referencingTicket.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketChecklistUpdatesDocument = gql`
     subscription ticketChecklistUpdates($ticketId: ID!) {
@@ -29,7 +27,7 @@ export const TicketChecklistUpdatesDocument = gql`
   }
 }
     ${ReferencingTicketFragmentDoc}`;
-export function useTicketChecklistUpdatesSubscription(variables: Types.TicketChecklistUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.TicketChecklistUpdatesSubscriptionVariables> | ReactiveFunction<Types.TicketChecklistUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.TicketChecklistUpdatesSubscription, Types.TicketChecklistUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.TicketChecklistUpdatesSubscription, Types.TicketChecklistUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.TicketChecklistUpdatesSubscription, Types.TicketChecklistUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.TicketChecklistUpdatesSubscription, Types.TicketChecklistUpdatesSubscriptionVariables>(TicketChecklistUpdatesDocument, variables, options);
+export function useTicketChecklistUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.TicketChecklistUpdatesSubscription, Types.TicketChecklistUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.TicketChecklistUpdatesSubscription, Types.TicketChecklistUpdatesSubscriptionVariables>(TicketChecklistUpdatesDocument, options);
 }
-export type TicketChecklistUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.TicketChecklistUpdatesSubscription, Types.TicketChecklistUpdatesSubscriptionVariables>;
+export type TicketChecklistUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.TicketChecklistUpdatesSubscription, Types.TicketChecklistUpdatesSubscriptionVariables>;

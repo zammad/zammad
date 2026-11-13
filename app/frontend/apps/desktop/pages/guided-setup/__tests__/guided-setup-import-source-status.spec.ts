@@ -234,6 +234,9 @@ describe('guided setup import source status', () => {
 
       await vi.advanceTimersByTimeAsync(5000)
       expect(mockCalls).toHaveLength(2)
+
+      await vi.advanceTimersByTimeAsync(10000)
+      expect(mockCalls, 'stops polling once the import has finished').toHaveLength(2)
       vi.useRealTimers()
 
       await configUpdateSubscription.trigger({
@@ -295,6 +298,11 @@ describe('guided setup import source status', () => {
       )
       expect(errorMessage.role).toBe('alert')
       expect(errorMessage).toBeInTheDocument()
+
+      const callCountAfterTimeout = mockCalls.length
+
+      await vi.advanceTimersByTimeAsync(10000)
+      expect(mockCalls, 'stops polling after the timeout').toHaveLength(callCountAfterTimeout)
     })
 
     it('shows server error after some status updates and hide it again', async () => {

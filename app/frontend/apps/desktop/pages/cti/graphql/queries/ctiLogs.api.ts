@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { CtiLogAttributesFragmentDoc } from '../fragments/ctiLogAttributes.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const CtiLogsDocument = gql`
     query ctiLogs($cursor: String, $pageSize: Int = 25) {
@@ -23,10 +21,10 @@ export const CtiLogsDocument = gql`
   }
 }
     ${CtiLogAttributesFragmentDoc}`;
-export function useCtiLogsQuery(variables: Types.CtiLogsQueryVariables | VueCompositionApi.Ref<Types.CtiLogsQueryVariables> | ReactiveFunction<Types.CtiLogsQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.CtiLogsQuery, Types.CtiLogsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>(CtiLogsDocument, variables, options);
+export function useCtiLogsQuery(options: VueApolloComposable.useQuery.Options<Types.CtiLogsQuery, Types.CtiLogsQueryVariables> = {}) {
+  return VueApolloComposable.useQuery<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>(CtiLogsDocument, options);
 }
-export function useCtiLogsLazyQuery(variables: Types.CtiLogsQueryVariables | VueCompositionApi.Ref<Types.CtiLogsQueryVariables> | ReactiveFunction<Types.CtiLogsQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.CtiLogsQuery, Types.CtiLogsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>(CtiLogsDocument, variables, options);
+export function useCtiLogsLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>(CtiLogsDocument, options);
 }
-export type CtiLogsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>;
+export type CtiLogsQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.CtiLogsQuery, Types.CtiLogsQueryVariables>;

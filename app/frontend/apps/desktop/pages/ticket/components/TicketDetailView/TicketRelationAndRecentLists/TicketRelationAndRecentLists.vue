@@ -24,16 +24,14 @@ defineEmits<{
 }>()
 
 const ticketRelationAndRecentListsQuery = new QueryHandler(
-  useTicketRelationAndRecentTicketListsQuery(
-    {
+  useTicketRelationAndRecentTicketListsQuery({
+    variables: {
       customerId: props.customerId,
       limit: 10,
       ticketId: props.internalTicketId,
     },
-    {
-      fetchPolicy: 'cache-and-network',
-    },
-  ),
+    fetchPolicy: 'cache-and-network',
+  }),
 )
 
 const isLoading = ticketRelationAndRecentListsQuery.loadingWithoutCachedResult()

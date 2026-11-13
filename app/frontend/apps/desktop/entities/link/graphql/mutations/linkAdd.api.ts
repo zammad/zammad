@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { KnowledgeBaseAnswerTranslationFragmentDoc } from '../../../knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const LinkAddDocument = gql`
     mutation linkAdd($input: LinkInput!) {
@@ -35,7 +33,7 @@ export const LinkAddDocument = gql`
   }
 }
     ${KnowledgeBaseAnswerTranslationFragmentDoc}`;
-export function useLinkAddMutation(options: VueApolloComposable.UseMutationOptions<Types.LinkAddMutation, Types.LinkAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.LinkAddMutation, Types.LinkAddMutationVariables>> = {}) {
+export function useLinkAddMutation(options: VueApolloComposable.useMutation.Options<Types.LinkAddMutation, Types.LinkAddMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.LinkAddMutation, Types.LinkAddMutationVariables>(LinkAddDocument, options);
 }
-export type LinkAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.LinkAddMutation, Types.LinkAddMutationVariables>;
+export type LinkAddMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.LinkAddMutation, Types.LinkAddMutationVariables>;

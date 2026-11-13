@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentTaskbarItemStateUpdatesDocument = gql`
     subscription userCurrentTaskbarItemStateUpdates($taskbarItemId: ID!) {
@@ -12,7 +10,7 @@ export const UserCurrentTaskbarItemStateUpdatesDocument = gql`
   }
 }
     `;
-export function useUserCurrentTaskbarItemStateUpdatesSubscription(variables: Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables> | ReactiveFunction<Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentTaskbarItemStateUpdatesSubscription, Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentTaskbarItemStateUpdatesSubscription, Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentTaskbarItemStateUpdatesSubscription, Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.UserCurrentTaskbarItemStateUpdatesSubscription, Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables>(UserCurrentTaskbarItemStateUpdatesDocument, variables, options);
+export function useUserCurrentTaskbarItemStateUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.UserCurrentTaskbarItemStateUpdatesSubscription, Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.UserCurrentTaskbarItemStateUpdatesSubscription, Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables>(UserCurrentTaskbarItemStateUpdatesDocument, options);
 }
-export type UserCurrentTaskbarItemStateUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.UserCurrentTaskbarItemStateUpdatesSubscription, Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables>;
+export type UserCurrentTaskbarItemStateUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.UserCurrentTaskbarItemStateUpdatesSubscription, Types.UserCurrentTaskbarItemStateUpdatesSubscriptionVariables>;

@@ -52,7 +52,7 @@ const { ADD_RECENT_SEARCH_DEBOUNCE_TIME, recentSearches, addSearch, clearSearche
 
 const recentCloseListQuery = new QueryHandler(
   useUserCurrentRecentCloseListQuery({
-    limit: 10,
+    variables: { limit: 10 },
   }),
 )
 

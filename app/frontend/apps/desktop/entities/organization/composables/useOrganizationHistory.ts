@@ -13,7 +13,7 @@ export const openOrganizationHistoryFlyout = (organizationId: ID) => {
   openFlyout(ORGANIZATION_HISTORY_FLYOUT_NAME, {
     name: ORGANIZATION_HISTORY_FLYOUT_NAME,
     type: EnumObjectManagerObjects.Organization,
-    query: () => useOrganizationHistoryQuery({ organizationId }),
+    query: () => useOrganizationHistoryQuery({ variables: { organizationId } }),
   })
 }
 

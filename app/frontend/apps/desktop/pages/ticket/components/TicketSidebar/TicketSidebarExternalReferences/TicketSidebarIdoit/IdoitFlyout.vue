@@ -35,16 +35,14 @@ const FETCH_DEBOUNCE = 300
 const flyoutName = 'idoit'
 
 const objectSearchQuery = new QueryHandler(
-  useTicketExternalReferencesIdoitObjectSearchQuery(
-    {
+  useTicketExternalReferencesIdoitObjectSearchQuery({
+    variables: {
       limit: FETCH_LIMIT,
       idoitTypeId: values.value?.type as string,
       query: values.value?.filter as string,
     },
-    {
-      fetchPolicy: 'no-cache',
-    },
-  ),
+    fetchPolicy: 'no-cache',
+  }),
   {
     errorShowNotification: false,
   },

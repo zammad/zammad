@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketByCustomerUpdatesDocument = gql`
     subscription ticketByCustomerUpdates($customerId: ID!) {
@@ -12,7 +10,7 @@ export const TicketByCustomerUpdatesDocument = gql`
   }
 }
     `;
-export function useTicketByCustomerUpdatesSubscription(variables: Types.TicketByCustomerUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.TicketByCustomerUpdatesSubscriptionVariables> | ReactiveFunction<Types.TicketByCustomerUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.TicketByCustomerUpdatesSubscription, Types.TicketByCustomerUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.TicketByCustomerUpdatesSubscription, Types.TicketByCustomerUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.TicketByCustomerUpdatesSubscription, Types.TicketByCustomerUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.TicketByCustomerUpdatesSubscription, Types.TicketByCustomerUpdatesSubscriptionVariables>(TicketByCustomerUpdatesDocument, variables, options);
+export function useTicketByCustomerUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.TicketByCustomerUpdatesSubscription, Types.TicketByCustomerUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.TicketByCustomerUpdatesSubscription, Types.TicketByCustomerUpdatesSubscriptionVariables>(TicketByCustomerUpdatesDocument, options);
 }
-export type TicketByCustomerUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.TicketByCustomerUpdatesSubscription, Types.TicketByCustomerUpdatesSubscriptionVariables>;
+export type TicketByCustomerUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.TicketByCustomerUpdatesSubscription, Types.TicketByCustomerUpdatesSubscriptionVariables>;

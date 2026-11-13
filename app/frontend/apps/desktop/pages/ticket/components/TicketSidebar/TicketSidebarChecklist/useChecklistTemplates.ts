@@ -22,14 +22,10 @@ type CreateNewChecklist = (
 
 export const useChecklistTemplates = (createNewChecklist: CreateNewChecklist) => {
   const checklistTemplatesQuery = new QueryHandler(
-    useChecklistTemplatesQuery(
-      {
-        onlyActive: true,
-      },
-      {
-        fetchPolicy: 'cache-and-network',
-      },
-    ),
+    useChecklistTemplatesQuery({
+      variables: { onlyActive: true },
+      fetchPolicy: 'cache-and-network',
+    }),
   )
 
   const checklistTemplates = checklistTemplatesQuery.result()

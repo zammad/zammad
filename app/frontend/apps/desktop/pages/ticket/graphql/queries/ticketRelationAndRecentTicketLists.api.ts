@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { SimpleTicketAttributeFragmentDoc } from '../../../../../../shared/graphql/fragments/simpleTicketAttribute.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketRelationAndRecentTicketListsDocument = gql`
     query ticketRelationAndRecentTicketLists($ticketId: Int!, $customerId: ID!, $limit: Int) {
@@ -20,10 +18,10 @@ export const TicketRelationAndRecentTicketListsDocument = gql`
   }
 }
     ${SimpleTicketAttributeFragmentDoc}`;
-export function useTicketRelationAndRecentTicketListsQuery(variables: Types.TicketRelationAndRecentTicketListsQueryVariables | VueCompositionApi.Ref<Types.TicketRelationAndRecentTicketListsQueryVariables> | ReactiveFunction<Types.TicketRelationAndRecentTicketListsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>(TicketRelationAndRecentTicketListsDocument, variables, options);
+export function useTicketRelationAndRecentTicketListsQuery(options: VueApolloComposable.useQuery.Options<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>(TicketRelationAndRecentTicketListsDocument, options);
 }
-export function useTicketRelationAndRecentTicketListsLazyQuery(variables?: Types.TicketRelationAndRecentTicketListsQueryVariables | VueCompositionApi.Ref<Types.TicketRelationAndRecentTicketListsQueryVariables> | ReactiveFunction<Types.TicketRelationAndRecentTicketListsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>(TicketRelationAndRecentTicketListsDocument, variables, options);
+export function useTicketRelationAndRecentTicketListsLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>(TicketRelationAndRecentTicketListsDocument, options);
 }
-export type TicketRelationAndRecentTicketListsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>;
+export type TicketRelationAndRecentTicketListsQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.TicketRelationAndRecentTicketListsQuery, Types.TicketRelationAndRecentTicketListsQueryVariables>;

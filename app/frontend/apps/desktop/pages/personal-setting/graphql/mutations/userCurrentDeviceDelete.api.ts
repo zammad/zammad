@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentDeviceDeleteDocument = gql`
     mutation userCurrentDeviceDelete($deviceId: ID!) {
@@ -16,7 +14,7 @@ export const UserCurrentDeviceDeleteDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useUserCurrentDeviceDeleteMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentDeviceDeleteMutation, Types.UserCurrentDeviceDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentDeviceDeleteMutation, Types.UserCurrentDeviceDeleteMutationVariables>> = {}) {
+export function useUserCurrentDeviceDeleteMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentDeviceDeleteMutation, Types.UserCurrentDeviceDeleteMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentDeviceDeleteMutation, Types.UserCurrentDeviceDeleteMutationVariables>(UserCurrentDeviceDeleteDocument, options);
 }
-export type UserCurrentDeviceDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentDeviceDeleteMutation, Types.UserCurrentDeviceDeleteMutationVariables>;
+export type UserCurrentDeviceDeleteMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentDeviceDeleteMutation, Types.UserCurrentDeviceDeleteMutationVariables>;

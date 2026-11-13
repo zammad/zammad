@@ -5,9 +5,7 @@ import { ChatSessionAttributesFragmentDoc } from '../fragments/chatSessionAttrib
 import { ChatTopicAttributesFragmentDoc } from '../fragments/chatTopicAttributes.api';
 import { ChatAgentAttributesFragmentDoc } from '../fragments/chatAgentAttributes.api';
 import { ChatMessageAttributesFragmentDoc } from '../fragments/chatMessageAttributes.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChatSessionDocument = gql`
     query chatSession($sessionId: ID!) {
@@ -23,10 +21,10 @@ export const ChatSessionDocument = gql`
 ${ChatTopicAttributesFragmentDoc}
 ${ChatAgentAttributesFragmentDoc}
 ${ChatMessageAttributesFragmentDoc}`;
-export function useChatSessionQuery(variables: Types.ChatSessionQueryVariables | VueCompositionApi.Ref<Types.ChatSessionQueryVariables> | ReactiveFunction<Types.ChatSessionQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.ChatSessionQuery, Types.ChatSessionQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>(ChatSessionDocument, variables, options);
+export function useChatSessionQuery(options: VueApolloComposable.useQuery.Options<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>(ChatSessionDocument, options);
 }
-export function useChatSessionLazyQuery(variables?: Types.ChatSessionQueryVariables | VueCompositionApi.Ref<Types.ChatSessionQueryVariables> | ReactiveFunction<Types.ChatSessionQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.ChatSessionQuery, Types.ChatSessionQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>(ChatSessionDocument, variables, options);
+export function useChatSessionLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>(ChatSessionDocument, options);
 }
-export type ChatSessionQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>;
+export type ChatSessionQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.ChatSessionQuery, Types.ChatSessionQueryVariables>;

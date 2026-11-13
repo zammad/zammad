@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const AutocompleteSearchKnowledgeBaseAnswerDocument = gql`
     query autocompleteSearchKnowledgeBaseAnswer($input: AutocompleteSearchKnowledgeBaseAnswerInput!) {
@@ -16,10 +14,10 @@ export const AutocompleteSearchKnowledgeBaseAnswerDocument = gql`
   }
 }
     `;
-export function useAutocompleteSearchKnowledgeBaseAnswerQuery(variables: Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables | VueCompositionApi.Ref<Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables> | ReactiveFunction<Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>(AutocompleteSearchKnowledgeBaseAnswerDocument, variables, options);
+export function useAutocompleteSearchKnowledgeBaseAnswerQuery(options: VueApolloComposable.useQuery.Options<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>(AutocompleteSearchKnowledgeBaseAnswerDocument, options);
 }
-export function useAutocompleteSearchKnowledgeBaseAnswerLazyQuery(variables?: Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables | VueCompositionApi.Ref<Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables> | ReactiveFunction<Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>(AutocompleteSearchKnowledgeBaseAnswerDocument, variables, options);
+export function useAutocompleteSearchKnowledgeBaseAnswerLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>(AutocompleteSearchKnowledgeBaseAnswerDocument, options);
 }
-export type AutocompleteSearchKnowledgeBaseAnswerQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>;
+export type AutocompleteSearchKnowledgeBaseAnswerQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.AutocompleteSearchKnowledgeBaseAnswerQuery, Types.AutocompleteSearchKnowledgeBaseAnswerQueryVariables>;

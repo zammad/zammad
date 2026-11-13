@@ -24,7 +24,7 @@ export const useKnowledgeBaseAiSuggestedAnswers = (
   }: {
     queryEnabled?: MaybeRef<boolean>
     subscriptionEnabled?: MaybeRef<boolean>
-    fetchPolicy?: MaybeRef<WatchQueryFetchPolicy>
+    fetchPolicy?: WatchQueryFetchPolicy
     // Whether drafts and archived answers count as a suggestion, too. Only of interest when asking
     // whether an answer already covers the ticket's topic, not when looking for one to work with.
     includeDraftsAndArchived?: MaybeRef<boolean>
@@ -36,20 +36,15 @@ export const useKnowledgeBaseAiSuggestedAnswers = (
     articleCount?: MaybeRefOrGetter<Maybe<number> | undefined>
   } = {},
 ) => {
-  const isQueryEnabled = computed(() => toValue(queryEnabled))
   const isSubscriptionEnabled = computed(() => toValue(subscriptionEnabled))
-  const reactiveFetchPolicy = computed(() => toValue(fetchPolicy))
 
   // Synchronous search. Reruns automatically when the ticket changes (reactive variables).
   const queryHandler = new QueryHandler(
-    useTicketAiRelatedKnowledgeBaseAnswersQuery(
-      () => ({
-        ticketId: ticketId.value,
-        includeDraftsAndArchived: toValue(includeDraftsAndArchived),
-        includeLinkedAnswers: toValue(includeLinkedAnswers),
-      }),
-      () => ({ enabled: isQueryEnabled.value, fetchPolicy: reactiveFetchPolicy.value }),
-    ),
+    useTicketAiRelatedKnowledgeBaseAnswersQuery({
+      variables: { ticketId, includeDraftsAndArchived, includeLinkedAnswers },
+      enabled: queryEnabled,
+      fetchPolicy,
+    }),
     { errorShowNotification: false },
   )
   const result = queryHandler.result()
@@ -108,10 +103,10 @@ export const useKnowledgeBaseAiSuggestedAnswers = (
   // Content-free ping: the embedding the search relies on may have settled. Always subscribed while
   // enabled (not only while pending) so a fast-finishing job can never ping before we are ready.
   const pingSubscription = new SubscriptionHandler(
-    useTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscription(
-      () => ({ ticketId: ticketId.value }),
-      () => ({ enabled: isSubscriptionEnabled.value }),
-    ),
+    useTicketAiRelatedKnowledgeBaseAnswersUpdatesSubscription({
+      variables: { ticketId },
+      enabled: isSubscriptionEnabled,
+    }),
     { errorShowNotification: false },
   )
   pingSubscription.onResult(({ data }) => {

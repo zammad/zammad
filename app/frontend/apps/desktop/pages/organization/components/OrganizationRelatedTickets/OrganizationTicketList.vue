@@ -27,11 +27,13 @@ export interface Props {
 const props = defineProps<Props>()
 
 const organizationTicketsQuery = new QueryHandler(
-  useTicketsByOrganizationQuery(() => ({
-    organizationId: props.organization.id,
-    stateTypeCategory: props.stateTypeCategory,
-    pageSize: 5,
-  })),
+  useTicketsByOrganizationQuery({
+    variables: () => ({
+      organizationId: props.organization.id,
+      stateTypeCategory: props.stateTypeCategory,
+      pageSize: 5,
+    }),
+  }),
 )
 
 const organizationTicketsResult = organizationTicketsQuery.result()

@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChannelEmailValidateConfigurationRoundtripDocument = gql`
     mutation channelEmailValidateConfigurationRoundtrip($inboundConfiguration: ChannelEmailInboundConfigurationInput!, $outboundConfiguration: ChannelEmailOutboundConfigurationInput!, $emailAddress: String!) {
@@ -20,7 +18,7 @@ export const ChannelEmailValidateConfigurationRoundtripDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useChannelEmailValidateConfigurationRoundtripMutation(options: VueApolloComposable.UseMutationOptions<Types.ChannelEmailValidateConfigurationRoundtripMutation, Types.ChannelEmailValidateConfigurationRoundtripMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChannelEmailValidateConfigurationRoundtripMutation, Types.ChannelEmailValidateConfigurationRoundtripMutationVariables>> = {}) {
+export function useChannelEmailValidateConfigurationRoundtripMutation(options: VueApolloComposable.useMutation.Options<Types.ChannelEmailValidateConfigurationRoundtripMutation, Types.ChannelEmailValidateConfigurationRoundtripMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChannelEmailValidateConfigurationRoundtripMutation, Types.ChannelEmailValidateConfigurationRoundtripMutationVariables>(ChannelEmailValidateConfigurationRoundtripDocument, options);
 }
-export type ChannelEmailValidateConfigurationRoundtripMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChannelEmailValidateConfigurationRoundtripMutation, Types.ChannelEmailValidateConfigurationRoundtripMutationVariables>;
+export type ChannelEmailValidateConfigurationRoundtripMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChannelEmailValidateConfigurationRoundtripMutation, Types.ChannelEmailValidateConfigurationRoundtripMutationVariables>;

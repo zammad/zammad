@@ -26,10 +26,11 @@ interface Props {
 const props = defineProps<Props>()
 
 const organizationInfoForPopoverQuery = new QueryHandler(
-  useOrganizationInfoForPopoverQuery(
-    () => ({ organizationId: props.organizationAvatar.id, membersCount: 5 }),
-    () => ({ enabled: !!props.organizationAvatar.id, fetchPolicy: 'cache-and-network' }),
-  ),
+  useOrganizationInfoForPopoverQuery({
+    variables: () => ({ organizationId: props.organizationAvatar.id, membersCount: 5 }),
+    enabled: () => !!props.organizationAvatar.id,
+    fetchPolicy: 'cache-and-network',
+  }),
 )
 
 const organizationResult = organizationInfoForPopoverQuery.result()

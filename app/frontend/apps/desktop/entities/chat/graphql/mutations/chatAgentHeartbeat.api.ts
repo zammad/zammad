@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChatAgentHeartbeatDocument = gql`
     mutation chatAgentHeartbeat {
@@ -16,7 +14,7 @@ export const ChatAgentHeartbeatDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useChatAgentHeartbeatMutation(options: VueApolloComposable.UseMutationOptions<Types.ChatAgentHeartbeatMutation, Types.ChatAgentHeartbeatMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChatAgentHeartbeatMutation, Types.ChatAgentHeartbeatMutationVariables>> = {}) {
+export function useChatAgentHeartbeatMutation(options: VueApolloComposable.useMutation.Options<Types.ChatAgentHeartbeatMutation, Types.ChatAgentHeartbeatMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChatAgentHeartbeatMutation, Types.ChatAgentHeartbeatMutationVariables>(ChatAgentHeartbeatDocument, options);
 }
-export type ChatAgentHeartbeatMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChatAgentHeartbeatMutation, Types.ChatAgentHeartbeatMutationVariables>;
+export type ChatAgentHeartbeatMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChatAgentHeartbeatMutation, Types.ChatAgentHeartbeatMutationVariables>;

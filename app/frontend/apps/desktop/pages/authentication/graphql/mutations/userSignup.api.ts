@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserSignupDocument = gql`
     mutation userSignup($input: UserSignupInput!) {
@@ -16,7 +14,7 @@ export const UserSignupDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useUserSignupMutation(options: VueApolloComposable.UseMutationOptions<Types.UserSignupMutation, Types.UserSignupMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserSignupMutation, Types.UserSignupMutationVariables>> = {}) {
+export function useUserSignupMutation(options: VueApolloComposable.useMutation.Options<Types.UserSignupMutation, Types.UserSignupMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserSignupMutation, Types.UserSignupMutationVariables>(UserSignupDocument, options);
 }
-export type UserSignupMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserSignupMutation, Types.UserSignupMutationVariables>;
+export type UserSignupMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserSignupMutation, Types.UserSignupMutationVariables>;

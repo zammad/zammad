@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { HistoryEventObjectFragmentDoc, HistoryEventFragmentDoc, HistoryIssuerFragmentDoc, HistoryGroupFragmentDoc } from '../../../../../../shared/graphql/fragments/history.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserHistoryDocument = gql`
     query userHistory($userId: ID!) {
@@ -16,10 +14,10 @@ export const UserHistoryDocument = gql`
 ${HistoryIssuerFragmentDoc}
 ${HistoryEventFragmentDoc}
 ${HistoryEventObjectFragmentDoc}`;
-export function useUserHistoryQuery(variables: Types.UserHistoryQueryVariables | VueCompositionApi.Ref<Types.UserHistoryQueryVariables> | ReactiveFunction<Types.UserHistoryQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserHistoryQuery, Types.UserHistoryQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>(UserHistoryDocument, variables, options);
+export function useUserHistoryQuery(options: VueApolloComposable.useQuery.Options<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>(UserHistoryDocument, options);
 }
-export function useUserHistoryLazyQuery(variables?: Types.UserHistoryQueryVariables | VueCompositionApi.Ref<Types.UserHistoryQueryVariables> | ReactiveFunction<Types.UserHistoryQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserHistoryQuery, Types.UserHistoryQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>(UserHistoryDocument, variables, options);
+export function useUserHistoryLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>(UserHistoryDocument, options);
 }
-export type UserHistoryQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>;
+export type UserHistoryQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.UserHistoryQuery, Types.UserHistoryQueryVariables>;

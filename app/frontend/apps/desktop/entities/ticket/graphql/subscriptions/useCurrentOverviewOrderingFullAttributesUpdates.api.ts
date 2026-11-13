@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { OverviewAttributesFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/overviewAttributes.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentOverviewOrderingFullAttributesUpdatesDocument = gql`
     subscription userCurrentOverviewOrderingFullAttributesUpdates($ignoreUserConditions: Boolean!, $withTicketCount: Boolean = false) {
@@ -16,7 +14,7 @@ export const UserCurrentOverviewOrderingFullAttributesUpdatesDocument = gql`
   }
 }
     ${OverviewAttributesFragmentDoc}`;
-export function useUserCurrentOverviewOrderingFullAttributesUpdatesSubscription(variables: Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables> | ReactiveFunction<Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscription, Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscription, Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscription, Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscription, Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables>(UserCurrentOverviewOrderingFullAttributesUpdatesDocument, variables, options);
+export function useUserCurrentOverviewOrderingFullAttributesUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscription, Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscription, Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables>(UserCurrentOverviewOrderingFullAttributesUpdatesDocument, options);
 }
-export type UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscription, Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables>;
+export type UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscription, Types.UserCurrentOverviewOrderingFullAttributesUpdatesSubscriptionVariables>;

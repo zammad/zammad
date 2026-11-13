@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { KnowledgeBaseAnswerTranslationFragmentDoc } from '../../../knowledge-base/graphql/fragments/knowledgeBaseAnswerTranslation.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const LinkListDocument = gql`
     query linkList($objectId: ID!, $targetType: String!) {
@@ -29,10 +27,10 @@ export const LinkListDocument = gql`
   }
 }
     ${KnowledgeBaseAnswerTranslationFragmentDoc}`;
-export function useLinkListQuery(variables: Types.LinkListQueryVariables | VueCompositionApi.Ref<Types.LinkListQueryVariables> | ReactiveFunction<Types.LinkListQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.LinkListQuery, Types.LinkListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.LinkListQuery, Types.LinkListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.LinkListQuery, Types.LinkListQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.LinkListQuery, Types.LinkListQueryVariables>(LinkListDocument, variables, options);
+export function useLinkListQuery(options: VueApolloComposable.useQuery.Options<Types.LinkListQuery, Types.LinkListQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.LinkListQuery, Types.LinkListQueryVariables>(LinkListDocument, options);
 }
-export function useLinkListLazyQuery(variables?: Types.LinkListQueryVariables | VueCompositionApi.Ref<Types.LinkListQueryVariables> | ReactiveFunction<Types.LinkListQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.LinkListQuery, Types.LinkListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.LinkListQuery, Types.LinkListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.LinkListQuery, Types.LinkListQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.LinkListQuery, Types.LinkListQueryVariables>(LinkListDocument, variables, options);
+export function useLinkListLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.LinkListQuery, Types.LinkListQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.LinkListQuery, Types.LinkListQueryVariables>(LinkListDocument, options);
 }
-export type LinkListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.LinkListQuery, Types.LinkListQueryVariables>;
+export type LinkListQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.LinkListQuery, Types.LinkListQueryVariables>;

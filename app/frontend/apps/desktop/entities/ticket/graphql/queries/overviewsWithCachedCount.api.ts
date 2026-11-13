@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const OverviewsWithCachedCountDocument = gql`
     query overviewsWithCachedCount($ignoreUserConditions: Boolean!, $filterOverviewIds: [ID!], $cacheTtl: Int!) {
@@ -16,10 +14,10 @@ export const OverviewsWithCachedCountDocument = gql`
   }
 }
     `;
-export function useOverviewsWithCachedCountQuery(variables: Types.OverviewsWithCachedCountQueryVariables | VueCompositionApi.Ref<Types.OverviewsWithCachedCountQueryVariables> | ReactiveFunction<Types.OverviewsWithCachedCountQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>(OverviewsWithCachedCountDocument, variables, options);
+export function useOverviewsWithCachedCountQuery(options: VueApolloComposable.useQuery.Options<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>(OverviewsWithCachedCountDocument, options);
 }
-export function useOverviewsWithCachedCountLazyQuery(variables?: Types.OverviewsWithCachedCountQueryVariables | VueCompositionApi.Ref<Types.OverviewsWithCachedCountQueryVariables> | ReactiveFunction<Types.OverviewsWithCachedCountQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>(OverviewsWithCachedCountDocument, variables, options);
+export function useOverviewsWithCachedCountLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>(OverviewsWithCachedCountDocument, options);
 }
-export type OverviewsWithCachedCountQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>;
+export type OverviewsWithCachedCountQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.OverviewsWithCachedCountQuery, Types.OverviewsWithCachedCountQueryVariables>;

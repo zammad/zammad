@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const AdminPasswordAuthVerifyDocument = gql`
     mutation adminPasswordAuthVerify($token: String!) {
@@ -16,7 +14,7 @@ export const AdminPasswordAuthVerifyDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useAdminPasswordAuthVerifyMutation(options: VueApolloComposable.UseMutationOptions<Types.AdminPasswordAuthVerifyMutation, Types.AdminPasswordAuthVerifyMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.AdminPasswordAuthVerifyMutation, Types.AdminPasswordAuthVerifyMutationVariables>> = {}) {
+export function useAdminPasswordAuthVerifyMutation(options: VueApolloComposable.useMutation.Options<Types.AdminPasswordAuthVerifyMutation, Types.AdminPasswordAuthVerifyMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.AdminPasswordAuthVerifyMutation, Types.AdminPasswordAuthVerifyMutationVariables>(AdminPasswordAuthVerifyDocument, options);
 }
-export type AdminPasswordAuthVerifyMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.AdminPasswordAuthVerifyMutation, Types.AdminPasswordAuthVerifyMutationVariables>;
+export type AdminPasswordAuthVerifyMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.AdminPasswordAuthVerifyMutation, Types.AdminPasswordAuthVerifyMutationVariables>;

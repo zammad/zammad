@@ -23,7 +23,7 @@ describe('CommonHistoryFlyout', () => {
       props: {
         name: 'test-history',
         type: EnumObjectManagerObjects.Ticket,
-        query: () => useTicketHistoryQuery({ ticketId }),
+        query: () => useTicketHistoryQuery({ variables: { ticketId } }),
       },
       flyout: true,
       store: true,
@@ -44,7 +44,7 @@ describe('CommonHistoryFlyout', () => {
       props: {
         name: 'test-history',
         type: EnumObjectManagerObjects.Ticket,
-        query: () => useTicketHistoryQuery({ ticketId }),
+        query: () => useTicketHistoryQuery({ variables: { ticketId } }),
         title: 'Custom History Title',
       },
       flyout: true,
@@ -98,7 +98,7 @@ describe('CommonHistoryFlyout', () => {
       props: {
         name: 'test-history',
         type: EnumObjectManagerObjects.Ticket,
-        query: () => useTicketHistoryQuery({ ticketId }),
+        query: () => useTicketHistoryQuery({ variables: { ticketId } }),
       },
       flyout: true,
       store: true,

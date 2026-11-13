@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChannelEmailGuessConfigurationDocument = gql`
     mutation channelEmailGuessConfiguration($emailAddress: String!, $password: String!) {
@@ -36,7 +34,7 @@ export const ChannelEmailGuessConfigurationDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useChannelEmailGuessConfigurationMutation(options: VueApolloComposable.UseMutationOptions<Types.ChannelEmailGuessConfigurationMutation, Types.ChannelEmailGuessConfigurationMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChannelEmailGuessConfigurationMutation, Types.ChannelEmailGuessConfigurationMutationVariables>> = {}) {
+export function useChannelEmailGuessConfigurationMutation(options: VueApolloComposable.useMutation.Options<Types.ChannelEmailGuessConfigurationMutation, Types.ChannelEmailGuessConfigurationMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChannelEmailGuessConfigurationMutation, Types.ChannelEmailGuessConfigurationMutationVariables>(ChannelEmailGuessConfigurationDocument, options);
 }
-export type ChannelEmailGuessConfigurationMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChannelEmailGuessConfigurationMutation, Types.ChannelEmailGuessConfigurationMutationVariables>;
+export type ChannelEmailGuessConfigurationMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChannelEmailGuessConfigurationMutation, Types.ChannelEmailGuessConfigurationMutationVariables>;

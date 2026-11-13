@@ -5,9 +5,7 @@ import { ChatSessionAttributesFragmentDoc } from '../fragments/chatSessionAttrib
 import { ChatTopicAttributesFragmentDoc } from '../fragments/chatTopicAttributes.api';
 import { ChatAgentAttributesFragmentDoc } from '../fragments/chatAgentAttributes.api';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChatSessionEndDocument = gql`
     mutation chatSessionEnd($sessionId: ID!) {
@@ -24,7 +22,7 @@ export const ChatSessionEndDocument = gql`
 ${ChatTopicAttributesFragmentDoc}
 ${ChatAgentAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useChatSessionEndMutation(options: VueApolloComposable.UseMutationOptions<Types.ChatSessionEndMutation, Types.ChatSessionEndMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChatSessionEndMutation, Types.ChatSessionEndMutationVariables>> = {}) {
+export function useChatSessionEndMutation(options: VueApolloComposable.useMutation.Options<Types.ChatSessionEndMutation, Types.ChatSessionEndMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChatSessionEndMutation, Types.ChatSessionEndMutationVariables>(ChatSessionEndDocument, options);
 }
-export type ChatSessionEndMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChatSessionEndMutation, Types.ChatSessionEndMutationVariables>;
+export type ChatSessionEndMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChatSessionEndMutation, Types.ChatSessionEndMutationVariables>;

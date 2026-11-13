@@ -4,9 +4,7 @@ import gql from 'graphql-tag';
 import { OrganizationAttributesFragmentDoc } from '../../../../../../../shared/entities/organization/graphql/fragments/organizationAttributes.api';
 import { ObjectAttributeValuesFragmentDoc } from '../../../../../../../shared/graphql/fragments/objectAttributeValues.api';
 import { OrganizationMembersFragmentDoc } from '../../../../../../../shared/entities/organization/graphql/fragments/organizationMembers.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const OrganizationInfoForPopoverDocument = gql`
     query organizationInfoForPopover($organizationId: ID!, $membersCount: Int) {
@@ -18,10 +16,10 @@ export const OrganizationInfoForPopoverDocument = gql`
     ${OrganizationAttributesFragmentDoc}
 ${ObjectAttributeValuesFragmentDoc}
 ${OrganizationMembersFragmentDoc}`;
-export function useOrganizationInfoForPopoverQuery(variables: Types.OrganizationInfoForPopoverQueryVariables | VueCompositionApi.Ref<Types.OrganizationInfoForPopoverQueryVariables> | ReactiveFunction<Types.OrganizationInfoForPopoverQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>(OrganizationInfoForPopoverDocument, variables, options);
+export function useOrganizationInfoForPopoverQuery(options: VueApolloComposable.useQuery.Options<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>(OrganizationInfoForPopoverDocument, options);
 }
-export function useOrganizationInfoForPopoverLazyQuery(variables?: Types.OrganizationInfoForPopoverQueryVariables | VueCompositionApi.Ref<Types.OrganizationInfoForPopoverQueryVariables> | ReactiveFunction<Types.OrganizationInfoForPopoverQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>(OrganizationInfoForPopoverDocument, variables, options);
+export function useOrganizationInfoForPopoverLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>(OrganizationInfoForPopoverDocument, options);
 }
-export type OrganizationInfoForPopoverQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>;
+export type OrganizationInfoForPopoverQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.OrganizationInfoForPopoverQuery, Types.OrganizationInfoForPopoverQueryVariables>;

@@ -38,21 +38,19 @@ const userSearchInput = toRef(props, 'search')
 const debouncedSearch = refDebounced<string>(userSearchInput, props.debounceTime)
 
 const quickSearchQuery = new QueryHandler(
-  useQuickSearchLazyQuery(
-    () => ({
-      search: debouncedSearch.value,
-      onlyIn: searchPluginNames.value,
+  useQuickSearchLazyQuery({
+    variables: {
+      search: debouncedSearch,
+      onlyIn: searchPluginNames,
       limit: RESULT_LIMIT,
-    }),
-    {
-      fetchPolicy: 'no-cache',
-      context: {
-        batch: {
-          active: false,
-        },
+    },
+    fetchPolicy: 'no-cache',
+    context: {
+      batch: {
+        active: false,
       },
     },
-  ),
+  }),
 )
 
 const quickSearchResult = quickSearchQuery.result()

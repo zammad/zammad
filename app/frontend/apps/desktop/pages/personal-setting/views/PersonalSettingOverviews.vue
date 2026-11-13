@@ -33,7 +33,7 @@ import { useUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentO
 const { breadcrumbItems } = useBreadcrumb()
 
 const overviewListQuery = new QueryHandler(
-  useUserCurrentOverviewListQuery({ ignoreUserConditions: true }),
+  useUserCurrentOverviewListQuery({ variables: { ignoreUserConditions: true } }),
 )
 
 const queryResult = overviewListQuery.result()

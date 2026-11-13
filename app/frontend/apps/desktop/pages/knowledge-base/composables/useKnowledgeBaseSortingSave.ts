@@ -39,24 +39,24 @@ export const useKnowledgeBaseSortingSave = (categoryId: Ref<string | undefined>)
     //   top level is its own mutation (Gql::Mutations::KnowledgeBase::Reorder::RootCategories).
     if (!categoryId.value) {
       return new MutationHandler(
-        useKnowledgeBaseReorderRootCategoriesMutation(() => ({
+        useKnowledgeBaseReorderRootCategoriesMutation({
           refetchQueries: REFETCH_ON_CATEGORY_ORDER,
-        })),
+        }),
       ).send({ sortingMode, categoryIds: orderedIds })
     }
 
     return new MutationHandler(
-      useKnowledgeBaseReorderCategoriesMutation(() => ({
+      useKnowledgeBaseReorderCategoriesMutation({
         refetchQueries: REFETCH_ON_CATEGORY_ORDER,
-      })),
+      }),
     ).send({ parentCategoryId: categoryId.value, sortingMode, categoryIds: orderedIds })
   }
 
   const sendAnswerChange = ({ sortingMode, orderedIds }: KnowledgeBaseSortingChange) =>
     new MutationHandler(
-      useKnowledgeBaseReorderAnswersMutation(() => ({
+      useKnowledgeBaseReorderAnswersMutation({
         refetchQueries: REFETCH_ON_ANSWER_ORDER,
-      })),
+      }),
     ).send({ categoryId: categoryId.value as string, sortingMode, answerIds: orderedIds })
 
   const sendChange = (change: KnowledgeBaseSortingChange) =>

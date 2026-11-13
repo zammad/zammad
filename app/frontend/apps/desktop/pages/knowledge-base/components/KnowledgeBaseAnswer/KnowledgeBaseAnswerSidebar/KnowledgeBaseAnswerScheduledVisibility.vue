@@ -45,7 +45,7 @@ const { isTouchDevice } = useTouchDevice()
 const { waitForConfirmation } = useConfirmation()
 
 const removeMutation = new MutationHandler(
-  useKnowledgeBaseAnswerVisibilityScheduleRemoveMutation({}),
+  useKnowledgeBaseAnswerVisibilityScheduleRemoveMutation(),
   { errorNotificationMessage: __('The scheduled visibility change could not be removed.') },
 )
 

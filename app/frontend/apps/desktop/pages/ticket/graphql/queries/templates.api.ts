@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TemplatesDocument = gql`
     query templates($onlyActive: Boolean = false) {
@@ -13,10 +11,10 @@ export const TemplatesDocument = gql`
   }
 }
     `;
-export function useTemplatesQuery(variables: Types.TemplatesQueryVariables | VueCompositionApi.Ref<Types.TemplatesQueryVariables> | ReactiveFunction<Types.TemplatesQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.TemplatesQuery, Types.TemplatesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TemplatesQuery, Types.TemplatesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TemplatesQuery, Types.TemplatesQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.TemplatesQuery, Types.TemplatesQueryVariables>(TemplatesDocument, variables, options);
+export function useTemplatesQuery(options: VueApolloComposable.useQuery.Options<Types.TemplatesQuery, Types.TemplatesQueryVariables> = {}) {
+  return VueApolloComposable.useQuery<Types.TemplatesQuery, Types.TemplatesQueryVariables>(TemplatesDocument, options);
 }
-export function useTemplatesLazyQuery(variables: Types.TemplatesQueryVariables | VueCompositionApi.Ref<Types.TemplatesQueryVariables> | ReactiveFunction<Types.TemplatesQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.TemplatesQuery, Types.TemplatesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TemplatesQuery, Types.TemplatesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TemplatesQuery, Types.TemplatesQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.TemplatesQuery, Types.TemplatesQueryVariables>(TemplatesDocument, variables, options);
+export function useTemplatesLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.TemplatesQuery, Types.TemplatesQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.TemplatesQuery, Types.TemplatesQueryVariables>(TemplatesDocument, options);
 }
-export type TemplatesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TemplatesQuery, Types.TemplatesQueryVariables>;
+export type TemplatesQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.TemplatesQuery, Types.TemplatesQueryVariables>;

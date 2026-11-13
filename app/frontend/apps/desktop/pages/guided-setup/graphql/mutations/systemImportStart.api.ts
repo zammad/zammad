@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const SystemImportStartDocument = gql`
     mutation systemImportStart {
@@ -16,7 +14,7 @@ export const SystemImportStartDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useSystemImportStartMutation(options: VueApolloComposable.UseMutationOptions<Types.SystemImportStartMutation, Types.SystemImportStartMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.SystemImportStartMutation, Types.SystemImportStartMutationVariables>> = {}) {
+export function useSystemImportStartMutation(options: VueApolloComposable.useMutation.Options<Types.SystemImportStartMutation, Types.SystemImportStartMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.SystemImportStartMutation, Types.SystemImportStartMutationVariables>(SystemImportStartDocument, options);
 }
-export type SystemImportStartMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.SystemImportStartMutation, Types.SystemImportStartMutationVariables>;
+export type SystemImportStartMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.SystemImportStartMutation, Types.SystemImportStartMutationVariables>;

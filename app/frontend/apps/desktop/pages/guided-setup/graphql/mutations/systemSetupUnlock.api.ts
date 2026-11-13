@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const SystemSetupUnlockDocument = gql`
     mutation systemSetupUnlock($value: String!) {
@@ -16,7 +14,7 @@ export const SystemSetupUnlockDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useSystemSetupUnlockMutation(options: VueApolloComposable.UseMutationOptions<Types.SystemSetupUnlockMutation, Types.SystemSetupUnlockMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.SystemSetupUnlockMutation, Types.SystemSetupUnlockMutationVariables>> = {}) {
+export function useSystemSetupUnlockMutation(options: VueApolloComposable.useMutation.Options<Types.SystemSetupUnlockMutation, Types.SystemSetupUnlockMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.SystemSetupUnlockMutation, Types.SystemSetupUnlockMutationVariables>(SystemSetupUnlockDocument, options);
 }
-export type SystemSetupUnlockMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.SystemSetupUnlockMutation, Types.SystemSetupUnlockMutationVariables>;
+export type SystemSetupUnlockMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.SystemSetupUnlockMutation, Types.SystemSetupUnlockMutationVariables>;

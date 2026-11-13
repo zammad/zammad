@@ -35,10 +35,10 @@ export const useChatAgentStore = defineStore('chatAgent', () => {
   const isEnabled = computed(() => isChatEnabled.value && session.hasPermission('chat.agent'))
 
   const stateQuery = new QueryHandler(
-    useChatAgentStateQuery(() => ({
-      enabled: isEnabled.value,
+    useChatAgentStateQuery({
+      enabled: isEnabled,
       fetchPolicy: 'cache-and-network',
-    })),
+    }),
   )
 
   // A read answers over HTTP and a push comes over the websocket, so a push can overtake the answer of

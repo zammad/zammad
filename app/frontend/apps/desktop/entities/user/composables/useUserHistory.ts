@@ -13,7 +13,7 @@ export const openUserHistoryFlyout = (userId: string) => {
   openFlyout(USER_HISTORY_FLYOUT_NAME, {
     name: USER_HISTORY_FLYOUT_NAME,
     type: EnumObjectManagerObjects.User,
-    query: () => useUserHistoryQuery({ userId }),
+    query: () => useUserHistoryQuery({ variables: { userId } }),
   })
 }
 

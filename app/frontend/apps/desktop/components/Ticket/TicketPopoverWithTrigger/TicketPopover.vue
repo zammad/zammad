@@ -19,10 +19,11 @@ interface Props {
 const props = defineProps<Props>()
 
 const ticketInfoForPopoverQuery = new QueryHandler(
-  useTicketInfoForPopoverQuery(
-    () => ({ ticketId: props.ticket.id!, withContent: props.withContent }),
-    () => ({ enabled: !!props.ticket.id, fetchPolicy: 'cache-and-network' }),
-  ),
+  useTicketInfoForPopoverQuery({
+    variables: () => ({ ticketId: props.ticket.id!, withContent: props.withContent }),
+    enabled: () => !!props.ticket.id,
+    fetchPolicy: 'cache-and-network',
+  }),
 )
 
 const ticketResult = ticketInfoForPopoverQuery.result()

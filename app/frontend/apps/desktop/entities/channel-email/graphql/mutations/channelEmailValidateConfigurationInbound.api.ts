@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChannelEmailValidateConfigurationInboundDocument = gql`
     mutation channelEmailValidateConfigurationInbound($inboundConfiguration: ChannelEmailInboundConfigurationInput!) {
@@ -21,7 +19,7 @@ export const ChannelEmailValidateConfigurationInboundDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useChannelEmailValidateConfigurationInboundMutation(options: VueApolloComposable.UseMutationOptions<Types.ChannelEmailValidateConfigurationInboundMutation, Types.ChannelEmailValidateConfigurationInboundMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChannelEmailValidateConfigurationInboundMutation, Types.ChannelEmailValidateConfigurationInboundMutationVariables>> = {}) {
+export function useChannelEmailValidateConfigurationInboundMutation(options: VueApolloComposable.useMutation.Options<Types.ChannelEmailValidateConfigurationInboundMutation, Types.ChannelEmailValidateConfigurationInboundMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChannelEmailValidateConfigurationInboundMutation, Types.ChannelEmailValidateConfigurationInboundMutationVariables>(ChannelEmailValidateConfigurationInboundDocument, options);
 }
-export type ChannelEmailValidateConfigurationInboundMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChannelEmailValidateConfigurationInboundMutation, Types.ChannelEmailValidateConfigurationInboundMutationVariables>;
+export type ChannelEmailValidateConfigurationInboundMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChannelEmailValidateConfigurationInboundMutation, Types.ChannelEmailValidateConfigurationInboundMutationVariables>;

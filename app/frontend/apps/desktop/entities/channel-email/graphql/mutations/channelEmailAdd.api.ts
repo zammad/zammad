@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChannelEmailAddDocument = gql`
     mutation channelEmailAdd($input: ChannelEmailAddInput!) {
@@ -21,7 +19,7 @@ export const ChannelEmailAddDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useChannelEmailAddMutation(options: VueApolloComposable.UseMutationOptions<Types.ChannelEmailAddMutation, Types.ChannelEmailAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChannelEmailAddMutation, Types.ChannelEmailAddMutationVariables>> = {}) {
+export function useChannelEmailAddMutation(options: VueApolloComposable.useMutation.Options<Types.ChannelEmailAddMutation, Types.ChannelEmailAddMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChannelEmailAddMutation, Types.ChannelEmailAddMutationVariables>(ChannelEmailAddDocument, options);
 }
-export type ChannelEmailAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChannelEmailAddMutation, Types.ChannelEmailAddMutationVariables>;
+export type ChannelEmailAddMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChannelEmailAddMutation, Types.ChannelEmailAddMutationVariables>;

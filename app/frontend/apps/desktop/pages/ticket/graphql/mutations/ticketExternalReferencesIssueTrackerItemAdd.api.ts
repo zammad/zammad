@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketExternalReferencesIssueTrackerItemAddDocument = gql`
     mutation ticketExternalReferencesIssueTrackerItemAdd($issueTrackerLink: UriHttpString!, $issueTrackerType: EnumTicketExternalReferencesIssueTrackerType!, $ticketId: ID) {
@@ -36,7 +34,7 @@ export const TicketExternalReferencesIssueTrackerItemAddDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTicketExternalReferencesIssueTrackerItemAddMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketExternalReferencesIssueTrackerItemAddMutation, Types.TicketExternalReferencesIssueTrackerItemAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketExternalReferencesIssueTrackerItemAddMutation, Types.TicketExternalReferencesIssueTrackerItemAddMutationVariables>> = {}) {
+export function useTicketExternalReferencesIssueTrackerItemAddMutation(options: VueApolloComposable.useMutation.Options<Types.TicketExternalReferencesIssueTrackerItemAddMutation, Types.TicketExternalReferencesIssueTrackerItemAddMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TicketExternalReferencesIssueTrackerItemAddMutation, Types.TicketExternalReferencesIssueTrackerItemAddMutationVariables>(TicketExternalReferencesIssueTrackerItemAddDocument, options);
 }
-export type TicketExternalReferencesIssueTrackerItemAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketExternalReferencesIssueTrackerItemAddMutation, Types.TicketExternalReferencesIssueTrackerItemAddMutationVariables>;
+export type TicketExternalReferencesIssueTrackerItemAddMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TicketExternalReferencesIssueTrackerItemAddMutation, Types.TicketExternalReferencesIssueTrackerItemAddMutationVariables>;

@@ -65,10 +65,10 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
 //   it by number. Only recently viewed ones - "recent customer tickets" needs a customer, and an
 //   answer has none.
 const recentlyViewedQuery = new QueryHandler(
-  useTicketsRecentlyViewedQuery(
-    { limit: RECENTLY_VIEWED_LIMIT },
-    { fetchPolicy: 'cache-and-network' },
-  ),
+  useTicketsRecentlyViewedQuery({
+    variables: { limit: RECENTLY_VIEWED_LIMIT },
+    fetchPolicy: 'cache-and-network',
+  }),
 )
 
 const recentlyViewedIsLoading = recentlyViewedQuery.loadingWithoutCachedResult()

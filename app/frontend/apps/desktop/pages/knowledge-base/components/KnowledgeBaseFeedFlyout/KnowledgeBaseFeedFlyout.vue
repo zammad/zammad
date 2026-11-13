@@ -39,15 +39,13 @@ const { activeLocale } = storeToRefs(useKnowledgeBaseStore())
 //   here, in another tab, or in the old interface — so every opening has to ask
 //   for what is valid now, and the token has no business sitting in the cache.
 const feedQuery = new QueryHandler(
-  useKnowledgeBaseFeedQuery(
-    () => ({
+  useKnowledgeBaseFeedQuery({
+    variables: () => ({
       categoryId: props.categoryId,
       locale: activeLocale.value,
     }),
-    {
-      fetchPolicy: 'no-cache',
-    },
-  ),
+    fetchPolicy: 'no-cache',
+  }),
 )
 
 const result = feedQuery.result()

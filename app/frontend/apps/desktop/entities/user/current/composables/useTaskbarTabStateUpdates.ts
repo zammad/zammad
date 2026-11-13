@@ -16,14 +16,12 @@ export const useTaskbarTabStateUpdates = (
   resetFormChanges?: () => Promise<void> | void,
 ) => {
   const stateUpdatesSubscription = new SubscriptionHandler(
-    useUserCurrentTaskbarItemStateUpdatesSubscription(
-      () => ({
+    useUserCurrentTaskbarItemStateUpdatesSubscription({
+      variables: () => ({
         taskbarItemId: currentTaskbarTabId.value!,
       }),
-      () => ({
-        enabled: !!currentTaskbarTabId.value,
-      }),
-    ),
+      enabled: () => !!currentTaskbarTabId.value,
+    }),
   )
 
   stateUpdatesSubscription.onSubscribed().then(() => {

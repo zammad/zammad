@@ -34,12 +34,12 @@ export const useKnowledgeBaseAnswers = (options: {
   })
 
   const answersQuery = new QueryHandler(
-    useKnowledgeBaseAnswersQuery(
-      queryVariables,
+    useKnowledgeBaseAnswersQuery({
+      variables: queryVariables,
       // Answers exist only below a specific category; the knowledge base root
       //   has none, so the query stays disabled until a category is opened.
-      () => ({ enabled: Boolean(categoryId.value) }),
-    ),
+      enabled: () => Boolean(categoryId.value),
+    }),
     {
       // A category the user may not browse is answered with a 403; the browse
       //   composable redirects to the root, so just swallow the toast here to

@@ -5,9 +5,7 @@ import { KnowledgeBaseCategoryGridAttributesFragmentDoc } from '../fragments/kno
 import { KnowledgeBaseCategoryPolicyFragmentDoc } from '../fragments/knowledgeBaseCategoryPolicy.api';
 import { KnowledgeBaseCategoryPreInfoFragmentDoc } from '../fragments/knowledgeBaseCategoryPreInfo.api';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseCategoryAddDocument = gql`
     mutation knowledgeBaseCategoryAdd($input: KnowledgeBaseCategoryInput!, $locale: String!) {
@@ -24,7 +22,7 @@ export const KnowledgeBaseCategoryAddDocument = gql`
 ${KnowledgeBaseCategoryPolicyFragmentDoc}
 ${KnowledgeBaseCategoryPreInfoFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useKnowledgeBaseCategoryAddMutation(options: VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseCategoryAddMutation, Types.KnowledgeBaseCategoryAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseCategoryAddMutation, Types.KnowledgeBaseCategoryAddMutationVariables>> = {}) {
+export function useKnowledgeBaseCategoryAddMutation(options: VueApolloComposable.useMutation.Options<Types.KnowledgeBaseCategoryAddMutation, Types.KnowledgeBaseCategoryAddMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.KnowledgeBaseCategoryAddMutation, Types.KnowledgeBaseCategoryAddMutationVariables>(KnowledgeBaseCategoryAddDocument, options);
 }
-export type KnowledgeBaseCategoryAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.KnowledgeBaseCategoryAddMutation, Types.KnowledgeBaseCategoryAddMutationVariables>;
+export type KnowledgeBaseCategoryAddMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.KnowledgeBaseCategoryAddMutation, Types.KnowledgeBaseCategoryAddMutationVariables>;

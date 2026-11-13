@@ -13,12 +13,10 @@ export const useTicketAttachments = (fetchPolicy?: WatchQueryFetchPolicy) => {
   const { ticketId } = useTicketInformation()
 
   const ticketAttachmentsQuery = new QueryHandler(
-    useTicketAttachmentsQuery(
-      () => ({
-        ticketId: ticketId.value,
-      }),
-      { fetchPolicy },
-    ),
+    useTicketAttachmentsQuery({
+      variables: { ticketId },
+      fetchPolicy,
+    }),
   )
   const result = ticketAttachmentsQuery.result()
   const loading = ticketAttachmentsQuery.loadingWithoutCachedResult()

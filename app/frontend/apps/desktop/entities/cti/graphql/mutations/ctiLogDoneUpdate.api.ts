@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const CtiLogDoneUpdateDocument = gql`
     mutation ctiLogDoneUpdate($id: ID!, $done: Boolean!) {
@@ -19,7 +17,7 @@ export const CtiLogDoneUpdateDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useCtiLogDoneUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.CtiLogDoneUpdateMutation, Types.CtiLogDoneUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.CtiLogDoneUpdateMutation, Types.CtiLogDoneUpdateMutationVariables>> = {}) {
+export function useCtiLogDoneUpdateMutation(options: VueApolloComposable.useMutation.Options<Types.CtiLogDoneUpdateMutation, Types.CtiLogDoneUpdateMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.CtiLogDoneUpdateMutation, Types.CtiLogDoneUpdateMutationVariables>(CtiLogDoneUpdateDocument, options);
 }
-export type CtiLogDoneUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.CtiLogDoneUpdateMutation, Types.CtiLogDoneUpdateMutationVariables>;
+export type CtiLogDoneUpdateMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.CtiLogDoneUpdateMutation, Types.CtiLogDoneUpdateMutationVariables>;

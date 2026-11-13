@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseAnswerDeleteDocument = gql`
     mutation knowledgeBaseAnswerDelete($answerId: ID!) {
@@ -16,7 +14,7 @@ export const KnowledgeBaseAnswerDeleteDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useKnowledgeBaseAnswerDeleteMutation(options: VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseAnswerDeleteMutation, Types.KnowledgeBaseAnswerDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseAnswerDeleteMutation, Types.KnowledgeBaseAnswerDeleteMutationVariables>> = {}) {
+export function useKnowledgeBaseAnswerDeleteMutation(options: VueApolloComposable.useMutation.Options<Types.KnowledgeBaseAnswerDeleteMutation, Types.KnowledgeBaseAnswerDeleteMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.KnowledgeBaseAnswerDeleteMutation, Types.KnowledgeBaseAnswerDeleteMutationVariables>(KnowledgeBaseAnswerDeleteDocument, options);
 }
-export type KnowledgeBaseAnswerDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.KnowledgeBaseAnswerDeleteMutation, Types.KnowledgeBaseAnswerDeleteMutationVariables>;
+export type KnowledgeBaseAnswerDeleteMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.KnowledgeBaseAnswerDeleteMutation, Types.KnowledgeBaseAnswerDeleteMutationVariables>;

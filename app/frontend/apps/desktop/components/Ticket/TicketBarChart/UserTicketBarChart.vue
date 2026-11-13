@@ -15,9 +15,11 @@ const props = defineProps<{
 }>()
 
 const ticketsStatsQuery = new QueryHandler(
-  useTicketsStatsMonthlyByCustomerQuery(() => ({
-    customerId: props.userId,
-  })),
+  useTicketsStatsMonthlyByCustomerQuery({
+    variables: () => ({
+      customerId: props.userId,
+    }),
+  }),
 )
 
 const ticketsStatsResult = ticketsStatsQuery.result()

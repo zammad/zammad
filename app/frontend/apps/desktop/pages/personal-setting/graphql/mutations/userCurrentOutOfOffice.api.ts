@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentOutOfOfficeDocument = gql`
     mutation userCurrentOutOfOffice($input: OutOfOfficeInput!) {
@@ -16,7 +14,7 @@ export const UserCurrentOutOfOfficeDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useUserCurrentOutOfOfficeMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentOutOfOfficeMutation, Types.UserCurrentOutOfOfficeMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentOutOfOfficeMutation, Types.UserCurrentOutOfOfficeMutationVariables>> = {}) {
+export function useUserCurrentOutOfOfficeMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentOutOfOfficeMutation, Types.UserCurrentOutOfOfficeMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentOutOfOfficeMutation, Types.UserCurrentOutOfOfficeMutationVariables>(UserCurrentOutOfOfficeDocument, options);
 }
-export type UserCurrentOutOfOfficeMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentOutOfOfficeMutation, Types.UserCurrentOutOfOfficeMutationVariables>;
+export type UserCurrentOutOfOfficeMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentOutOfOfficeMutation, Types.UserCurrentOutOfOfficeMutationVariables>;

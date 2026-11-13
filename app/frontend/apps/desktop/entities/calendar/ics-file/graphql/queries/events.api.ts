@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const CalendarIcsFileEventsDocument = gql`
     query calendarIcsFileEvents($fileId: ID!) {
@@ -18,10 +16,10 @@ export const CalendarIcsFileEventsDocument = gql`
   }
 }
     `;
-export function useCalendarIcsFileEventsQuery(variables: Types.CalendarIcsFileEventsQueryVariables | VueCompositionApi.Ref<Types.CalendarIcsFileEventsQueryVariables> | ReactiveFunction<Types.CalendarIcsFileEventsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>(CalendarIcsFileEventsDocument, variables, options);
+export function useCalendarIcsFileEventsQuery(options: VueApolloComposable.useQuery.Options<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>(CalendarIcsFileEventsDocument, options);
 }
-export function useCalendarIcsFileEventsLazyQuery(variables?: Types.CalendarIcsFileEventsQueryVariables | VueCompositionApi.Ref<Types.CalendarIcsFileEventsQueryVariables> | ReactiveFunction<Types.CalendarIcsFileEventsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>(CalendarIcsFileEventsDocument, variables, options);
+export function useCalendarIcsFileEventsLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>(CalendarIcsFileEventsDocument, options);
 }
-export type CalendarIcsFileEventsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>;
+export type CalendarIcsFileEventsQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.CalendarIcsFileEventsQuery, Types.CalendarIcsFileEventsQueryVariables>;

@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketPopoverArticleFragmentDoc } from '../fragments/ticketPopoverArticle.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketInfoForPopoverDocument = gql`
     query ticketInfoForPopover($ticketId: ID!, $withContent: Boolean = false) {
@@ -83,10 +81,10 @@ export const TicketInfoForPopoverDocument = gql`
   }
 }
     ${TicketPopoverArticleFragmentDoc}`;
-export function useTicketInfoForPopoverQuery(variables: Types.TicketInfoForPopoverQueryVariables | VueCompositionApi.Ref<Types.TicketInfoForPopoverQueryVariables> | ReactiveFunction<Types.TicketInfoForPopoverQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>(TicketInfoForPopoverDocument, variables, options);
+export function useTicketInfoForPopoverQuery(options: VueApolloComposable.useQuery.Options<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>(TicketInfoForPopoverDocument, options);
 }
-export function useTicketInfoForPopoverLazyQuery(variables?: Types.TicketInfoForPopoverQueryVariables | VueCompositionApi.Ref<Types.TicketInfoForPopoverQueryVariables> | ReactiveFunction<Types.TicketInfoForPopoverQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>(TicketInfoForPopoverDocument, variables, options);
+export function useTicketInfoForPopoverLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>(TicketInfoForPopoverDocument, options);
 }
-export type TicketInfoForPopoverQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>;
+export type TicketInfoForPopoverQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.TicketInfoForPopoverQuery, Types.TicketInfoForPopoverQueryVariables>;

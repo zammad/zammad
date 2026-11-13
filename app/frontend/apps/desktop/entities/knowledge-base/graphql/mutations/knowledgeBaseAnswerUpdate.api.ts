@@ -6,9 +6,7 @@ import { KnowledgeBaseAnswerPolicyFragmentDoc } from '../fragments/knowledgeBase
 import { KnowledgeBaseAnswerPreInfoFragmentDoc } from '../fragments/knowledgeBaseAnswerPreInfo.api';
 import { KnowledgeBaseCategoryBreadcrumbFragmentDoc } from '../fragments/knowledgeBaseCategoryBreadcrumb.api';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseAnswerUpdateDocument = gql`
     mutation knowledgeBaseAnswerUpdate($answerId: ID!, $input: KnowledgeBaseUpdateAnswerInput!, $locale: String!, $meta: KnowledgeBaseAnswerUpdateMetaInput, $withBodyForEditing: Boolean = false, $withNavigation: Boolean = false) {
@@ -32,7 +30,7 @@ ${KnowledgeBaseAnswerPolicyFragmentDoc}
 ${KnowledgeBaseAnswerPreInfoFragmentDoc}
 ${KnowledgeBaseCategoryBreadcrumbFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useKnowledgeBaseAnswerUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseAnswerUpdateMutation, Types.KnowledgeBaseAnswerUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseAnswerUpdateMutation, Types.KnowledgeBaseAnswerUpdateMutationVariables>> = {}) {
+export function useKnowledgeBaseAnswerUpdateMutation(options: VueApolloComposable.useMutation.Options<Types.KnowledgeBaseAnswerUpdateMutation, Types.KnowledgeBaseAnswerUpdateMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.KnowledgeBaseAnswerUpdateMutation, Types.KnowledgeBaseAnswerUpdateMutationVariables>(KnowledgeBaseAnswerUpdateDocument, options);
 }
-export type KnowledgeBaseAnswerUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.KnowledgeBaseAnswerUpdateMutation, Types.KnowledgeBaseAnswerUpdateMutationVariables>;
+export type KnowledgeBaseAnswerUpdateMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.KnowledgeBaseAnswerUpdateMutation, Types.KnowledgeBaseAnswerUpdateMutationVariables>;

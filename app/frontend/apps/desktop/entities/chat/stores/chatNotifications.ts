@@ -155,9 +155,12 @@ export const useChatNotificationsStore = defineStore('chatNotifications', () => 
 
     scope.run(() => {
       // A refused subscription is the window's to tell, which keeps quiet about one after a transfer.
-      const updates = new SubscriptionHandler(useChatSessionUpdatesSubscription({ sessionId }), {
-        errorShowNotification: false,
-      })
+      const updates = new SubscriptionHandler(
+        useChatSessionUpdatesSubscription({ variables: { sessionId } }),
+        {
+          errorShowNotification: false,
+        },
+      )
 
       updates.onResult(({ data }) => {
         const message = data?.chatSessionUpdates.message

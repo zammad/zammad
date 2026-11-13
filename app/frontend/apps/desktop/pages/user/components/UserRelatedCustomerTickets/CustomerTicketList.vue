@@ -28,12 +28,14 @@ export interface Props {
 const props = defineProps<Props>()
 
 const customerTicketsQuery = new QueryHandler(
-  useTicketsByCustomerQuery(() => ({
-    customerId: props.customer.id,
-    customerOrganizations: props.customerOrganizations,
-    stateTypeCategory: props.stateTypeCategory,
-    pageSize: 5,
-  })),
+  useTicketsByCustomerQuery({
+    variables: () => ({
+      customerId: props.customer.id,
+      customerOrganizations: props.customerOrganizations,
+      stateTypeCategory: props.stateTypeCategory,
+      pageSize: 5,
+    }),
+  }),
 )
 
 const customerTicketsResult = customerTicketsQuery.result()

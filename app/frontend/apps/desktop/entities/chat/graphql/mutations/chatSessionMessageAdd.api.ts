@@ -4,9 +4,7 @@ import gql from 'graphql-tag';
 import { ChatMessageAttributesFragmentDoc } from '../fragments/chatMessageAttributes.api';
 import { ChatAgentAttributesFragmentDoc } from '../fragments/chatAgentAttributes.api';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChatSessionMessageAddDocument = gql`
     mutation chatSessionMessageAdd($sessionId: ID!, $content: String!) {
@@ -22,7 +20,7 @@ export const ChatSessionMessageAddDocument = gql`
     ${ChatMessageAttributesFragmentDoc}
 ${ChatAgentAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useChatSessionMessageAddMutation(options: VueApolloComposable.UseMutationOptions<Types.ChatSessionMessageAddMutation, Types.ChatSessionMessageAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChatSessionMessageAddMutation, Types.ChatSessionMessageAddMutationVariables>> = {}) {
+export function useChatSessionMessageAddMutation(options: VueApolloComposable.useMutation.Options<Types.ChatSessionMessageAddMutation, Types.ChatSessionMessageAddMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChatSessionMessageAddMutation, Types.ChatSessionMessageAddMutationVariables>(ChatSessionMessageAddDocument, options);
 }
-export type ChatSessionMessageAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChatSessionMessageAddMutation, Types.ChatSessionMessageAddMutationVariables>;
+export type ChatSessionMessageAddMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChatSessionMessageAddMutation, Types.ChatSessionMessageAddMutationVariables>;

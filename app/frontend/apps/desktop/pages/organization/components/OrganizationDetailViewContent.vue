@@ -85,14 +85,10 @@ const { hasPermission } = useSessionStore()
 const chartInstance = useTemplateRef('chart')
 
 const organizationTicketsSubscription = new SubscriptionHandler(
-  useTicketByOrganizationUpdatesSubscription(
-    () => ({
-      organizationId: organizationId.value,
-    }),
-    {
-      enabled: hasPermission('ticket.agent'),
-    },
-  ),
+  useTicketByOrganizationUpdatesSubscription({
+    variables: { organizationId },
+    enabled: hasPermission('ticket.agent'),
+  }),
 )
 
 organizationTicketsSubscription.onResult(({ data }) => {

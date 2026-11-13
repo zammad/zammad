@@ -5,9 +5,7 @@ import { UserCurrentTaskbarItemAttributesFragmentDoc } from '../fragments/userCu
 import { TicketTaskbarTabAttributesFragmentDoc } from '../../../../../../../shared/entities/ticket/graphql/fragments/ticketTaskbarTabAttributes.api';
 import { KnowledgeBaseAnswerTaskbarTabAttributesFragmentDoc } from '../../../../knowledge-base/graphql/fragments/knowledgeBaseAnswerTaskbarTabAttributes.api';
 import { ErrorsFragmentDoc } from '../../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentTaskbarItemTouchLastContactDocument = gql`
     mutation userCurrentTaskbarItemTouchLastContact($id: ID!) {
@@ -24,7 +22,7 @@ export const UserCurrentTaskbarItemTouchLastContactDocument = gql`
 ${TicketTaskbarTabAttributesFragmentDoc}
 ${KnowledgeBaseAnswerTaskbarTabAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useUserCurrentTaskbarItemTouchLastContactMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentTaskbarItemTouchLastContactMutation, Types.UserCurrentTaskbarItemTouchLastContactMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentTaskbarItemTouchLastContactMutation, Types.UserCurrentTaskbarItemTouchLastContactMutationVariables>> = {}) {
+export function useUserCurrentTaskbarItemTouchLastContactMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentTaskbarItemTouchLastContactMutation, Types.UserCurrentTaskbarItemTouchLastContactMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentTaskbarItemTouchLastContactMutation, Types.UserCurrentTaskbarItemTouchLastContactMutationVariables>(UserCurrentTaskbarItemTouchLastContactDocument, options);
 }
-export type UserCurrentTaskbarItemTouchLastContactMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentTaskbarItemTouchLastContactMutation, Types.UserCurrentTaskbarItemTouchLastContactMutationVariables>;
+export type UserCurrentTaskbarItemTouchLastContactMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentTaskbarItemTouchLastContactMutation, Types.UserCurrentTaskbarItemTouchLastContactMutationVariables>;

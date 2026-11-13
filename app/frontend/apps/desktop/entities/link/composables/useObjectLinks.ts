@@ -28,13 +28,10 @@ export const useObjectLinks = (
   const objectId = computed(() => object.value?.id)
 
   const linkListQuery = new QueryHandler(
-    useLinkListQuery(
-      () => ({
-        objectId: objectId.value,
-        targetType,
-      }),
-      () => ({ enabled: Boolean(objectId.value) && (options.enabled?.value ?? true) }),
-    ),
+    useLinkListQuery({
+      variables: { objectId, targetType },
+      enabled: () => Boolean(objectId.value) && (options.enabled?.value ?? true),
+    }),
   )
 
   const linkListQueryResult = linkListQuery.result()

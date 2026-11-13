@@ -20,9 +20,9 @@ export const useTicketChecklist = (
   ticketId: ComputedRef<string>,
 ) => {
   const checklistQuery = new QueryHandler(
-    useTicketChecklistQuery(() => ({
-      ticketId: ticketId.value,
-    })),
+    useTicketChecklistQuery({
+      variables: { ticketId },
+    }),
   )
 
   checklistQuery.subscribeToMore<

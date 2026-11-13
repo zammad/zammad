@@ -233,21 +233,19 @@ export const useTicketOverviewsStore = defineStore('ticketOverviews', () => {
           cachedTickets?.ticketsCachedByOverview?.collectionSignature
 
         const ticketsQuery = new QueryHandler(
-          useTicketsCachedByOverviewLazyQuery(
-            () => ({
+          useTicketsCachedByOverviewLazyQuery({
+            variables: () => ({
               pageSize: queryPollingConfig.value.page_size,
               ...getMainVariables(),
               knownCollectionSignature: cachedCollectionSignature,
             }),
-            {
-              fetchPolicy: 'network-only',
-              context: {
-                batch: {
-                  active: false,
-                },
+            fetchPolicy: 'network-only',
+            context: {
+              batch: {
+                active: false,
               },
             },
-          ),
+          }),
           {
             errorShowNotification: false, // We do not show notifications for the overview polling query in the background.
           },

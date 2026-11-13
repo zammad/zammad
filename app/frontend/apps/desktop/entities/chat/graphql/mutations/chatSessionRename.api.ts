@@ -5,9 +5,7 @@ import { ChatSessionAttributesFragmentDoc } from '../fragments/chatSessionAttrib
 import { ChatTopicAttributesFragmentDoc } from '../fragments/chatTopicAttributes.api';
 import { ChatAgentAttributesFragmentDoc } from '../fragments/chatAgentAttributes.api';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChatSessionRenameDocument = gql`
     mutation chatSessionRename($sessionId: ID!, $name: String!) {
@@ -24,7 +22,7 @@ export const ChatSessionRenameDocument = gql`
 ${ChatTopicAttributesFragmentDoc}
 ${ChatAgentAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useChatSessionRenameMutation(options: VueApolloComposable.UseMutationOptions<Types.ChatSessionRenameMutation, Types.ChatSessionRenameMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChatSessionRenameMutation, Types.ChatSessionRenameMutationVariables>> = {}) {
+export function useChatSessionRenameMutation(options: VueApolloComposable.useMutation.Options<Types.ChatSessionRenameMutation, Types.ChatSessionRenameMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChatSessionRenameMutation, Types.ChatSessionRenameMutationVariables>(ChatSessionRenameDocument, options);
 }
-export type ChatSessionRenameMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChatSessionRenameMutation, Types.ChatSessionRenameMutationVariables>;
+export type ChatSessionRenameMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChatSessionRenameMutation, Types.ChatSessionRenameMutationVariables>;

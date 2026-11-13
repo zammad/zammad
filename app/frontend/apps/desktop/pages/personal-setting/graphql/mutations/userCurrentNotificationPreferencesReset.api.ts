@@ -3,9 +3,7 @@ import * as Types from '#shared/graphql/types.ts';
 import gql from 'graphql-tag';
 import { UserPersonalSettingsFragmentDoc } from '../../../../../../shared/graphql/fragments/userPersonalSettings.api';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentNotificationPreferencesResetDocument = gql`
     mutation userCurrentNotificationPreferencesReset {
@@ -20,7 +18,7 @@ export const UserCurrentNotificationPreferencesResetDocument = gql`
 }
     ${UserPersonalSettingsFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useUserCurrentNotificationPreferencesResetMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentNotificationPreferencesResetMutation, Types.UserCurrentNotificationPreferencesResetMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentNotificationPreferencesResetMutation, Types.UserCurrentNotificationPreferencesResetMutationVariables>> = {}) {
+export function useUserCurrentNotificationPreferencesResetMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentNotificationPreferencesResetMutation, Types.UserCurrentNotificationPreferencesResetMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentNotificationPreferencesResetMutation, Types.UserCurrentNotificationPreferencesResetMutationVariables>(UserCurrentNotificationPreferencesResetDocument, options);
 }
-export type UserCurrentNotificationPreferencesResetMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentNotificationPreferencesResetMutation, Types.UserCurrentNotificationPreferencesResetMutationVariables>;
+export type UserCurrentNotificationPreferencesResetMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentNotificationPreferencesResetMutation, Types.UserCurrentNotificationPreferencesResetMutationVariables>;

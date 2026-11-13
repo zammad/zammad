@@ -5,9 +5,7 @@ import { ChatAgentStateAttributesFragmentDoc } from '../fragments/chatAgentState
 import { ChatTopicAttributesFragmentDoc } from '../fragments/chatTopicAttributes.api';
 import { ChatSessionAttributesFragmentDoc } from '../fragments/chatSessionAttributes.api';
 import { ChatAgentAttributesFragmentDoc } from '../fragments/chatAgentAttributes.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChatAgentStateUpdatesDocument = gql`
     subscription chatAgentStateUpdates {
@@ -21,7 +19,7 @@ export const ChatAgentStateUpdatesDocument = gql`
 ${ChatTopicAttributesFragmentDoc}
 ${ChatSessionAttributesFragmentDoc}
 ${ChatAgentAttributesFragmentDoc}`;
-export function useChatAgentStateUpdatesSubscription(options: VueApolloComposable.UseSubscriptionOptions<Types.ChatAgentStateUpdatesSubscription, Types.ChatAgentStateUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.ChatAgentStateUpdatesSubscription, Types.ChatAgentStateUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.ChatAgentStateUpdatesSubscription, Types.ChatAgentStateUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.ChatAgentStateUpdatesSubscription, Types.ChatAgentStateUpdatesSubscriptionVariables>(ChatAgentStateUpdatesDocument, {}, options);
+export function useChatAgentStateUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.ChatAgentStateUpdatesSubscription, Types.ChatAgentStateUpdatesSubscriptionVariables> = {}) {
+  return VueApolloComposable.useSubscription<Types.ChatAgentStateUpdatesSubscription, Types.ChatAgentStateUpdatesSubscriptionVariables>(ChatAgentStateUpdatesDocument, options);
 }
-export type ChatAgentStateUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.ChatAgentStateUpdatesSubscription, Types.ChatAgentStateUpdatesSubscriptionVariables>;
+export type ChatAgentStateUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.ChatAgentStateUpdatesSubscription, Types.ChatAgentStateUpdatesSubscriptionVariables>;

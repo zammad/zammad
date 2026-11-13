@@ -11,6 +11,7 @@ import type {
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import type { QueryOperationReturn } from '#shared/types/server/apollo/handler.ts'
 
 import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
@@ -22,7 +23,6 @@ import HistoryEventHeader from './HistoryEventHeader.vue'
 import HistoryEventIssuer from './HistoryEventIssuer.vue'
 
 import type { OperationVariables } from '@apollo/client'
-import type { UseQueryReturn } from '@vue/apollo-composable/compat'
 
 interface HistoryQueryResult {
   [key: string]: Array<HistoryGroup> | undefined
@@ -30,7 +30,7 @@ interface HistoryQueryResult {
 
 export interface Props {
   name: string
-  query: () => UseQueryReturn<HistoryQueryResult, OperationVariables>
+  query: () => QueryOperationReturn<HistoryQueryResult, OperationVariables>
   type: EnumObjectManagerObjects
   title?: string
 }

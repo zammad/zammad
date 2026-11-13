@@ -260,12 +260,10 @@ const applyForeignSearchEntity = (
 const searchTaskbarSubscriptionActive = ref(true)
 
 const taskbarStateUpdatesSubscription = new SubscriptionHandler(
-  useSearchTaskbarItemStateUpdatesSubscription(
-    () => ({ taskbarItemId: currentTaskbarTabId.value! }),
-    () => ({
-      enabled: !!currentTaskbarTabId.value && searchTaskbarSubscriptionActive.value,
-    }),
-  ),
+  useSearchTaskbarItemStateUpdatesSubscription({
+    variables: () => ({ taskbarItemId: currentTaskbarTabId.value! }),
+    enabled: () => !!currentTaskbarTabId.value && searchTaskbarSubscriptionActive.value,
+  }),
 )
 
 taskbarStateUpdatesSubscription.onResult((result) => {
@@ -355,7 +353,8 @@ const searchCountsVariables = computed<SearchCountsQueryVariables>((previous) =>
 })
 
 const detailSearchQuery = new QueryHandler(
-  useDetailSearchLazyQuery(searchQueryVariables, {
+  useDetailSearchLazyQuery({
+    variables: searchQueryVariables,
     context: {
       batch: {
         active: false,
@@ -369,7 +368,8 @@ const detailSearchQuery = new QueryHandler(
 )
 
 const searchCountsQuery = new QueryHandler(
-  useSearchCountsLazyQuery(searchCountsVariables, {
+  useSearchCountsLazyQuery({
+    variables: searchCountsVariables,
     context: {
       batch: {
         active: false,

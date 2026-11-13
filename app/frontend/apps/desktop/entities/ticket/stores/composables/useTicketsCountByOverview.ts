@@ -16,22 +16,20 @@ export const useTicketsCountByOverview = (
   queryPollingConfig: ComputedRef<TicketOverviewQueryPollingConfig>,
 ) => {
   const overviewWithCachedCountHandler = new QueryHandler(
-    useOverviewsWithCachedCountQuery(
-      () => ({
+    useOverviewsWithCachedCountQuery({
+      variables: () => ({
         filterOverviewIds: overviewIds.value,
         ignoreUserConditions: false,
         cacheTtl: queryPollingConfig.value.counts.cache_ttl_sec,
       }),
-      () => ({
-        fetchPolicy: 'network-only',
-        enabled: !!pollingOverviewIds.value?.length && !!overviewIds.value?.length,
-        context: {
-          batch: {
-            active: false,
-          },
+      enabled: () => !!pollingOverviewIds.value?.length && !!overviewIds.value?.length,
+      fetchPolicy: 'network-only',
+      context: {
+        batch: {
+          active: false,
         },
-      }),
-    ),
+      },
+    }),
   )
 
   const { startPolling } = useQueryPolling(
@@ -50,12 +48,10 @@ export const useTicketsCountByOverview = (
   overviewWithCachedCountHandler.watchOnceOnResult(startPolling)
 
   const ticketOverviewTicketCountHandler = new QueryHandler(
-    useUserCurrentTicketOverviewsCountQuery(
-      { ignoreUserConditions: false, cacheTtl: 60 },
-      {
-        fetchPolicy: 'cache-only',
-      },
-    ),
+    useUserCurrentTicketOverviewsCountQuery({
+      variables: { ignoreUserConditions: false, cacheTtl: 60 },
+      fetchPolicy: 'cache-only',
+    }),
   )
 
   const overviewsTicketCount = ticketOverviewTicketCountHandler.result()

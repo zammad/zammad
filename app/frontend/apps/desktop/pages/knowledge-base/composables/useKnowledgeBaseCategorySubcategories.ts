@@ -45,7 +45,7 @@ export const useKnowledgeBaseCategorySubcategories = (
   const store = useKnowledgeBaseStore()
 
   const knowledgeBaseCategorySubcategories = new QueryHandler(
-    useKnowledgeBaseCategorySubcategoriesQuery(queryVariables),
+    useKnowledgeBaseCategorySubcategoriesQuery({ variables: queryVariables }),
     {
       // Opening a category the user may not browse (stale link, revoked access,
       //   a permission change) is answered with a 403 — route to the not-found

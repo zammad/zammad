@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChecklistTemplatesDocument = gql`
     query checklistTemplates($onlyActive: Boolean = false) {
@@ -14,10 +12,10 @@ export const ChecklistTemplatesDocument = gql`
   }
 }
     `;
-export function useChecklistTemplatesQuery(variables: Types.ChecklistTemplatesQueryVariables | VueCompositionApi.Ref<Types.ChecklistTemplatesQueryVariables> | ReactiveFunction<Types.ChecklistTemplatesQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>(ChecklistTemplatesDocument, variables, options);
+export function useChecklistTemplatesQuery(options: VueApolloComposable.useQuery.Options<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables> = {}) {
+  return VueApolloComposable.useQuery<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>(ChecklistTemplatesDocument, options);
 }
-export function useChecklistTemplatesLazyQuery(variables: Types.ChecklistTemplatesQueryVariables | VueCompositionApi.Ref<Types.ChecklistTemplatesQueryVariables> | ReactiveFunction<Types.ChecklistTemplatesQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>(ChecklistTemplatesDocument, variables, options);
+export function useChecklistTemplatesLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>(ChecklistTemplatesDocument, options);
 }
-export type ChecklistTemplatesQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>;
+export type ChecklistTemplatesQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.ChecklistTemplatesQuery, Types.ChecklistTemplatesQueryVariables>;

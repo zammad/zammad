@@ -5,9 +5,7 @@ import { KnowledgeBaseAnswerAttributesFragmentDoc } from '../fragments/knowledge
 import { KnowledgeBaseAnswerPolicyFragmentDoc } from '../fragments/knowledgeBaseAnswerPolicy.api';
 import { KnowledgeBaseAnswerPreInfoFragmentDoc } from '../fragments/knowledgeBaseAnswerPreInfo.api';
 import { KnowledgeBaseCategoryBreadcrumbFragmentDoc } from '../fragments/knowledgeBaseCategoryBreadcrumb.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseAnswerDocument = gql`
     query knowledgeBaseAnswer($answerId: ID!, $locale: String, $withBodyForEditing: Boolean = false, $withNavigation: Boolean = true) {
@@ -20,10 +18,10 @@ export const KnowledgeBaseAnswerDocument = gql`
 ${KnowledgeBaseAnswerPolicyFragmentDoc}
 ${KnowledgeBaseAnswerPreInfoFragmentDoc}
 ${KnowledgeBaseCategoryBreadcrumbFragmentDoc}`;
-export function useKnowledgeBaseAnswerQuery(variables: Types.KnowledgeBaseAnswerQueryVariables | VueCompositionApi.Ref<Types.KnowledgeBaseAnswerQueryVariables> | ReactiveFunction<Types.KnowledgeBaseAnswerQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>(KnowledgeBaseAnswerDocument, variables, options);
+export function useKnowledgeBaseAnswerQuery(options: VueApolloComposable.useQuery.Options<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>(KnowledgeBaseAnswerDocument, options);
 }
-export function useKnowledgeBaseAnswerLazyQuery(variables?: Types.KnowledgeBaseAnswerQueryVariables | VueCompositionApi.Ref<Types.KnowledgeBaseAnswerQueryVariables> | ReactiveFunction<Types.KnowledgeBaseAnswerQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>(KnowledgeBaseAnswerDocument, variables, options);
+export function useKnowledgeBaseAnswerLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>(KnowledgeBaseAnswerDocument, options);
 }
-export type KnowledgeBaseAnswerQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>;
+export type KnowledgeBaseAnswerQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.KnowledgeBaseAnswerQuery, Types.KnowledgeBaseAnswerQueryVariables>;

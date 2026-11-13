@@ -44,7 +44,7 @@ export const useCtiCallPickup = () => {
   }
 
   const pickupSubscription = new SubscriptionHandler(
-    useCtiCallPickupSubscription(() => ({ enabled: isEnabled.value })),
+    useCtiCallPickupSubscription({ enabled: isEnabled }),
   )
 
   pickupSubscription.onResult((result) => {

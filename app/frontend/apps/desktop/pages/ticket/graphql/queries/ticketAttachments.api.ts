@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketAttachmentsDocument = gql`
     query ticketAttachments($ticketId: ID!) {
@@ -17,10 +15,10 @@ export const TicketAttachmentsDocument = gql`
   }
 }
     `;
-export function useTicketAttachmentsQuery(variables: Types.TicketAttachmentsQueryVariables | VueCompositionApi.Ref<Types.TicketAttachmentsQueryVariables> | ReactiveFunction<Types.TicketAttachmentsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>(TicketAttachmentsDocument, variables, options);
+export function useTicketAttachmentsQuery(options: VueApolloComposable.useQuery.Options<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>(TicketAttachmentsDocument, options);
 }
-export function useTicketAttachmentsLazyQuery(variables?: Types.TicketAttachmentsQueryVariables | VueCompositionApi.Ref<Types.TicketAttachmentsQueryVariables> | ReactiveFunction<Types.TicketAttachmentsQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>(TicketAttachmentsDocument, variables, options);
+export function useTicketAttachmentsLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>(TicketAttachmentsDocument, options);
 }
-export type TicketAttachmentsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>;
+export type TicketAttachmentsQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.TicketAttachmentsQuery, Types.TicketAttachmentsQueryVariables>;

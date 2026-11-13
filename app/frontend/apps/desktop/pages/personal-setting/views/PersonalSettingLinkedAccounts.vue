@@ -102,7 +102,7 @@ const unlinkMutation = async (
   uid: string,
 ) => {
   return new MutationHandler(
-    useUserCurrentRemoveLinkedAccountMutation(() => ({
+    useUserCurrentRemoveLinkedAccountMutation({
       update(cache) {
         if (user.value === null) return
 
@@ -127,7 +127,7 @@ const unlinkMutation = async (
 
         cache.gc()
       },
-    })),
+    }),
   ).send({
     provider: authProvider,
     uid,

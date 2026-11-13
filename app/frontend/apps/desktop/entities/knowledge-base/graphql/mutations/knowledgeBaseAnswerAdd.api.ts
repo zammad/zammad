@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseAnswerAddDocument = gql`
     mutation knowledgeBaseAnswerAdd($input: KnowledgeBaseCreateAnswerInput!, $locale: String!) {
@@ -33,7 +31,7 @@ export const KnowledgeBaseAnswerAddDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useKnowledgeBaseAnswerAddMutation(options: VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseAnswerAddMutation, Types.KnowledgeBaseAnswerAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.KnowledgeBaseAnswerAddMutation, Types.KnowledgeBaseAnswerAddMutationVariables>> = {}) {
+export function useKnowledgeBaseAnswerAddMutation(options: VueApolloComposable.useMutation.Options<Types.KnowledgeBaseAnswerAddMutation, Types.KnowledgeBaseAnswerAddMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.KnowledgeBaseAnswerAddMutation, Types.KnowledgeBaseAnswerAddMutationVariables>(KnowledgeBaseAnswerAddDocument, options);
 }
-export type KnowledgeBaseAnswerAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.KnowledgeBaseAnswerAddMutation, Types.KnowledgeBaseAnswerAddMutationVariables>;
+export type KnowledgeBaseAnswerAddMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.KnowledgeBaseAnswerAddMutation, Types.KnowledgeBaseAnswerAddMutationVariables>;

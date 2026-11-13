@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const LinkRemoveDocument = gql`
     mutation linkRemove($input: LinkInput!) {
@@ -16,7 +14,7 @@ export const LinkRemoveDocument = gql`
   }
 }
     `;
-export function useLinkRemoveMutation(options: VueApolloComposable.UseMutationOptions<Types.LinkRemoveMutation, Types.LinkRemoveMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.LinkRemoveMutation, Types.LinkRemoveMutationVariables>> = {}) {
+export function useLinkRemoveMutation(options: VueApolloComposable.useMutation.Options<Types.LinkRemoveMutation, Types.LinkRemoveMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.LinkRemoveMutation, Types.LinkRemoveMutationVariables>(LinkRemoveDocument, options);
 }
-export type LinkRemoveMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.LinkRemoveMutation, Types.LinkRemoveMutationVariables>;
+export type LinkRemoveMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.LinkRemoveMutation, Types.LinkRemoveMutationVariables>;

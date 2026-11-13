@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { OverviewAttributesFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/overviewAttributes.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentTicketOverviewFullAttributesUpdatesDocument = gql`
     subscription userCurrentTicketOverviewFullAttributesUpdates($ignoreUserConditions: Boolean!, $withTicketCount: Boolean = false) {
@@ -16,7 +14,7 @@ export const UserCurrentTicketOverviewFullAttributesUpdatesDocument = gql`
   }
 }
     ${OverviewAttributesFragmentDoc}`;
-export function useUserCurrentTicketOverviewFullAttributesUpdatesSubscription(variables: Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables> | ReactiveFunction<Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscription, Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscription, Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscription, Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscription, Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables>(UserCurrentTicketOverviewFullAttributesUpdatesDocument, variables, options);
+export function useUserCurrentTicketOverviewFullAttributesUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscription, Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscription, Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables>(UserCurrentTicketOverviewFullAttributesUpdatesDocument, options);
 }
-export type UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscription, Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables>;
+export type UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscription, Types.UserCurrentTicketOverviewFullAttributesUpdatesSubscriptionVariables>;

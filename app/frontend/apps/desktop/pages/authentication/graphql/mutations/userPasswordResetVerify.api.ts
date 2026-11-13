@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserPasswordResetVerifyDocument = gql`
     mutation userPasswordResetVerify($token: String!) {
@@ -16,7 +14,7 @@ export const UserPasswordResetVerifyDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useUserPasswordResetVerifyMutation(options: VueApolloComposable.UseMutationOptions<Types.UserPasswordResetVerifyMutation, Types.UserPasswordResetVerifyMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserPasswordResetVerifyMutation, Types.UserPasswordResetVerifyMutationVariables>> = {}) {
+export function useUserPasswordResetVerifyMutation(options: VueApolloComposable.useMutation.Options<Types.UserPasswordResetVerifyMutation, Types.UserPasswordResetVerifyMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserPasswordResetVerifyMutation, Types.UserPasswordResetVerifyMutationVariables>(UserPasswordResetVerifyDocument, options);
 }
-export type UserPasswordResetVerifyMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserPasswordResetVerifyMutation, Types.UserPasswordResetVerifyMutationVariables>;
+export type UserPasswordResetVerifyMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserPasswordResetVerifyMutation, Types.UserPasswordResetVerifyMutationVariables>;

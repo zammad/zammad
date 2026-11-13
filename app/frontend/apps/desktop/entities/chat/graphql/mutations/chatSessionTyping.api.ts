@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChatSessionTypingDocument = gql`
     mutation chatSessionTyping($sessionId: ID!) {
@@ -16,7 +14,7 @@ export const ChatSessionTypingDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useChatSessionTypingMutation(options: VueApolloComposable.UseMutationOptions<Types.ChatSessionTypingMutation, Types.ChatSessionTypingMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.ChatSessionTypingMutation, Types.ChatSessionTypingMutationVariables>> = {}) {
+export function useChatSessionTypingMutation(options: VueApolloComposable.useMutation.Options<Types.ChatSessionTypingMutation, Types.ChatSessionTypingMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.ChatSessionTypingMutation, Types.ChatSessionTypingMutationVariables>(ChatSessionTypingDocument, options);
 }
-export type ChatSessionTypingMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.ChatSessionTypingMutation, Types.ChatSessionTypingMutationVariables>;
+export type ChatSessionTypingMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.ChatSessionTypingMutation, Types.ChatSessionTypingMutationVariables>;
