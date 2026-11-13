@@ -5,6 +5,8 @@ require 'jwt'
 class OmniAuth::Strategies::MicrosoftOffice365Database < OmniAuth::Strategies::MicrosoftOffice365
   include OmniAuth::Strategies::DatabaseSettings
 
+  PROFILE_PHOTO_TIMEOUT = 5
+
   option :name, 'microsoft_office365'
 
   # Override the gem's DEFAULT_SCOPE ("openid User.Read Contacts.Read") to drop
@@ -42,5 +44,23 @@ class OmniAuth::Strategies::MicrosoftOffice365Database < OmniAuth::Strategies::M
   rescue JWT::DecodeError => e
     Rails.logger.warn { "Failed to decode MS365 ID token: #{e.message}" }
     {}
+  end
+
+  private
+
+  # Replaces the gem's version, which fails the whole login on any photo error
+  # but a missing photo (e.g. while Exchange Online is down) - the avatar is optional.
+  def avatar_file
+    photo = access_token.get('https://graph.microsoft.com/v1.0/me/photo/$value') { |req| req.options.timeout = PROFILE_PHOTO_TIMEOUT }
+    ext   = photo.content_type.to_s.delete_prefix('image/')
+
+    Tempfile.new(['avatar', ".#{ext}"]).tap do |file|
+      file.binmode
+      file.write(photo.body)
+      file.rewind
+    end
+  rescue OAuth2::Error, Faraday::Error => e
+    Rails.logger.warn { "Failed to fetch MS365 profile photo: #{e.message}" } if e.response.try(:status) != 404
+    nil
   end
 end
