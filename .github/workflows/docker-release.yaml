@@ -15,9 +15,16 @@ on:
     - cron:  '10 6 * * 1-5'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   docker-build-image:
     if: github.repository == 'zammad/zammad' && (github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/develop')
+    permissions:
+      contents: read
+      # Push to ghcr.io with the job token.
+      packages: write
     strategy:
       matrix:
         runs-on:
@@ -84,6 +91,10 @@ jobs:
 
   docker-create-multiarch-manifest:
     if: github.repository == 'zammad/zammad' && (github.event_name != 'workflow_dispatch' || github.ref == 'refs/heads/develop')
+    permissions:
+      contents: read
+      # Push to ghcr.io with the job token.
+      packages: write
     runs-on: ubuntu-26.04
     needs:
       - docker-build-image

@@ -6,6 +6,9 @@ on:
     # Run every on Friday to ensure everything works as expected.
     - cron:  '0 6 * * 5'
 
+permissions:
+  contents: read
+
 jobs:
   CI:
     runs-on: ubuntu-latest

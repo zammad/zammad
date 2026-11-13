@@ -3,6 +3,9 @@ name: docker-ci
 on:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   docker-ci:
     runs-on: ubuntu-26.04
