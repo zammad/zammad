@@ -217,21 +217,21 @@ class App.User extends App.Model
     return if !item.created_by
 
     if item.type is 'create'
-      return App.i18n.translateContent('%s created user |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s created user |%s|', item.created_by.activityName(), item.title)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated user |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s updated user |%s|', item.created_by.activityName(), item.title)
     else if item.type is 'session started'
-      return App.i18n.translateContent('%s started a new session', item.created_by.displayName())
+      return App.i18n.translateContent('%s started a new session', item.created_by.activityName())
     else if item.type is 'switch to'
       to = item.title
       if item.objectNative
         to = item.objectNative.displayName()
-      return App.i18n.translateContent('%s switched to |%s|!', item.created_by.displayName(), to)
+      return App.i18n.translateContent('%s switched to |%s|!', item.created_by.activityName(), to)
     else if item.type is 'ended switch to'
       to = item.title
       if item.objectNative
         to = item.objectNative.displayName()
-      return App.i18n.translateContent('%s ended switch to |%s|!', item.created_by.displayName(), to)
+      return App.i18n.translateContent('%s ended switch to |%s|!', item.created_by.activityName(), to)
     return "Unknown action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   ###
@@ -457,6 +457,11 @@ class App.User extends App.Model
 
   displayName: ->
     @displayNameFromParts() or @displayNameFallback()
+
+  # Name of the actor in activity messages, the system user has no real name.
+  activityName: ->
+    return App.i18n.translatePlain('System') if @id is 1
+    @displayName()
 
   displayNameLong: ->
     name = @displayNameFromParts()

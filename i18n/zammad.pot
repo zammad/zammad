@@ -1653,7 +1653,7 @@ msgid "Age"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/full_quote_header.coffee:39
-#: app/assets/javascripts/app/models/user.coffee:511
+#: app/assets/javascripts/app/models/user.coffee:516
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco:6
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:13
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:13
@@ -18228,9 +18228,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:3
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:51
+#: app/assets/javascripts/app/models/user.coffee:463
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/useHistoryEvents.ts:28
 #: app/frontend/apps/desktop/pages/chat/components/ChatWindow.vue:165
+#: app/frontend/shared/composables/activity-message/useActivityMessage.ts:16
+#: app/models/online_notification/push_payload.rb:194
 #: db/seeds/permissions.rb:209
 #: db/seeds/ticket_article_senders.rb:5
 msgid "System"

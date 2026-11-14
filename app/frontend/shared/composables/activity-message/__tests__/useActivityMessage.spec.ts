@@ -64,4 +64,18 @@ describe('useActivityMessage', () => {
     expect(highlightedMessage).not.toContain('<script')
     expect(highlightedMessage).toContain('&lt;script&gt;alert(1)&lt;/script&gt;')
   })
+
+  it('names the system user System like the ticket history', () => {
+    const activity = buildActivity({
+      typeName: 'update',
+      createdBy: {
+        id: 'gid://zammad/User/1',
+        fullname: '-',
+      } as OnlineNotification['createdBy'],
+    })
+
+    const { message } = useActivityMessage(activity)
+
+    expect(message).toBe('System updated ticket |Welcome to Zammad|')
+  })
 })

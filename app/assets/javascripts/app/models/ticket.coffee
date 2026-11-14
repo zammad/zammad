@@ -109,9 +109,9 @@ class App.Ticket extends App.Model
 
     switch item.type
       when 'create'
-        App.i18n.translateContent('%s created ticket |%s|', item.created_by.displayName(), item.title)
+        App.i18n.translateContent('%s created ticket |%s|', item.created_by.activityName(), item.title)
       when 'update'
-        App.i18n.translateContent('%s updated ticket |%s|', item.created_by.displayName(), item.title)
+        App.i18n.translateContent('%s updated ticket |%s|', item.created_by.activityName(), item.title)
       when 'reminder_reached'
         App.i18n.translateContent('Pending reminder reached for ticket |%s|', item.title)
       when 'escalation'
