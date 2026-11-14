@@ -143,6 +143,7 @@ returns
 
                 record = new(param_cleanup(clean_params).reverse_merge(created_by_id: 1, updated_by_id: 1))
                 record.associations_from_param(attributes)
+                record.disable_name_guessing = true if record.is_a?(User)
                 record.save!
               rescue => e
                 errors.push "Line #{i.next}: Unable to create record - #{e.message}"
@@ -158,6 +159,7 @@ returns
                 record.with_lock do
                   record.associations_from_param(attributes)
                   record.assign_attributes(clean_params)
+                  record.disable_name_guessing = true if record.is_a?(User)
                   record.save! if record.changed?
                 end
               rescue => e
