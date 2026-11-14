@@ -3,9 +3,7 @@ import * as Types from '#shared/graphql/types.ts';
 import gql from 'graphql-tag';
 import { TicketSharedDraftZoomAttributesFragmentDoc } from '../fragments/ticketSharedDraftZoomAttributes.api';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketSharedDraftZoomUpdateDocument = gql`
     mutation ticketSharedDraftZoomUpdate($sharedDraftId: ID!, $input: TicketSharedDraftZoomInput!) {
@@ -20,7 +18,7 @@ export const TicketSharedDraftZoomUpdateDocument = gql`
 }
     ${TicketSharedDraftZoomAttributesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useTicketSharedDraftZoomUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketSharedDraftZoomUpdateMutation, Types.TicketSharedDraftZoomUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketSharedDraftZoomUpdateMutation, Types.TicketSharedDraftZoomUpdateMutationVariables>> = {}) {
+export function useTicketSharedDraftZoomUpdateMutation(options: VueApolloComposable.useMutation.Options<Types.TicketSharedDraftZoomUpdateMutation, Types.TicketSharedDraftZoomUpdateMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TicketSharedDraftZoomUpdateMutation, Types.TicketSharedDraftZoomUpdateMutationVariables>(TicketSharedDraftZoomUpdateDocument, options);
 }
-export type TicketSharedDraftZoomUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketSharedDraftZoomUpdateMutation, Types.TicketSharedDraftZoomUpdateMutationVariables>;
+export type TicketSharedDraftZoomUpdateMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TicketSharedDraftZoomUpdateMutation, Types.TicketSharedDraftZoomUpdateMutationVariables>;

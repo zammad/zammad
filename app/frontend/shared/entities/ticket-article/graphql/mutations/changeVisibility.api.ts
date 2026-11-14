@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketArticleChangeVisibilityDocument = gql`
     mutation ticketArticleChangeVisibility($articleId: ID!, $internal: Boolean!) {
@@ -19,7 +17,7 @@ export const TicketArticleChangeVisibilityDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTicketArticleChangeVisibilityMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables>> = {}) {
+export function useTicketArticleChangeVisibilityMutation(options: VueApolloComposable.useMutation.Options<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables>(TicketArticleChangeVisibilityDocument, options);
 }
-export type TicketArticleChangeVisibilityMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables>;
+export type TicketArticleChangeVisibilityMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TicketArticleChangeVisibilityMutation, Types.TicketArticleChangeVisibilityMutationVariables>;

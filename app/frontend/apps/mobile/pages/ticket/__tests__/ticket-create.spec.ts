@@ -20,6 +20,8 @@ import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/F
 import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/core/attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import { TicketCreateDocument } from '#shared/entities/ticket/graphql/mutations/create.api.ts'
+import { UserDocument } from '#shared/entities/user/graphql/queries/user.api.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { defaultOrganization } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
 import {
@@ -27,6 +29,7 @@ import {
   ticketArticleObjectAttributes,
   ticketPayload,
 } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
+import { defaultUser } from '#mobile/entities/user/__tests__/mocks/user-mocks.ts'
 
 const visitTicketCreate = async (path = '/tickets/create') => {
   const mockObjectAttributes = mockGraphQLApi(ObjectManagerFrontendAttributesDocument).willBehave(
@@ -290,6 +293,28 @@ describe('Creating new ticket as agent', () => {
     await nextStep(view)
 
     expect(view.getByLabelText('CC')).toBeInTheDocument()
+  })
+
+  it('preselects the customer given in the URL', async () => {
+    const mockUser = mockGraphQLApi(UserDocument).willResolve({ user: defaultUser() })
+
+    const { view } = await visitTicketCreate('/tickets/create?customer_id=100')
+
+    expect(mockUser.spies.resolve).toHaveBeenCalledWith(
+      expect.objectContaining({
+        userId: convertToGraphQLId('User', 100),
+        secondaryOrganizationsCount: 3,
+      }),
+    )
+    expect(await view.findByText('John Doe')).toBeInTheDocument()
+  })
+
+  it('requests no customer when the URL gives none', async () => {
+    const mockUser = mockGraphQLApi(UserDocument).willResolve({ user: defaultUser() })
+
+    await visitTicketCreate()
+
+    expect(mockUser.spies.resolve).not.toHaveBeenCalled()
   })
 
   // The rest of the test cases are covered by E2E test, due to limitations of JSDOM test environment.

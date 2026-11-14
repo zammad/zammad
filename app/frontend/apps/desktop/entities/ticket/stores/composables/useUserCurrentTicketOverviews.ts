@@ -110,7 +110,7 @@ export const useUserCurrentTicketOverviews = () => {
         withTicketCount: false,
         ignoreUserConditions: false,
       },
-      enabled: () => hasAgentOrCustomerPermission.value,
+      enabled: hasAgentOrCustomerPermission,
     }),
   )
 

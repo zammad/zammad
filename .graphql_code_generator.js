@@ -48,7 +48,6 @@ const config = {
   overwrite: true,
   schema: 'app/graphql/graphql_introspection.json',
   config: {
-    vueCompositionApiImportFrom: 'vue',
     addDocBlocks: false,
   },
   generates: {
@@ -93,7 +92,7 @@ const config = {
         importTypesNamespace: '',
         extension: '.api.ts',
       },
-      plugins: ['./app/frontend/build/vueApolloPlugin.js'],
+      plugins: ['./app/frontend/build/vueApolloV5Plugin.js'],
       config: {
         importOperationTypesFrom: 'Types',
       },

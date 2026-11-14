@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketMergeDocument = gql`
     mutation ticketMerge($sourceTicketId: ID!, $targetTicketId: ID!) {
@@ -15,7 +13,7 @@ export const TicketMergeDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTicketMergeMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketMergeMutation, Types.TicketMergeMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketMergeMutation, Types.TicketMergeMutationVariables>> = {}) {
+export function useTicketMergeMutation(options: VueApolloComposable.useMutation.Options<Types.TicketMergeMutation, Types.TicketMergeMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TicketMergeMutation, Types.TicketMergeMutationVariables>(TicketMergeDocument, options);
 }
-export type TicketMergeMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketMergeMutation, Types.TicketMergeMutationVariables>;
+export type TicketMergeMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TicketMergeMutation, Types.TicketMergeMutationVariables>;

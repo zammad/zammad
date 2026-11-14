@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketArticleTranslationFragmentDoc } from '../fragments/ticketArticleTranslation.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketArticleTranslationUpdatesDocument = gql`
     subscription ticketArticleTranslationUpdates($ticketId: ID!, $targetLocale: String!) {
@@ -33,7 +31,7 @@ export const TicketArticleTranslationUpdatesDocument = gql`
   }
 }
     ${TicketArticleTranslationFragmentDoc}`;
-export function useTicketArticleTranslationUpdatesSubscription(variables: Types.TicketArticleTranslationUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.TicketArticleTranslationUpdatesSubscriptionVariables> | ReactiveFunction<Types.TicketArticleTranslationUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.TicketArticleTranslationUpdatesSubscription, Types.TicketArticleTranslationUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.TicketArticleTranslationUpdatesSubscription, Types.TicketArticleTranslationUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.TicketArticleTranslationUpdatesSubscription, Types.TicketArticleTranslationUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.TicketArticleTranslationUpdatesSubscription, Types.TicketArticleTranslationUpdatesSubscriptionVariables>(TicketArticleTranslationUpdatesDocument, variables, options);
+export function useTicketArticleTranslationUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.TicketArticleTranslationUpdatesSubscription, Types.TicketArticleTranslationUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.TicketArticleTranslationUpdatesSubscription, Types.TicketArticleTranslationUpdatesSubscriptionVariables>(TicketArticleTranslationUpdatesDocument, options);
 }
-export type TicketArticleTranslationUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.TicketArticleTranslationUpdatesSubscription, Types.TicketArticleTranslationUpdatesSubscriptionVariables>;
+export type TicketArticleTranslationUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.TicketArticleTranslationUpdatesSubscription, Types.TicketArticleTranslationUpdatesSubscriptionVariables>;

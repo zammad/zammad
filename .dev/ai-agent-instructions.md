@@ -127,7 +127,8 @@ You MUST read the relevant file(s) below before responding when working on that 
 - `.dev/agent_docs/graphql_patterns.md` — How to add/modify GraphQL types,
   mutations, queries, and subscriptions
 - `.dev/agent_docs/frontend_patterns.md` — Vue component conventions,
-  composables, routing, the form system, and UI principles
+  composables, GraphQL operation calls, routing, the form system, and UI
+  principles
 - `.dev/agent_docs/frontend_addon_layer.md` — How an addon extends the Vue
   frontend via the build-time weave (Vapor-safe, multi-addon)
 - `.dev/agent_docs/legacy_model_patterns.md` — Concerns needed by new models

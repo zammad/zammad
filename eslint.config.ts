@@ -45,8 +45,6 @@ export default defineConfigWithVueTs(
     'app/frontend/build/mocksGraphqlPlugin.js',
     'app/frontend/build/graphqlDocumentExtensions/transform.js',
     'app/frontend/build/graphqlDocumentExtensions/mergeDocument.js',
-    'app/frontend/build/vueApolloPlugin.js',
-    'app/frontend/build/vueApolloV5Documents.js',
     'app/frontend/build/vueApolloV5Plugin.js',
     '.eslint-plugin-zammad/lib/index.js',
     '.eslint-plugin-zammad/tests/**/*.js',

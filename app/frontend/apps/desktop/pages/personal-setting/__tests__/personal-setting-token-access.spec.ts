@@ -15,7 +15,10 @@ import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { mockUserCurrentAccessTokenAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.mocks.ts'
-import { mockUserCurrentAccessTokenDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.mocks.ts'
+import {
+  mockUserCurrentAccessTokenDeleteMutation,
+  waitForUserCurrentAccessTokenDeleteMutationCalls,
+} from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.mocks.ts'
 import { mockUserCurrentAccessTokenListQuery } from '#shared/entities/user/current/graphql/queries/userCurrentAcessTokenList.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
@@ -155,7 +158,13 @@ describe('personal settings for token access', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Delete object' }))
 
+    const calls = await waitForUserCurrentAccessTokenDeleteMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({ tokenId: userCurrentAccessTokenList[0].id })
+
     checkSimpleTableContent(view, [rowContents[1]])
+
+    expect(await view.findByText('Personal access token has been deleted.')).toBeInTheDocument()
   })
 
   it('updates the personal access token list when a new access token is added', async () => {

@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const OnlineNotificationDeleteDocument = gql`
     mutation onlineNotificationDelete($onlineNotificationId: ID!) {
@@ -16,7 +14,7 @@ export const OnlineNotificationDeleteDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useOnlineNotificationDeleteMutation(options: VueApolloComposable.UseMutationOptions<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables>> = {}) {
+export function useOnlineNotificationDeleteMutation(options: VueApolloComposable.useMutation.Options<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables>(OnlineNotificationDeleteDocument, options);
 }
-export type OnlineNotificationDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables>;
+export type OnlineNotificationDeleteMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.OnlineNotificationDeleteMutation, Types.OnlineNotificationDeleteMutationVariables>;

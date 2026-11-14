@@ -82,8 +82,10 @@ const { redirectToPasswordCheck } = usePasswordCheckTwoFactor(props.formSubmitCa
 
 const configurationQuery = new QueryHandler(
   useUserCurrentTwoFactorGetMethodConfigurationQuery({
-    methodName: twoFactorPlugin.name,
-    token: props.token,
+    variables: {
+      methodName: twoFactorPlugin.name,
+      token: props.token,
+    },
   }),
   {
     errorNotificationMessage: __('Could not fetch security keys'),
@@ -180,15 +182,13 @@ const loading = ref(false)
 const error = ref<string | null>(null)
 
 const initiateQuery = new QueryHandler(
-  useUserCurrentTwoFactorInitiateMethodConfigurationLazyQuery(
-    {
+  useUserCurrentTwoFactorInitiateMethodConfigurationLazyQuery({
+    variables: {
       methodName: twoFactorPlugin.name,
       token: props.token,
     },
-    {
-      fetchPolicy: 'no-cache',
-    },
-  ),
+    fetchPolicy: 'no-cache',
+  }),
 )
 
 const setupCredential = async () => {

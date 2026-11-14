@@ -238,7 +238,7 @@ const selectAvatar = (avatar: Avatar) => {
 
 const deleteAvatar = (avatar: Avatar) => {
   const accountAvatarDeleteMutation = new MutationHandler(
-    useUserCurrentAvatarDeleteMutation(() => ({
+    useUserCurrentAvatarDeleteMutation({
       variables: { id: avatar.id },
       update(cache) {
         if (avatar.default) {
@@ -248,7 +248,7 @@ const deleteAvatar = (avatar: Avatar) => {
         cache.evict({ id: cache.identify(avatar) })
         cache.gc()
       },
-    })),
+    }),
     {
       errorNotificationMessage: __('The avatar could not be deleted.'),
     },

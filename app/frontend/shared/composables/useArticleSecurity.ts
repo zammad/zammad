@@ -58,11 +58,11 @@ export const useArticleSecurity = (article: Ref<TicketArticle>) => {
 
   const retrySecurityProcess = async () => {
     const retryMutation = new MutationHandler(
-      useTicketArticleRetrySecurityProcessMutation(() => ({
+      useTicketArticleRetrySecurityProcessMutation({
         variables: {
           articleId: article.value.id,
         },
-      })),
+      }),
     )
 
     const result = await retryMutation.send()

@@ -3,9 +3,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useUserCurrentAccessTokenDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.api.ts'
 import { useUserCurrentAccessTokenListQuery } from '#shared/entities/user/current/graphql/queries/userCurrentAcessTokenList.api.ts'
 import type {
@@ -16,7 +13,6 @@ import type {
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
 import { ErrorRouteType, redirectErrorRoute } from '#shared/router/error.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { ErrorStatusCodes } from '#shared/types/error.ts'
 
@@ -31,6 +27,7 @@ import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useCheckTokenAccess } from '../composables/permission/useCheckTokenAccess.ts'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { useEntryDelete } from '../composables/useEntryDelete.ts'
 import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { UserCurrentAccessTokenUpdatesDocument } from '../graphql/subscriptions/userCurrentAccessTokenUpdates.api.ts'
 
@@ -106,40 +103,14 @@ const tableHeaders: TableSimpleHeader[] = [
   },
 ]
 
-const { notify } = useNotifications()
-
-const { waitForVariantConfirmation } = useConfirmation()
-
-const deleteDevice = (accessToken: Token) => {
-  const accessTokenDeleteMutation = new MutationHandler(
-    useUserCurrentAccessTokenDeleteMutation(() => ({
-      variables: {
-        tokenId: accessToken.id,
-      },
-      update(cache) {
-        cache.evict({ id: cache.identify(accessToken) })
-        cache.gc()
-      },
-    })),
-    {
-      errorNotificationMessage: __('The personal access token could not be deleted.'),
-    },
-  )
-
-  accessTokenDeleteMutation.send().then(() => {
-    notify({
-      id: 'personal-access-token-removed',
-      type: NotificationTypes.Success,
-      message: __('Personal access token has been deleted.'),
-    })
-  })
-}
-
-const confirmDeleteDevice = async (accessToken: Token) => {
-  const confirmed = await waitForVariantConfirmation('delete')
-
-  if (confirmed) deleteDevice(accessToken)
-}
+const { confirmEntryDelete } = useEntryDelete(useUserCurrentAccessTokenDeleteMutation, {
+  variables: (accessToken: Token) => ({ tokenId: accessToken.id }),
+  errorNotificationMessage: __('The personal access token could not be deleted.'),
+  successNotification: {
+    id: 'personal-access-token-removed',
+    message: __('Personal access token has been deleted.'),
+  },
+})
 
 const tableActions: MenuItem[] = [
   {
@@ -147,7 +118,7 @@ const tableActions: MenuItem[] = [
     label: __('Delete this access token'),
     icon: 'trash3',
     onClick: (data) => {
-      confirmDeleteDevice(data as Token)
+      confirmEntryDelete(data as Token)
     },
   },
 ]

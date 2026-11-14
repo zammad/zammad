@@ -27,16 +27,14 @@ const customerId = computed(() => Number(props.context.formValues.customer_id))
 // Query is using cache first so it should normally not trigger any additional request, because the customer sidebar
 // is alreaddy doing the same query.
 const userQuery = new QueryHandler(
-  useUserQuery(
-    () => ({
+  useUserQuery({
+    variables: () => ({
       userId: convertToGraphQLId('User', customerId.value),
       secondaryOrganizationsCount: 5,
     }),
-    () => ({
-      enabled: Boolean(customerId.value) && customerId.value !== SYSTEM_USER_INTERNAL_ID,
-      fetchPolicy: 'cache-first',
-    }),
-  ),
+    enabled: () => Boolean(customerId.value) && customerId.value !== SYSTEM_USER_INTERNAL_ID,
+    fetchPolicy: 'cache-first',
+  }),
 )
 
 const userResult = userQuery.result()

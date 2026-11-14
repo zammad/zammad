@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentAvatarAddDocument = gql`
     mutation userCurrentAvatarAdd($images: AvatarInput!) {
@@ -26,7 +24,7 @@ export const UserCurrentAvatarAddDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useUserCurrentAvatarAddMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentAvatarAddMutation, Types.UserCurrentAvatarAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentAvatarAddMutation, Types.UserCurrentAvatarAddMutationVariables>> = {}) {
+export function useUserCurrentAvatarAddMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentAvatarAddMutation, Types.UserCurrentAvatarAddMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentAvatarAddMutation, Types.UserCurrentAvatarAddMutationVariables>(UserCurrentAvatarAddDocument, options);
 }
-export type UserCurrentAvatarAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentAvatarAddMutation, Types.UserCurrentAvatarAddMutationVariables>;
+export type UserCurrentAvatarAddMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentAvatarAddMutation, Types.UserCurrentAvatarAddMutationVariables>;

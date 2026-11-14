@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useLazyQuery } from '@vue/apollo-composable/compat'
-import { refDebounced, watchOnce } from '@vueuse/core'
+import { useQuery } from '@vue/apollo-composable'
+import { refDebounced } from '@vueuse/core'
 import gql from 'graphql-tag'
 import { cloneDeep } from 'lodash-es'
 import { computed, nextTick, onMounted, ref, toRef } from 'vue'
@@ -103,33 +103,18 @@ const additionalQueryParams = () => {
 }
 
 const autocompleteQueryHandler = new QueryHandler(
-  useLazyQuery(
-    AutocompleteSearchDocument,
-    () => ({
+  useQuery<Record<string, AutoCompleteOption[]>>(AutocompleteSearchDocument, {
+    variables: () => ({
       input: {
         query: debouncedFilter.value || props.context.defaultFilter || '',
         limit: props.context.limit,
         ...additionalQueryParams(),
       },
     }),
-    () => ({
-      enabled: !!(debouncedFilter.value || props.context.defaultFilter),
-      fetchPolicy: 'cache-and-network', // Show cached results immediately, then refresh from the server.
-    }),
-  ),
+    enabled: () => !!(debouncedFilter.value || props.context.defaultFilter),
+    fetchPolicy: 'cache-and-network', // Show cached results immediately, then refresh from the server.
+  }),
 )
-
-if (props.context.defaultFilter) {
-  autocompleteQueryHandler.load()
-} else {
-  watchOnce(
-    () => debouncedFilter.value,
-    (newValue) => {
-      if (!newValue.length) return
-      autocompleteQueryHandler.load()
-    },
-  )
-}
 
 const autocompleteQueryResultKey = (
   (AutocompleteSearchDocument.definitions[0] as OperationDefinitionNode).selectionSet
@@ -137,10 +122,7 @@ const autocompleteQueryResultKey = (
 ).name.value
 
 const autocompleteQueryResultOptions = computed(
-  () =>
-    autocompleteQueryHandler.result().value?.[
-      autocompleteQueryResultKey
-    ] as unknown as AutoCompleteOption[],
+  () => autocompleteQueryHandler.result().value?.[autocompleteQueryResultKey],
 )
 
 const autocompleteOptions = computed(() => {

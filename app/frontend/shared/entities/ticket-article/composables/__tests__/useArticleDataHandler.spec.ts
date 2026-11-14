@@ -5,7 +5,10 @@ import { ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import { mockTicketArticlesQuery } from '#shared/entities/ticket/graphql/queries/ticket/articles.mocks.ts'
+import {
+  mockTicketArticlesQuery,
+  waitForTicketArticlesQueryCalls,
+} from '#shared/entities/ticket/graphql/queries/ticket/articles.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { useArticleDataHandler } from '../useArticleDataHandler.ts'
@@ -17,7 +20,7 @@ const edges = (start: number, count: number) =>
     cursor: `cursor-${start + index}`,
   }))
 
-const setup = async (count = 2) => {
+const setup = async (count = 2, currentTicketId = ref(ticketId)) => {
   mockTicketArticlesQuery({
     firstArticles: { edges: edges(1, 1) },
     articles: {
@@ -34,7 +37,7 @@ const setup = async (count = 2) => {
   renderComponent(
     {
       setup() {
-        handler = useArticleDataHandler(ref(ticketId))
+        handler = useArticleDataHandler(currentTicketId)
         return {}
       },
       template: '<div />',
@@ -44,6 +47,20 @@ const setup = async (count = 2) => {
   await waitFor(() => expect(handler.articleResult.value?.articles.edges.length).toBe(count))
   return handler
 }
+
+describe('articles query', () => {
+  it('loads the articles of another ticket when the ticket changes', async () => {
+    const currentTicketId = ref(ticketId)
+    await setup(2, currentTicketId)
+
+    const otherTicketId = convertToGraphQLId('Ticket', 2)
+    currentTicketId.value = otherTicketId
+
+    const calls = await waitForTicketArticlesQueryCalls()
+
+    await waitFor(() => expect(calls.at(-1)?.variables).toMatchObject({ ticketId: otherTicketId }))
+  })
+})
 
 describe('article selections', () => {
   it('describes the leading page and loaded trailing window', async () => {

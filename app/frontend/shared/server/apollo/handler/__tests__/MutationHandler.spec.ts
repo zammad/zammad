@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import * as native from '@vue/apollo-composable'
-import { useMutation } from '@vue/apollo-composable/compat'
+import { useMutation } from '@vue/apollo-composable'
 import { nextTick } from 'vue'
 
 import { SampleTypedMutationDocument } from '#tests/fixtures/graphqlSampleTypes.ts'
@@ -67,17 +66,9 @@ const mockClient = (error = false, errorType = 'GraphQL') => {
   mutationFunctionCallSpy.mockClear()
 }
 
-// Every case runs against the compat (v4-style) and the native v5 composables:
-// a handler must behave the same no matter which shape it was constructed from.
-describe.each(['compat', 'native'] as const)('MutationHandler (%s)', (entry) => {
+describe('MutationHandler', () => {
   const sampleMutation = () => {
     mutationFunctionCallSpy()
-
-    if (entry === 'native') {
-      return native.useMutation<SampleUpdateMutation, SampleUpdateMutationVariables>(
-        SampleTypedMutationDocument,
-      )
-    }
 
     return useMutation<SampleUpdateMutation, SampleUpdateMutationVariables>(
       SampleTypedMutationDocument,
@@ -85,7 +76,7 @@ describe.each(['compat', 'native'] as const)('MutationHandler (%s)', (entry) => 
   }
 
   // Two examples mutate these for their scenario, and the notification store
-  // accumulates across examples; the second entry run must not inherit either.
+  // accumulates across examples.
   beforeEach(() => {
     mutationSampleResult = defaultMutationSampleResult()
     errorType = 'Exceptions::UnknownError'
@@ -202,23 +193,20 @@ describe.each(['compat', 'native'] as const)('MutationHandler (%s)', (entry) => 
       })
     })
 
-    // The native mutate takes one options object; `send` must merge the
-    // override options and the variables into it.
-    it.runIf(entry === 'native')(
-      'merges override options into the native mutate call',
-      async () => {
-        const mutationHandlerObject = new MutationHandler(sampleMutation())
+    // `mutate` takes one options object; `send` must merge the override
+    // options and the variables into it.
+    it('merges override options into the mutate call', async () => {
+      const mutationHandlerObject = new MutationHandler(sampleMutation())
 
-        const mutateSpy = vi.spyOn(mutationHandlerObject.operationResult, 'mutate')
+      const mutateSpy = vi.spyOn(mutationHandlerObject.operationResult, 'mutate')
 
-        await mutationHandlerObject.send({ id: 1, Sample: {} }, { errorPolicy: 'all' })
+      await mutationHandlerObject.send({ id: 1, Sample: {} }, { errorPolicy: 'all' })
 
-        expect(mutateSpy).toHaveBeenCalledWith({
-          errorPolicy: 'all',
-          variables: { id: 1, Sample: {} },
-        })
-      },
-    )
+      expect(mutateSpy).toHaveBeenCalledWith({
+        errorPolicy: 'all',
+        variables: { id: 1, Sample: {} },
+      })
+    })
   })
 
   describe('error handling', () => {

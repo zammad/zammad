@@ -12,7 +12,7 @@ export const useOnlineNotificationCount = ({ withPushTags = false } = {}) => {
   const unseenPushTags = ref<string[]>()
 
   const notificationsCountSubscription = new SubscriptionHandler(
-    useOnlineNotificationsCountSubscription({ withPushTags }),
+    useOnlineNotificationsCountSubscription({ variables: { withPushTags } }),
   )
 
   notificationsCountSubscription.onResult((result) => {

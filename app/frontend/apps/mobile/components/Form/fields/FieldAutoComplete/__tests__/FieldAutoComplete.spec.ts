@@ -272,6 +272,41 @@ describe('Form - Field - AutoComplete - Query', () => {
     await waitFor(() => expect(wrapper.getByRole('option')).toHaveTextContent('Item A refreshed'))
   })
 
+  it('sends no query without a filter and a default filter', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+    await waitForNextTick()
+
+    expect(wrapper.getByRole('searchbox')).toBeInTheDocument()
+    expect(mockApi.spies.behave).not.toHaveBeenCalled()
+  })
+
+  it('queries with the default filter when the dialog opens', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+        defaultFilter: 'item',
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    await waitUntil(() => mockApi.calls.behave)
+
+    expect(mockApi.spies.behave).toHaveBeenCalledWith({
+      input: expect.objectContaining({ query: 'item' }),
+    })
+  })
+
   it('replaces local options with selection', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,

@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentLocaleDocument = gql`
     mutation userCurrentLocale($locale: String!) {
@@ -16,7 +14,7 @@ export const UserCurrentLocaleDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useUserCurrentLocaleMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentLocaleMutation, Types.UserCurrentLocaleMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentLocaleMutation, Types.UserCurrentLocaleMutationVariables>> = {}) {
+export function useUserCurrentLocaleMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentLocaleMutation, Types.UserCurrentLocaleMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentLocaleMutation, Types.UserCurrentLocaleMutationVariables>(UserCurrentLocaleDocument, options);
 }
-export type UserCurrentLocaleMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentLocaleMutation, Types.UserCurrentLocaleMutationVariables>;
+export type UserCurrentLocaleMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentLocaleMutation, Types.UserCurrentLocaleMutationVariables>;

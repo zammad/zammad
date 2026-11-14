@@ -5,7 +5,11 @@ import { waitFor } from '@testing-library/vue'
 import { concatMap } from 'rxjs'
 import { defineComponent, h, nextTick, ref } from 'vue'
 
-import { getGraphQLMockCalls, mockedApolloClient } from '#tests/graphql/builders/mocks.ts'
+import {
+  getGraphQLMockCalls,
+  getGraphQLSubscriptionHandler,
+  mockedApolloClient,
+} from '#tests/graphql/builders/mocks.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
@@ -24,6 +28,7 @@ import {
   mockTicketArticleTranslateManyMutationError,
 } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleTranslateMany.mocks.ts'
 import { mockTicketArticleTranslationTargetLocalesQuery } from '#shared/entities/ticket-article/graphql/queries/ticketArticleTranslationTargetLocales.mocks.ts'
+import { TicketArticleTranslationUpdatesDocument } from '#shared/entities/ticket-article/graphql/subscriptions/ticketArticleTranslationUpdates.api.ts'
 import { getTicketArticleTranslationUpdatesSubscriptionHandler } from '#shared/entities/ticket-article/graphql/subscriptions/ticketArticleTranslationUpdates.mocks.ts'
 import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
 import type { TicketArticleTranslation } from '#shared/entities/ticket-article/stores/types.ts'
@@ -850,6 +855,31 @@ describe('useTicketArticleTranslation', () => {
   })
 
   describe('per tab', () => {
+    it('does not listen while the service offers no target language', async () => {
+      const { store } = setup({}, [])
+
+      await store.loadTargetLocales()
+      await waitForNextTick(true)
+
+      expect(getTicketArticleTranslationUpdatesSubscriptionHandler()).toBeUndefined()
+    })
+
+    it('listens for the new target language once the target changes', async () => {
+      const { store } = setup()
+      await openSubscription()
+
+      store.setTargetLocale('fr-fr')
+
+      await waitFor(() =>
+        expect(
+          getGraphQLSubscriptionHandler(TicketArticleTranslationUpdatesDocument, {
+            ticketId,
+            targetLocale: 'fr-fr',
+          })?.closed(),
+        ).toBe(false),
+      )
+    })
+
     it('keeps listening while hidden, so a deferred result still arrives', async () => {
       const { translation, shown } = setup()
       deferred()

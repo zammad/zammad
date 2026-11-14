@@ -662,6 +662,53 @@ describe('Form - Field - AutoComplete - Query', () => {
     // when the field already carries a value.
     expect(getGraphQLMockCalls(AutocompleteSearchUserDocument)).toHaveLength(0)
   })
+
+  it('applies the default filter again once a single-select field is cleared', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+        defaultFilter: '*',
+        value: testOptions[0].value,
+        options: [testOptions[0]],
+        clearable: true,
+      },
+    })
+
+    mockAutocompleteSearchUserQuery({
+      autocompleteSearchUser: testOptions,
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    const calls = await waitForAutocompleteSearchUserQueryCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      input: expect.objectContaining({
+        query: '*',
+      }),
+    })
+  })
+
+  it('sends no query without a filter and a default filter', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+      },
+    })
+
+    mockAutocompleteSearchUserQuery({
+      autocompleteSearchUser: testOptions,
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+    await waitForNextTick()
+
+    expect(getGraphQLMockCalls(AutocompleteSearchUserDocument)).toHaveLength(0)
+  })
 })
 
 describe('Form - Field - AutoComplete - Initial Options', () => {

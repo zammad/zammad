@@ -194,22 +194,19 @@ const customUserId = locationParams.get('customer_id') || undefined
 
 const userOptions = ref<unknown[]>([])
 
-const userQuery = useUserQuery(
-  () => ({
+const userQuery = useUserQuery({
+  variables: {
     userId: convertToGraphQLId('User', Number(customUserId)),
     secondaryOrganizationsCount: 3,
-  }),
-  {
-    // we probably opened this because user was already loaded user on another page,
-    // so we should try to get it from cache first, but if someone passed down id
-    // we need to still provide correct value
-    fetchPolicy: 'cache-first',
-    enabled: !!customUserId,
   },
-)
-userQuery.onResult((r) => {
-  if (r.loading) return
-  const user = r.data?.user
+  // we probably opened this because user was already loaded user on another page,
+  // so we should try to get it from cache first, but if someone passed down id
+  // we need to still provide correct value
+  fetchPolicy: 'cache-first',
+  enabled: !!customUserId,
+})
+userQuery.onResult((data) => {
+  const user = data?.user
   if (!user) {
     userOptions.value = []
     return

@@ -18,15 +18,11 @@ export const useTicketSharedDraftStart = (
   errorCallback?: (error: GraphQLHandlerError) => boolean,
 ) => {
   const sharedDraftStartListQuery = new QueryHandler(
-    useTicketSharedDraftStartListQuery(
-      () => ({
-        groupId: groupId.value,
-      }),
+    useTicketSharedDraftStartListQuery({
+      variables: { groupId },
       // Commented out because cache-first policy breaks subscribing to updates.
-      {
-        fetchPolicy: 'cache-first',
-      },
-    ),
+      fetchPolicy: 'cache-first',
+    }),
     {
       errorCallback,
     },

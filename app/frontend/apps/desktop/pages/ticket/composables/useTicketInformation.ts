@@ -18,14 +18,10 @@ export const initializeTicketInformation = (internalId: Ref<number | string>) =>
 
   const ticketQuery = new QueryHandler(
     // Currently we need no subscribeToMore here, because the tab registration holds the ticket subscription.
-    useTicketQuery(
-      () => ({
-        ticketId: ticketId.value,
-      }),
-      {
-        fetchPolicy: 'cache-first',
-      },
-    ),
+    useTicketQuery({
+      variables: { ticketId },
+      fetchPolicy: 'cache-first',
+    }),
   )
 
   const result = ticketQuery.result()

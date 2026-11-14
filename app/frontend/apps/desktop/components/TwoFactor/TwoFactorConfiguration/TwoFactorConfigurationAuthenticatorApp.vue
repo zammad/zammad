@@ -36,15 +36,13 @@ const twoFactorPlugin = twoFactorMethodLookup[props.type]
 const headerIcon = computed(() => twoFactorPlugin.icon)
 
 const initiationQuery = new QueryHandler(
-  useUserCurrentTwoFactorInitiateMethodConfigurationQuery(
-    {
+  useUserCurrentTwoFactorInitiateMethodConfigurationQuery({
+    variables: {
       methodName: twoFactorPlugin.name,
       token: props.token,
     },
-    {
-      fetchPolicy: 'no-cache',
-    },
-  ),
+    fetchPolicy: 'no-cache',
+  }),
 )
 
 const { redirectToPasswordCheck } = usePasswordCheckTwoFactor(props.formSubmitCallback)

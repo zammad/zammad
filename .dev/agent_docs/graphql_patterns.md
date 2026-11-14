@@ -73,6 +73,21 @@ They return `nil` instead of errors when unauthorized.
 
 ## Frontend Composable Generation
 
-`app/frontend/build/vueApolloV5Documents.js` lists the `.graphql` documents whose
-generated composables use the native vue-apollo v5 shape; a new document goes on
-it from the start, fragment-only documents never do.
+`pnpm generate-graphql-api` writes an `.api.ts` file next to every `.graphql`
+operation document. `app/frontend/build/vueApolloV5Plugin.js` generates its
+composables in the native vue-apollo v5 shape: one options object that
+carries the variables (`useUserQuery({ variables, enabled })`).
+
+Besides the document (`UserDocument`) and a result type
+(`UserQueryCompositionFunctionResult`), the file exports per operation type:
+
+- query: `useUserQuery(options)` and `useUserLazyQuery(options?)`
+- mutation: `useUserAddMutation(options?)`
+- subscription: `useCurrentUserUpdatesSubscription(options)`
+
+`options` is required once a query or subscription declares a non-null
+variable. It stays optional for a lazy query and a mutation, which can
+receive their variables later, through `load()` and `mutate()`.
+
+How to call the composables is described in
+`.dev/agent_docs/frontend_patterns.md` ("GraphQL Operations").

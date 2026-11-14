@@ -3,9 +3,7 @@ import * as Types from '#shared/graphql/types.ts';
 import gql from 'graphql-tag';
 import { TicketArticleTranslationAvailabilityFragmentDoc } from '../fragments/ticketArticleTranslationAvailability.api';
 import { TicketArticleTranslationFragmentDoc } from '../fragments/ticketArticleTranslation.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketArticleTranslateManyDocument = gql`
     mutation ticketArticleTranslateMany($ticketId: ID!, $firstArticlesCount: Int, $loadFirstArticles: Boolean, $pageSize: Int, $beforeCursor: String, $afterCursor: String, $targetLocale: String!, $generateMissing: Boolean!) {
@@ -41,7 +39,7 @@ export const TicketArticleTranslateManyDocument = gql`
 }
     ${TicketArticleTranslationAvailabilityFragmentDoc}
 ${TicketArticleTranslationFragmentDoc}`;
-export function useTicketArticleTranslateManyMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketArticleTranslateManyMutation, Types.TicketArticleTranslateManyMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketArticleTranslateManyMutation, Types.TicketArticleTranslateManyMutationVariables>> = {}) {
+export function useTicketArticleTranslateManyMutation(options: VueApolloComposable.useMutation.Options<Types.TicketArticleTranslateManyMutation, Types.TicketArticleTranslateManyMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TicketArticleTranslateManyMutation, Types.TicketArticleTranslateManyMutationVariables>(TicketArticleTranslateManyDocument, options);
 }
-export type TicketArticleTranslateManyMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketArticleTranslateManyMutation, Types.TicketArticleTranslateManyMutationVariables>;
+export type TicketArticleTranslateManyMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TicketArticleTranslateManyMutation, Types.TicketArticleTranslateManyMutationVariables>;

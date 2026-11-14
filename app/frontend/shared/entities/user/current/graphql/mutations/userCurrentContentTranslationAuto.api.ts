@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentContentTranslationAutoDocument = gql`
     mutation userCurrentContentTranslationAuto($enabled: Boolean!) {
@@ -16,7 +14,7 @@ export const UserCurrentContentTranslationAutoDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useUserCurrentContentTranslationAutoMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentContentTranslationAutoMutation, Types.UserCurrentContentTranslationAutoMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentContentTranslationAutoMutation, Types.UserCurrentContentTranslationAutoMutationVariables>> = {}) {
+export function useUserCurrentContentTranslationAutoMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentContentTranslationAutoMutation, Types.UserCurrentContentTranslationAutoMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentContentTranslationAutoMutation, Types.UserCurrentContentTranslationAutoMutationVariables>(UserCurrentContentTranslationAutoDocument, options);
 }
-export type UserCurrentContentTranslationAutoMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentContentTranslationAutoMutation, Types.UserCurrentContentTranslationAutoMutationVariables>;
+export type UserCurrentContentTranslationAutoMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentContentTranslationAutoMutation, Types.UserCurrentContentTranslationAutoMutationVariables>;

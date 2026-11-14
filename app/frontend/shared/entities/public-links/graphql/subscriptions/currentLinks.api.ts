@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { PublicLinkAttributesFragmentDoc } from '../../../../graphql/fragments/publicLinkAttributes.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const PublicLinkUpdatesDocument = gql`
     subscription publicLinkUpdates($screen: EnumPublicLinksScreen!) {
@@ -15,7 +13,7 @@ export const PublicLinkUpdatesDocument = gql`
   }
 }
     ${PublicLinkAttributesFragmentDoc}`;
-export function usePublicLinkUpdatesSubscription(variables: Types.PublicLinkUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.PublicLinkUpdatesSubscriptionVariables> | ReactiveFunction<Types.PublicLinkUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.PublicLinkUpdatesSubscription, Types.PublicLinkUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.PublicLinkUpdatesSubscription, Types.PublicLinkUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.PublicLinkUpdatesSubscription, Types.PublicLinkUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.PublicLinkUpdatesSubscription, Types.PublicLinkUpdatesSubscriptionVariables>(PublicLinkUpdatesDocument, variables, options);
+export function usePublicLinkUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.PublicLinkUpdatesSubscription, Types.PublicLinkUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.PublicLinkUpdatesSubscription, Types.PublicLinkUpdatesSubscriptionVariables>(PublicLinkUpdatesDocument, options);
 }
-export type PublicLinkUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.PublicLinkUpdatesSubscription, Types.PublicLinkUpdatesSubscriptionVariables>;
+export type PublicLinkUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.PublicLinkUpdatesSubscription, Types.PublicLinkUpdatesSubscriptionVariables>;

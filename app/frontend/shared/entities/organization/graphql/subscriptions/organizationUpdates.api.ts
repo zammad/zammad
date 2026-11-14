@@ -4,9 +4,7 @@ import gql from 'graphql-tag';
 import { OrganizationAttributesFragmentDoc } from '../fragments/organizationAttributes.api';
 import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import { OrganizationMembersWithFetchMoreFragmentDoc } from '../fragments/organizationMembersWithFetchMore.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const OrganizationUpdatesDocument = gql`
     subscription organizationUpdates($organizationId: ID!, $first: Int, $after: String, $initial: Boolean = false) {
@@ -29,7 +27,7 @@ export const OrganizationUpdatesDocument = gql`
     ${OrganizationAttributesFragmentDoc}
 ${ObjectAttributeValuesFragmentDoc}
 ${OrganizationMembersWithFetchMoreFragmentDoc}`;
-export function useOrganizationUpdatesSubscription(variables: Types.OrganizationUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.OrganizationUpdatesSubscriptionVariables> | ReactiveFunction<Types.OrganizationUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables>(OrganizationUpdatesDocument, variables, options);
+export function useOrganizationUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables>(OrganizationUpdatesDocument, options);
 }
-export type OrganizationUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables>;
+export type OrganizationUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.OrganizationUpdatesSubscription, Types.OrganizationUpdatesSubscriptionVariables>;

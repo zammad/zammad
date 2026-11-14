@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const AutocompleteSearchTicketDocument = gql`
     query autocompleteSearchTicket($input: AutocompleteSearchTicketInput!) {
@@ -28,10 +26,10 @@ export const AutocompleteSearchTicketDocument = gql`
   }
 }
     `;
-export function useAutocompleteSearchTicketQuery(variables: Types.AutocompleteSearchTicketQueryVariables | VueCompositionApi.Ref<Types.AutocompleteSearchTicketQueryVariables> | ReactiveFunction<Types.AutocompleteSearchTicketQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>(AutocompleteSearchTicketDocument, variables, options);
+export function useAutocompleteSearchTicketQuery(options: VueApolloComposable.useQuery.Options<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>(AutocompleteSearchTicketDocument, options);
 }
-export function useAutocompleteSearchTicketLazyQuery(variables?: Types.AutocompleteSearchTicketQueryVariables | VueCompositionApi.Ref<Types.AutocompleteSearchTicketQueryVariables> | ReactiveFunction<Types.AutocompleteSearchTicketQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>(AutocompleteSearchTicketDocument, variables, options);
+export function useAutocompleteSearchTicketLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>(AutocompleteSearchTicketDocument, options);
 }
-export type AutocompleteSearchTicketQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>;
+export type AutocompleteSearchTicketQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.AutocompleteSearchTicketQuery, Types.AutocompleteSearchTicketQueryVariables>;

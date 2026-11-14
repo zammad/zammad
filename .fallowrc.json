@@ -52,10 +52,6 @@
       "exports": ["EXTENSION_NAME"]
     },
     {
-      "file": "app/frontend/**/graphql/**/*.api.ts",
-      "exports": ["ReactiveFunction"]
-    },
-    {
       "file": "app/frontend/shared/graphql/schema-types.ts",
       "exports": ["*"]
     }

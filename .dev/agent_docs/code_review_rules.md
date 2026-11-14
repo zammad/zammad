@@ -33,6 +33,7 @@ authority, and they change.
 | GraphQL types, mutations, queries, subscriptions      | `graphql_patterns.md`             |
 | Knowledge base code in the new stack                  | `knowledge_base_patterns.md`      |
 | Vue components, composables, routing, the form system | `frontend_patterns.md`            |
+| GraphQL operation calls in the Vue frontend           | `frontend_patterns.md`            |
 | Addon extensions to the Vue frontend                  | `frontend_addon_layer.md`         |
 | New models used by the legacy CoffeeScript stack      | `legacy_model_patterns.md`        |
 | Specs, test setup, test helpers                       | `testing.md`                      |

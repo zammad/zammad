@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentTwoFactorVerifyMethodConfigurationDocument = gql`
     mutation userCurrentTwoFactorVerifyMethodConfiguration($methodName: EnumTwoFactorAuthenticationMethod!, $token: String!, $payload: JSON!, $configuration: JSON!) {
@@ -21,7 +19,7 @@ export const UserCurrentTwoFactorVerifyMethodConfigurationDocument = gql`
   }
 }
     `;
-export function useUserCurrentTwoFactorVerifyMethodConfigurationMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentTwoFactorVerifyMethodConfigurationMutation, Types.UserCurrentTwoFactorVerifyMethodConfigurationMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentTwoFactorVerifyMethodConfigurationMutation, Types.UserCurrentTwoFactorVerifyMethodConfigurationMutationVariables>> = {}) {
+export function useUserCurrentTwoFactorVerifyMethodConfigurationMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentTwoFactorVerifyMethodConfigurationMutation, Types.UserCurrentTwoFactorVerifyMethodConfigurationMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentTwoFactorVerifyMethodConfigurationMutation, Types.UserCurrentTwoFactorVerifyMethodConfigurationMutationVariables>(UserCurrentTwoFactorVerifyMethodConfigurationDocument, options);
 }
-export type UserCurrentTwoFactorVerifyMethodConfigurationMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentTwoFactorVerifyMethodConfigurationMutation, Types.UserCurrentTwoFactorVerifyMethodConfigurationMutationVariables>;
+export type UserCurrentTwoFactorVerifyMethodConfigurationMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentTwoFactorVerifyMethodConfigurationMutation, Types.UserCurrentTwoFactorVerifyMethodConfigurationMutationVariables>;

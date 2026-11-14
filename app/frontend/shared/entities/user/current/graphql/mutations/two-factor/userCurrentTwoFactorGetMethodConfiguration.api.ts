@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentTwoFactorGetMethodConfigurationDocument = gql`
     query userCurrentTwoFactorGetMethodConfiguration($methodName: String!, $token: String!) {
@@ -13,10 +11,10 @@ export const UserCurrentTwoFactorGetMethodConfigurationDocument = gql`
   )
 }
     `;
-export function useUserCurrentTwoFactorGetMethodConfigurationQuery(variables: Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables | VueCompositionApi.Ref<Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables> | ReactiveFunction<Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>(UserCurrentTwoFactorGetMethodConfigurationDocument, variables, options);
+export function useUserCurrentTwoFactorGetMethodConfigurationQuery(options: VueApolloComposable.useQuery.Options<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>(UserCurrentTwoFactorGetMethodConfigurationDocument, options);
 }
-export function useUserCurrentTwoFactorGetMethodConfigurationLazyQuery(variables?: Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables | VueCompositionApi.Ref<Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables> | ReactiveFunction<Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>(UserCurrentTwoFactorGetMethodConfigurationDocument, variables, options);
+export function useUserCurrentTwoFactorGetMethodConfigurationLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>(UserCurrentTwoFactorGetMethodConfigurationDocument, options);
 }
-export type UserCurrentTwoFactorGetMethodConfigurationQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>;
+export type UserCurrentTwoFactorGetMethodConfigurationQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.UserCurrentTwoFactorGetMethodConfigurationQuery, Types.UserCurrentTwoFactorGetMethodConfigurationQueryVariables>;

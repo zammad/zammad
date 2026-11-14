@@ -2,8 +2,7 @@
 
 import { ApolloClient, ApolloLink, InMemoryCache, NetworkStatus } from '@apollo/client'
 import { relayStylePagination } from '@apollo/client/utilities'
-import * as native from '@vue/apollo-composable'
-import { provideApolloClient, useLazyQuery, useQuery } from '@vue/apollo-composable/compat'
+import { provideApolloClient, useLazyQuery, useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
 import { createMockSubscription } from 'mock-apollo-client'
 import { Observable } from 'rxjs'
@@ -24,11 +23,11 @@ import { waitForNextTick, waitUntilSpyCalled } from '#tests/support/utils.ts'
 
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
+import type { QueryHandlerResult } from '#shared/types/server/apollo/handler.ts'
 
 import QueryHandler from '../QueryHandler.ts'
 
 import type { ErrorLike } from '@apollo/client'
-import type { ApolloQueryResultV4 } from '@vue/apollo-composable/compat'
 import type { IMockSubscription } from 'mock-apollo-client'
 import type { Mock } from 'vitest'
 
@@ -92,7 +91,7 @@ const mockClient = (error = false, errorType = 'GraphQL') => {
 }
 
 const waitFirstResult = (queryHandler: QueryHandler<any, any>) =>
-  new Promise<ApolloQueryResultV4<any> | ErrorLike>((resolve) => {
+  new Promise<QueryHandlerResult<any> | ErrorLike>((resolve) => {
     queryHandler.onResult((res) => {
       if (res.data) {
         resolve(res)
@@ -103,43 +102,28 @@ const waitFirstResult = (queryHandler: QueryHandler<any, any>) =>
     })
   })
 
-// Every case runs against the compat (v4-style) and the native v5 composables:
-// a handler must behave the same no matter which shape it was constructed from.
-describe.each(['compat', 'native'] as const)('QueryHandler (%s)', (entry) => {
+describe('QueryHandler', () => {
   const sampleQuery = (variables: SampleQueryVariables, options = {}) => {
     queryFunctionCallSpy()
 
-    if (entry === 'native') {
-      return native.useQuery<SampleQuery, SampleQueryVariables>(SampleTypedQueryDocument, {
-        variables,
-        ...options,
-      })
-    }
-
-    return useQuery<SampleQuery, SampleQueryVariables>(SampleTypedQueryDocument, variables, options)
+    return useQuery<SampleQuery, SampleQueryVariables>(SampleTypedQueryDocument, {
+      variables,
+      ...options,
+    })
   }
 
   const sampleLazyQuery = (variables: SampleQueryVariables, options = {}) => {
     queryFunctionCallSpy()
 
-    if (entry === 'native') {
-      return native.useLazyQuery<SampleQuery, SampleQueryVariables>(SampleTypedQueryDocument, {
-        variables,
-        ...options,
-      })
-    }
-
-    return useLazyQuery<SampleQuery, SampleQueryVariables>(
-      SampleTypedQueryDocument,
+    return useLazyQuery<SampleQuery, SampleQueryVariables>(SampleTypedQueryDocument, {
       variables,
-      options,
-    )
+      ...options,
+    })
   }
 
   const scope = effectScope()
 
-  // The notification store accumulates across examples; the second entry run
-  // must not inherit the first one's notifications.
+  // The notification store accumulates across examples.
   beforeEach(() => {
     useNotifications().clearAllNotifications()
   })
@@ -678,16 +662,10 @@ describe.each(['compat', 'native'] as const)('QueryHandler (%s)', (entry) => {
     type ItemsVariables = { pageSize: number; cursor?: string }
 
     const itemsQuery = () =>
-      entry === 'native'
-        ? native.useQuery<ItemsResult, ItemsVariables>(ItemsDocument, {
-            variables: { pageSize: 10 },
-            fetchPolicy: 'cache-first',
-          })
-        : useQuery<ItemsResult, ItemsVariables>(
-            ItemsDocument,
-            { pageSize: 10 },
-            { fetchPolicy: 'cache-first' },
-          )
+      useQuery<ItemsResult, ItemsVariables>(ItemsDocument, {
+        variables: { pageSize: 10 },
+        fetchPolicy: 'cache-first',
+      })
 
     it('resolves once the merged page is in the result', async () => {
       await scope.run(async () => {

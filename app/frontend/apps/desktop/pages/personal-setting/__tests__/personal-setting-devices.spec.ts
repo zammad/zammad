@@ -12,8 +12,13 @@ import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
-import { mockUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.mocks.ts'
+import {
+  mockUserCurrentDeviceDeleteMutation,
+  mockUserCurrentDeviceDeleteMutationError,
+  waitForUserCurrentDeviceDeleteMutationCalls,
+} from '../graphql/mutations/userCurrentDeviceDelete.mocks.ts'
 import { mockUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.mocks.ts'
 import { getUserCurrentDevicesUpdatesSubscriptionHandler } from '../graphql/subscriptions/userCurrentDevicesUpdates.mocks.ts'
 
@@ -113,7 +118,36 @@ describe('devices personal settings', () => {
 
     await view.events.click(view.getByRole('button', { name: 'Delete object' }))
 
+    const calls = await waitForUserCurrentDeviceDeleteMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({ deviceId: userCurrentDeviceList[1].id })
+
     checkSimpleTableContent(view, [rowContents[0]])
+
+    expect(await view.findByText('Device has been revoked.')).toBeInTheDocument()
+  })
+
+  it('keeps a device when deleting it fails', async () => {
+    mockUserCurrentDeviceListQuery({ userCurrentDeviceList })
+
+    const view = await visitView('/personal-setting/devices')
+
+    mockUserCurrentDeviceDeleteMutationError('Something went wrong', {
+      type: GraphQLErrorTypes.UnknownError,
+    })
+
+    await view.events.click(
+      within(view.getByRole('table')).getByRole('button', { name: 'Delete this device' }),
+    )
+
+    await view.events.click(await view.findByRole('button', { name: 'Delete object' }))
+
+    expect(await view.findByRole('alert')).toHaveTextContent('The device could not be deleted.')
+    expect(view.queryByText('Device has been revoked.')).not.toBeInTheDocument()
+
+    expect(
+      within(view.getByRole('table')).getByRole('button', { name: 'Delete this device' }),
+    ).toBeInTheDocument()
   })
 
   it('shows a translated label when the device location is unknown', async () => {

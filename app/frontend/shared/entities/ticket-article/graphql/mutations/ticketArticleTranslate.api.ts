@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketArticleTranslationFragmentDoc } from '../fragments/ticketArticleTranslation.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketArticleTranslateDocument = gql`
     mutation ticketArticleTranslate($articleId: ID!, $targetLocale: String!, $force: Boolean, $regenerationOfId: ID) {
@@ -32,7 +30,7 @@ export const TicketArticleTranslateDocument = gql`
   }
 }
     ${TicketArticleTranslationFragmentDoc}`;
-export function useTicketArticleTranslateMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketArticleTranslateMutation, Types.TicketArticleTranslateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketArticleTranslateMutation, Types.TicketArticleTranslateMutationVariables>> = {}) {
+export function useTicketArticleTranslateMutation(options: VueApolloComposable.useMutation.Options<Types.TicketArticleTranslateMutation, Types.TicketArticleTranslateMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TicketArticleTranslateMutation, Types.TicketArticleTranslateMutationVariables>(TicketArticleTranslateDocument, options);
 }
-export type TicketArticleTranslateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketArticleTranslateMutation, Types.TicketArticleTranslateMutationVariables>;
+export type TicketArticleTranslateMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TicketArticleTranslateMutation, Types.TicketArticleTranslateMutationVariables>;

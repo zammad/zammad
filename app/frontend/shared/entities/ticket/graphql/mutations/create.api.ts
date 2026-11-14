@@ -4,9 +4,7 @@ import gql from 'graphql-tag';
 import { TicketAttributesFragmentDoc } from '../fragments/ticketAttributes.api';
 import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketCreateDocument = gql`
     mutation ticketCreate($input: TicketCreateInput!) {
@@ -22,7 +20,7 @@ export const TicketCreateDocument = gql`
     ${TicketAttributesFragmentDoc}
 ${ObjectAttributeValuesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useTicketCreateMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketCreateMutation, Types.TicketCreateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketCreateMutation, Types.TicketCreateMutationVariables>> = {}) {
+export function useTicketCreateMutation(options: VueApolloComposable.useMutation.Options<Types.TicketCreateMutation, Types.TicketCreateMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TicketCreateMutation, Types.TicketCreateMutationVariables>(TicketCreateDocument, options);
 }
-export type TicketCreateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketCreateMutation, Types.TicketCreateMutationVariables>;
+export type TicketCreateMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TicketCreateMutation, Types.TicketCreateMutationVariables>;

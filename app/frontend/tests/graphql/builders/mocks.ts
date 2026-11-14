@@ -6,7 +6,7 @@ import {
   mergeDeep,
   removeDirectivesFromDocument,
 } from '@apollo/client/utilities/internal'
-import { provideApolloClient } from '@vue/apollo-composable/compat'
+import { provideApolloClient } from '@vue/apollo-composable'
 import { visit, print } from 'graphql'
 import {
   Kind,

@@ -13,7 +13,7 @@ import {
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 export const usePublicLinks = (screen: EnumPublicLinksScreen) => {
-  const publicLinksQuery = new QueryHandler(usePublicLinksQuery({ screen }))
+  const publicLinksQuery = new QueryHandler(usePublicLinksQuery({ variables: { screen } }))
 
   publicLinksQuery.subscribeToMore<
     PublicLinkUpdatesSubscriptionVariables,

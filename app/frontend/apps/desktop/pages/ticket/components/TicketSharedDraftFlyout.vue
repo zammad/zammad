@@ -48,7 +48,7 @@ const flyoutName = 'shared-draft'
 
 const metaInformationQueryHandler = new QueryHandler(
   metaInformationQuery({
-    sharedDraftId: props.sharedDraftId,
+    variables: { sharedDraftId: props.sharedDraftId },
   }),
 )
 

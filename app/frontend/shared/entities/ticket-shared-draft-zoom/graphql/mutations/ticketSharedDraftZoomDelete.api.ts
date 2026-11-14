@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketSharedDraftZoomDeleteDocument = gql`
     mutation ticketSharedDraftZoomDelete($sharedDraftId: ID!) {
@@ -16,7 +14,7 @@ export const TicketSharedDraftZoomDeleteDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTicketSharedDraftZoomDeleteMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketSharedDraftZoomDeleteMutation, Types.TicketSharedDraftZoomDeleteMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketSharedDraftZoomDeleteMutation, Types.TicketSharedDraftZoomDeleteMutationVariables>> = {}) {
+export function useTicketSharedDraftZoomDeleteMutation(options: VueApolloComposable.useMutation.Options<Types.TicketSharedDraftZoomDeleteMutation, Types.TicketSharedDraftZoomDeleteMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TicketSharedDraftZoomDeleteMutation, Types.TicketSharedDraftZoomDeleteMutationVariables>(TicketSharedDraftZoomDeleteDocument, options);
 }
-export type TicketSharedDraftZoomDeleteMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TicketSharedDraftZoomDeleteMutation, Types.TicketSharedDraftZoomDeleteMutationVariables>;
+export type TicketSharedDraftZoomDeleteMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TicketSharedDraftZoomDeleteMutation, Types.TicketSharedDraftZoomDeleteMutationVariables>;

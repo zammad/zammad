@@ -111,10 +111,11 @@ export const useTicketArticleTranslation = (
   )
 
   const subscription = new SubscriptionHandler(
-    useTicketArticleTranslationUpdatesSubscription(
-      () => ({ ticketId: ticketId.value, targetLocale: targetLocale.value ?? '' }),
-      () => ({ enabled: started.value, fetchPolicy: 'no-cache' }),
-    ),
+    useTicketArticleTranslationUpdatesSubscription({
+      variables: { ticketId, targetLocale: () => targetLocale.value ?? '' },
+      enabled: started,
+      fetchPolicy: 'no-cache',
+    }),
     { errorShowNotification: false },
   )
 

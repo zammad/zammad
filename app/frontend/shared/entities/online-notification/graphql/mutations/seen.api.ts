@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const OnlineNotificationSeenDocument = gql`
     mutation onlineNotificationSeen($objectId: ID!) {
@@ -16,7 +14,7 @@ export const OnlineNotificationSeenDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useOnlineNotificationSeenMutation(options: VueApolloComposable.UseMutationOptions<Types.OnlineNotificationSeenMutation, Types.OnlineNotificationSeenMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.OnlineNotificationSeenMutation, Types.OnlineNotificationSeenMutationVariables>> = {}) {
+export function useOnlineNotificationSeenMutation(options: VueApolloComposable.useMutation.Options<Types.OnlineNotificationSeenMutation, Types.OnlineNotificationSeenMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.OnlineNotificationSeenMutation, Types.OnlineNotificationSeenMutationVariables>(OnlineNotificationSeenDocument, options);
 }
-export type OnlineNotificationSeenMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.OnlineNotificationSeenMutation, Types.OnlineNotificationSeenMutationVariables>;
+export type OnlineNotificationSeenMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.OnlineNotificationSeenMutation, Types.OnlineNotificationSeenMutationVariables>;

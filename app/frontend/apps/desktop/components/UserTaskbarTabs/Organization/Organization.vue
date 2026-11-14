@@ -25,17 +25,15 @@ const organization = computed(() => props.taskbarTab.entity)
 const { organizationDisplayName, isOrganizationInactive } = useOrganizationEntity(organization)
 
 new SubscriptionHandler(
-  useOrganizationUpdatesSubscription(
-    () => ({
+  useOrganizationUpdatesSubscription({
+    variables: () => ({
       organizationId: organization.value!.id,
       first: SECONDARY_ORGANIZATIONS_FETCH_COUNT,
       initial: true,
     }),
-    () => ({
-      // NB: Organization detail view has its own subscription handling, avoid double subscriptions.
-      enabled: !!organization.value?.id && !isTaskbarTabLoaded.value,
-    }),
-  ),
+    // NB: Organization detail view has its own subscription handling, avoid double subscriptions.
+    enabled: () => !!organization.value?.id && !isTaskbarTabLoaded.value,
+  }),
   {
     // NB: Silence toast notifications for particular errors, these will be handled by the layout taskbar tab component.
     errorCallback: (errorHandler) =>

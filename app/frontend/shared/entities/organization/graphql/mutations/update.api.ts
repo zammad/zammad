@@ -4,9 +4,7 @@ import gql from 'graphql-tag';
 import { OrganizationAttributesFragmentDoc } from '../fragments/organizationAttributes.api';
 import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const OrganizationUpdateDocument = gql`
     mutation organizationUpdate($id: ID!, $input: OrganizationInput!) {
@@ -22,7 +20,7 @@ export const OrganizationUpdateDocument = gql`
     ${OrganizationAttributesFragmentDoc}
 ${ObjectAttributeValuesFragmentDoc}
 ${ErrorsFragmentDoc}`;
-export function useOrganizationUpdateMutation(options: VueApolloComposable.UseMutationOptions<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables>> = {}) {
+export function useOrganizationUpdateMutation(options: VueApolloComposable.useMutation.Options<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables>(OrganizationUpdateDocument, options);
 }
-export type OrganizationUpdateMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables>;
+export type OrganizationUpdateMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.OrganizationUpdateMutation, Types.OrganizationUpdateMutationVariables>;

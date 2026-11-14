@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const OnlineNotificationMarkAllAsSeenDocument = gql`
     mutation onlineNotificationMarkAllAsSeen {
@@ -16,7 +14,7 @@ export const OnlineNotificationMarkAllAsSeenDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useOnlineNotificationMarkAllAsSeenMutation(options: VueApolloComposable.UseMutationOptions<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables>> = {}) {
+export function useOnlineNotificationMarkAllAsSeenMutation(options: VueApolloComposable.useMutation.Options<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables>(OnlineNotificationMarkAllAsSeenDocument, options);
 }
-export type OnlineNotificationMarkAllAsSeenMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables>;
+export type OnlineNotificationMarkAllAsSeenMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.OnlineNotificationMarkAllAsSeenMutation, Types.OnlineNotificationMarkAllAsSeenMutationVariables>;

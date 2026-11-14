@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ErrorsFragmentDoc } from '../../../../../graphql/fragments/errors.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TagAssignmentAddDocument = gql`
     mutation tagAssignmentAdd($objectId: ID!, $tag: String!) {
@@ -16,7 +14,7 @@ export const TagAssignmentAddDocument = gql`
   }
 }
     ${ErrorsFragmentDoc}`;
-export function useTagAssignmentAddMutation(options: VueApolloComposable.UseMutationOptions<Types.TagAssignmentAddMutation, Types.TagAssignmentAddMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TagAssignmentAddMutation, Types.TagAssignmentAddMutationVariables>> = {}) {
+export function useTagAssignmentAddMutation(options: VueApolloComposable.useMutation.Options<Types.TagAssignmentAddMutation, Types.TagAssignmentAddMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.TagAssignmentAddMutation, Types.TagAssignmentAddMutationVariables>(TagAssignmentAddDocument, options);
 }
-export type TagAssignmentAddMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.TagAssignmentAddMutation, Types.TagAssignmentAddMutationVariables>;
+export type TagAssignmentAddMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.TagAssignmentAddMutation, Types.TagAssignmentAddMutationVariables>;

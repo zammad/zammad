@@ -30,16 +30,14 @@ export const useOrganizationDetail = (
   const hasLoadedMore = ref(false)
 
   const organizationQuery = new QueryHandler(
-    useOrganizationQuery(
-      () => ({
+    useOrganizationQuery({
+      variables: () => ({
         organizationId: organizationId.value!,
         first: SECONDARY_ORGANIZATIONS_FETCH_COUNT,
       }),
-      () => ({
-        enabled: Boolean(organizationId.value),
-        fetchPolicy,
-      }),
-    ),
+      enabled: () => Boolean(organizationId.value),
+      fetchPolicy,
+    }),
     {
       errorCallback,
     },

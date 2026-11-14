@@ -4,15 +4,13 @@ import UserError from '#shared/errors/UserError.ts'
 import type { UserErrors } from '#shared/types/error.ts'
 import type {
   MutationOperationReturn,
+  MutationSendOptions,
   OperationMutationResult,
 } from '#shared/types/server/apollo/handler.ts'
 
 import { BaseHandler } from './BaseHandler.ts'
-import { isNativeMutationResult } from './utils/isNativeOperationResult.ts'
 
 import type { OperationVariables } from '@apollo/client'
-import type { useMutation } from '@vue/apollo-composable'
-import type { MutateOverrideOptions } from '@vue/apollo-composable/compat'
 import type { Ref } from 'vue'
 
 export default class MutationHandler<
@@ -21,21 +19,16 @@ export default class MutationHandler<
 > extends BaseHandler<TResult, TVariables, MutationOperationReturn<TResult, TVariables>> {
   public async send(
     variables?: TVariables,
-    options?: MutateOverrideOptions<TResult>,
+    options?: MutationSendOptions<TResult, TVariables>,
   ): Promise<Maybe<TResult>> {
-    // The native `mutate` resolves `{ data, error }` instead of rejecting;
-    // `BaseHandler` registers `onError`, so it never throws either way and the
-    // `!result || result.error` branch below is the real error path.
-    const result = isNativeMutationResult(this.operationResult)
-      ? await this.operationResult.mutate({
-          ...(options as useMutation.MutateOptions<TResult, TVariables>),
-          variables,
-        })
-      : await this.operationResult.mutate(variables, options)
+    // `mutate` resolves `{ data, error }` instead of rejecting; `BaseHandler`
+    // registers `onError`, so it never throws and the `result.error` branch
+    // below is the real error path.
+    const result = await this.operationResult.mutate({ ...options, variables })
 
     // The error itself was already reported to 'onError' by vue-apollo.
-    if (!result || result.error) {
-      throw this.operationError().value ?? result?.error
+    if (result.error) {
+      throw this.operationError().value ?? result.error
     }
 
     const payload = result.data ? Object.values(result.data)[0] : undefined

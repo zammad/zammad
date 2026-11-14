@@ -4,9 +4,7 @@ import gql from 'graphql-tag';
 import { OrganizationAttributesFragmentDoc } from '../fragments/organizationAttributes.api';
 import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
 import { OrganizationMembersWithFetchMoreFragmentDoc } from '../fragments/organizationMembersWithFetchMore.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const OrganizationDocument = gql`
     query organization($organizationId: ID!, $first: Int, $after: String) {
@@ -27,10 +25,10 @@ export const OrganizationDocument = gql`
     ${OrganizationAttributesFragmentDoc}
 ${ObjectAttributeValuesFragmentDoc}
 ${OrganizationMembersWithFetchMoreFragmentDoc}`;
-export function useOrganizationQuery(variables: Types.OrganizationQueryVariables | VueCompositionApi.Ref<Types.OrganizationQueryVariables> | ReactiveFunction<Types.OrganizationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.OrganizationQuery, Types.OrganizationQueryVariables>(OrganizationDocument, variables, options);
+export function useOrganizationQuery(options: VueApolloComposable.useQuery.Options<Types.OrganizationQuery, Types.OrganizationQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.OrganizationQuery, Types.OrganizationQueryVariables>(OrganizationDocument, options);
 }
-export function useOrganizationLazyQuery(variables?: Types.OrganizationQueryVariables | VueCompositionApi.Ref<Types.OrganizationQueryVariables> | ReactiveFunction<Types.OrganizationQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OrganizationQuery, Types.OrganizationQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.OrganizationQuery, Types.OrganizationQueryVariables>(OrganizationDocument, variables, options);
+export function useOrganizationLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.OrganizationQuery, Types.OrganizationQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.OrganizationQuery, Types.OrganizationQueryVariables>(OrganizationDocument, options);
 }
-export type OrganizationQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.OrganizationQuery, Types.OrganizationQueryVariables>;
+export type OrganizationQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.OrganizationQuery, Types.OrganizationQueryVariables>;

@@ -33,7 +33,8 @@ const filter = ref('')
 const newTags = ref<{ value: string; label: string }[]>([])
 
 const tagsQuery = new QueryHandler(
-  useAutocompleteSearchTagQuery(() => ({ input: { query: filter.value } }), {
+  useAutocompleteSearchTagQuery({
+    variables: () => ({ input: { query: filter.value } }),
     debounce: 300,
   }),
 )

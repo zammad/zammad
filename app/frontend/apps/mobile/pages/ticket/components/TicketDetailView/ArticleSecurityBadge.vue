@@ -43,11 +43,11 @@ const canView = computed(() => {
 const showPopup = ref(false)
 
 const retryMutation = new MutationHandler(
-  useTicketArticleRetrySecurityProcessMutation(() => ({
-    variables: {
+  useTicketArticleRetrySecurityProcessMutation({
+    variables: () => ({
       articleId: props.articleId,
-    },
-  })),
+    }),
+  }),
 )
 
 const { notify } = useNotifications()

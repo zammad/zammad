@@ -38,20 +38,18 @@ export const useArticleDataHandler = (
   const firstArticlesCount = computed(() => options.firstArticlesCount?.value || 5)
 
   const articlesQuery = new QueryHandler(
-    useTicketArticlesQuery(
-      () => ({
-        ticketId: ticketId.value,
+    useTicketArticlesQuery({
+      variables: {
+        ticketId,
         pageSize: options.pageSize || 20,
-        firstArticlesCount: firstArticlesCount.value,
-      }),
-      {
-        context: {
-          batch: {
-            active: false,
-          },
+        firstArticlesCount,
+      },
+      context: {
+        batch: {
+          active: false,
         },
       },
-    ),
+    }),
   )
 
   const articleResult = articlesQuery.result()

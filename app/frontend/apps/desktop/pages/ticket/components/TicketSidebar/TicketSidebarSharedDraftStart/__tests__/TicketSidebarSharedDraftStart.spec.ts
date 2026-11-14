@@ -1,10 +1,16 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-import { mockTicketSharedDraftStartListQueryError } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartList.mocks.ts'
+import {
+  mockTicketSharedDraftStartListQueryError,
+  waitForTicketSharedDraftStartListQueryCalls,
+} from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartList.mocks.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
@@ -55,6 +61,29 @@ describe('TicketSidebarSharedDraftStart.vue', () => {
     })
 
     expect(wrapper.emitted('show')).toHaveLength(1)
+  })
+
+  it('loads the shared drafts of another group when the group changes', async () => {
+    const wrapper = await renderTicketSidebarSharedDraftStart({
+      formValues: {
+        group_id: 1,
+      },
+    })
+
+    await wrapper.rerender({
+      context: {
+        screenType: TicketSidebarScreenType.TicketCreate,
+        formValues: {
+          group_id: 2,
+        },
+      },
+    })
+
+    const calls = await waitForTicketSharedDraftStartListQueryCalls()
+
+    await waitFor(() =>
+      expect(calls.at(-1)?.variables).toEqual({ groupId: convertToGraphQLId('Group', 2) }),
+    )
   })
 
   it('does not show sidebar when group ID is absent', async () => {

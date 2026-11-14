@@ -10,11 +10,9 @@ import { useTicketArticleRetryMediaDownloadMutation } from '../graphql/mutations
 
 export const useTicketArticleRetryMediaDownload = (articleId: Ref<string>) => {
   const retryMutation = new MutationHandler(
-    useTicketArticleRetryMediaDownloadMutation(() => ({
-      variables: {
-        articleId: articleId.value,
-      },
-    })),
+    useTicketArticleRetryMediaDownloadMutation({
+      variables: { articleId },
+    }),
   )
 
   const { notify } = useNotifications()

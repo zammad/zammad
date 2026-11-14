@@ -31,14 +31,15 @@ export const useUserDetail = (
   const hasLoadedMore = ref(false)
 
   const userQuery = new QueryHandler(
-    useUserQuery(
-      () => ({
+    useUserQuery({
+      variables: () => ({
         userId: userId.value!,
         secondaryOrganizationsCount: SECONDARY_ORGANIZATIONS_FETCH_COUNT,
         hasOrganizationCounts,
       }),
-      () => ({ enabled: Boolean(userId.value), fetchPolicy }),
-    ),
+      enabled: () => Boolean(userId.value),
+      fetchPolicy,
+    }),
     {
       errorCallback,
     },

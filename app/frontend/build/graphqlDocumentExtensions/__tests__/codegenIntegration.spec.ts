@@ -10,42 +10,26 @@
  */
 
 import { readFileSync } from 'fs'
-import { relative, resolve, sep } from 'path'
+import { resolve } from 'path'
 
 import { executeCodegen } from '@graphql-codegen/cli'
 import { describe, expect, it } from 'vitest'
 
-/* eslint-disable @typescript-eslint/no-require-imports */
-const vueApolloPluginModule = require('../../vueApolloPlugin.js')
-const { vueApolloV5Documents } = require('../../vueApolloV5Documents.js')
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { graphqlDocumentExtensionsTransform } = require('../transform.js')
-/* eslint-enable @typescript-eslint/no-require-imports */
 
 const fixturesDir = resolve(__dirname, 'fixtures')
 const schemaSdl = readFileSync(resolve(fixturesDir, 'testSchema.graphql'), 'utf8')
 
-// Hands codegen the dispatcher instance this spec mutates the allowlist of —
-// the default loader's require would load a second, unmutated copy.
-const vueApolloPluginLoader = async (name: string) => {
-  if (name.endsWith('vueApolloPlugin.js')) return vueApolloPluginModule
-
-  throw Object.assign(new Error(`Unexpected module: ${name}`), { code: 'MODULE_NOT_FOUND' })
-}
-
 // Runs the real codegen pipeline over one fixture's base document. `plugins`
 // mirrors the plugins the repo config uses, since a merged document has to
 // survive all of them.
-const generate = async (
-  fixture: string,
-  plugins: string[],
-  pluginLoader?: typeof vueApolloPluginLoader,
-) => {
+const generate = async (fixture: string, plugins: string[]) => {
   const baseDocumentPath = resolve(fixturesDir, fixture, 'base.graphql')
 
   const { result, error } = await executeCodegen({
     schema: schemaSdl,
     documents: [baseDocumentPath],
-    ...(pluginLoader ? { pluginLoader } : {}),
     generates: {
       [resolve(fixturesDir, fixture) + '/']: {
         documents: [baseDocumentPath],
@@ -81,36 +65,17 @@ describe('documentTransforms propagation through near-operation-file preset', ()
   // A merged fragment takes a different path through the plugins than merged
   // root fields (the spread is a node we synthesize, not one copied from a
   // parsed document), so it is generated through the plugins the repo config
-  // uses for its document outputs.
+  // uses for its document outputs. The vue-apollo plugin is given with a path
+  // relative to the working directory, as the repository config does.
   it('generates output for a merged fragment through operations and vue-apollo plugins', async () => {
     const content = await generate('fragmentMerge', [
       'typescript-operations',
-      'typescript-vue-apollo',
+      './app/frontend/build/vueApolloV5Plugin.js',
     ])
 
     expect(content).toContain('userDetailSearch')
     expect(content).toContain('...userDetailSearch')
-  })
-
-  // The dispatcher is given with a path relative to the working directory, as
-  // the repository config does.
-  it('keeps the merged fragment when the dispatcher routes an allowlisted document to the v5 visitor', async () => {
-    const baseDocumentPath = resolve(fixturesDir, 'fragmentMerge', 'base.graphql')
-    const allowlistedPath = relative(process.cwd(), baseDocumentPath).split(sep).join('/')
-    vueApolloV5Documents.add(allowlistedPath)
-
-    try {
-      const content = await generate(
-        'fragmentMerge',
-        ['./app/frontend/build/vueApolloPlugin.js'],
-        vueApolloPluginLoader,
-      )
-
-      expect(content).toContain("import * as VueApolloComposable from '@vue/apollo-composable';")
-      expect(content).toContain('VueApolloComposable.useQuery.Options')
-      expect(content).toContain('...userDetailSearch')
-    } finally {
-      vueApolloV5Documents.delete(allowlistedPath)
-    }
+    expect(content).toContain("import * as VueApolloComposable from '@vue/apollo-composable';")
+    expect(content).toContain('VueApolloComposable.useQuery.Options')
   })
 })

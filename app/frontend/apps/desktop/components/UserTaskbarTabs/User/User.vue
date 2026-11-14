@@ -25,19 +25,17 @@ const user = computed(() => props.taskbarTab.entity)
 const { userDisplayName, isUserInactive } = useUserEntity(user)
 
 new SubscriptionHandler(
-  useUserUpdatesSubscription(
-    () => ({
+  useUserUpdatesSubscription({
+    variables: () => ({
       userId: user.value!.id,
       initial: true,
       secondaryOrganizationsCount: SECONDARY_ORGANIZATIONS_FETCH_COUNT,
       // Prime the same fields the detail view reads, so it resolves from cache.
       hasOrganizationCounts: true,
     }),
-    () => ({
-      // NB: User detail view has its own subscription handling, avoid double subscriptions.
-      enabled: !!user.value?.id && !isTaskbarTabLoaded.value,
-    }),
-  ),
+    // NB: User detail view has its own subscription handling, avoid double subscriptions.
+    enabled: () => !!user.value?.id && !isTaskbarTabLoaded.value,
+  }),
   {
     // NB: Silence toast notifications for particular errors, these will be handled by the layout taskbar tab component.
     errorCallback: (errorHandler) =>

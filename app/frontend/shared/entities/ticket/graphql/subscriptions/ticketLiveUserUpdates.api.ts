@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketLiveUserAttributesFragmentDoc } from '../fragments/ticketLiveUserAttributes.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketLiveUserUpdatesDocument = gql`
     subscription ticketLiveUserUpdates($key: String!, $app: EnumTaskbarApp!) {
@@ -15,7 +13,7 @@ export const TicketLiveUserUpdatesDocument = gql`
   }
 }
     ${TicketLiveUserAttributesFragmentDoc}`;
-export function useTicketLiveUserUpdatesSubscription(variables: Types.TicketLiveUserUpdatesSubscriptionVariables | VueCompositionApi.Ref<Types.TicketLiveUserUpdatesSubscriptionVariables> | ReactiveFunction<Types.TicketLiveUserUpdatesSubscriptionVariables>, options: VueApolloComposable.UseSubscriptionOptions<Types.TicketLiveUserUpdatesSubscription, Types.TicketLiveUserUpdatesSubscriptionVariables> | VueCompositionApi.Ref<VueApolloComposable.UseSubscriptionOptions<Types.TicketLiveUserUpdatesSubscription, Types.TicketLiveUserUpdatesSubscriptionVariables>> | ReactiveFunction<VueApolloComposable.UseSubscriptionOptions<Types.TicketLiveUserUpdatesSubscription, Types.TicketLiveUserUpdatesSubscriptionVariables>> = {}) {
-  return VueApolloComposable.useSubscription<Types.TicketLiveUserUpdatesSubscription, Types.TicketLiveUserUpdatesSubscriptionVariables>(TicketLiveUserUpdatesDocument, variables, options);
+export function useTicketLiveUserUpdatesSubscription(options: VueApolloComposable.useSubscription.Options<Types.TicketLiveUserUpdatesSubscription, Types.TicketLiveUserUpdatesSubscriptionVariables>) {
+  return VueApolloComposable.useSubscription<Types.TicketLiveUserUpdatesSubscription, Types.TicketLiveUserUpdatesSubscriptionVariables>(TicketLiveUserUpdatesDocument, options);
 }
-export type TicketLiveUserUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.UseSubscriptionReturn<Types.TicketLiveUserUpdatesSubscription, Types.TicketLiveUserUpdatesSubscriptionVariables>;
+export type TicketLiveUserUpdatesSubscriptionCompositionFunctionResult = VueApolloComposable.useSubscription.Result<Types.TicketLiveUserUpdatesSubscription, Types.TicketLiveUserUpdatesSubscriptionVariables>;

@@ -3,9 +3,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import type {
   UserCurrentDevicesUpdatesSubscription,
@@ -14,7 +11,6 @@ import type {
   UserDevice,
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
@@ -25,14 +21,13 @@ import type { TableSimpleHeader, TableItem } from '#desktop/components/CommonTab
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { useEntryDelete } from '../composables/useEntryDelete.ts'
 import { usePersonalSettingTabs } from '../composables/usePersonalSettingTabs.ts'
 import { useUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.api.ts'
 import { useUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.api.ts'
 import { UserCurrentDevicesUpdatesDocument } from '../graphql/subscriptions/userCurrentDevicesUpdates.api.ts'
 
 const { breadcrumbItems } = useBreadcrumb()
-
-const { notify } = useNotifications()
 
 const { fingerprint } = useFingerprint()
 
@@ -56,38 +51,14 @@ deviceListQuery.subscribeToMore<
   },
 })
 
-const { waitForVariantConfirmation } = useConfirmation()
-
-const deleteDevice = (device: UserDevice) => {
-  const deviceDeleteMutation = new MutationHandler(
-    useUserCurrentDeviceDeleteMutation({
-      variables: {
-        deviceId: device.id,
-      },
-      update(cache) {
-        cache.evict({ id: cache.identify(device) })
-        cache.gc()
-      },
-    }),
-    {
-      errorNotificationMessage: __('The device could not be deleted.'),
-    },
-  )
-
-  deviceDeleteMutation.send().then(() => {
-    notify({
-      id: 'device-revoked',
-      type: NotificationTypes.Success,
-      message: __('Device has been revoked.'),
-    })
-  })
-}
-
-const confirmDeleteDevice = async (device: UserDevice) => {
-  const confirmed = await waitForVariantConfirmation('delete')
-
-  if (confirmed) deleteDevice(device)
-}
+const { confirmEntryDelete } = useEntryDelete(useUserCurrentDeviceDeleteMutation, {
+  variables: (device: UserDevice) => ({ deviceId: device.id }),
+  errorNotificationMessage: __('The device could not be deleted.'),
+  successNotification: {
+    id: 'device-revoked',
+    message: __('Device has been revoked.'),
+  },
+})
 
 const tableHeaders: TableSimpleHeader[] = [
   {
@@ -114,7 +85,7 @@ const tableActions: MenuItem[] = [
     icon: 'trash3',
     show: (data) => !data?.current,
     onClick: (data) => {
-      confirmDeleteDevice(data as UserDevice)
+      confirmEntryDelete(data as UserDevice)
     },
   },
 ]

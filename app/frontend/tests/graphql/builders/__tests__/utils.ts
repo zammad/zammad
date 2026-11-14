@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { render } from '@testing-library/vue'
-import { useLazyQuery, useMutation, useSubscription } from '@vue/apollo-composable/compat'
+import { useLazyQuery, useMutation, useSubscription } from '@vue/apollo-composable'
 
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
@@ -14,7 +14,6 @@ import {
 } from '../mocks.ts'
 
 import type { DocumentNode, OperationVariables } from '@apollo/client'
-import type { OptionsParameter } from '@vue/apollo-composable/compat'
 
 interface EnhancedQueryHandler<R, V extends OperationVariables> extends QueryHandler<R, V> {
   getMockedData: () => { data: R }
@@ -54,11 +53,10 @@ const getHandler = (document: DocumentNode, cb: () => any) => {
 export const getQueryHandler = <R, V extends OperationVariables = OperationVariables>(
   document: DocumentNode,
   variables?: V,
-  options?: OptionsParameter<R, V>,
 ) => {
   return getHandler(
     document,
-    () => new QueryHandler(useLazyQuery(document, variables, options)),
+    () => new QueryHandler(useLazyQuery<R, OperationVariables>(document, { variables })),
   ) as EnhancedQueryHandler<R, V>
 }
 
@@ -80,7 +78,7 @@ export const getSubscriptionHandler = <
 ) => {
   const handler = getHandler(
     document,
-    () => new SubscriptionHandler(useSubscription<R, V>(document, variables)),
+    () => new SubscriptionHandler(useSubscription<R, V>(document, { variables })),
   ) as EnhancedSubscriptionHandler<R, V>
   handler.getTestSubscriptionHandler = () => {
     return getGraphQLSubscriptionHandler(document)

@@ -163,7 +163,7 @@ const fetchQuotableAuthorName = async (article: TicketArticle) => {
   const quotedHeaderQuery = scope.run(
     () =>
       new QueryHandler(
-        useTicketArticleQuotedHeaderLazyQuery(variables, { fetchPolicy: 'no-cache' }),
+        useTicketArticleQuotedHeaderLazyQuery({ variables, fetchPolicy: 'no-cache' }),
       ),
   )!
 

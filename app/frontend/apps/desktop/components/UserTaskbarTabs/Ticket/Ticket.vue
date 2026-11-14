@@ -21,8 +21,10 @@ const { ticketNumberWithTicketHook } = useTicketNumber(toRef(props.taskbarTab, '
 
 new SubscriptionHandler(
   useTicketUpdatesSubscription({
-    ticketId: props.taskbarTab.entity!.id,
-    initial: true,
+    variables: {
+      ticketId: props.taskbarTab.entity!.id,
+      initial: true,
+    },
   }),
   {
     // NB: Silence toast notifications for particular errors, these will be handled by the layout taskbar tab component.

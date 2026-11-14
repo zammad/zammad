@@ -24,6 +24,10 @@ export const createApolloClient = (cacheInitializerModules: CacheInitializerModu
         fetchPolicy: 'cache-and-network',
         // No `nextFetchPolicy`: Apollo answers a cache update with a temporary "cache-first",
         //   which only reverts without one - returning the current policy would keep it for good.
+
+        // Already Apollo's default, stated because the views rely on it:
+        //   `loading` is true during a refetch.
+        notifyOnNetworkStatusChange: true,
       },
     },
   })

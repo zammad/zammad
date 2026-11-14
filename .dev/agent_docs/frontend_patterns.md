@@ -37,6 +37,45 @@ inside the same folder.
 - `.ts` files next to `.graphql` operation files
   (e.g. `graphql/queries/`, `graphql/mutations/`, `graphql/subscriptions/`)
 
+## GraphQL Operations
+
+Call a generated composable with **one options object** and wrap it in a
+handler from `#shared/server/apollo/handler/index.ts` (`QueryHandler`,
+`MutationHandler`, `SubscriptionHandler`), which takes care of the error
+handling:
+
+```ts
+const userQuery = new QueryHandler(
+  useUserQuery({
+    variables: { userId },
+    enabled: () => props.active,
+    fetchPolicy: 'cache-first',
+  }),
+)
+```
+
+- Only `variables` and `enabled` are reactive, every other option
+  (`fetchPolicy`, `context`, …) is read once. Pass a ref where one is at
+  hand, for the flag (`enabled: isEnabled`) or per variable
+  (`variables: { userId }`). Use a getter for props and derived values
+  (`variables: () => ({ userId: props.userId })`) and a plain object when
+  nothing changes.
+- A lazy query (`useXLazyQuery`) has no `enabled`: it waits for `load()`.
+  `load()` starts the query synchronously, so set the state its variables
+  read before the call. The composable's `load()` returns a Promise,
+  `QueryHandler.load()` returns nothing. Await `QueryHandler.query()` for a
+  one-off result: it works on a lazy query only, resolves `{ data, error }`
+  and shows no notification when it fails.
+- Mutation variables go to `send(variables)`. Variables set in the options
+  are defaults which `send()` merges its own into.
+- The `onResult` callback of a handler receives an object (`{ data }`), the
+  `onResult` of the composable receives the data itself. Register callbacks
+  on the handler.
+- Never write to an Apollo result, a mutation result included. The object is
+  shared with the cache: writing throws where results are frozen
+  (development and Vitest) and corrupts the cached data unnoticed in a
+  production build. Copy it first.
+
 ## UI Principles
 
 - Icon-only buttons need `v-tooltip` supplying the accessible name.

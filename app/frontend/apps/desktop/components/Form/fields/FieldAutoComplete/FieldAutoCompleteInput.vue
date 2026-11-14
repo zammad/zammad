@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useLazyQuery } from '@vue/apollo-composable/compat'
-import { refDebounced, useDebounceFn, watchOnce } from '@vueuse/core'
+import { useQuery } from '@vue/apollo-composable'
+import { refDebounced, useDebounceFn } from '@vueuse/core'
 import gql from 'graphql-tag'
 import { cloneDeep, escapeRegExp, isEqual, uniqBy } from 'lodash-es'
 import { useTemplateRef } from 'vue'
@@ -188,33 +188,18 @@ const defaultFilter = computed(() => {
 })
 
 const autocompleteQueryHandler = new QueryHandler(
-  useLazyQuery(
-    AutocompleteSearchDocument,
-    () => ({
+  useQuery<Record<string, AutoCompleteOption[]>>(AutocompleteSearchDocument, {
+    variables: () => ({
       input: {
         query: debouncedFilter.value || defaultFilter.value || '',
         limit: props.context.limit,
         ...additionalQueryParams(),
       },
     }),
-    () => ({
-      enabled: !!(debouncedFilter.value || defaultFilter.value),
-      fetchPolicy: 'cache-and-network', // Show cached results immediately, then refresh from the server.
-    }),
-  ),
+    enabled: () => !!(debouncedFilter.value || defaultFilter.value),
+    fetchPolicy: 'cache-and-network', // Show cached results immediately, then refresh from the server.
+  }),
 )
-
-if (defaultFilter.value) {
-  autocompleteQueryHandler.load()
-} else {
-  watchOnce(
-    () => debouncedFilter.value,
-    (newValue) => {
-      if (!newValue.length) return
-      autocompleteQueryHandler.load()
-    },
-  )
-}
 
 const autocompleteQueryResultKey = (
   (AutocompleteSearchDocument.definitions[0] as OperationDefinitionNode).selectionSet

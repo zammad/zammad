@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const UserCurrentTwoFactorRemoveMethodCredentialsDocument = gql`
     mutation userCurrentTwoFactorRemoveMethodCredentials($methodName: String!, $token: String!, $credentialId: String!) {
@@ -16,7 +14,7 @@ export const UserCurrentTwoFactorRemoveMethodCredentialsDocument = gql`
   }
 }
     `;
-export function useUserCurrentTwoFactorRemoveMethodCredentialsMutation(options: VueApolloComposable.UseMutationOptions<Types.UserCurrentTwoFactorRemoveMethodCredentialsMutation, Types.UserCurrentTwoFactorRemoveMethodCredentialsMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.UserCurrentTwoFactorRemoveMethodCredentialsMutation, Types.UserCurrentTwoFactorRemoveMethodCredentialsMutationVariables>> = {}) {
+export function useUserCurrentTwoFactorRemoveMethodCredentialsMutation(options: VueApolloComposable.useMutation.Options<Types.UserCurrentTwoFactorRemoveMethodCredentialsMutation, Types.UserCurrentTwoFactorRemoveMethodCredentialsMutationVariables> = {}) {
   return VueApolloComposable.useMutation<Types.UserCurrentTwoFactorRemoveMethodCredentialsMutation, Types.UserCurrentTwoFactorRemoveMethodCredentialsMutationVariables>(UserCurrentTwoFactorRemoveMethodCredentialsDocument, options);
 }
-export type UserCurrentTwoFactorRemoveMethodCredentialsMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<Types.UserCurrentTwoFactorRemoveMethodCredentialsMutation, Types.UserCurrentTwoFactorRemoveMethodCredentialsMutationVariables>;
+export type UserCurrentTwoFactorRemoveMethodCredentialsMutationCompositionFunctionResult = VueApolloComposable.useMutation.Result<Types.UserCurrentTwoFactorRemoveMethodCredentialsMutation, Types.UserCurrentTwoFactorRemoveMethodCredentialsMutationVariables>;

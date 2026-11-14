@@ -2,9 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketSharedDraftStartAttributesFragmentDoc } from '../fragments/ticketSharedDraftStartAttributes.api';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const TicketSharedDraftStartListDocument = gql`
     query ticketSharedDraftStartList($groupId: ID!) {
@@ -13,10 +11,10 @@ export const TicketSharedDraftStartListDocument = gql`
   }
 }
     ${TicketSharedDraftStartAttributesFragmentDoc}`;
-export function useTicketSharedDraftStartListQuery(variables: Types.TicketSharedDraftStartListQueryVariables | VueCompositionApi.Ref<Types.TicketSharedDraftStartListQueryVariables> | ReactiveFunction<Types.TicketSharedDraftStartListQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>(TicketSharedDraftStartListDocument, variables, options);
+export function useTicketSharedDraftStartListQuery(options: VueApolloComposable.useQuery.Options<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>) {
+  return VueApolloComposable.useQuery<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>(TicketSharedDraftStartListDocument, options);
 }
-export function useTicketSharedDraftStartListLazyQuery(variables?: Types.TicketSharedDraftStartListQueryVariables | VueCompositionApi.Ref<Types.TicketSharedDraftStartListQueryVariables> | ReactiveFunction<Types.TicketSharedDraftStartListQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>(TicketSharedDraftStartListDocument, variables, options);
+export function useTicketSharedDraftStartListLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>(TicketSharedDraftStartListDocument, options);
 }
-export type TicketSharedDraftStartListQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>;
+export type TicketSharedDraftStartListQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.TicketSharedDraftStartListQuery, Types.TicketSharedDraftStartListQueryVariables>;

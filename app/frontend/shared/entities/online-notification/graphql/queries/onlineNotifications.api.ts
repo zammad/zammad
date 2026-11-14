@@ -1,9 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import * as VueApolloComposable from '@vue/apollo-composable/compat';
-import * as VueCompositionApi from 'vue';
-export type ReactiveFunction<TParam> = () => TParam;
+import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const OnlineNotificationsDocument = gql`
     query onlineNotifications {
@@ -93,10 +91,10 @@ export const OnlineNotificationsDocument = gql`
   }
 }
     `;
-export function useOnlineNotificationsQuery(options: VueApolloComposable.UseQueryOptions<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>> = {}) {
-  return VueApolloComposable.useQuery<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>(OnlineNotificationsDocument, {}, options);
+export function useOnlineNotificationsQuery(options: VueApolloComposable.useQuery.Options<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables> = {}) {
+  return VueApolloComposable.useQuery<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>(OnlineNotificationsDocument, options);
 }
-export function useOnlineNotificationsLazyQuery(options: VueApolloComposable.UseQueryOptions<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>> = {}) {
-  return VueApolloComposable.useLazyQuery<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>(OnlineNotificationsDocument, {}, options);
+export function useOnlineNotificationsLazyQuery(options?: VueApolloComposable.useLazyQuery.Options<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>) {
+  return VueApolloComposable.useLazyQuery<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>(OnlineNotificationsDocument, options);
 }
-export type OnlineNotificationsQueryCompositionFunctionResult = VueApolloComposable.UseQueryReturn<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>;
+export type OnlineNotificationsQueryCompositionFunctionResult = VueApolloComposable.useQuery.Result<Types.OnlineNotificationsQuery, Types.OnlineNotificationsQueryVariables>;
