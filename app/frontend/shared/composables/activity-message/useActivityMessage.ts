@@ -5,9 +5,18 @@ import { computed, type Ref } from 'vue'
 
 import { userDisplayName } from '#shared/entities/user/utils/getUserDisplayName.ts'
 import type { OnlineNotification } from '#shared/graphql/types.ts'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
+import { i18n } from '#shared/i18n.ts'
 import log from '#shared/utils/log.ts'
 
 import { activityMessageBuilder } from './activityMessageBuilder/index.ts'
+
+const actorName = (createdBy: OnlineNotification['createdBy']) => {
+  if (!createdBy) return ''
+  if (getIdFromGraphQLId(createdBy.id) === 1) return i18n.t('System')
+
+  return userDisplayName(createdBy)
+}
 
 export const useActivityMessage = (activity: Readonly<Ref<OnlineNotification>>) => {
   const builder = computed(() => activityMessageBuilder[activity.value.objectName])
@@ -17,7 +26,7 @@ export const useActivityMessage = (activity: Readonly<Ref<OnlineNotification>>) 
 
   const message = builder.value?.messageText(
     activity.value.typeName,
-    activity.value.createdBy ? userDisplayName(activity.value.createdBy) : '',
+    actorName(activity.value.createdBy),
     activity.value.metaObject,
   )
 

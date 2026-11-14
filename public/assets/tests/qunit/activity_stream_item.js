@@ -20,6 +20,13 @@ const renderGroupItem = (attributes) => {
 
 App.User.refresh([
   {
+    id: 1,
+    login: '-',
+    firstname: '-',
+    lastname: '',
+    active: false,
+  },
+  {
     id: 5,
     login: 'nicole.braun@zammad.org',
     firstname: 'Nicole',
@@ -40,6 +47,12 @@ QUnit.test('group activity by an existing user', assert => {
   const el = renderGroupItem({ created_by_id: 5 })
 
   assert.ok(el.find('.activity-text').text().includes('Nicole Braun'), 'message names the user')
+})
+
+QUnit.test('group activity by the system user', assert => {
+  const el = renderGroupItem({ created_by_id: 1 })
+
+  assert.equal(el.find('.activity-text').text().trim(), 'System updated group Users', 'message names the system user like the ticket history')
 })
 
 QUnit.test('group activity by a user who no longer exists', assert => {
