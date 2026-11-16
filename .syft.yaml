@@ -36,3 +36,6 @@ profiles:
     file:
       metadata:
         selection: none
+    # Zammad's own lint plugin. It ships only because the asset build needs it.
+    exclude:
+      - ./.eslint-plugin-zammad/**
