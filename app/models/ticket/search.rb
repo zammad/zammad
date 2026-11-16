@@ -174,40 +174,52 @@ returns if user has no permissions to search
       return if params[:query].blank?
       return if !search_customer_access?(params)
 
-      query_or = [search_query_condition_customer(params)]
+      customer_condition = search_query_condition_customer(params)
 
       group_ids = search_agent_group_ids(params)
-      if group_ids.present?
-        query_or.push(
-          {
-            bool: {
-              must: [
-                { terms: { group_id: group_ids } },
-                SearchIndexBackend.build_query_condition(params[:query], name, params),
-              ],
-            }
-          }
-        )
-      end
+      return customer_condition if group_ids.blank?
 
+      # The tickets of the agent groups match by the agent condition only, which covers all of their data (#6542).
       {
         bool: {
-          should: query_or,
+          should: [
+            {
+              bool: {
+                must:     [customer_condition],
+                must_not: [{ terms: { group_id: group_ids } }],
+              }
+            },
+            {
+              bool: {
+                must: [
+                  { terms: { group_id: group_ids } },
+                  SearchIndexBackend.build_query_condition(params[:query], name, params),
+                ],
+              }
+            },
+          ],
         }
       }
     end
 
+    # Each part of the query matches the ticket or one of its articles on its own (#6542).
     def search_query_condition_customer(params)
+      query = SearchIndexBackend.append_wildcard_to_simple_query(params[:query])
+
+      SearchIndexBackend::QueryString.new(query).to_bool { |part| search_query_condition_customer_part(part) }
+    end
+
+    def search_query_condition_customer_part(query)
       {
         bool: {
           should: [
-            search_query_condition_fields(search_query_condition_customer_query(params[:query]), CUSTOMER_SEARCH_FIELDS),
+            search_query_condition_fields(search_query_condition_customer_query(query), CUSTOMER_SEARCH_FIELDS),
             {
               nested: {
                 path:  'article',
                 query: {
                   bool: {
-                    must:   [search_query_condition_fields(params[:query], CUSTOMER_SEARCH_ARTICLE_FIELDS)],
+                    must:   [search_query_condition_fields(query, CUSTOMER_SEARCH_ARTICLE_FIELDS)],
                     filter: [{ term: { 'article.internal' => false } }],
                   }
                 }
@@ -227,7 +239,7 @@ returns if user has no permissions to search
     end
 
     def search_query_condition_fields(query, fields)
-      SearchIndexBackend.build_query_condition(query, name, query_fields_by_indexes: { name.to_sym => fields })
+      SearchIndexBackend.build_query_string_condition(query, name, query_fields_by_indexes: { name.to_sym => fields })
     end
   end
 end

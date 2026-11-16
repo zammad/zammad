@@ -535,4 +535,92 @@ RSpec.describe Ticket::Search do
       include_examples 'search for tickets'
     end
   end
+
+  describe 'Ticket Search: state.name exclusion ignored in the customer scope for dual-role (Agent+Customer) users #6542', searchindex: true do
+    let(:group)          { create(:group) }
+    let(:customer)       { create(:customer) }
+    let(:agent)          { create(:agent, groups: [group]) }
+    let(:agent_customer) { create(:agent_and_customer, groups: [group]) }
+    let(:title_term)     { "title#{SecureRandom.hex(8)}" }
+    let(:article_term)   { "article#{SecureRandom.hex(8)}" }
+    let(:closed_term)    { "closed#{SecureRandom.hex(8)}" }
+    let(:closed_state)   { Ticket::State.find_by(name: 'closed') }
+    let(:open_tickets)   { ticket_attributes.map { |attributes| create(:ticket, title: title_term, **attributes) } }
+    let(:closed_tickets) { ticket_attributes.map { |attributes| create(:ticket, title: title_term, state: closed_state, **attributes) } }
+
+    before do
+      open_tickets.each { |ticket| create(:ticket_article, ticket:, body: article_term) }
+      closed_tickets.each { |ticket| create(:ticket_article, ticket:, body: "#{article_term} #{closed_term}") }
+      searchindex_model_reload([Ticket])
+    end
+
+    def search(query)
+      Ticket.search(current_user: user, query: query)
+    end
+
+    shared_examples 'search for tickets with an exclusion' do
+      it 'does not find the closed tickets' do
+        expect(search('!state.name: closed')).to match_array(open_tickets)
+      end
+
+      it 'does not find the closed tickets via a field group' do
+        expect(search('state.name:(NOT closed)')).to match_array(open_tickets)
+      end
+
+      it 'does not find the closed tickets by an article' do
+        expect(search("#{article_term} !state.name:closed")).to match_array(open_tickets)
+      end
+
+      it 'finds the closed tickets by an article' do
+        expect(search("state.name:closed #{article_term}")).to match_array(closed_tickets)
+      end
+
+      it 'does not find the tickets by an excluded term of an article' do
+        expect(search("#{title_term} -#{closed_term}")).to match_array(open_tickets)
+      end
+    end
+
+    context 'when user is customer' do
+      let(:user)              { customer }
+      let(:ticket_attributes) { [{ group:, customer: }] }
+
+      include_examples 'search for tickets with an exclusion'
+    end
+
+    context 'when user is agent' do
+      let(:user)              { agent }
+      let(:ticket_attributes) { [{ group:, customer: }] }
+
+      include_examples 'search for tickets with an exclusion'
+    end
+
+    context 'when user is agent and customer' do
+      let(:user)              { agent_customer }
+      let(:ticket_attributes) { [{ group:, customer: }, { group: create(:group), customer: agent_customer }] }
+
+      include_examples 'search for tickets with an exclusion'
+
+      context 'with internal data' do
+        let(:internal_term) { "internal#{SecureRandom.hex(8)}" }
+        let(:tag)           { "tag#{SecureRandom.hex(8)}" }
+        let(:own_tickets)   { [open_tickets.last, closed_tickets.last] }
+
+        before do
+          (open_tickets + closed_tickets).each do |ticket|
+            create(:ticket_article, ticket:, body: internal_term, internal: true)
+            ticket.tag_add(tag, 1)
+          end
+          searchindex_model_reload([Ticket])
+        end
+
+        it 'does not find the tickets of the agent group by an excluded term of an internal article' do
+          expect(search("#{title_term} -#{internal_term}")).to match_array(own_tickets)
+        end
+
+        it 'does not find the tickets of the agent group by an excluded tag' do
+          expect(search("#{title_term} -tags:#{tag}")).to match_array(own_tickets)
+        end
+      end
+    end
+  end
 end
