@@ -327,12 +327,18 @@ const iconClasses =
     data-test-id="field-date"
     @focusout="onFieldFocusout"
   >
-    <!-- The groups are painted by the layer below, the input keeps the caret and the selection. -->
+    <!-- The groups are painted by the layer underneath, the input keeps the caret and paints the
+      selection over it. The selection colors are opaque and explicit: the system ones are
+      translucent on some platforms, letting the layer underneath show through, and their text
+      color differs, transparent on macOS. -->
     <input
       :id="context.id"
       ref="input"
       :name="context.node.name"
-      :class="[context.classes.input, 'grow text-transparent caret-black dark:caret-white']"
+      :class="[
+        context.classes.input,
+        'relative z-1 grow text-transparent caret-black selection:bg-blue-800 selection:text-white dark:caret-white',
+      ]"
       type="text"
       role="spinbutton"
       autocomplete="off"
