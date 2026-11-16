@@ -23,9 +23,33 @@ module HostnameSafetyCheck
   # @raise [StandardError] if hostname is not safe or cannot be resolved
   def self.validate!(hostname, allow_private: false, allow_loopback: false, allow_link_local: false)
     resolved = IPSocket.getaddress(hostname)
+    check_address!(hostname, resolved, allow_private:, allow_loopback:, allow_link_local:)
+
+    resolved
+  rescue => e
+    raise e if e.is_a?(SafetyError)
+
+    raise SafetyError.new(hostname) # rubocop:disable Style/RaiseArgs
+  end
+
+  # Returns all addresses the hostname resolves to that pass the same checks as .validate!, in resolver order.
+  # Unsafe addresses are left out, so a connection can fall back to another address without ever reaching them.
+  #
+  # @return [Array<String>] the safe addresses, empty if the hostname cannot be resolved
+  def self.safe_addresses(hostname, allow_private: false, allow_loopback: false, allow_link_local: false)
+    Addrinfo.getaddrinfo(hostname, nil, nil, :STREAM).map(&:ip_address).uniq.select do |address|
+      check_address!(hostname, address, allow_private:, allow_loopback:, allow_link_local:)
+    rescue SafetyError, IPAddr::Error
+      false
+    end
+  rescue SocketError
+    []
+  end
+
+  def self.check_address!(hostname, address, allow_private:, allow_loopback:, allow_link_local:)
     # An IPv4 address in IPv6 notation (::ffff:169.254.169.254, ::169.254.169.254) is judged as the
     # IPv4 address it stands for.
-    ip       = IPAddr.new(resolved).native
+    ip = IPAddr.new(address).native
 
     if METADATA_ENDPOINTS.any? { |network| network.include?(ip) }
       raise MetadataIpError.new(hostname, ip)
@@ -43,12 +67,9 @@ module HostnameSafetyCheck
       raise LinkLocalIpError.new(hostname, ip)
     end
 
-    resolved
-  rescue => e
-    raise e if e.is_a?(SafetyError)
-
-    raise SafetyError.new(hostname) # rubocop:disable Style/RaiseArgs
+    true
   end
+  private_class_method :check_address!
 
   class SafetyError < StandardError
     def initialize(hostname, ip = nil)
