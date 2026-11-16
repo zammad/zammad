@@ -5,7 +5,7 @@ require 'services/service/ai/tool/field_scope_examples'
 
 RSpec.describe Service::AI::Tool::SearchKnowledgeBase, :aggregate_failures do
   let(:knowledge_base) { create(:knowledge_base) }
-  let(:category)       { create(:knowledge_base_category, knowledge_base:) }
+  let(:category)       { create(:knowledge_base_category, knowledge_base:).tap { |record| record.translations.first.update!(title: 'Billing') } }
   let(:agent)          { create(:agent) }
 
   let!(:refund) do
@@ -67,6 +67,7 @@ RSpec.describe Service::AI::Tool::SearchKnowledgeBase, :aggregate_failures do
                                                  id:         refund.id,
                                                  title:      'Refunds for annual plans',
                                                  locale:     'en-us',
+                                                 category:   { id: category.id, path: 'Billing' },
                                                  visibility: 'internal',
                                                  edited_at:  refund.translations.first.edited_at,
                                                  text:       'Within 30 days of a renewal, a full refund is possible. After that, offer a credit for the remaining months.',
@@ -78,7 +79,7 @@ RSpec.describe Service::AI::Tool::SearchKnowledgeBase, :aggregate_failures do
         Knowledge base languages: en-us.
         Coverage: unknown — judge whether the answers fit the question.
 
-        Knowledge base answer #{refund.id} · en-us · internal · updated #{Service::AI::Tool::Output.time(refund.translations.first.edited_at)}
+        Knowledge base answer #{refund.id} · en-us · category Billing · internal · updated #{Service::AI::Tool::Output.time(refund.translations.first.edited_at)}
         <text source="knowledge_base" field="title">
         │ Refunds for annual plans
         </text>
@@ -311,7 +312,7 @@ RSpec.describe Service::AI::Tool::SearchKnowledgeBase, :aggregate_failures do
           Knowledge base languages: en-us.
           Coverage: covered — the first answer is clearly the closest to the question.
 
-          Knowledge base answer #{refund.id} · en-us · internal · updated
+          Knowledge base answer #{refund.id} · en-us · category Billing · internal · updated
         TEXT
       end
 
@@ -365,7 +366,7 @@ RSpec.describe Service::AI::Tool::SearchKnowledgeBase, :aggregate_failures do
 
         expect(result.content).to include(coverage: 'weak')
         expect(result.content[:answers]).to contain_exactly(include(id: outlook.id, contains: '0x8004010F'))
-        expect(result.text).to include("Knowledge base answer #{outlook.id} · en-us · public · updated").and include('· contains 0x8004010F')
+        expect(result.text).to include("Knowledge base answer #{outlook.id} · en-us · category Billing · public · updated").and include('· contains 0x8004010F')
       end
 
       it 'does not take a longer identifier that begins or ends with it for it' do
@@ -473,6 +474,26 @@ RSpec.describe Service::AI::Tool::SearchKnowledgeBase, :aggregate_failures do
       end
     end
 
+    context 'with response_format detailed' do
+      let(:medium_text) { "#{'Background on the address book. ' * 20}Remove the account and add it again." }
+      let(:hits)        { [hit(outlook, 0.86, 'Remove the account and add it again.'), hit(cancel, 0.80)] }
+
+      before do
+        outlook.translations.first.content.update!(body: medium_text)
+        outlook.tag_add('outlook', 1)
+      end
+
+      it 'shows the best answers with their text and every answer with its tags, which the concise layer leaves out' do
+        concise  = perform.content[:answers]
+        detailed = perform({ response_format: 'detailed' }).content[:answers]
+
+        expect(concise.first).to include(text: 'Remove the account and add it again.', truncated: true, part: 'passage')
+        expect(concise).to all(not_include(:tags))
+        expect(detailed.first).to include(text: medium_text, truncated: false, tags: ['outlook'])
+        expect(detailed.second).to include(tags: [])
+      end
+    end
+
     context 'with an answer edited since the index took its passage' do
       let(:long_text) { "#{'The first part of a long answer. ' * 80}Refunds are possible within fourteen days." }
       let(:long)      { answer('Refunds paid by invoice', long_text, :published) }
@@ -508,7 +529,7 @@ RSpec.describe Service::AI::Tool::SearchKnowledgeBase, :aggregate_failures do
           Knowledge base languages: en-us.
           Coverage: unknown — judge whether the answers fit the question.
 
-          Knowledge base answer #{refund.id} · en-us · internal · updated
+          Knowledge base answer #{refund.id} · en-us · category Billing · internal · updated
         TEXT
       end
 
@@ -624,7 +645,7 @@ RSpec.describe Service::AI::Tool::SearchKnowledgeBase, :aggregate_failures do
           Knowledge base languages: en-us.
           Coverage: unknown — judge whether the answers fit the question.
 
-          Knowledge base answer #{refund.id} · en-us · internal · updated
+          Knowledge base answer #{refund.id} · en-us · category Billing · internal · updated
         TEXT
       end
 
@@ -652,7 +673,7 @@ RSpec.describe Service::AI::Tool::SearchKnowledgeBase, :aggregate_failures do
 
         expect(result.content).to include(mode: 'keyword', coverage: 'unknown')
         expect(result.content[:answers]).to contain_exactly(include(id: outlook.id, contains: '0x8004010F'))
-        expect(result.text).to include("Knowledge base answer #{outlook.id} · en-us · public · updated").and include('· contains 0x8004010F')
+        expect(result.text).to include("Knowledge base answer #{outlook.id} · en-us · category Billing · public · updated").and include('· contains 0x8004010F')
       end
 
       it 'leaves out the drafts and archived answers that hold the identifier, which an editor may see' do
@@ -803,7 +824,7 @@ RSpec.describe Service::AI::Tool::SearchKnowledgeBase, :aggregate_failures do
 
         expect(ids(result)).to eq([cancel.id])
         expect(result.content[:answers].first).not_to include(:edited_at)
-        expect(result.text).to include("Knowledge base answer #{cancel.id} · en-us · public\n")
+        expect(result.text).to include("Knowledge base answer #{cancel.id} · en-us · category Billing · public\n")
       end
 
       it 'finds only the published answers by an identifier too' do

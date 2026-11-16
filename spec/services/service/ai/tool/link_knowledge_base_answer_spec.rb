@@ -60,7 +60,10 @@ RSpec.describe Service::AI::Tool::LinkKnowledgeBaseAnswer, :aggregate_failures d
     expect(result[:isError]).to be(false)
     expect(result[:structuredContent]).to eq(
       'ticket'        => { 'id' => ticket.id, 'number' => ticket.number, 'url' => "https://support.example.com/#ticket/zoom/#{ticket.id}" },
-      'answer'        => { 'type' => 'KnowledgeBase::Answer', 'id' => answer.id, 'title' => 'Reconnect the branch VPN', 'locale' => 'en-us', 'url' => url },
+      'answer'        => {
+        'type' => 'KnowledgeBase::Answer', 'id' => answer.id, 'title' => 'Reconnect the branch VPN', 'locale' => 'en-us',
+        'category' => { 'id' => category.id, 'path' => category.translations.first.title }, 'url' => url
+      },
       'linked_before' => false,
     )
     expect(output_schema_errors(described_class.tool_output_schema, result[:structuredContent])).to be_empty

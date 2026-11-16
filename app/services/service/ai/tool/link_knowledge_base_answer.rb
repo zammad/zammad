@@ -95,11 +95,12 @@ class Service::AI::Tool::LinkKnowledgeBaseAnswer < Service::AI::Tool
 
   def answer_reference
     {
-      type:   'KnowledgeBase::Answer',
-      id:     answer.id,
-      title:  translation.title,
+      type:     'KnowledgeBase::Answer',
+      id:       answer.id,
+      title:    translation.title,
       locale:,
-      url:    Service::AI::Tool::ObjectLink.url(type: 'KnowledgeBase::Answer', id: answer.id, locale:),
+      category: Service::AI::Tool::Output::KnowledgeBaseAnswer.categories([translation]).fetch(translation.id),
+      url:      Service::AI::Tool::ObjectLink.url(type: 'KnowledgeBase::Answer', id: answer.id, locale:),
     }
   end
 end

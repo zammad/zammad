@@ -333,9 +333,10 @@ class Service::AI::Tool::GetTicket < Service::AI::Tool
   def linked_answer_rows
     @linked_answer_rows ||= begin
       shown = linked_answers.first(REFERENCE_ROWS)
-      ActiveRecord::Associations::Preloader.new(records: shown.pluck(:item), associations: { kb_locale: :system_locale }).call
+      ActiveRecord::Associations::Preloader.new(records: shown.pluck(:item), associations: [:answer, { kb_locale: :system_locale }]).call
+      categories = Service::AI::Tool::Output::KnowledgeBaseAnswer.categories(shown.pluck(:item))
 
-      shown.map { |link| Service::AI::Tool::Output::KnowledgeBaseAnswer.row(link[:item], content: { link: link[:type] }) }
+      shown.map { |link| Service::AI::Tool::Output::KnowledgeBaseAnswer.row(link[:item], category: categories[link[:item].id], content: { link: link[:type] }) }
     end
   end
 

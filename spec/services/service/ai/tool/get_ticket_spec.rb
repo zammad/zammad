@@ -259,15 +259,16 @@ RSpec.describe Service::AI::Tool::GetTicket, :aggregate_failures do
     end
 
     it 'lists the linked knowledge base answers the user may see' do
-      published = create(:knowledge_base_answer, :published, translation_attributes: { title: 'Outlook sync after an update' })
+      category  = create(:knowledge_base_category).tap { |record| record.translations.first.update!(title: 'Email') }
+      published = create(:knowledge_base_answer, :published, category:, translation_attributes: { title: 'Outlook sync after an update' })
       create(:link, from: ticket, to: published.translations.first)
       create(:link, from: ticket, to: create(:knowledge_base_answer, :draft).translations.first)
 
       result = perform
       locale = published.translations.first.kb_locale.system_locale.locale
 
-      expect(result.content[:references][:knowledge_base_answers]).to eq([{ type: 'KnowledgeBase::Answer', id: published.id, title: 'Outlook sync after an update', locale:, link: 'normal' }])
-      expect(result.text).to include("Linked knowledge base answers: 1.\n\nKnowledge base answer #{published.id} · #{locale}\n<text source=\"knowledge_base\" field=\"title\">\n│ Outlook sync after an update\n</text>")
+      expect(result.content[:references][:knowledge_base_answers]).to eq([{ type: 'KnowledgeBase::Answer', id: published.id, title: 'Outlook sync after an update', locale:, category: { id: category.id, path: 'Email' }, link: 'normal' }])
+      expect(result.text).to include("Linked knowledge base answers: 1.\n\nKnowledge base answer #{published.id} · #{locale} · category Email\n<text source=\"knowledge_base\" field=\"title\">\n│ Outlook sync after an update\n</text>")
     end
 
     it 'names the external references only while their integration is on' do
