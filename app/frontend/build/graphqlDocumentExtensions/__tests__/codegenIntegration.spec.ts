@@ -78,4 +78,15 @@ describe('documentTransforms propagation through near-operation-file preset', ()
     expect(content).toContain("import * as VueApolloComposable from '@vue/apollo-composable';")
     expect(content).toContain('VueApolloComposable.useQuery.Options')
   })
+
+  // An operation importing a fragment document only brings along the fragments
+  // the preset knows of, never one an extension merged into that document.
+  it('lets a fragment document bring along a fragment merged into it', async () => {
+    const content = await generate('fragmentDocumentBase', [
+      './app/frontend/build/vueApolloV5Plugin.js',
+    ])
+
+    expect(content).toContain('...userEntityAttributes')
+    expect(content).toMatch(/\$\{UserEntityAttributesFragmentDoc\}`/)
+  })
 })

@@ -22,6 +22,20 @@ class VueApolloV5Visitor extends VueApolloVisitor {
     return ''
   }
 
+  // A fragment document leaves the fragments it spreads to the operations
+  // importing it. They never see a fragment an add-on extension merged into
+  // the document, so the document brings along the ones defined next to it.
+  _includeFragments(fragments, nodeKind) {
+    if (nodeKind !== Kind.FRAGMENT_DEFINITION) return super._includeFragments(fragments, nodeKind)
+
+    return Array.from(this._fragments.values())
+      .filter((fragment) => !fragment.isExternal)
+      .map((fragment) => this.getFragmentVariableName(fragment.name))
+      .filter((name) => fragments.includes(name))
+      .map((name) => `\${${name}}`)
+      .join('\n')
+  }
+
   buildCompositionFunction({
     operationName,
     operationType,
