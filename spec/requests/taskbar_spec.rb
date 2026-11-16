@@ -79,6 +79,48 @@ RSpec.describe 'Taskbars', type: :request do
     end
   end
 
+  describe 'GET /api/v1/taskbar/:id', authenticated_as: :agent do
+    let!(:taskbar) { create(:taskbar, user: agent) }
+
+    it 'returns the requested taskbar' do
+      expect { get "/api/v1/taskbar/#{taskbar.id}", as: :json }.not_to change(Taskbar, :count)
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to include('id' => taskbar.id, 'user_id' => agent.id, 'key' => taskbar.key)
+    end
+
+    it 'does not create a taskbar from request params' do
+      params = {
+        user_id:  customer.id,
+        key:      'Ticket-12345',
+        callback: 'TicketZoom',
+        params:   { ticket_id: 12_345 },
+        prio:     1,
+      }
+
+      expect { get "/api/v1/taskbar/#{taskbar.id}", params: params, as: :json }.not_to change(Taskbar, :count)
+
+      expect(response).to have_http_status(:ok)
+      expect(json_response).to include('id' => taskbar.id, 'key' => taskbar.key)
+      expect(customer.taskbars).to be_empty
+    end
+
+    it 'refuses a taskbar of another user' do
+      other_taskbar = create(:taskbar, user: customer)
+
+      get "/api/v1/taskbar/#{other_taskbar.id}", as: :json
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(json_response['error']).to eq('Not allowed to access this task.')
+    end
+
+    it 'returns not found for an unknown taskbar' do
+      get "/api/v1/taskbar/#{Taskbar.maximum(:id) + 1}", as: :json
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
   describe 'Init', authenticated_as: :agent do
     let(:tickets)       { create_list(:ticket, 3, group: Group.first) }
     let(:customers)     { create_list(:customer, 3) }

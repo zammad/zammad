@@ -10,7 +10,7 @@ class TaskbarController < ApplicationController
   end
 
   def show
-    model_create_render(Taskbar, params)
+    model_show_render(Taskbar, params)
   end
 
   def create
