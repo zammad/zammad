@@ -184,6 +184,35 @@ RSpec.describe BackgroundServices do
     end
   end
 
+  describe '#monitor_child_processes', ensure_threads_exited: true do
+    let(:running_pid)  { Process.fork { sleep } }
+    let(:died_pid)     { Process.fork { exit! } }
+    let(:kill_tracker) { { called: false } }
+
+    before do
+      stub_const("#{described_class}::CHILD_PROCESS_MONITOR_INTERVAL", 0.1)
+
+      allow(Process).to receive(:kill).and_call_original
+      allow(Process).to receive(:kill).with('TERM', Process.pid) { kill_tracker[:called] = true }
+
+      # The died child is not the first one, so nothing has waited for it yet (zombie).
+      instance.child_pids = [running_pid, died_pid]
+      instance.send(:monitor_child_processes)
+
+      deadline = 3.seconds.from_now
+      sleep 0.05 until kill_tracker[:called] || Time.zone.now > deadline
+    end
+
+    after do
+      Process.kill('KILL', running_pid)
+      Process.wait(running_pid)
+    end
+
+    it 'terminates the background worker if a child process died' do
+      expect(Process).to have_received(:kill).with('TERM', Process.pid)
+    end
+  end
+
   # The file watcher thread must not survive the examples: it would keep polling all watchable
   #   paths for the rest of the suite and crash unrelated examples when a file it just globbed
   #   is removed again (e.g. by the package specs).

@@ -40,7 +40,11 @@ class BackgroundServices
     monitor_child_processes
     restart_on_file_changes if Rails.application.config.reloading_enabled? # e.g. in development environment
 
-    child_pids.each { |pid| Process.waitpid(pid) }
+    child_pids.each do |pid|
+      Process.waitpid(pid)
+    rescue Errno::ECHILD
+      # Already reaped by the child process monitor.
+    end
     threads.each(&:join)
   ensure
     Rails.logger.info('Stopping BackgroundServices.')
@@ -75,8 +79,8 @@ class BackgroundServices
 
       until self.class.shutdown_requested
         child_pids.each do |child_pid|
-          Process.getpgid(child_pid)
-        rescue Errno::ESRCH
+          next if !child_process_exited?(child_pid)
+
           Rails.logger.error { "BackgroundServices child process #{child_pid} has died, terminating the background worker…" }
           Process.kill('TERM', Process.pid)
           Thread.current.exit
@@ -84,6 +88,13 @@ class BackgroundServices
         sleep CHILD_PROCESS_MONITOR_INTERVAL
       end
     end
+  end
+
+  # Reaps the child if it exited: a not yet reaped (zombie) child still looks alive to getpgid on Linux.
+  def child_process_exited?(pid)
+    Process.waitpid(pid, Process::WNOHANG).present?
+  rescue Errno::ECHILD
+    true # Already reaped by the main thread.
   end
 
   # If codebase reloading is enabled, trigger a process shutdown if a file change is detected.
