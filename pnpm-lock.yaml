@@ -403,8 +403,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0(graphql@17.1.0)
       '@graphql-codegen/near-operation-file-preset':
-        specifier: ^6.0.0
-        version: 6.0.0(graphql@17.1.0)
+        specifier: ^6.0.1
+        version: 6.0.1(graphql@17.1.0)
       '@graphql-codegen/plugin-helpers':
         specifier: ^8.0.0
         version: 8.0.0(graphql@17.1.0)
@@ -418,7 +418,7 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0(graphql-tag@2.12.7(graphql@17.1.0))(graphql@17.1.0)
       '@graphql-codegen/visitor-plugin-common':
-        specifier: ^8.0.1
+        specifier: ^8.0.2
         version: 8.0.2(graphql@17.1.0)
       '@pinia/testing':
         specifier: ^2.0.2
@@ -1526,8 +1526,8 @@ packages:
     peerDependencies:
       graphql: ^16.0.0 || ^17.0.0
 
-  '@graphql-codegen/near-operation-file-preset@6.0.0':
-    resolution: {integrity: sha512-Yu5fOmp04mjNF17DEe83gYFaB2i7A4j4B9PVZuuamSIEVBI5b6kwQEh4u47VBnDNlAnG26qIeCVxeirAxPfHPw==}
+  '@graphql-codegen/near-operation-file-preset@6.0.1':
+    resolution: {integrity: sha512-BbTS54RLNQUKtOynyaL948pMfEQw91kGmrincsawoHGihhck/qQcoJPzh6iVQzTnZaDod10wQ2lmGPHaEGYQDg==}
     engines: {node: '>=22.18.0'}
     peerDependencies:
       graphql: ^16.0.0 || ^17.0.0
@@ -8100,12 +8100,12 @@ snapshots:
       graphql: 17.1.0
       tslib: 2.9.1
 
-  '@graphql-codegen/near-operation-file-preset@6.0.0(graphql@17.1.0)':
+  '@graphql-codegen/near-operation-file-preset@6.0.1(graphql@17.1.0)':
     dependencies:
       '@graphql-codegen/add': 8.0.0(graphql@17.1.0)
       '@graphql-codegen/plugin-helpers': 8.0.0(graphql@17.1.0)
       '@graphql-codegen/visitor-plugin-common': 8.0.2(graphql@17.1.0)
-      '@graphql-tools/utils': 11.2.2(graphql@17.1.0)
+      '@graphql-tools/utils': 13.2.2(graphql@17.1.0)
       graphql: 17.1.0
       parse-filepath: 1.0.2
       tslib: 2.9.1
