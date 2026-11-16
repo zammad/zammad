@@ -96,7 +96,10 @@ Doorkeeper.configure do
   # by default in non-development environments). OAuth2 delegates security in
   # communication to the HTTPS protocol so it is wise to keep this enabled.
   #
-  # force_ssl_in_redirect_uri !Rails.env.development?
+  # Native apps receive the code on a loopback IP literal over http (RFC 8252 sections 7.3 and 8.3).
+  force_ssl_in_redirect_uri do |uri|
+    !Rails.env.development? && !(uri.scheme == 'http' && %w[127.0.0.1 ::1].include?(uri.hostname))
+  end
 
   # Specify what grant flows are enabled in array of Strings. The valid
   # strings and the flows they enable are:
