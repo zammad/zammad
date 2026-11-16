@@ -187,6 +187,17 @@ RSpec.describe Sessions::Event::ChatSessionStart do
     end
   end
 
+  context 'when starting a chat session that has tags' do
+    it 'sends the tags to the agent' do
+      chat_session.tag_add('vip', 1)
+      subject_as_agent.run
+
+      expect(Sessions.queue(client_id).first).to include(
+        'data' => hash_including('session' => hash_including('tags' => ['vip']))
+      )
+    end
+  end
+
   context 'when starting a chat session as agent with transferred conversation' do
     it 'send out chat_session_start to customer and agent with already created messages' do
       chat_message_history
