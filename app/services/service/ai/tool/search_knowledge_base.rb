@@ -93,9 +93,10 @@ class Service::AI::Tool::SearchKnowledgeBase < Service::AI::Tool
               '(mode "keyword") or by meaning (mode "semantic"). By words, the query takes words or Lucene query ' \
               'syntax, as Zammad\'s knowledge base search does: fields such as title: or tags:, quotes for a phrase, ' \
               'AND, OR, NOT. By meaning, it takes a ' \
-              'short question and says how well the answers fit. The best answers come with their text, the others ' \
-              'with the part that matched; get_knowledge_base_answer reads one in full. Pass next_cursor as cursor, ' \
-              'with the same other arguments, for more answers.',
+              'short question and says how well the answers fit. Each answer comes with its category and the part that ' \
+              'matched; with response_format "detailed", the best answers come with their text and every answer with ' \
+              'its tags. get_knowledge_base_answer reads one in full. Pass next_cursor as cursor, with the same other ' \
+              'arguments, for more answers.',
               harness: 'Without mode, it searches by meaning.',
               mcp:     'Without mode, it searches by words.'
   # rubocop:disable-next Zammad/DetectTranslatableString
@@ -121,6 +122,9 @@ class Service::AI::Tool::SearchKnowledgeBase < Service::AI::Tool
                                     'base. semantic searches by meaning, where the helpdesk has it set up, and says how ' \
                                     'well the answers fit: for a question in the user\'s own words, or in another ' \
                                     'language than the knowledge base\'s.'
+  parameter :response_format, type: :string, enum: %w[concise detailed], default: 'concise',
+                              description: 'concise: each answer with its category and the part that matched. detailed: ' \
+                                           'the best answers with their text as well, every answer with its tags.'
   parameter :cursor, type: :string, description: 'next_cursor of the previous result, for the next answers.'
 
   def self.available?
@@ -417,17 +421,30 @@ class Service::AI::Tool::SearchKnowledgeBase < Service::AI::Tool
     result.body_preview.map(&:text).join if result.body_preview.any?(&:highlight)
   end
 
-  # The best answers of the whole search come with their text, the others with the part that matched.
+  def detailed?
+    argument(:response_format) == 'detailed'
+  end
+
   def rows
     @rows ||= begin
       translations = page.pluck(:translation)
       ActiveRecord::Associations::Preloader.new(records: translations, associations: [:content, :answer, { kb_locale: :system_locale }]).call
+      categories = Service::AI::Tool::Output::KnowledgeBaseAnswer.categories(translations)
+      tags       = detailed? ? Service::AI::Tool::Output::KnowledgeBaseAnswer.tags(translations.map(&:answer_id)) : {}
 
-      page.each_with_index.map { |hit, index| row_of(hit, offset + index < FULL_TEXTS ? TEXT_LENGTH : EXCERPT_LENGTH) }
+      page.each_with_index.map do |hit, index|
+        row_of(hit, text_length(index), category: categories[hit[:translation].id], tags: tags[hit[:translation].answer_id])
+      end
     end
   end
 
-  def row_of(hit, length)
+  # In the detailed layer, the best answers of the whole search come with their text; every other answer comes with the
+  #   part that matched.
+  def text_length(index)
+    detailed? && offset + index < FULL_TEXTS ? TEXT_LENGTH : EXCERPT_LENGTH
+  end
+
+  def row_of(hit, length, category:, tags:)
     translation = hit[:translation]
 
     Service::AI::Tool::Output::KnowledgeBaseAnswer.part(
@@ -435,6 +452,8 @@ class Service::AI::Tool::SearchKnowledgeBase < Service::AI::Tool
       length:,
       passage:   hit[:passage],
       edited_at: (translation.edited_at if field_visible?(translation, :edited_at)),
+      category:,
+      tags:,
       content:   { contains: hit[:contains] }.compact,
       facts:     [("contains #{hit[:contains]}" if hit[:contains])],
     )

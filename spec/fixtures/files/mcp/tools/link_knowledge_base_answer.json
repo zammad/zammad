@@ -72,6 +72,22 @@
           "locale": {
             "type": "string"
           },
+          "category": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "path": {
+                "type": "string",
+                "description": "The titles of the category and the categories above it, the top one first, as in \"Setup / Email\"."
+              }
+            },
+            "required": [
+              "id",
+              "path"
+            ]
+          },
           "url": {
             "type": "string",
             "description": "Link to the answer in Zammad."
@@ -81,7 +97,8 @@
           "type",
           "id",
           "title",
-          "locale"
+          "locale",
+          "category"
         ],
         "description": "The answer, in the locale of the text linked."
       },
