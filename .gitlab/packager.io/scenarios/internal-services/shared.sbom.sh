@@ -3,6 +3,7 @@
 set -eu
 
 # A broken scan configuration still produces a valid, but incomplete SBOM.
+# Same check as .gitlab/sbom/verify.sh, which is outside of the image's build context.
 SBOM=/opt/zammad/sbom.cdx.json
 
 if [ ! -s "$SBOM" ]; then
