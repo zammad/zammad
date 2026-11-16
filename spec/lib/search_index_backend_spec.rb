@@ -1529,6 +1529,24 @@ RSpec.describe SearchIndexBackend do
     end
   end
 
+  describe 'Ticket can not be indexed if article preferences contain values of changing types #6556', searchindex: true do
+    let(:ticket_date)   { create(:ticket) }
+    let(:ticket_string) { create(:ticket) }
+
+    before do
+      create(:ticket_article, ticket: ticket_date, preferences: { special: { version: '2026-11-10' } })
+      create(:ticket_article, ticket: ticket_string, preferences: { special: { version: '2026-11-10-candidate-only' } })
+      ticket_date.search_index_update_backend
+      ticket_string.search_index_update_backend
+      described_class.refresh
+    end
+
+    it 'does index both tickets', :aggregate_failures do
+      expect(described_class.search('article.preferences.special.version: "2026-11-10"', 'Ticket').pluck(:id)).to eq([ticket_date.id.to_s])
+      expect(described_class.search('article.preferences.special.version: "2026-11-10-candidate-only"', 'Ticket').pluck(:id)).to eq([ticket_string.id.to_s])
+    end
+  end
+
   describe 'works with special characters', performs_jobs: true, searchindex: true do
     # Verify fix for Github issue #2058 - Autocomplete hangs on dot in the new user form
     it 'does searching for organization with a dot in its name' do
@@ -1652,6 +1670,12 @@ RSpec.describe SearchIndexBackend do
   end
 
   describe '.get_mapping_properties_object' do
+    it 'maps article preferences as flattened (#6556)' do
+      mapping = described_class.get_mapping_properties_object(Ticket)
+
+      expect(mapping.dig(:properties, :article, :properties, 'preferences')).to eq(type: 'flattened')
+    end
+
     context 'with multi-value object attributes (#6130)', db_strategy: :reset do
       let(:screens) { { create_middle: { '-all-' => { shown: true, required: false } } } }
 

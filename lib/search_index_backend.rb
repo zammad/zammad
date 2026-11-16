@@ -1055,6 +1055,7 @@ helper method for making HTTP calls and raising error if response was not succes
       result[:properties][:article] = {
         type:              'nested',
         include_in_parent: true,
+        properties:        Ticket::Article.columns_hash.slice(*STORE_NAMES).transform_values { { type: 'flattened' } },
       }
     end
 
