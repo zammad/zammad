@@ -61,15 +61,16 @@ class Channel::Driver::Imap < Channel::Driver::BaseEmailInbound
   end
 
   def fetch_message_ids(filter)
+    # Sequence numbers change when another IMAP session expunges messages.
     raise if @imap.capabilities.exclude?('SORT')
 
     {
-      result:      @imap.sort(['DATE'], filter, 'US-ASCII'),
+      result:      @imap.uid_sort(['DATE'], filter, 'US-ASCII'),
       is_fallback: false
     }
   rescue
     {
-      result:      @imap.search(filter),
+      result:      @imap.uid_search(filter),
       is_fallback: true # indicates that we can not use a result ordered by date
     }
   end
@@ -234,11 +235,11 @@ returns
 
   def fetch_single_message(message_id, count, count_all) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     message_meta = Timeout.timeout(FETCH_METADATA_TIMEOUT) do
-      @imap.fetch(message_id, ['RFC822.SIZE', 'FLAGS', 'INTERNALDATE', 'RFC822.HEADER'])[0]
+      uid_fetch_message(message_id, ['RFC822.SIZE', 'FLAGS', 'INTERNALDATE', 'RFC822.HEADER'])
     rescue Net::IMAP::ResponseParseError => e
       raise if e.message.exclude?('unknown token')
 
-      notice += <<~NOTICE
+      notice = <<~NOTICE
         One of your incoming emails could not be imported (#{e.message}).
         Please remove it from your inbox directly
         to prevent Zammad from trying to import it again.
@@ -246,12 +247,20 @@ returns
       Rails.logger.error "Net::IMAP failed to parse message #{message_id}: #{e.message} (#{e.class})"
       Rails.logger.error '(See https://github.com/zammad/zammad/issues/2754 for more details)'
 
+      # net-imap closes the connection on a parse error, so the remaining messages need a new one.
+      setup_connection(@options)
+
       return MessageResult.new(success: false, after_action: [:result_error, notice])
     end
 
-    return MessageResult.new(success: false) if message_meta.nil?
+    headers = self.class.extract_rfc822_headers(message_meta)
+    if !headers
+      Rails.logger.info "  - ignore message #{count}/#{count_all} - because no headers could be fetched for message (UID #{message_id})"
 
-    message_validator = MessageValidator.new(self.class.extract_rfc822_headers(message_meta), message_meta.attr['RFC822.SIZE'])
+      return MessageResult.new(success: false)
+    end
+
+    message_validator = MessageValidator.new(headers, message_meta.attr['RFC822.SIZE'])
 
     if message_validator.fresh_verify_message?
       Rails.logger.info "  - ignore message #{count}/#{count_all} - because message has a verify message"
@@ -267,18 +276,27 @@ returns
     # ignore already imported
     if message_validator.already_imported?(@keep_on_server, @channel)
       Timeout.timeout(1.minute) do
-        @imap.store(message_id, '+FLAGS', [:Seen])
+        @imap.uid_store(message_id, '+FLAGS.SILENT', [:Seen])
       end
       Rails.logger.info "  - ignore message #{count}/#{count_all} - because message message id already imported"
 
       return MessageResult.new(success: false)
     end
 
+    # Decided before the body fetch, which would set \Seen and hide the message from the next keep_on_server run.
+    too_large_info = message_validator.too_large?
+    if too_large_info && Setting.get('postmaster_send_reject_if_mail_too_large') != true
+      info = "  - ignore message #{count}/#{count_all} - because message is too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB)"
+      Rails.logger.info info
+
+      return MessageResult.new(success: false, after_action: [:too_large_ignored, "#{info}\n"])
+    end
+
     # fetch message body
     msg = begin
       Timeout.timeout(FETCH_MSG_TIMEOUT) do
         key = fetch_message_body_key(@options)
-        @imap.fetch(message_id, key)[0].attr[key]
+        uid_fetch_message(message_id, key)&.attr&.dig(key)
       end
     rescue Timeout::Error => e
       Rails.logger.error "Unable to fetch email from #{count}/#{count_all} from server (#{@options[:host]}/#{@options[:user]}): #{e.inspect}"
@@ -286,22 +304,17 @@ returns
     end
 
     if !msg
+      Rails.logger.info "  - ignore message #{count}/#{count_all} - because message (UID #{message_id}) was removed from the server before its body could be fetched"
+
       return MessageResult.new(success: false)
     end
 
     # do not process too big messages, instead download & send postmaster reply
-    if (too_large_info = message_validator.too_large?)
-      if Setting.get('postmaster_send_reject_if_mail_too_large') == true
-        info = "  - download message #{count}/#{count_all} - ignore message because it's too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB)"
-        Rails.logger.info info
-        after_action = [:notice, "#{info}\n"]
-        process_oversized_mail(@channel, msg)
-      else
-        info = "  - ignore message #{count}/#{count_all} - because message is too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB)"
-        Rails.logger.info info
-
-        return MessageResult.new(success: false, after_action: [:too_large_ignored, "#{info}\n"])
-      end
+    if too_large_info
+      info = "  - download message #{count}/#{count_all} - ignore message because it's too large (is:#{too_large_info[0]} MB/max:#{too_large_info[1]} MB)"
+      Rails.logger.info info
+      after_action = [:notice, "#{info}\n"]
+      process_oversized_mail(@channel, msg)
     elsif (unprocessed = process_message(msg, count, count_all))
       # Not even an error ticket could be created. The body fetch above implicitly set \Seen, which would hide
       #   the message from the next run with keep_on_server, so it is made unread again to be retried.
@@ -314,9 +327,9 @@ returns
     begin
       Timeout.timeout(FETCH_MSG_TIMEOUT) do
         if @keep_on_server
-          @imap.store(message_id, '+FLAGS', [:Seen])
+          @imap.uid_store(message_id, '+FLAGS.SILENT', [:Seen])
         else
-          @imap.store(message_id, '+FLAGS', [:Deleted])
+          @imap.uid_store(message_id, '+FLAGS.SILENT', [:Deleted])
         end
       end
     rescue Timeout::Error => e
@@ -332,7 +345,7 @@ returns
   #   unread again to be retried; a message that became a ticket is marked seen as before.
   def keep_unread(message_id, count, count_all)
     Timeout.timeout(FETCH_MSG_TIMEOUT) do
-      @imap.store(message_id, '-FLAGS', [:Seen])
+      @imap.uid_store(message_id, '-FLAGS.SILENT', [:Seen])
     end
   rescue Timeout::Error => e
     Rails.logger.error "Unable to set -FLAGS for email #{count}/#{count_all} on server (#{@options[:host]}/#{@options[:user]}): #{e.inspect}"
@@ -371,29 +384,50 @@ returns
   end
 
   def check_single_message(message_id)
-    message_meta = Timeout.timeout(FETCH_METADATA_TIMEOUT) do
-      @imap.fetch(message_id, ['RFC822.HEADER'])[0]
-    end
+    headers = fetch_headers(message_id)
+    return if !headers
 
-    MessageValidator.new(self.class.extract_rfc822_headers(message_meta))
+    MessageValidator.new(headers)
   end
 
   def verify_single_message(message_id, verify_string)
-    message_meta = Timeout.timeout(FETCH_METADATA_TIMEOUT) do
-      @imap.fetch(message_id, ['RFC822.HEADER'])[0]
-    end
-
-    # check if verify message exists
-    headers = self.class.extract_rfc822_headers(message_meta)
+    headers = fetch_headers(message_id)
+    return if !headers
 
     headers['Subject']&.match?(%r{#{verify_string}})
   end
 
   def verify_message_cleanup(message_id)
     Timeout.timeout(EXPUNGE_TIMEOUT) do
-      @imap.store(message_id, '+FLAGS', [:Deleted])
-      @imap.expunge
+      @imap.uid_store(message_id, '+FLAGS.SILENT', [:Deleted])
+
+      # A plain EXPUNGE would also remove messages that another client has only flagged as deleted.
+      # IMAP4rev2 includes UIDPLUS without announcing it (RFC 9051).
+      if @imap.capabilities.intersect?(%w[UIDPLUS IMAP4rev2])
+        @imap.uid_expunge(message_id)
+      else
+        @imap.expunge
+      end
     end
+  end
+
+  def fetch_headers(message_id)
+    message_meta = Timeout.timeout(FETCH_METADATA_TIMEOUT) do
+      uid_fetch_message(message_id, ['RFC822.HEADER'])
+    end
+
+    self.class.extract_rfc822_headers(message_meta)
+  end
+
+  # The server may send untagged FETCH responses for other messages during the command (RFC 3501 section 7),
+  #   e.g. when another session changes their flags, and may split the data of the requested message across
+  #   several responses (e.g. a separate one for the implicit \Seen of a body fetch). UID is requested explicitly
+  #   for servers that leave it out despite RFC 3501 section 6.4.8.
+  def uid_fetch_message(message_id, attributes)
+    responses = @imap.uid_fetch(message_id, Array(attributes) | ['UID'])&.select { |data| data.uid == message_id }
+    return if responses.blank?
+
+    Net::IMAP::FetchData.new(responses.first.seqno, responses.map(&:attr).reduce(:merge))
   end
 
   def authentication_error_class
