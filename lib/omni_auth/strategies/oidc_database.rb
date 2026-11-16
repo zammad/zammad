@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class OmniAuth::Strategies::OidcDatabase < OmniAuth::Strategies::OpenIDConnect
+  include OmniAuth::Strategies::DatabaseSettings
+
   option :name, 'openid_connect'
 
   def self.setup
@@ -32,12 +34,6 @@ class OmniAuth::Strategies::OidcDatabase < OmniAuth::Strategies::OpenIDConnect
     env['rack.session.options'][:expire_after] = nil
 
     session.destroy
-  end
-
-  def initialize(app, *args, &)
-    args[0] = self.class.setup
-
-    super
   end
 
   def decode_logout_token(logout_token)

@@ -34,7 +34,7 @@ module Gql::Mutations::Concerns::Logout::HandlesOidcAuthorization
     private
 
     def oidc_strategy
-      @oidc_strategy ||= OmniAuth::Strategies::OidcDatabase.new(OmniAuth::Strategies::OidcDatabase.setup)
+      @oidc_strategy ||= OmniAuth::Strategies::OidcDatabase.new(nil, OmniAuth::Strategies::OidcDatabase.setup)
     end
   end
 end

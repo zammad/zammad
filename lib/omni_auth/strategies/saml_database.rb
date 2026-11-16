@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class OmniAuth::Strategies::SamlDatabase < OmniAuth::Strategies::SAML
+  include OmniAuth::Strategies::DatabaseSettings
+
   option :name, 'saml'
 
   def self.setup
@@ -38,12 +40,6 @@ class OmniAuth::Strategies::SamlDatabase < OmniAuth::Strategies::SAML
     env['rack.session.options'][:expire_after] = nil
 
     session.destroy
-  end
-
-  def initialize(app, *args, &)
-    args[0] = self.class.setup
-
-    super
   end
 
   def self.apply_security_settings(settings)

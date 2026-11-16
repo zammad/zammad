@@ -1,15 +1,16 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class OmniAuth::Strategies::TwitterDatabase < OmniAuth::Strategies::Twitter
+  include OmniAuth::Strategies::DatabaseSettings
+
   option :name, 'twitter'
 
-  def initialize(app, *args, &)
+  def self.setup
+    config = Setting.get('auth_twitter_credentials') || {}
 
-    # database lookup
-    config  = Setting.get('auth_twitter_credentials') || {}
-    args[0] = config['key']
-    args[1] = config['secret']
-    super
+    {
+      consumer_key:    config['key'],
+      consumer_secret: config['secret'],
+    }
   end
-
 end
