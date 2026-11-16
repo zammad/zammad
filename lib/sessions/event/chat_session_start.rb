@@ -42,11 +42,7 @@ return is sent as message back to peer
       chat_session.add_recipient(@client_id, true)
     end
 
-    session_attributes = chat_session.attributes
-    session_attributes['messages'] = []
-    Chat::Message.where(chat_session_id: chat_session.id).reorder(created_at: :asc).each do |message|
-      session_attributes['messages'].push message.attributes
-    end
+    session_attributes = chat_session.attributes_with_messages_and_tags
 
     # send chat_session_init to customer client
     chat_session.send_start_to_customer(@client_id)

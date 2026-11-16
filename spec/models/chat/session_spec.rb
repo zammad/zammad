@@ -53,6 +53,17 @@ RSpec.describe Chat::Session, type: :model do
     end
   end
 
+  describe '.active_chats_by_user_id' do
+    let(:agent)        { create(:agent) }
+    let(:chat_session) { create(:'chat/session', chat: create(:chat), state: 'running', user: agent) }
+
+    before { chat_session.tag_add('vip', 1) }
+
+    it 'includes the tags of the session' do
+      expect(described_class.active_chats_by_user_id(agent.id)).to contain_exactly(hash_including('id' => chat_session.id, 'tags' => ['vip']))
+    end
+  end
+
   describe '#recipients_active?' do
     let(:chat)                  { create(:chat) }
     let(:agent)                 { create(:agent) }
