@@ -84,9 +84,9 @@ Using **organizations** you can **group** customers. This has two main benefits:
     return if !item.created_by
 
     if item.type is 'create'
-      return App.i18n.translateContent('%s created organization |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s created organization |%s|', item.created_by.activityName(), item.title)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated organization |%s|', item.created_by.displayName(), item.title)
+      return App.i18n.translateContent('%s updated organization |%s|', item.created_by.activityName(), item.title)
     return "Unknown action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."
 
   isAccessibleBy: (requester, access) ->

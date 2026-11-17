@@ -36,7 +36,7 @@ const defaults = {
         seen: true,
         createdAt: '2024-11-18T16:28:07Z',
         createdBy: {
-          id: convertToGraphQLId('User', 1),
+          id: convertToGraphQLId('User', 4),
           fullname: 'Admin Foo',
           lastname: 'Foo',
           firstname: 'Admin',
