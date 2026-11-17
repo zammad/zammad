@@ -180,3 +180,55 @@ QUnit.test( "autocompletion_ajax_external_data_source check", assert => {
   assert.deepEqual(JSON.parse(el.find('[data-name="external_data_source4"] .js-shadow').val()), testOptions, 'verify shadow value (multi select)')
   assert.deepEqual(el.find('[data-name="external_data_source4"] .token').length, testOptions.length, 'verify selected options (multi select)')
 })
+
+QUnit.test( "autocompletion_ajax_external_data_source search results depend on the search context", assert => {
+  // The search URL of an external data source may use the ticket customer, so the cached results
+  //   must not be reused after the customer of the form was changed.
+  var cache = {}
+  App.ExternalDataSourceAjaxSelect.TEST_SEARCH_RESULT_CACHE = cache
+
+  $('#forms').append('<hr><h1>autocompletion_ajax_external_data_source search context</h1><form id="form2"></form>')
+  var el = $('#form2')
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      className: 'Ticket',
+      configure_attributes: [
+        {
+          name:    'customer_id',
+          display: 'Customer',
+          tag:     'input',
+          type:    'text',
+          null:    true,
+          default: '1',
+        },
+        {
+          name:    'external_data_source5',
+          display: 'ExternalDataSource5',
+          tag:     'autocompletion_ajax_external_data_source',
+          null:    true,
+        },
+      ],
+    },
+  })
+
+  var cacheKey = function() {
+    return 'Ticket+external_data_source5+*+' + JSON.stringify({ customer_id: App.ControllerForm.params(el).customer_id })
+  }
+  var search = function() {
+    $('[data-name="external_data_source5"] .js-input').trigger('focus').val('*').trigger('input')
+    return $('[data-name="external_data_source5"]').closest('.searchableSelect').find('.js-optionsList li:not(.is-hidden)')
+  }
+
+  cache[cacheKey()] = { result: [ { value: 1, label: 'Option of customer 1' } ] }
+  var entries = search()
+  assert.equal(entries.length, 1, 'dropdown count for customer 1')
+  assert.equal(entries.first().text().trim(), 'Option of customer 1', 'option of customer 1')
+
+  // Change the customer: the results of customer 1 must not be shown any more.
+  el.find('[name="customer_id"]').val('2')
+  cache[cacheKey()] = { result: [ { value: 2, label: 'Option A of customer 2' }, { value: 3, label: 'Option B of customer 2' } ] }
+  entries = search()
+  assert.equal(entries.length, 2, 'dropdown count for customer 2')
+  assert.equal(entries.first().text().trim(), 'Option A of customer 2', 'option of customer 2')
+})
