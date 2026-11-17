@@ -62,27 +62,41 @@ class App.ExternalDataSourceAjaxSelect extends App.SearchableAjaxSelect
     else if @hasSubmenu @attribute.options
       @attribute.valueName = @getName(@attribute.value, @attribute.options)
 
+  searchContext: =>
+    search_context = {}
+
+    return search_context if !@delegate
+
+    params = if @delegate.params?.id then @delegate.params else App.ControllerForm.params(@delegate.form)
+
+    if params.id
+      search_context["#{@delegate.model.className.toLowerCase()}_id"] = params.id
+
+    if params.customer_id
+      search_context.customer_id = params.customer_id
+
+    search_context
+
   cacheKey: =>
     objectName    = @options.attribute.objectName
     attributeName = @options.attribute.attributeName or @options.attribute.nameRaw
     query         = @input.val()
+    key           = "#{objectName}+#{attributeName}+#{query}"
 
-    "#{objectName}+#{attributeName}+#{query}"
+    # The search URL may use the search context (e.g. the customer of the ticket), so cached
+    # results are only valid for the same context. Otherwise, after changing the customer of
+    # a new ticket, the results of the previous customer would be shown again.
+    searchContext = @searchContext()
+    return key if _.isEmpty(searchContext)
+
+    "#{key}+#{JSON.stringify(searchContext)}"
 
   ajaxAttributes: =>
     objectName     = @options.attribute.objectName
     attributeName  = @options.attribute.attributeName or @options.attribute.nameRaw
     query          = @input.val()
-    search_context = {}
-
-    if @delegate
-      params = if @delegate.params?.id then @delegate.params else App.ControllerForm.params(@delegate.form)
-
-      if params.id
-        search_context["#{@delegate.model.className.toLowerCase()}_id"] = params.id
-
-      if params.customer_id
-        search_context.customer_id = params.customer_id
+    search_context = @searchContext()
+    cacheKey       = @cacheKey()
 
     {
       id:   @options.attribute.id
@@ -94,8 +108,8 @@ class App.ExternalDataSourceAjaxSelect extends App.SearchableAjaxSelect
         search_context: search_context
       processData: true
       success:     (data, status, xhr) =>
-        # cache search result
-        @searchResultCache[@cacheKey()] = data
+        # cache search result (under the key of the request, the context may have changed meanwhile)
+        @searchResultCache[cacheKey] = data
         @renderResponse(data, query)
       error: =>
         @hideLoader()
