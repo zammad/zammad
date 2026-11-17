@@ -68,6 +68,8 @@ class App.KnowledgeBaseAnswerTranslation extends App.Model
   # Fetches what inserting the answer into an article puts there: its body, with the images inlined,
   # and its attachments, cloned into the article's upload cache.
   # Without a fixed request ID, so a second insertion cannot abort a clone the server already made.
+  # An editor outside of a form, like the message input of a chat, has no upload cache to clone
+  # into and gets the body alone.
   @fetchForInsertion: (url, id, formId, success, error) ->
     App.Ajax.request(
       type: 'GET'
@@ -77,6 +79,10 @@ class App.KnowledgeBaseAnswerTranslation extends App.Model
 
         translation = App.KnowledgeBaseAnswerTranslation.find(id)
         body        = translation.content().bodyWithPublicURLs()
+
+        if !formId
+          App.Utils.htmlImage2DataUrlAsync(body, (output) -> success(output, []))
+          return
 
         App.Ajax.request(
           type: 'POST'

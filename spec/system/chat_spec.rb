@@ -567,4 +567,42 @@ RSpec.describe 'Chat Handling', type: :system do
       end
     end
   end
+
+  context 'when inserting a knowledge base answer into a message', authenticated_as: :authenticate, current_user_id: 1 do
+    let(:image) { Base64.strict_encode64(Rails.root.join('spec/fixtures/files/image/squares.png').binread) }
+    let(:answer) do
+      create(:knowledge_base_answer, published_at: 1.week.ago, translation_attributes: {
+               title:   'Return label',
+               content: build(:knowledge_base_answer_translation_content, body: "<p>Print the label.</p><img src='data:image/png;base64,#{image}'>")
+             })
+    end
+
+    def authenticate
+      answer
+      super
+    end
+
+    it 'inserts its text and its image', :aggregate_failures do
+      visit '/'
+
+      enable_agent_chat
+
+      using_session :customer do
+        visit chat_url
+        open_chat_dialog
+      end
+
+      accept_chat
+
+      input = find('.active .chat-window .js-customerChatInput')
+
+      input.send_keys('??')
+      'Ret'.chars.each { |letter| input.send_keys(letter) }
+
+      find(:text_module, answer.translations.first.id).click
+
+      expect(input).to have_text('Print the label.')
+      expect(input).to have_css('img[src^="data:image/"]')
+    end
+  end
 end
