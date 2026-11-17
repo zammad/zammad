@@ -8,7 +8,12 @@ import type { FieldEditorProps } from '#shared/components/Form/fields/FieldEdito
 import { useInlineMode } from '#shared/components/Form/fields/FieldEditor/useInlineMode.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
-const renderInlineModeWrapper = (context: { inline: boolean; disabled?: boolean }) => {
+const renderInlineModeWrapper = (context: {
+  inline: boolean
+  disabled?: boolean
+  id?: string
+  reset?: () => void
+}) => {
   const Component = defineComponent({
     setup() {
       const fieldContext = ref({
@@ -22,7 +27,7 @@ const renderInlineModeWrapper = (context: { inline: boolean; disabled?: boolean 
       return { isEditing, onWrapperClick }
     },
     template: `
-      <div ref="wrapper" role="button" @click="onWrapperClick">{{ isEditing }}</div>
+      <div ref="wrapper" role="button" tabindex="0" @click="onWrapperClick">{{ isEditing }}</div>
     `,
   })
 
@@ -53,6 +58,32 @@ describe('useInlineMode', () => {
 
     await wrapper.events.click(wrapper.getByRole('button'))
 
+    expect(wrapper.getByRole('button')).toHaveTextContent('false')
+  })
+
+  // Escape used to blur every editor, inline or not (#6525).
+  it('does not handle Escape when the field is not in inline mode', async () => {
+    const reset = vi.fn()
+    const wrapper = renderInlineModeWrapper({ inline: false, id: 'editor-not-inline', reset })
+
+    wrapper.getByRole('button').focus()
+    await wrapper.events.keyboard('{Escape}')
+
+    expect(reset).not.toHaveBeenCalled()
+    expect(wrapper.getByRole('button')).toHaveFocus()
+  })
+
+  it('cancels on Escape only while the inline field is being edited', async () => {
+    const reset = vi.fn()
+    const wrapper = renderInlineModeWrapper({ inline: true, id: 'editor-inline', reset })
+
+    await wrapper.events.keyboard('{Escape}')
+    expect(reset).not.toHaveBeenCalled()
+
+    await wrapper.events.click(wrapper.getByRole('button'))
+    await wrapper.events.keyboard('{Escape}')
+
+    expect(reset).toHaveBeenCalledOnce()
     expect(wrapper.getByRole('button')).toHaveTextContent('false')
   })
 })
