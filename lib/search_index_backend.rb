@@ -481,9 +481,25 @@ builds the default fulltext condition of a search, which callers may replace via
   def self.build_query_condition(query, index, options = {})
     return { match_all: {} } if query.blank?
 
+    build_query_string_condition(append_wildcard_to_simple_query(query), index, options)
+  end
+
+=begin
+
+builds the fulltext condition for a query which is used as it is
+
+@param query   [String] search query
+@param index   [String] index name
+@param options [Hash] search options (see build_query)
+
+  condition = SearchIndexBackend.build_query_string_condition('state.name:closed', 'Ticket')
+
+=end
+
+  def self.build_query_string_condition(query, index, options = {})
     condition = {
       'query_string' => {
-        'query'            => append_wildcard_to_simple_query(query),
+        'query'            => query,
         'time_zone'        => Setting.get('timezone_default'),
         'default_operator' => 'AND',
         'analyze_wildcard' => true,
