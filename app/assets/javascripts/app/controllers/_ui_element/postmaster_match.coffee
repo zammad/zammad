@@ -70,6 +70,10 @@ class App.UiElement.postmaster_match
             name:     'X-DSPAM-Signature'
           },
           {
+            value:    'email-urgency'
+            name:     __('Email urgency')
+          },
+          {
             value:    'importance'
             name:     'Importance'
           },
@@ -164,7 +168,7 @@ class App.UiElement.postmaster_match
         ]
 
     groups.expert.options = groups.expert.options.sort (a, b) ->
-      a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      App.i18n.translatePlain(a.name).toLowerCase().localeCompare(App.i18n.translatePlain(b.name).toLowerCase())
 
     groups
 
@@ -201,6 +205,9 @@ class App.UiElement.postmaster_match
       value = params[attribute.name]?[key]?.value
       @rebuildAttributeSelectors(item, elementRow, key, attribute)
       @rebuildOperater(item, elementRow, key, groups, operator, attribute)
+
+      # a key with its own operators may not offer the previous one
+      operator = elementRow.find('.js-operator select option:selected').attr('value')
       @buildValue(item, elementRow, key, groups, value, operator, attribute)
     )
 
@@ -208,6 +215,10 @@ class App.UiElement.postmaster_match
     item.on('change', '.js-operator select', (e) =>
       elementRow = $(e.target).closest('.js-filterElement')
       key = elementRow.find('.js-attributeSelector option:selected').attr('value')
+
+      # both operators share one select, keep the selection
+      return if key is 'email-urgency'
+
       operator = $(e.target).find('option:selected').attr('value')
       value = params[attribute.name]?[key]?.value
       @buildValue(item, elementRow, key, groups, value, operator, attribute)
@@ -255,7 +266,19 @@ class App.UiElement.postmaster_match
       type: 'text'
       value: value
 
-    if _.contains(['is any of', 'is none of', 'starts with one of', 'ends with one of'], operator)
+    # 'is any of' compares case sensitively, so offer exactly the accepted values.
+    if key is 'email-urgency'
+      config.tag        = 'select_search'
+      config.multiple   = true
+      config.nulloption = false
+      config.translate  = true
+      config.options    = [
+        { value: 'high',   name: __('High urgency') },
+        { value: 'normal', name: __('Normal urgency') },
+        { value: 'low',    name: __('Low urgency') },
+      ]
+
+    else if _.contains(['is any of', 'is none of', 'starts with one of', 'ends with one of'], operator)
       config.name = "{json}#{config.name}"
       config.tag = 'tokenfield'
 
@@ -297,7 +320,9 @@ class App.UiElement.postmaster_match
   @buildOperator: (elementFull, elementRow, key, groups, current_operator, attribute) ->
     selection = $("<select class=\"form-control\" name=\"#{attribute.name}::#{key}::operator\"></select>")
 
-    for operator in ['contains', 'contains not', 'is any of', 'is none of', 'starts with one of', 'ends with one of', 'matches regex', 'does not match regex']
+    operators = ['contains', 'contains not', 'is any of', 'is none of', 'starts with one of', 'ends with one of', 'matches regex', 'does not match regex']
+    operators = ['is any of', 'is none of'] if key is 'email-urgency'
+    for operator in operators
       operatorName = App.i18n.translateInline(operator)
       selected = ''
       if current_operator is operator

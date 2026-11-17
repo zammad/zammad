@@ -65,6 +65,7 @@ class Channel::EmailParser::HeadersParser
                              .transform_values { |v| v.match?(Channel::EmailParser::EMAIL_REGEX) ? v : '' })
 
     hash['x-any-recipient'] = hash.values.compact_blank.join(', ')
+    hash['email-urgency']   = EmailUrgency.parse(imported_fields)
     hash['message_id']      = imported_fields['message-id']
     hash['subject']         = imported_fields['subject']&.strip
     hash['date']            = begin

@@ -78,6 +78,37 @@ RSpec.describe PostmasterFilter, type: :model do
           end
         end
       end
+
+      context 'when matching the email urgency' do
+        describe 'with accepted values' do
+          include_examples('ok', matcher: {
+                             'email-urgency' => {
+                               operator: 'is none of',
+                               value:    %w[high low],
+                             },
+                           })
+        end
+
+        %w[High foo].each do |value|
+          describe "with value: #{value}" do
+            include_examples('raises exception', matcher: {
+                               'email-urgency' => {
+                                 operator: 'is any of',
+                                 value:    [value],
+                               },
+                             }, message: 'The email urgency must be one of: high, normal, low.')
+          end
+        end
+
+        describe 'with another operator' do
+          include_examples('raises exception', matcher: {
+                             'Email-Urgency' => {
+                               operator: 'contains',
+                               value:    'high',
+                             },
+                           }, message: 'The provided match operator is missing or invalid.')
+        end
+      end
     end
   end
 

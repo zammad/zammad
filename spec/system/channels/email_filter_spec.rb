@@ -99,6 +99,68 @@ RSpec.describe 'Manage > Channels > Email > Filters', type: :system do
     end
   end
 
+  context 'when matching the email urgency' do
+    it 'offers exactly the accepted values and saves the condition' do
+      visit '/#channels/email'
+      click 'a[href="#c-filter"]'
+      click '.content.active a[data-type="new"]'
+
+      in_modal do
+        fill_in 'name', with: 'Urgent mail'
+
+        within '.postmaster_match' do
+          find('.js-attributeSelector select').find(:option, 'Email urgency').select_option
+
+          expect(find('.js-operator select').all('option').map(&:value)).to eq(['is any of', 'is none of'])
+          expect(find('select[name="match::email-urgency::value"]').all('option').map(&:value)).to eq(%w[high normal low])
+
+          find('select[name="match::email-urgency::value"]').find(:option, 'High urgency').select_option
+        end
+
+        click '.js-submit'
+      end
+
+      expect(page).to have_no_css('.modal')
+      expect(PostmasterFilter.find_by(name: 'Urgent mail').match)
+        .to eq('email-urgency' => { 'operator' => 'is any of', 'value' => ['high'] })
+
+      within '#c-filter' do
+        find('td', text: 'Urgent mail').click
+      end
+
+      in_modal do
+        within '.postmaster_match' do
+          expect(find('.js-operator select').value).to eq('is any of')
+          expect(find('select[name="match::email-urgency::value"]').value).to eq(['high'])
+        end
+      end
+    end
+
+    it 'keeps the selected value when the operator is switched' do
+      visit '/#channels/email'
+      click 'a[href="#c-filter"]'
+      click '.content.active a[data-type="new"]'
+
+      in_modal do
+        fill_in 'name', with: 'Urgent mail'
+
+        within '.postmaster_match' do
+          find('.js-attributeSelector select').find(:option, 'Email urgency').select_option
+          find('select[name="match::email-urgency::value"]').find(:option, 'High urgency').select_option
+          find('.js-operator select').find(:option, 'is none of').select_option
+
+          expect(find('select[name="match::email-urgency::value"]').value).to eq(['high'])
+        end
+
+        click '.js-submit'
+      end
+
+      expect(page).to have_no_css('.modal')
+      expect(PostmasterFilter.find_by(name: 'Urgent mail').match)
+        .to eq('email-urgency' => { 'operator' => 'is none of', 'value' => ['high'] })
+    end
+  end
+
   context 'when setting email or url attributes from regex captures', db_strategy: :reset do
     %w[email url].each do |type|
       it "saves the placeholder into the #{type} attribute" do

@@ -29,16 +29,25 @@ class PostmasterFilter < ApplicationModel
   def validate_condition
     raise Exceptions::InvalidAttribute.new(condition_attribute_name, __('At least one match rule is required, but none was provided.')) if match.blank?
 
-    match.each_value do |meta|
+    match.each do |key, meta|
       raise Exceptions::InvalidAttribute.new(condition_attribute_name, __('The provided match operator is missing or invalid.')) if meta['operator'].blank? || VALID_OPERATORS.exclude?(meta['operator'])
       raise Exceptions::InvalidAttribute.new(condition_attribute_name, __('The required match value is missing.')) if meta['value'].blank?
 
+      validate_email_urgency_match_rule!(meta) if key.to_s.casecmp?('email-urgency')
       validate_regex_match_rule!(meta['value'], meta['operator'])
     end
     true
   end
 
   private
+
+  # FilterProcessor compares case sensitively, so any other value would never match.
+  def validate_email_urgency_match_rule!(meta)
+    raise Exceptions::InvalidAttribute.new(condition_attribute_name, __('The provided match operator is missing or invalid.')) if ['is any of', 'is none of'].exclude?(meta['operator'])
+    return if Array(meta['value']).all? { |value| EmailUrgency::VALUES.include?(value) }
+
+    raise Exceptions::InvalidAttribute.new(condition_attribute_name, format(__('The email urgency must be one of: %s.'), EmailUrgency::VALUES.join(', ')))
+  end
 
   def validate_regex_match_rule!(match_rule, operator)
     return if !operator.eql?('matches regex') && !operator.eql?('does not match regex')
