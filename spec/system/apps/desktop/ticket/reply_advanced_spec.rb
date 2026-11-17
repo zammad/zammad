@@ -53,7 +53,7 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
     wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
   end
 
-  it 'covers the full editor and advanced features scenario', performs_jobs: true do
+  def start_reply_with_cite
     cite_article_text(first_cite)
 
     # The signature is inserted asynchronously after the reply form opens -
@@ -66,10 +66,20 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
 
     editor.input_element.send_keys(' First reply text.')
 
-    cite_article_text(second_cite)
-    find_editor('Text').input_element.send_keys(' Second reply text.')
+    editor_focus_flag
+  end
+
+  it 'keeps the editor toolbar reachable while scrolling the draft' do
+    start_reply_with_cite
 
     expect_toolbar_visible_while_scrolling
+  end
+
+  it 'formats a cited reply with a text module, headings and a table' do
+    start_reply_with_cite
+
+    cite_article_text(second_cite)
+    find_editor('Text').input_element.send_keys(' Second reply text.')
 
     insert_text_module_at_top
 
@@ -84,6 +94,10 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
     select_table_option('Toggle header column')
     fill_first_table_cell('A1')
     insert_row_between_existing_rows
+  end
+
+  it 'submits a reply with tag and accounted time, then mentions an agent in an internal note', performs_jobs: true do
+    editor_focus_flag = start_reply_with_cite
 
     add_tag('editor-scenario')
 
