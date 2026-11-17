@@ -7,7 +7,7 @@
     </div>
   </div>
   <div class="chat-name">
-    <span class="js-name js-info u-clickable"><%= @name %><span> #<%= @session.id %>
+    <span class="js-info u-clickable"><span class="js-name"><%= @name %></span> #<%= @session.id %></span>
   </div>
   <div class="chat-disconnect js-disconnect">
     <div class="btn btn--action btn--small"><%- @T('disconnect') %></div>
@@ -28,7 +28,7 @@
     <ul>
       <% for chat in @chats: %>
         <% if @session.chat_id isnt chat.id: %>
-          <li><a data-chat-id="<%= chat.id %>" class="js-transferChat" href="#"><%- chat.name %></a>
+          <li><a data-chat-id="<%= chat.id %>" class="js-transferChat" href="#"><%= chat.name %></a>
         <% end %>
       <% end %>
     </ul>

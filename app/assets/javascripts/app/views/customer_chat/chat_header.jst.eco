@@ -10,7 +10,7 @@
     <ul class="dropdown-menu" role="menu">
       <% for chat in @chats: %>
       <li class="js-waitingCustomers js-acceptChat" disabled data-chat-id="<%= chat.id %>" role="menuitem">
-        <span class="badge js-badgeWaitingCustomers"></span> <%- @T('Waiting in %s', chat.name) %> <span class="flex-spacer"></span>
+        <span class="badge js-badgeWaitingCustomers"></span> <%- @Ti('Waiting in %s', chat.name) %> <span class="flex-spacer"></span>
         <div class="status-badge js-info">
           <div class="info-badge"><%- @Icon('info') %></div>
         </div>
