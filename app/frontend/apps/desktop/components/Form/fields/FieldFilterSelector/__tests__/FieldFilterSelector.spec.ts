@@ -547,6 +547,22 @@ describe('Fields - FieldFilterSelector', () => {
       expect(await view.findByRole('option', { name: 'Users' })).toBeInTheDocument()
     })
 
+    it('keeps the options of a rendered select filter untouched', async () => {
+      const view = renderFilterSelector(
+        [{ name: 'ticket.group_id', operator: 'is', value: null }],
+        {
+          filterAttributes: groupAttributes,
+          filterAttributeOptions,
+        },
+      )
+
+      expect(view.getByLabelText('Group')).toBeInTheDocument()
+
+      expect(getNode('filterSelector')?.context?.filterAttributeOptions).toEqual(
+        filterAttributeOptions,
+      )
+    })
+
     it('keeps the dropdown of a restored select filter closed', async () => {
       const view = renderFilterSelector(
         [{ name: 'ticket.group_id', operator: 'is', value: null }],

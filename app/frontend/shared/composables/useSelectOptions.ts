@@ -47,6 +47,8 @@ const useSelectOptions = <T extends SelectOption[] | FlatSelectOption[] | AutoCo
 
     const { noOptionsLabelTranslation } = context.value
 
+    // Translation must preserve the source options and their original labels.
+    // oxlint-disable-next-line oxc/no-map-spread
     return availableOptions.value.map((option) => {
       const label =
         noOptionsLabelTranslation && !option.labelPlaceholder
@@ -59,10 +61,11 @@ const useSelectOptions = <T extends SelectOption[] | FlatSelectOption[] | AutoCo
           ? variant.heading || ''
           : i18n.t(variant.heading, ...(variant.headingPlaceholder || []))
 
-      return Object.assign(option, {
+      return {
+        ...option,
         label,
         heading,
-      })
+      }
     })
   })
 
