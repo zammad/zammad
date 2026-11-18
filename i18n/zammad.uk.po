@@ -246,8 +246,8 @@ msgstr ""
 "\n"
 "<DIV>Привіт, #{user.firstname},</DIV>\n"
 "<BR>\n"
-"<DIV>Схоже, ви пов’язали свій обліковий запис <B>із стороннім додатком</B> «#"
-"{t(provider)}».</DIV>\n"
+"<DIV>Схоже, ви пов’язали свій обліковий запис <B>із стороннім додатком</B> "
+"«#{t(provider)}».</DIV>\n"
 "<BR>\n"
 "<DIV>Якщо це зробили не ви, будь ласка, видаліть пов’язаний обліковий запис "
 "зі свого профілю та змініть пароль у сторонньому додатку. Можливо, хтось "
@@ -1244,7 +1244,7 @@ msgstr "Асистент з написання текстів зі ШІ"
 msgid "AI writing assistant tools"
 msgstr "Інструменти ШІ для написання текстів"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr "AM/PM"
 
@@ -4051,7 +4051,7 @@ msgstr "Змінити пароль"
 msgid "Change customer"
 msgstr "Змінити клієнта"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr "Змінити дату"
@@ -4223,7 +4223,7 @@ msgstr "Перевірити канали."
 msgid "Check item"
 msgstr "Перевірити елемент"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr "Детальну інформацію див. у відповіді та корисних даних:"
 
@@ -4311,7 +4311,7 @@ msgstr "Контрольна сума"
 msgid "Child"
 msgstr "Нащадок"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -4527,7 +4527,7 @@ msgstr "Очистити пошук"
 msgid "Clear selection"
 msgstr "Очистити вибір"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr "Очистити значення"
@@ -6028,7 +6028,7 @@ msgstr "Поле дати"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "День"
 
@@ -8304,7 +8304,7 @@ msgstr "Elasticsearch Загальний розмір корисного нав�
 msgid "Elasticsearch index does not exist"
 msgstr "Індексу Elasticsearch не існує"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9497,7 +9497,7 @@ msgstr "Розширений пошук"
 msgid "External data source field"
 msgstr "Поле зовнішнього джерела даних"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Вилучення інформації про вкладення zammad з масивів"
 
@@ -10917,7 +10917,7 @@ msgid "Hour(s)"
 msgstr "Година(ни)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "Години"
@@ -13662,7 +13662,7 @@ msgid "Minute(s)"
 msgstr "Хвилина(ин)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "Хвилини"
@@ -13748,7 +13748,7 @@ msgid "Monitoring Token"
 msgstr "Токен моніторингу"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "Місяць"
 
@@ -18617,7 +18617,7 @@ msgstr ""
 "У списку підлеглих організацій не можна вказувати одну й ту саму організацію "
 "двічі."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 msgid "Seconds"
 msgstr "Секунди"
 
@@ -20166,6 +20166,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -21436,7 +21437,7 @@ msgid ""
 msgstr ""
 "Запис було створено, але він прихований через поточний пошук або фільтр."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 msgid "The entry was not a valid date and has been cleared."
 msgstr "Цей запис містив неправильну дату і був видалений."
 
@@ -21582,7 +21583,7 @@ msgstr ""
 "Встановлення пакетів має наслідки для безпеки, оскільки довільний код буде "
 "виконуватися в контексті програми Zammad."
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -22033,7 +22034,7 @@ msgstr "Немає обов'язкового параметра «Ідентиф
 msgid "The required parameter 'id' is missing."
 msgstr "Немає обов'язкового параметра «Ідентифікатор» (id)."
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 msgid "The required parameter 'key' is missing."
 msgstr "Відсутній обов'язковий параметр \"Ключ\" (key)."
 
@@ -22098,7 +22099,7 @@ msgstr "Немає обов'язкового параметра «номер_з�
 msgid "The required parameter 'user_id' is missing."
 msgstr "Немає обов'язкового параметра «ідентифікатор_користувача» (user_id)."
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 msgid "The required parameter 'value' is missing."
 msgstr "Відсутня обов'язковий параметр значення (value)."
 
@@ -22198,7 +22199,7 @@ msgstr "Вибрана мова не входить до цієї бази зн�
 msgid "The server presented a certificate that could not be verified."
 msgstr "Сервер надав сертифікат, який неможливо було перевірити."
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -24443,7 +24444,7 @@ msgstr "Токен недійсний!"
 msgid "Token-based API access has been disabled by the administrator."
 msgstr "Доступ до API на основі токенів вимкнено адміністратором."
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr "Збій надто багато перенаправлень для вихідного URL."
 
@@ -25333,8 +25334,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<DIV>\n"
-"  <A href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
-"{article.id}\" target=\"zammad_app\">Переглянути це в #{config.product_name}"
+"  <A href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Переглянути це в #{config.product_name}"
 "</A></DIV>\n"
 "</div>\n"
 
@@ -26456,7 +26457,7 @@ msgstr ""
 "до адміністратора."
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "Рік"
 
@@ -27179,7 +27180,7 @@ msgstr "Фонд Zammad"
 msgid "Zammad Helpdesk"
 msgstr "Служба підтримки Zammad"
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr "Агент користувача (User Agent) Zammad"
 
@@ -28432,7 +28433,7 @@ msgstr "не надійшло"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "не встановлено"
 

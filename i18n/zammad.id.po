@@ -1355,7 +1355,7 @@ msgstr "Asisten Penulisan"
 msgid "AI writing assistant tools"
 msgstr "Alat Asisten Penulisan"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr ""
 
@@ -4273,7 +4273,7 @@ msgstr "Ubah Kata Sandi Anda"
 msgid "Change customer"
 msgstr "Ubah pelanggan"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr "Ubah tanggal"
@@ -4450,7 +4450,7 @@ msgstr "Periksa saluran."
 msgid "Check item"
 msgstr "Periksa item"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr "Periksa respons dan payload untuk informasi terperinci:"
 
@@ -4539,7 +4539,7 @@ msgstr "Checksum"
 msgid "Child"
 msgstr "Anak"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -4773,7 +4773,7 @@ msgstr "Hapus pencarian"
 msgid "Clear selection"
 msgstr "Hapus Pilihan"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr "Hapus nilai"
@@ -6328,7 +6328,7 @@ msgstr "Bidang tanggal"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "Hari"
 
@@ -8700,7 +8700,7 @@ msgstr "Ukuran Total Payload Elasticsearch"
 msgid "Elasticsearch index does not exist"
 msgstr "Indeks Elasticsearch tidak ada"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9915,7 +9915,7 @@ msgstr "Pencarian Lanjutan"
 msgid "External data source field"
 msgstr "Bidang sumber data eksternal"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Ekstrak informasi zammad-attachment dari array"
 
@@ -11386,7 +11386,7 @@ msgid "Hour(s)"
 msgstr "Jam"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "Jam"
@@ -14238,7 +14238,7 @@ msgid "Minute(s)"
 msgstr "Menit"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "Menit"
@@ -14324,7 +14324,7 @@ msgid "Monitoring Token"
 msgstr "Token Pemantauan"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "Bulan"
 
@@ -19441,7 +19441,7 @@ msgstr "Organisasi sekunder tidak dapat menyertakan organisasi primer."
 msgid "Secondary organizations cannot include the same organization twice."
 msgstr "Organisasi sekunder tidak dapat menyertakan organisasi primer."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 #, fuzzy
 #| msgid "Saved conditions"
 msgid "Seconds"
@@ -21100,6 +21100,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -22374,7 +22375,7 @@ msgid ""
 "The entry was created, but it is hidden by the current search or filter."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 #, fuzzy
 #| msgid "The entry could not be created."
 msgid "The entry was not a valid date and has been cleared."
@@ -22524,7 +22525,7 @@ msgstr ""
 "Pemasangan paket datang dengan implikasi keamanan, karena kode arbitrer akan "
 "dieksekusi dalam konteks aplikasi Zammad."
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -22988,7 +22989,7 @@ msgstr "Parameter yang diperlukan 'group_id' tidak ada."
 msgid "The required parameter 'id' is missing."
 msgstr "Parameter yang diperlukan 'id' tidak ada."
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 msgid "The required parameter 'key' is missing."
 msgstr "Parameter yang diperlukan 'key' tidak ada."
 
@@ -23050,7 +23051,7 @@ msgstr "Parameter yang diperlukan 'ticket_number' tidak ada."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Parameter yang diperlukan 'user_id' tidak ada."
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 msgid "The required parameter 'value' is missing."
 msgstr "Parameter yang diperlukan 'value' tidak ada."
 
@@ -23145,7 +23146,7 @@ msgstr "File tidak termasuk dalam artikel yang ditentukan."
 msgid "The server presented a certificate that could not be verified."
 msgstr "Server menyajikan sertifikat yang tidak dapat diverifikasi."
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -25431,7 +25432,7 @@ msgstr "Token tidak valid!"
 msgid "Token-based API access has been disabled by the administrator."
 msgstr "Akses API berbasis token telah dinonaktifkan oleh administrator."
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr "Terlalu banyak pengalihan untuk URL asli, berhenti."
 
@@ -27570,7 +27571,7 @@ msgstr ""
 "administrator Anda."
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "Tahun"
 
@@ -28307,7 +28308,7 @@ msgstr "Zammad Foundation"
 msgid "Zammad Helpdesk"
 msgstr "Zammad Helpdesk"
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr "Zammad User Agent"
 
@@ -29596,7 +29597,7 @@ msgstr "tidak tercapai"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "tidak diatur"
 

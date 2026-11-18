@@ -1253,7 +1253,7 @@ msgstr "Assistant d'écriture IA"
 msgid "AI writing assistant tools"
 msgstr "Outils d'assistance à la rédaction par IA"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr "AM/PM"
 
@@ -4089,7 +4089,7 @@ msgstr "Modifier votre mot de passe"
 msgid "Change customer"
 msgstr "Changer de client"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr "Modifier la date"
@@ -4262,7 +4262,7 @@ msgstr "Vérifier les canaux."
 msgid "Check item"
 msgstr "Cocher l'élément"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 "Vérifiez la réponse et sa charge utile (payload) pour plus de détails :"
@@ -4350,7 +4350,7 @@ msgstr "Somme de contrôle"
 msgid "Child"
 msgstr "Enfant"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -4572,7 +4572,7 @@ msgstr "Effacer la recherche"
 msgid "Clear selection"
 msgstr "Effacer la sélection"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr "Effacer la valeur"
@@ -6085,7 +6085,7 @@ msgstr "Champ date"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "Jour"
 
@@ -8384,7 +8384,7 @@ msgstr "Taille totale de la charge utile (payload) Elasticsearch"
 msgid "Elasticsearch index does not exist"
 msgstr "L'index Elasticsearch n'existe pas"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9583,7 +9583,7 @@ msgstr "Recherche avancée"
 msgid "External data source field"
 msgstr "Champ de source de données externe"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 "Extraire les informations des pièces jointes de Zammad depuis des tableaux"
@@ -11022,7 +11022,7 @@ msgid "Hour(s)"
 msgstr "Heure(s)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "Heures"
@@ -13776,7 +13776,7 @@ msgid "Minute(s)"
 msgstr "Minute(s)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "Minutes"
@@ -13862,7 +13862,7 @@ msgid "Monitoring Token"
 msgstr "Jeton de supervision"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "Mois"
 
@@ -18768,7 +18768,7 @@ msgstr ""
 "Les organisations secondaires ne peuvent pas inclure la même organisation "
 "deux fois."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 msgid "Seconds"
 msgstr "secondes"
 
@@ -20333,6 +20333,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -21634,7 +21635,7 @@ msgstr ""
 "L’élément a été créé, mais il est masqué par la recherche ou le filtre en "
 "cours."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 msgid "The entry was not a valid date and has been cleared."
 msgstr "La saisie ne correspondait pas à une date valide et a été effacée."
 
@@ -21783,7 +21784,7 @@ msgstr ""
 "L'installation de paquets a des conséquences sur la sécurité, car du code "
 "arbitraire sera exécuté dans le contexte de l'application Zammad."
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -22250,7 +22251,7 @@ msgstr "Le paramètre requis 'group_id' est manquant."
 msgid "The required parameter 'id' is missing."
 msgstr "Le paramètre requis 'id' est manquant."
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 msgid "The required parameter 'key' is missing."
 msgstr "Le paramètre requis 'key' est manquant."
 
@@ -22310,7 +22311,7 @@ msgstr "Le paramètre requis 'ticket_number' est manquant."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Le paramètre requis 'user_id' est manquant."
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 msgid "The required parameter 'value' is missing."
 msgstr "Le paramètre requis 'value' est manquant."
 
@@ -22410,7 +22411,7 @@ msgstr "La langue sélectionnée n'appartient pas à cette base de connaissances
 msgid "The server presented a certificate that could not be verified."
 msgstr "Le serveur a présenté un certificat qui n'a pas pu être vérifié."
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -24700,7 +24701,7 @@ msgstr ""
 "L'accès à l'API basé sur des jetons d'accès a été désactivé par "
 "l'administrateur."
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr "Trop de redirections pour l'URL d'origine, arrêt."
 
@@ -25596,8 +25597,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
-"{article.id}\" target=\"zammad_app\">Voir dans #{config.product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Voir dans #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17
@@ -26724,7 +26725,7 @@ msgstr ""
 "contacter votre administrateur."
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "Année"
 
@@ -27468,7 +27469,7 @@ msgstr "Fondation Zammad"
 msgid "Zammad Helpdesk"
 msgstr "Support Zammad"
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr "User Agent Zammad"
 
@@ -28718,7 +28719,7 @@ msgstr "non atteint"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "non défini"
 

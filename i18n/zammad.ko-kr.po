@@ -1341,7 +1341,7 @@ msgstr "작성 도우미"
 msgid "AI writing assistant tools"
 msgstr "작성 도우미 도구"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr ""
 
@@ -4228,7 +4228,7 @@ msgstr "비밀번호 변경"
 msgid "Change customer"
 msgstr "고객 변경"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr "날짜 변경"
@@ -4405,7 +4405,7 @@ msgstr "채널 검수하기."
 msgid "Check item"
 msgstr "체크섬"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr "자세한 정보는 응답 및 페이로드를 확인하세요:"
 
@@ -4491,7 +4491,7 @@ msgstr "체크섬"
 msgid "Child"
 msgstr "하위"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -4717,7 +4717,7 @@ msgstr "검색 지우기"
 msgid "Clear selection"
 msgstr "선택 지우기"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr "값 지우기"
@@ -6252,7 +6252,7 @@ msgstr "날짜 필드"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "일"
 
@@ -8521,7 +8521,7 @@ msgstr "Elasticsearch 총 페이로드 크기"
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch 인덱스가 존재하지 않습니다"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9695,7 +9695,7 @@ msgstr "확장 검색"
 msgid "External data source field"
 msgstr "외부 데이터 소스 필드"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr "배열에서 zammad 첨부 정보를 추출"
 
@@ -11160,7 +11160,7 @@ msgid "Hour(s)"
 msgstr "시간"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "시간"
@@ -13986,7 +13986,7 @@ msgid "Minute(s)"
 msgstr "분"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "분"
@@ -14072,7 +14072,7 @@ msgid "Monitoring Token"
 msgstr "모니터링 토큰"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "월"
 
@@ -19143,7 +19143,7 @@ msgstr "보조 조직에는 주 조직을 포함할 수 없습니다."
 msgid "Secondary organizations cannot include the same organization twice."
 msgstr "보조 조직에는 주 조직을 포함할 수 없습니다."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 #, fuzzy
 #| msgid "Saved conditions"
 msgid "Seconds"
@@ -20778,6 +20778,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -22029,7 +22030,7 @@ msgid ""
 "The entry was created, but it is hidden by the current search or filter."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 #, fuzzy
 #| msgid "The entry could not be created."
 msgid "The entry was not a valid date and has been cleared."
@@ -22174,7 +22175,7 @@ msgstr ""
 "패키지 설치에는 보안 영향이 따릅니다. Zammad 애플리케이션 컨텍스트에서 임의"
 "의 코드가 실행되기 때문입니다."
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -22634,7 +22635,7 @@ msgstr "필수 매개변수 'group_id'이(가) 없습니다."
 msgid "The required parameter 'id' is missing."
 msgstr "필수 매개변수 'id'이(가) 없습니다."
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 msgid "The required parameter 'key' is missing."
 msgstr "필수 매개변수 'key'이(가) 없습니다."
 
@@ -22696,7 +22697,7 @@ msgstr "필수 매개변수 'ticket_number'이(가) 없습니다."
 msgid "The required parameter 'user_id' is missing."
 msgstr "필수 매개변수 'user_id'이(가) 없습니다."
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 msgid "The required parameter 'value' is missing."
 msgstr "필수 매개변수 'value'이(가) 없습니다."
 
@@ -22791,7 +22792,7 @@ msgstr "파일이 지정된 게시물에 속하지 않습니다."
 msgid "The server presented a certificate that could not be verified."
 msgstr "서버가 확인할 수 없는 인증서를 제공했습니다."
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -25035,7 +25036,7 @@ msgstr "토큰이 유효하지 않습니다!"
 msgid "Token-based API access has been disabled by the administrator."
 msgstr "토큰 기반 API 액세스가 관리자에 의해 비활성화되었습니다."
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr "원본 URL에 대한 리디렉션이 너무 많아 중단되었습니다."
 
@@ -27159,7 +27160,7 @@ msgstr ""
 "요약을 생성할 수 없습니다. 나중에 다시 시도하거나 관리자에게 문의하세요."
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "년"
 
@@ -27877,7 +27878,7 @@ msgstr "Zammad Foundation"
 msgid "Zammad Helpdesk"
 msgstr "Zammad 헬프데스크"
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr "Zammad 사용자 에이전트"
 
@@ -29165,7 +29166,7 @@ msgstr "도달하지 않음"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "설정되지 않음"
 

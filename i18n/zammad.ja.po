@@ -1225,7 +1225,7 @@ msgstr "AIライティングアシスタント"
 msgid "AI writing assistant tools"
 msgstr "AIライティングアシスタントツール"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr ""
 
@@ -4023,7 +4023,7 @@ msgstr "パスワードの変更"
 msgid "Change customer"
 msgstr "顧客の変更"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr "日付の変更"
@@ -4194,7 +4194,7 @@ msgstr "チャンネルを確認してください。"
 msgid "Check item"
 msgstr "項目を確認"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr "詳細情報については、レスポンスとペイロードを確認してください:"
 
@@ -4283,7 +4283,7 @@ msgstr "チェックサム"
 msgid "Child"
 msgstr "子"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -4496,7 +4496,7 @@ msgstr "検索をクリア"
 msgid "Clear selection"
 msgstr "選択を解除"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr "値をクリア"
@@ -6001,7 +6001,7 @@ msgstr "日付フィールド"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "日"
 
@@ -8233,7 +8233,7 @@ msgstr "Elasticsearch合計ペイロードサイズ"
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch インデックスが存在しません"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9400,7 +9400,7 @@ msgstr "拡張検索"
 msgid "External data source field"
 msgstr "外部データソースフィールド"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr "配列からzammad添付情報を抽出"
 
@@ -10819,7 +10819,7 @@ msgid "Hour(s)"
 msgstr "時"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "時間"
@@ -13533,7 +13533,7 @@ msgid "Minute(s)"
 msgstr "分"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "分"
@@ -13621,7 +13621,7 @@ msgid "Monitoring Token"
 msgstr "モニタリングトークン"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "月"
 
@@ -18493,7 +18493,7 @@ msgstr "補助組織にプライマリ組織を含めることはできません
 msgid "Secondary organizations cannot include the same organization twice."
 msgstr "補助組織にプライマリ組織を含めることはできません。"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 #, fuzzy
 #| msgid "Saved conditions"
 msgid "Seconds"
@@ -20021,6 +20021,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -21292,7 +21293,7 @@ msgid ""
 "The entry was created, but it is hidden by the current search or filter."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 #, fuzzy
 #| msgid "The entry could not be created."
 msgid "The entry was not a valid date and has been cleared."
@@ -21439,7 +21440,7 @@ msgstr ""
 "パッケージのインストールにはセキュリティ上の影響を伴います。Zammadアプリケー"
 "ションのコンテキストで任意のコードが実行されるためです。"
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -21897,7 +21898,7 @@ msgstr "必須パラメータ 'group_id' が不足しています。"
 msgid "The required parameter 'id' is missing."
 msgstr "必須パラメータ 'id' が不足しています。"
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 msgid "The required parameter 'key' is missing."
 msgstr "必須パラメータ 'key' が不足しています。"
 
@@ -21957,7 +21958,7 @@ msgstr "必須パラメータ 'ticket_number' が不足しています。"
 msgid "The required parameter 'user_id' is missing."
 msgstr "必須パラメータ 'user_id' が不足しています。"
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 msgid "The required parameter 'value' is missing."
 msgstr "必須パラメータ 'value' が不足しています。"
 
@@ -22058,7 +22059,7 @@ msgstr "選択した言語はこのナレッジベースには含まれていま
 msgid "The server presented a certificate that could not be verified."
 msgstr "サーバーが検証できない証明書を提示しました。"
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -24279,7 +24280,7 @@ msgstr "トークンが無効です！"
 msgid "Token-based API access has been disabled by the administrator."
 msgstr "管理者によってトークンベースのAPIアクセスが無効化されています。"
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr "元のURLへのリダイレクトが多すぎるため、停止しました。"
 
@@ -26323,7 +26324,7 @@ msgstr ""
 "管理者にお問い合わせください。"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "年"
 
@@ -27041,7 +27042,7 @@ msgstr "Zammad Foundation"
 msgid "Zammad Helpdesk"
 msgstr "Zammad Helpdesk"
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr "Zammad User Agent"
 
@@ -28290,7 +28291,7 @@ msgstr "未到達"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "設定されていません"
 

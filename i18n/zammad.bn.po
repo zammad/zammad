@@ -1226,7 +1226,7 @@ msgstr "AI রাইটিং অ্যাসিস্ট্যান্ট"
 msgid "AI writing assistant tools"
 msgstr "AI রাইটিং অ্যাসিস্ট্যান্ট টুলস"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr ""
 
@@ -4019,7 +4019,7 @@ msgstr "আপনার পাসওয়ার্ড পরিবর্তন 
 msgid "Change customer"
 msgstr "গ্রাহক পরিবর্তন করুন"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr "তারিখ পরিবর্তন করুন"
@@ -4190,7 +4190,7 @@ msgstr "চ্যানেল পরীক্ষা করুন।"
 msgid "Check item"
 msgstr "আইটেম চেক করুন"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr "বিস্তারিত তথ্যের জন্য রেসপন্স এবং পেলোড পরীক্ষা করুন:"
 
@@ -4275,7 +4275,7 @@ msgstr "চেকসাম"
 msgid "Child"
 msgstr "চাইল্ড"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -4489,7 +4489,7 @@ msgstr "সার্চ পরিষ্কার করুন"
 msgid "Clear selection"
 msgstr "নির্বাচন পরিষ্কার করুন"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr "মান পরিষ্কার করুন"
@@ -5989,7 +5989,7 @@ msgstr "তারিখ ফিল্ড"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "দিন"
 
@@ -8199,7 +8199,7 @@ msgstr "Elasticsearch মোট পেলোড আকার"
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch ইনডেক্স বিদ্যমান নেই"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9360,7 +9360,7 @@ msgstr "এক্সটেন্ডেড সার্চ"
 msgid "External data source field"
 msgstr "এক্সটার্নাল ডেটা সোর্স ফিল্ড"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr "অ্যারে থেকে zammad-attachment তথ্য এক্সট্র্যাক্ট করুন"
 
@@ -10774,7 +10774,7 @@ msgid "Hour(s)"
 msgstr "ঘণ্টা"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "ঘণ্টা"
@@ -13482,7 +13482,7 @@ msgid "Minute(s)"
 msgstr "মিনিট(সমূহ)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "মিনিট"
@@ -13567,7 +13567,7 @@ msgid "Monitoring Token"
 msgstr "পর্যবেক্ষণ টোকেন"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "মাস"
 
@@ -18425,7 +18425,7 @@ msgstr "মাধ্যমিক প্রতিষ্ঠানের মধ্�
 msgid "Secondary organizations cannot include the same organization twice."
 msgstr "মাধ্যমিক প্রতিষ্ঠানের মধ্যে প্রাথমিক প্রতিষ্ঠান অন্তর্ভুক্ত করা যাবে না।"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 #, fuzzy
 #| msgid "Saved conditions"
 msgid "Seconds"
@@ -19956,6 +19956,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -21231,7 +21232,7 @@ msgid ""
 "The entry was created, but it is hidden by the current search or filter."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 #, fuzzy
 #| msgid "The entry could not be created."
 msgid "The entry was not a valid date and has been cleared."
@@ -21377,7 +21378,7 @@ msgstr ""
 "প্যাকেজ ইনস্টলেশনের সাথে নিরাপত্তাজনিত প্রভাব জড়িত, কারণ এর ফলে Zammad "
 "অ্যাপ্লিকেশনের প্রেক্ষাপটে যেকোনো কোড সম্পাদিত হতে পারে।"
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -21827,7 +21828,7 @@ msgstr "প্রয়োজনীয় প্যারামিটার 'gro
 msgid "The required parameter 'id' is missing."
 msgstr "প্রয়োজনীয় প্যারামিটার 'id' অনুপস্থিত।"
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 msgid "The required parameter 'key' is missing."
 msgstr "প্রয়োজনীয় প্যারামিটার 'key' অনুপস্থিত।"
 
@@ -21887,7 +21888,7 @@ msgstr "প্রয়োজনীয় প্যারামিটার 'tic
 msgid "The required parameter 'user_id' is missing."
 msgstr "প্রয়োজনীয় প্যারামিটার 'user_id' অনুপস্থিত।"
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 msgid "The required parameter 'value' is missing."
 msgstr "প্রয়োজনীয় প্যারামিটার 'value' অনুপস্থিত।"
 
@@ -21986,7 +21987,7 @@ msgstr "নির্বাচিত ভাষা এই নলেজ বেস�
 msgid "The server presented a certificate that could not be verified."
 msgstr "সার্ভার এমন একটি সার্টিফিকেট উপস্থাপন করেছে যা যাচাই করা যায়নি।"
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -24196,7 +24197,7 @@ msgstr "টোকেন অবৈধ!"
 msgid "Token-based API access has been disabled by the administrator."
 msgstr "প্রশাসক দ্বারা টোকেন-ভিত্তিক API অ্যাক্সেস নিষ্ক্রিয় করা হয়েছে।"
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr "মূল URL-এর জন্য অত্যধিক পুনঃনির্দেশনা, থামানো হচ্ছে।"
 
@@ -26219,7 +26220,7 @@ msgstr ""
 "প্রশাসকের সাথে যোগাযোগ করুন।"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "বছর"
 
@@ -26937,7 +26938,7 @@ msgstr "Zammad Foundation"
 msgid "Zammad Helpdesk"
 msgstr "Zammad Helpdesk"
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr "Zammad User Agent"
 
@@ -28184,7 +28185,7 @@ msgstr "পৌঁছানো হয়নি"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "সেট করা হয়নি"
 

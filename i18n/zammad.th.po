@@ -1329,7 +1329,7 @@ msgstr "กำลังรออยู่ใน %s"
 msgid "AI writing assistant tools"
 msgstr "เครื่องมือข้อความของผู้ช่วย AI"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr ""
 
@@ -4226,7 +4226,7 @@ msgstr "เปลี่ยนรหัสผ่านของคุณ"
 msgid "Change customer"
 msgstr "เปลี่ยนลูกค้า"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr "เปลี่ยนวันที่"
@@ -4415,7 +4415,7 @@ msgstr "ตรวจสอบช่องทางสื่อสาร"
 msgid "Check item"
 msgstr "รายการตรวจสอบ"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr "ตรวจสอบการตอบสนองและเพย์โหลดสำหรับข้อมูลโดยละเอียด:"
 
@@ -4501,7 +4501,7 @@ msgstr "Checksum"
 msgid "Child"
 msgstr "Child"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -4711,7 +4711,7 @@ msgstr "ล้างการค้นหา"
 msgid "Clear selection"
 msgstr "ล้างการเลือก"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 #, fuzzy
 #| msgid "Clear Selection"
@@ -6301,7 +6301,7 @@ msgstr "ช่องวัน"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "วัน"
 
@@ -8645,7 +8645,7 @@ msgstr ""
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch Endpoint Index"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9871,7 +9871,7 @@ msgstr "การค้นหาเพิ่มเติม"
 msgid "External data source field"
 msgstr "ภายใน"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 
@@ -11412,7 +11412,7 @@ msgid "Hour(s)"
 msgstr "ชั่วโมง"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "ชั่วโมง"
@@ -14454,7 +14454,7 @@ msgid "Minute(s)"
 msgstr "นาที(s)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "นาที"
@@ -14540,7 +14540,7 @@ msgid "Monitoring Token"
 msgstr "Monitoring Token"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "เดือน"
 
@@ -20000,7 +20000,7 @@ msgstr "องค์กรรองจะได้รับอนุญาตก
 msgid "Secondary organizations cannot include the same organization twice."
 msgstr "องค์กรรองจะได้รับอนุญาตก็ต่อเมื่อได้รับองค์กรหลัก"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 msgid "Seconds"
 msgstr ""
 
@@ -21713,6 +21713,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -23037,7 +23038,7 @@ msgid ""
 "The entry was created, but it is hidden by the current search or filter."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 msgid "The entry was not a valid date and has been cleared."
 msgstr ""
 
@@ -23197,7 +23198,7 @@ msgstr ""
 "การติดตั้งแพ็คเกจมาพร้อมกับความปลอดภัย "
 "เนื่องจากรหัสที่กำหนดเองจะถูกดำเนินการในบริบทของแอปพลิเคชัน Zammad"
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -23703,7 +23704,7 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 #, fuzzy
 #| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The required parameter 'key' is missing."
@@ -23775,7 +23776,7 @@ msgstr ""
 msgid "The required parameter 'user_id' is missing."
 msgstr "ไม่มีพารามิเตอร์ที่จำเป็น 'payload->class_name'"
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 #, fuzzy
 #| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The required parameter 'value' is missing."
@@ -23874,7 +23875,7 @@ msgstr ""
 msgid "The server presented a certificate that could not be verified."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -26168,7 +26169,7 @@ msgstr "Token is invalid!"
 msgid "Token-based API access has been disabled by the administrator."
 msgstr ""
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr "มีการเปลี่ยนเส้นทางมากเกินไปสำหรับ URL เดิม กำลังหยุดชะงัก"
 
@@ -28374,7 +28375,7 @@ msgid ""
 msgstr "ไม่สามารถตั้งรหัสผ่านได้ โปรดติดต่อผู้ดูแลระบบของคุณ"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "ปี"
 
@@ -29087,7 +29088,7 @@ msgstr "มูลนิธิ Zammad"
 msgid "Zammad Helpdesk"
 msgstr "Zammad Helpdesk"
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr "เจ้าหน้าที่ ผู้ใช้ Zammad"
 
@@ -30431,7 +30432,7 @@ msgstr "ไม่ถึง"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "ยังไม่ได้ตั้งค่า"
 

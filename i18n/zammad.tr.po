@@ -1250,7 +1250,7 @@ msgstr "YZ yazı asistanı"
 msgid "AI writing assistant tools"
 msgstr "YZ yazım asistanı araçları"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr "Sabah/Akşam"
 
@@ -4062,7 +4062,7 @@ msgstr "Şifrenizi Değiştirin"
 msgid "Change customer"
 msgstr "Müşteri değiştir"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr "Tarih değiştir"
@@ -4233,7 +4233,7 @@ msgstr "Kanalları kontrol edin."
 msgid "Check item"
 msgstr "Öğeyi kontrol edin"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr "Ayrıntılı bilgi için yanıtı ve payload'u kontrol edin:"
 
@@ -4320,7 +4320,7 @@ msgstr "Sağlama Toplamı (Checksum)"
 msgid "Child"
 msgstr "Alt"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -4539,7 +4539,7 @@ msgstr "Aramayı Temizle"
 msgid "Clear selection"
 msgstr "Seçimi temizle"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr "Değeri temizle"
@@ -6037,7 +6037,7 @@ msgstr "Tarih alanı"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "Gün"
 
@@ -8326,7 +8326,7 @@ msgstr "Elasticsearch Toplam Payload Boyutu"
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch indeksi mevcut değil"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9514,7 +9514,7 @@ msgstr "Genişletilmiş arama"
 msgid "External data source field"
 msgstr "Harici veri kaynağı alanı"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Dizilerden zammad-eki bilgilerini ayıklayın"
 
@@ -10935,7 +10935,7 @@ msgid "Hour(s)"
 msgstr "Hour(s)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "Saat"
@@ -13665,7 +13665,7 @@ msgid "Minute(s)"
 msgstr "Minute(s)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "Dakika"
@@ -13751,7 +13751,7 @@ msgid "Monitoring Token"
 msgstr "İzleme Belirteci"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "Ay"
 
@@ -18619,7 +18619,7 @@ msgstr "İkincil organizasyonlar birincil organizasyonu içeremez."
 msgid "Secondary organizations cannot include the same organization twice."
 msgstr "İkincil kuruluşlar arasında aynı kuruluş iki kez yer alamaz."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 msgid "Seconds"
 msgstr "Saniye"
 
@@ -20168,6 +20168,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -21438,7 +21439,7 @@ msgstr ""
 "Girdi oluşturuldu, ancak mevcut arama veya filtre nedeniyle gizlenmiş "
 "durumda."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 msgid "The entry was not a valid date and has been cleared."
 msgstr "Girdi geçerli bir tarih değildi ve silindi."
 
@@ -21584,7 +21585,7 @@ msgstr ""
 "Paketlerin kurulumu, Zammad uygulaması bağlamında isteğe bağlı kod "
 "yürütüleceğinden, güvenlik etkileriyle birlikte gelir."
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -22026,7 +22027,7 @@ msgstr "Gerekli parametre 'group_id' eksik."
 msgid "The required parameter 'id' is missing."
 msgstr "Gerekli parametre 'id' eksik."
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 msgid "The required parameter 'key' is missing."
 msgstr "Gerekli 'key' parametresi eksik."
 
@@ -22086,7 +22087,7 @@ msgstr "Gerekli 'ticket_number' parametresi eksik."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Gerekli parametre 'user_id' eksik."
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 msgid "The required parameter 'value' is missing."
 msgstr "Gerekli parametre 'value' eksik."
 
@@ -22183,7 +22184,7 @@ msgstr "Seçilen dil, bu Bilgi Tabanına ait değildir."
 msgid "The server presented a certificate that could not be verified."
 msgstr "Sunucu doğrulanamayan bir sertifika sundu."
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -24431,7 +24432,7 @@ msgstr "Belirteç geçersiz!"
 msgid "Token-based API access has been disabled by the administrator."
 msgstr "Belirteç tabanlı API erişimi yönetici tarafından devre dışı bırakıldı."
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr "Orijinal URL için çok fazla yönlendirme, durduruluyor."
 
@@ -25304,8 +25305,8 @@ msgstr ""
 "<div>Merhaba #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %>"
-", #{article.created_by.fullname} tarafından gönderilen mesaja <%= h "
+"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+"%>, #{article.created_by.fullname} tarafından gönderilen mesaja <%= h "
 "@objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> "
 "emojisiyle tepki verdi:\n"
 "</div>\n"
@@ -25319,8 +25320,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
-"{article.id}\" target=\"zammad_app\">Bunu #{config.product_name} üzerinden "
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Bunu #{config.product_name} üzerinden "
 "görüntüle</a>\n"
 "</div>\n"
 
@@ -26437,7 +26438,7 @@ msgstr ""
 "başvurun."
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "Yıl"
 
@@ -27165,7 +27166,7 @@ msgstr "Zammad Vakfı"
 msgid "Zammad Helpdesk"
 msgstr "Zammad Yardım Masası"
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr "Zammad Kullanıcı Temsilcisi"
 
@@ -28415,7 +28416,7 @@ msgstr "ulaşmamış"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "ayarlı değil"
 

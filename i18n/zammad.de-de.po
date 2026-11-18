@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-14 12:12+0000\n"
+"PO-Revision-Date: 2026-11-18 22:12+0000\n"
 "Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
@@ -1248,7 +1248,7 @@ msgstr "KI-Schreibassistent"
 msgid "AI writing assistant tools"
 msgstr "KI-Schreibassistent-Werkzeuge"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr "AM/PM"
 
@@ -4078,7 +4078,7 @@ msgstr "Ändern Sie Ihr Passwort"
 msgid "Change customer"
 msgstr "Kunden ändern"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr "Datum ändern"
@@ -4249,7 +4249,7 @@ msgstr "Kanäle prüfen."
 msgid "Check item"
 msgstr "Element abhaken"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr "Prüfen Sie die Antwort und die Nutzlast für weitere Informationen:"
 
@@ -4335,7 +4335,7 @@ msgstr "Prüfsumme"
 msgid "Child"
 msgstr "Kinder"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -4558,7 +4558,7 @@ msgstr "Suche löschen"
 msgid "Clear selection"
 msgstr "Auswahl löschen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr "Den Wert löschen"
@@ -6065,7 +6065,7 @@ msgstr "Datumsfeld"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "Tag"
 
@@ -8374,7 +8374,7 @@ msgstr "Elasticsearch Gesamt-Nutzlast-Größe"
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch-Index existiert nicht"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9581,7 +9581,7 @@ msgstr "Erweiterte Suche"
 msgid "External data source field"
 msgstr "Feld für externe Datenquelle"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Extrahieren von Zammad-Anhangsinformationen aus Arrays"
 
@@ -10608,7 +10608,7 @@ msgstr "Growth/Enterprise API (api.deepl.com)"
 
 #: app/assets/javascripts/app/models/webhook.coffee:15
 msgid "HMAC signature token"
-msgstr "HMAC Signature Token"
+msgstr "HMAC-Signatur-Token"
 
 #: db/seeds/settings.rb:5848
 msgid "HTML Email CSS Font"
@@ -11011,7 +11011,7 @@ msgid "Hour(s)"
 msgstr "Stunde(n)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "Stunden"
@@ -13757,7 +13757,7 @@ msgid "Minute(s)"
 msgstr "Minute(n)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "Minuten"
@@ -13843,7 +13843,7 @@ msgid "Monitoring Token"
 msgstr "Monitoring-Token"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "Monat"
 
@@ -18752,7 +18752,7 @@ msgstr ""
 "Sekundäre Organisationen können die gleiche Organisation nicht zweimal "
 "enthalten."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 msgid "Seconds"
 msgstr "Sekunden"
 
@@ -20316,6 +20316,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -21622,7 +21623,7 @@ msgstr ""
 "Der Eintrag wurde erstellt, wird jedoch durch die aktuelle Suche oder den "
 "aktuellen Filter ausgeblendet."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 msgid "The entry was not a valid date and has been cleared."
 msgstr "Der Eintrag enthielt kein gültiges Datum und wurde gelöscht."
 
@@ -21776,7 +21777,7 @@ msgstr ""
 "Die Installation von Paketen ist mit Sicherheitsrisiken verbunden, da "
 "beliebiger Code im Kontext der Zammad-Anwendung ausgeführt wird."
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -22238,7 +22239,7 @@ msgstr "Der erforderliche Parameter 'group_id' fehlt."
 msgid "The required parameter 'id' is missing."
 msgstr "Der erforderliche Parameter 'id' fehlt."
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 msgid "The required parameter 'key' is missing."
 msgstr "Der erforderliche Parameter 'key' fehlt."
 
@@ -22298,7 +22299,7 @@ msgstr "Der erforderliche Parameter 'ticket_number' fehlt."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Der erforderliche Parameter 'user_id' fehlt."
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 msgid "The required parameter 'value' is missing."
 msgstr "Der erforderliche Parameter 'value' fehlt."
 
@@ -22400,7 +22401,7 @@ msgstr ""
 "Der Server hat ein Zertifikat bereitgestellt, das nicht verifiziert werden "
 "konnte."
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -24700,7 +24701,7 @@ msgstr "Das Token ist ungültig!"
 msgid "Token-based API access has been disabled by the administrator."
 msgstr "Der Token-basierte API-Zugang wurde vom Administrator deaktiviert."
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr "Zu viele Weiterleitungen für ursprüngliche URL. Angehalten."
 
@@ -25586,8 +25587,8 @@ msgstr ""
 "<div>\n"
 "<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
 "%> reagierte mit <%= h @objects[:article].preferences.dig('whatsapp', "
-"'reaction', 'emoji') %> auf die Nachricht von #{article.created_by.fullname}"
-":\n"
+"'reaction', 'emoji') %> auf die Nachricht von "
+"#{article.created_by.fullname}:\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
@@ -25599,8 +25600,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
-"{article.id}\" target=\"zammad_app\">In #{config.product_name} anzeigen</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">In #{config.product_name} anzeigen</"
+"a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17
@@ -26719,7 +26721,7 @@ msgstr ""
 "erneut oder kontaktieren Sie Ihren Administrator."
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "Jahr"
 
@@ -27461,7 +27463,7 @@ msgstr "Zammad-Stiftung"
 msgid "Zammad Helpdesk"
 msgstr "Zammad Helpdesk"
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr "Zammad User Agent"
 
@@ -28713,7 +28715,7 @@ msgstr "nicht erreicht"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "ist nicht gesetzt"
 

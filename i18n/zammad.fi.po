@@ -76,8 +76,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Luonut #{current_user.longname} "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Luonut #{current_user.longname} "
 "päivitetty #{ticket.updated_at}_\n"
 "* Ryhmä: #{ticket.group.name}\n"
 "* Omistaja: #{ticket.owner.fullname}\n"
@@ -103,8 +103,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Eskaloitu #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Eskaloitu #{ticket.escalation_at}_\n"
 "Tiketti (#{ticket.title}) asiakkaalta \"#{ticket.customer.longname}\" on "
 "eskaloitu \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -129,8 +129,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Päivitetty #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Päivitetty #{ticket.updated_at}_\n"
 "* Ryhmä: #{ticket.group.name}\n"
 "* Omistaja: #{ticket.owner.fullname}\n"
 "* Tila: #{t(ticket.state.name)}\n"
@@ -154,8 +154,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Muistutukset saavutettu_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Muistutukset saavutettu_\n"
 "Tiketti kaipaa huomiota: muistutukset saavutettu tiketille (#{ticket.title}) "
 "asiakkaalta \"*#{ticket.customer.longname}*\"!\n"
 "\n"
@@ -182,8 +182,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Päivitetty #{ticket.updated_at} "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Päivitetty #{ticket.updated_at} "
 "käyttäjän #{current_user.longname} toimesta_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -211,8 +211,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#"
-"{config.ticket_hook}#{ticket.number}>: Eskaloidaan #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"#{config.ticket_hook}#{ticket.number}>: Eskaloidaan #{ticket.escalation_at}"
+"_\n"
 "Tiketti (#{ticket.title}) asiakkaalta \"#{ticket.customer.longname}\" "
 "eskaloidaan \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -313,8 +314,8 @@ msgstr ""
 "<div>Laitteesi on lisätty tunnettujen laitteiden luetteloosi, jota voit "
 "tarkastella täällä:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\">#"
-"{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Jos tämä et ollut sinä, poista laite, vaihda tilisi salasana ja ota "
 "yhteyttä järjestelmänvalvojaasi. Joku on saattanut päästä luvattomasti "
@@ -1228,7 +1229,7 @@ msgstr "Toisisijainen organisaatio"
 msgid "AI writing assistant tools"
 msgstr "Toisisijainen organisaatio"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr ""
 
@@ -1999,8 +2000,8 @@ msgstr ""
 "\n"
 "<div>Terve #{user.firstname},</div>\n"
 "<br>\n"
-"<div>Saimme pyynnön kirjautua ylläpitäjänä #{config.product_name} <b>#"
-"{user.login}</b>-tilillesi.</div>\n"
+"<div>Saimme pyynnön kirjautua ylläpitäjänä #{config.product_name} "
+"<b>#{user.login}</b>-tilillesi.</div>\n"
 "<br>\n"
 "<div>Jatka napsauttamalla alla olevaa linkkiä tai kopioimalla URL-osoite "
 "selaimesi osoiteriville:</div>\n"
@@ -4156,7 +4157,7 @@ msgstr "Vaihda salasanasi"
 msgid "Change customer"
 msgstr "Vaihda asiakas"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 #, fuzzy
 #| msgid "Change order"
@@ -4367,7 +4368,7 @@ msgstr "Yhdistä kanavia"
 msgid "Check item"
 msgstr "Tarkistesumma"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 
@@ -4459,7 +4460,7 @@ msgstr "Tarkistesumma"
 msgid "Child"
 msgstr "Alempi"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 #, fuzzy
@@ -4677,7 +4678,7 @@ msgstr "Tyhjennä haku"
 msgid "Clear selection"
 msgstr "Tyhejnnä valinta"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 #, fuzzy
 #| msgid "Clear Selection"
@@ -6241,7 +6242,7 @@ msgstr "Päivä"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "Päivä"
 
@@ -8479,7 +8480,7 @@ msgstr ""
 msgid "Elasticsearch index does not exist"
 msgstr "Sähköpostiasetuksesi"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9634,7 +9635,7 @@ msgstr "Laajennettu haku"
 msgid "External data source field"
 msgstr "sisäinen"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 
@@ -11160,7 +11161,7 @@ msgid "Hour(s)"
 msgstr "Tunnit"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "tuntia"
@@ -14111,7 +14112,7 @@ msgid "Minute(s)"
 msgstr "Minuuttia"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "Minuutit"
@@ -14199,7 +14200,7 @@ msgid "Monitoring Token"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "Kuukausi"
 
@@ -19598,7 +19599,7 @@ msgstr ""
 msgid "Secondary organizations cannot include the same organization twice."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 #, fuzzy
 #| msgid "Saved conditions"
 msgid "Seconds"
@@ -21334,6 +21335,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -22639,7 +22641,7 @@ msgid ""
 "The entry was created, but it is hidden by the current search or filter."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 msgid "The entry was not a valid date and has been cleared."
 msgstr ""
 
@@ -22795,7 +22797,7 @@ msgid ""
 "arbitrary code will be executed in the context of the Zammad application."
 msgstr ""
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -23289,7 +23291,7 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 msgid "The required parameter 'key' is missing."
 msgstr ""
 
@@ -23349,7 +23351,7 @@ msgstr ""
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 msgid "The required parameter 'value' is missing."
 msgstr ""
 
@@ -23444,7 +23446,7 @@ msgstr ""
 msgid "The server presented a certificate that could not be verified."
 msgstr "Objekti luotu"
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -25726,7 +25728,7 @@ msgstr ""
 msgid "Token-based API access has been disabled by the administrator."
 msgstr ""
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr ""
 
@@ -27851,7 +27853,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "Vuosi"
 
@@ -28528,7 +28530,7 @@ msgstr ""
 msgid "Zammad Helpdesk"
 msgstr ""
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr ""
 
@@ -29867,7 +29869,7 @@ msgstr "ei saavutettu"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "ei asetettu"
 

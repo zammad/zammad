@@ -1244,7 +1244,7 @@ msgstr "MI-írássegéd"
 msgid "AI writing assistant tools"
 msgstr "MI-írássegédeszközök"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
 msgid "AM/PM"
 msgstr "de/du"
 
@@ -4065,7 +4065,7 @@ msgstr "Változtassa meg a jelszavát"
 msgid "Change customer"
 msgstr "Ügyfél megváltoztatása"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:314
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr "Dátum megváltoztatása"
@@ -4239,7 +4239,7 @@ msgstr "Csatornák ellenőrzése."
 msgid "Check item"
 msgstr "Elem ellenőrzése"
 
-#: lib/search_index_backend.rb:489
+#: lib/search_index_backend.rb:495
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 "A részletes információkért ellenőrizze a választ és a hasznos tartalmat:"
@@ -4328,7 +4328,7 @@ msgstr "Ellenőrzőösszeg"
 msgid "Child"
 msgstr "Gyermek"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:317
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -4554,7 +4554,7 @@ msgstr "Keresés törlése"
 msgid "Clear selection"
 msgstr "Kijelölés törlése"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:379
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr "Az érték törlése"
@@ -6063,7 +6063,7 @@ msgstr "Dátum mező"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:86
 msgid "Day"
 msgstr "Nap"
 
@@ -8403,7 +8403,7 @@ msgstr "Elasticsearch teljes hasznostartalom-méret"
 msgid "Elasticsearch index does not exist"
 msgstr "Az Elasticsearch-index nem létezik"
 
-#: lib/search_index_backend.rb:485
+#: lib/search_index_backend.rb:491
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9597,7 +9597,7 @@ msgstr "Kibővített keresés"
 msgid "External data source field"
 msgstr "Külső adatforrásmező"
 
-#: lib/search_index_backend.rb:830
+#: lib/search_index_backend.rb:837
 msgid "Extract zammad-attachment information from arrays"
 msgstr "A Zammad-melléklet információinak kinyerése a tömbökből"
 
@@ -11022,7 +11022,7 @@ msgid "Hour(s)"
 msgstr "Óra"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:241
 msgid "Hours"
 msgstr "Óra"
@@ -13755,7 +13755,7 @@ msgid "Minute(s)"
 msgstr "perc"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:92
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:253
 msgid "Minutes"
 msgstr "perc"
@@ -13841,7 +13841,7 @@ msgid "Monitoring Token"
 msgstr "Felügyeleti token"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:89
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:87
 msgid "Month"
 msgstr "hónap"
 
@@ -18727,7 +18727,7 @@ msgid "Secondary organizations cannot include the same organization twice."
 msgstr ""
 "A másodlagos szervezetek nem tartalmazhatják ugyanazt a szervezetet kétszer."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:91
 msgid "Seconds"
 msgstr "Másodperc"
 
@@ -20286,6 +20286,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/button_with_dropdown.coffee:12
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:9
 #: app/assets/javascripts/app/views/ai/knowledge_base_features.jst.eco:46
+#: app/assets/javascripts/app/views/ai/ticket_summary.jst.eco:62
 #: app/assets/javascripts/app/views/beta_ui.jst.eco:20
 #: app/assets/javascripts/app/views/channel/form.jst.eco:124
 #: app/assets/javascripts/app/views/integration/content_translation_ticket_articles.jst.eco:23
@@ -21564,7 +21565,7 @@ msgid ""
 "The entry was created, but it is hidden by the current search or filter."
 msgstr "A bejegyzés létrejött, de a jelenlegi keresés vagy szűrő elrejti azt."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:81
 msgid "The entry was not a valid date and has been cleared."
 msgstr "A bejegyzés nem volt érvényes dátum, és törölve lett."
 
@@ -21711,7 +21712,7 @@ msgstr ""
 "A csomagok telepítése biztonsági következményekkel jár, mert tetszőleges kód "
 "kerül végrehajtásra a Zammad-alkalmazás környezetében."
 
-#: lib/search_index_backend.rb:487
+#: lib/search_index_backend.rb:493
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -22159,7 +22160,7 @@ msgstr "A szükséges „group_id” paraméter hiányzik."
 msgid "The required parameter 'id' is missing."
 msgstr "A szükséges „id” paraméter hiányzik."
 
-#: lib/search_index_backend.rb:753
+#: lib/search_index_backend.rb:760
 msgid "The required parameter 'key' is missing."
 msgstr "A szükséges „key” paraméter hiányzik."
 
@@ -22219,7 +22220,7 @@ msgstr "A szükséges „ticket_number” paraméter hiányzik."
 msgid "The required parameter 'user_id' is missing."
 msgstr "A szükséges „user_id” paraméter hiányzik."
 
-#: lib/search_index_backend.rb:754
+#: lib/search_index_backend.rb:761
 msgid "The required parameter 'value' is missing."
 msgstr "A szükséges „value” paraméter hiányzik."
 
@@ -22319,7 +22320,7 @@ msgstr ""
 "A kiszolgáló olyan tanúsítványt mutatott be, amelyet nem sikerült "
 "ellenőrizni."
 
-#: lib/user_agent.rb:213
+#: lib/user_agent.rb:223
 msgid ""
 "The server returned a redirect response, but the current operation does not "
 "allow redirects."
@@ -24584,7 +24585,7 @@ msgstr "A token érvénytelen!"
 msgid "Token-based API access has been disabled by the administrator."
 msgstr "A tokenalapú API-hozzáférést az adminisztrátor letiltotta."
 
-#: lib/user_agent.rb:217
+#: lib/user_agent.rb:227
 msgid "Too many redirections for the original URL, halting."
 msgstr "Túl sok átirányítás az eredeti URL-re, megállás."
 
@@ -25472,8 +25473,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
-"{article.id}\" target=\"zammad_app\">Nézze meg itt: #{config.product_name}</"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Nézze meg itt: #{config.product_name}</"
 "a>\n"
 "</div>\n"
 
@@ -26587,7 +26588,7 @@ msgstr ""
 "fel a kapcsolatot az adminisztrátorral."
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:90
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:88
 msgid "Year"
 msgstr "Év"
 
@@ -26956,7 +26957,8 @@ msgstr "Nincsenek meg a szükséges jogosultságai az oldal eléréséhez."
 
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:54
 msgid "You get notified on this device about updates to your tickets."
-msgstr "Értesítést kap ezen az eszközön a jegyeivel kapcsolatos frissítésekről."
+msgstr ""
+"Értesítést kap ezen az eszközön a jegyeivel kapcsolatos frissítésekről."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:28
 #: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:34
@@ -27310,7 +27312,7 @@ msgstr "Zammad Alapítvány"
 msgid "Zammad Helpdesk"
 msgstr "Zammad ügyfélszolgálat"
 
-#: lib/user_agent.rb:101
+#: lib/user_agent.rb:111
 msgid "Zammad User Agent"
 msgstr "Zammad felhasználói ügynök"
 
@@ -28560,7 +28562,7 @@ msgstr "nem érte el"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:134
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:132
 msgid "not set"
 msgstr "nincs beállítva"
 
