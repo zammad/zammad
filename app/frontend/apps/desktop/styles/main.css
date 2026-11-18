@@ -158,10 +158,15 @@
     /* All fields default to full-width. */
     @apply col-span-full;
 
-    /* Optional single-column style for configured fields (medium+ breakpoint). */
-    &.form-group-single-column {
+    /* Optional single-column style for configured fields (medium+ breakpoint), unless they have no partner. */
+    &.form-group-single-column:not([data-form-group-unpaired]) {
       @apply @md:col-span-1;
     }
+  }
+
+  /* Single-column style for all fields of a group (small+ breakpoint), unless they have no partner. */
+  .form-group.form-group-half-size-fields > :not([data-form-group-unpaired]) {
+    @apply @sm:col-span-1;
   }
 
   /*

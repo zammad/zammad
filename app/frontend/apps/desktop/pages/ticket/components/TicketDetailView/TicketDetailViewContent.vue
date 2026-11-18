@@ -399,7 +399,7 @@ const ticketEditSchema = [
         isLayout: true,
         component: 'FormGroup',
         props: {
-          class: '@sm:*:col-span-1',
+          halfSizeFields: true,
           showDirtyMark: true,
         },
         children: [ticketSchema],
