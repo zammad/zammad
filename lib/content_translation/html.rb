@@ -29,20 +29,29 @@ class ContentTranslation::Html
 
   SECTION_MARKER = %r{\A[[:blank:]]*\{[[:blank:]]*(s[1-9]\d*)[[:blank:]]*\}[[:blank:]]*\z}
 
-  attr_reader :sections
+  attr_reader :fragment, :sections, :text_sections, :translated_texts
 
   def self.protected?(node)
     PROTECTED_ELEMENTS.include?(node.name) || node['translate']&.casecmp?('no')
   end
 
-  def initialize(content)
+  # @param texts [Hash{Symbol => String}] plain texts translated along with the content, each a
+  #   section of its own behind it; #translated_texts has their translations
+  def initialize(content, texts: {})
     guard do
       @fragment = ScrubHtml.new(content.to_s, []).scrub!
-      @fragment.xpath('.//comment()').each(&:remove)
-      @fragment.css('span').each { |span| merge_following_spans(span) }
-      @sections = []
-      extract(@fragment)
+      fragment.xpath('.//comment()').each(&:remove)
+      fragment.css('span').each { |span| merge_following_spans(span) }
+      @sections         = []
+      @translated_texts = {}
+      extract(fragment)
+      @text_sections = texts.transform_values { |text| add_text_section(text) }.compact
     end
+  end
+
+  # @return [Boolean] whether the content has text to translate, beside the texts behind it
+  def content?
+    sections.size > text_sections.size
   end
 
   def to_s
@@ -59,15 +68,53 @@ class ContentTranslation::Html
 
       if !restored
         Rails.logger.info("#{self.class.name}: the answer cannot be rebuilt, it is rendered with simplified formatting.")
-        next Fallback.new(response, @fragment).render
+        next fallback(response)
       end
 
-      sections.zip(restored).each { |section, nodes| section.replace(nodes) }
-      @fragment.to_html
+      sections.zip(restored).each do |section, translation|
+        name = text_sections.key(section)
+        next section.replace(translation) if !name
+
+        translated_texts[name] = plain_text(translation)
+      end
+      fragment.to_html
     end
   end
 
   private
+
+  def add_text_section(text)
+    section = Section.new("s#{sections.size + 1}", [fragment.document.create_text_node(text)])
+    return if !section.translatable?
+
+    sections << section
+    section
+  end
+
+  # The texts behind the content are told apart from it by their first marker. Without that marker
+  # nothing says where the content ends, so all of the answer is rendered as content.
+  def fallback(response)
+    return simplified(response) if text_sections.empty? || !response.is_a?(String)
+
+    # At the start of a line, and the last one: such a marker inside the content is its text.
+    texts_start = content? ? response.rindex(%r{^[[:blank:]]*\{[[:blank:]]*#{text_sections.values.first.id}[[:blank:]]*\}}) : 0
+    return simplified(response) if !texts_start
+
+    texts = Fallback.texts(response[texts_start..])
+    @translated_texts = text_sections.keys.zip(texts.map(&:squish)).to_h if texts.size == text_sections.size
+
+    # Content without text has nothing to translate and stays as it is.
+    content? ? simplified(response[0...texts_start]) : fragment.to_html
+  end
+
+  def simplified(response)
+    Fallback.new(response, fragment).render
+  end
+
+  # A text has no formatting to rebuild, so whatever the model added to it is dropped.
+  def plain_text(translation)
+    Fallback.texts(translation).join(' ').squish
+  end
 
   # Keeps a failure of the transformation apart from a failure of the provider.
   def guard
@@ -81,7 +128,7 @@ class ContentTranslation::Html
     texts = split(response)
     return if !texts
 
-    restored = sections.zip(texts).map { |section, text| section.restore(text) }
+    restored = sections.zip(texts).map { |section, text| text_sections.value?(section) ? text : section.restore(text) }
     restored if restored.all?
   end
 

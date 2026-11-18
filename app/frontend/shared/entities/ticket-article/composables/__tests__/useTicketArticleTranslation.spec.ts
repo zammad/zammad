@@ -308,7 +308,12 @@ describe('useTicketArticleTranslation', () => {
         ticketArticleTranslationUpdates: {
           article: {
             id: articleId,
-            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+            translation: {
+              content: '<p>Hallo</p>',
+              subject: 'Betreff',
+              backend: 'ai',
+              translated: true,
+            },
           },
           translation: { translated: true },
           error: null,
@@ -318,7 +323,36 @@ describe('useTicketArticleTranslation', () => {
       expect(translation.translationFor(articleId)).toMatchObject({
         status: 'done',
         content: '<p>Hallo</p>',
+        subject: 'Betreff',
         backend: 'ai',
+      })
+    })
+
+    it('carries the translated subject of a translation that is answered at once', async () => {
+      const { translation } = setup()
+      mockTicketArticleTranslateMutation({
+        ticketArticleTranslate: {
+          article: {
+            id: articleId,
+            translation: {
+              content: '<p>Hallo</p>',
+              subject: 'Betreff',
+              backend: 'ai',
+              translated: true,
+            },
+          },
+          translation: { translated: true },
+        },
+      })
+
+      const translating = translation.showTranslation(articleId)
+      await openSubscription()
+      await translating
+
+      expect(translation.translationFor(articleId)).toMatchObject({
+        status: 'done',
+        content: '<p>Hallo</p>',
+        subject: 'Betreff',
       })
     })
 
@@ -587,6 +621,7 @@ describe('useTicketArticleTranslation', () => {
       expect(translation.translationFor(articleId)).toEqual({
         status: 'done',
         content: '<p>Hallo</p>',
+        subject: null,
         backend: 'libretranslate',
         translated: true,
         analytics: null,
@@ -753,8 +788,9 @@ describe('useTicketArticleTranslation', () => {
                 id: articleId,
                 translationAvailable: true,
                 translation: {
-                  __typename: 'ContentTranslation',
+                  __typename: 'TicketArticleTranslation',
                   content: '<p>Hallo</p>',
+                  subject: null,
                   backend: 'ai',
                   translated: true,
                 },
@@ -2011,6 +2047,71 @@ describe('useTicketArticleTranslation', () => {
       await waitForNextTick(true)
 
       expect(translation.hasDirectTranslationAction(articleId)).toBe(false)
+    })
+  })
+
+  describe('displayed translation', () => {
+    it('is displayed once it arrived, and no longer after the original is shown again', async () => {
+      const { translation } = setup()
+      deferred()
+
+      const translating = translation.showTranslation(articleId)
+      const subscription = await openSubscription()
+      await translating
+
+      // On its way: the toggle is on already, the article still shows the original.
+      expect(translation.isTranslationActive(articleId)).toBe(true)
+      expect(translation.isTranslationDisplayed(articleId)).toBe(false)
+
+      await subscription.trigger({
+        ticketArticleTranslationUpdates: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: true },
+          },
+          translation: { translated: true },
+          error: null,
+        },
+      })
+
+      expect(translation.isTranslationDisplayed(articleId)).toBe(true)
+      expect(translation.isTranslationDisplayed(otherArticleId)).toBe(false)
+
+      translation.showOriginal(articleId)
+
+      expect(translation.isTranslationDisplayed(articleId)).toBe(false)
+    })
+
+    it('is not displayed after a failure', async () => {
+      const { translation } = setup()
+      mockTicketArticleTranslateMutationError('AI provider is not configured.', {
+        type: GraphQLErrorTypes.UnknownError,
+      })
+
+      const translating = translation.showTranslation(articleId)
+      await openSubscription()
+      await translating
+
+      expect(translation.isTranslationDisplayed(articleId)).toBe(false)
+    })
+
+    it('is not displayed for an article already in the target language', async () => {
+      const { translation } = setup()
+      mockTicketArticleTranslateMutation({
+        ticketArticleTranslate: {
+          article: {
+            id: articleId,
+            translation: { content: '<p>Hallo</p>', backend: 'ai', translated: false },
+          },
+          translation: { translated: false },
+        },
+      })
+
+      const translating = translation.showTranslation(articleId)
+      await openSubscription()
+      await translating
+
+      expect(translation.isTranslationDisplayed(articleId)).toBe(false)
     })
   })
 })

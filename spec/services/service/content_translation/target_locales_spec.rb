@@ -58,7 +58,8 @@ RSpec.describe Service::ContentTranslation::TargetLocales do
 
     before do
       # Without the validation, because saving the config runs the connection test.
-      Setting.set('content_translation_service_config', { 'provider' => 'libre_translate', 'url' => url }, validate: false)
+      Setting.set('content_translation_libre_translate_config', { 'url' => url }, validate: false)
+      Setting.set('content_translation_provider', 'libre_translate')
 
       stub_hostname_resolution(url)
       stub_request(:get, "#{url}/languages")

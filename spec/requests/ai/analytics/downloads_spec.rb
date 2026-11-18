@@ -175,6 +175,27 @@ RSpec.describe 'AI::Analytics::DownloadsController', :aggregate_failures, authen
       include_examples 'returns basic data'
       include_examples 'handles filtering correctly'
 
+      context 'with translation runs of the providers that are no AI' do
+        let(:format)    { 'json' }
+        let(:deepl_run) { create(:ai_analytics_run, identifier: Service::ContentTranslation::StoredTranslation::IDENTIFIER, ai_service_name: 'deepl') }
+        let(:ai_analytics_run) do
+          deepl_run
+          create(:ai_analytics_run, identifier: Service::ContentTranslation::StoredTranslation::IDENTIFIER, ai_service_name: 'libre_translate')
+          create(:ai_analytics_run, identifier: Service::ContentTranslation::StoredTranslation::IDENTIFIER, ai_service_name: 'Translate')
+        end
+
+        it 'leaves them out and keeps the AI translation runs' do
+          expect(response.parsed_body).to contain_exactly(include(id: ai_analytics_run.id))
+        end
+
+        context 'when asked for one of them by name' do
+          let(:filters) { { ai_service_name: 'deepl' } }
+
+          it 'returns its runs' do
+            expect(response.parsed_body).to contain_exactly(include(id: deepl_run.id))
+          end
+        end
+      end
     end
 
     context 'with download type errors' do

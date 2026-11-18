@@ -19,9 +19,16 @@ class Gql::Loaders::Ticket::ArticleTranslationLoader < GraphQL::Batch::Loader
     articles.each do |article|
       translation = stored[article.id]
       if @with_content && translation
+        extra_texts = Service::ContentTranslation::TicketArticle.extra_texts(article)
         translation = Service::ContentTranslation::TicketArticle.for_display(
           article,
-          { content: translation.content, backend: translation.metadata['backend'], translated: true }
+          {
+            content:            translation.content,
+            extra_texts:        Service::ContentTranslation::StoredTranslation.extra_translations(translation, extra_texts),
+            source_extra_texts: extra_texts,
+            backend:            translation.metadata['backend'],
+            translated:         true,
+          }
         )
       end
       fulfill(article, translation)

@@ -66,9 +66,58 @@ RSpec.describe LibreTranslate::Client do
       end
     end
 
+    it 'sends a single text on its own, not as a list' do
+      translate
+
+      expect(WebMock).to have_requested(:post, endpoint).with(body: hash_including('q' => 'Hello world.'))
+    end
+
+    context 'with several texts' do
+      def translate
+        client.translate(text: ['Hello world.', 'Greeting'], target: 'de', format: 'text')
+      end
+
+      before { stub_translate(['Hallo Welt.', 'Begrüßung']) }
+
+      it 'returns one translation per text, in their order' do
+        expect(translate).to eq(['Hallo Welt.', 'Begrüßung'])
+      end
+
+      it 'sends them as a list in one request' do
+        translate
+
+        expect(WebMock).to have_requested(:post, endpoint).with(body: hash_including('q' => ['Hello world.', 'Greeting'])).once
+      end
+
+      # Which text an answer of another length leaves out cannot be told, so none of it is usable.
+      it 'raises for an answer with fewer translations than texts' do
+        stub_translate(['Hallo Welt.'])
+
+        expect { translate }.to raise_error(described_class::UnreachableError)
+      end
+
+      it 'raises for a translation that is no text' do
+        stub_translate(['Hallo Welt.', nil])
+
+        expect { translate }.to raise_error(described_class::UnreachableError)
+      end
+
+      it 'raises for a single translation' do
+        stub_translate('Hallo Welt.')
+
+        expect { translate }.to raise_error(described_class::UnreachableError)
+      end
+    end
+
     # What a URL pointing at something else than a LibreTranslate instance answers with. Taking it
     # for a translation would hand the caller an empty article.
     context 'when the answer carries no translated text' do
+      it 'raises for a list where a single text was asked for' do
+        stub_translate(['Hallo Welt.'])
+
+        expect { translate }.to raise_error(described_class::UnreachableError)
+      end
+
       it 'raises for an answer that is no object' do
         stub_request(:post, endpoint)
           .to_return(status: 200, body: [].to_json, headers: { 'Content-Type' => 'application/json' })
@@ -316,7 +365,7 @@ RSpec.describe LibreTranslate::Client do
 
   describe 'logging every request' do
     def logs_of(url)
-      HttpLog.where(facility: 'content_translation', url:)
+      HttpLog.where(facility: 'LibreTranslate', url:)
     end
 
     before do

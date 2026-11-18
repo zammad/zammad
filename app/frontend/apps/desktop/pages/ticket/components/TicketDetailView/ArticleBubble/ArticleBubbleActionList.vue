@@ -3,6 +3,10 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue'
 
+import {
+  NotificationTypes,
+  useNotifications,
+} from '#shared/components/CommonNotifications/index.ts'
 import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables/useTicketArticleReplyAction.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
@@ -109,6 +113,8 @@ const { getNewArticleBody, openReplyForm } = useTicketArticleReplyAction(
 
 const { isPending, isActionPending, performAction } = usePendingArticleAction()
 
+const { notify } = useNotifications()
+
 const disposeCallbacks: (() => unknown)[] = []
 
 const onDispose = (callback: () => unknown) => {
@@ -167,10 +173,26 @@ const actions = computed(() => {
             onClick: () => {
               if (!ticket.value) return
 
+              const selection = articleSelection(props.article.internalId)
+
+              // A translation takes the place of the original in the article body, so a quote of
+              //   it would read as if the customer had written it.
+              const isQuoteRefused =
+                !!(selection?.html || selection?.text) &&
+                articleTranslation.isTranslationDisplayed(props.article.id)
+
+              if (isQuoteRefused && action.quotesSelection)
+                notify({
+                  id: 'article-translation-quote-refused',
+                  type: NotificationTypes.Warn,
+                  message: __('Translated text cannot be quoted. Show the original to quote it.'),
+                })
+
               performAction(action, ticket.value, props.article, {
                 formId: form.value?.formId ?? '',
-                selection: articleSelection(props.article.internalId),
-                openReplyForm,
+                selection: isQuoteRefused ? undefined : selection,
+                openReplyForm: (values) =>
+                  openReplyForm({ ...values, answeredArticleId: props.article.id }),
                 getNewArticleBody,
               })
             },

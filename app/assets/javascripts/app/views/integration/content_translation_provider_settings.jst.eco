@@ -1,29 +1,31 @@
+<% if @attributes.length: %>
 <h2><%- @T('Settings') %></h2>
 
-<form>
-  <div class="settings-entry js-serviceForm no-margin"></div>
-
-  <% if @attributes.length: %>
-    <div class="formGroup-label">
-      <label><%- @T('Provider configuration') %></label>
-    </div>
-    <div class="settings-entry">
-      <table class="settings-list" style="width: 100%;">
-        <thead>
-          <tr>
-            <th width="20%"><%- @T('Name') %>
-            <th width="80%"><%- @T('Value') %>
-        </thead>
-        <tbody>
-  <% for attribute in @attributes: %>
-          <tr>
-            <td><%- @T(attribute.display) %><% if attribute.null is false: %> *<% end %>
-            <td class="settings-list-control-cell" data-name="<%= attribute.name %>">
-  <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% end %>
+<form class="js-providerConfig">
+  <div class="formGroup-label">
+    <label><%- @T('Provider configuration') %></label>
+  </div>
+  <div class="settings-entry">
+    <table class="settings-list" style="width: 100%;">
+      <thead>
+        <tr>
+          <th width="20%"><%- @T('Name') %>
+          <th width="80%"><%- @T('Value') %>
+      </thead>
+      <tbody>
+<% for attribute in @attributes: %>
+        <tr>
+          <td><%- @T(attribute.display) %><% if attribute.null is false: %> *<% end %>
+          <td class="settings-list-control-cell" data-name="<%= attribute.name %>">
+<% end %>
+      </tbody>
+    </table>
+  </div>
 
   <button type="submit" class="btn btn--primary js-submit"><%- @T('Save') %></button>
 </form>
+
+<div class="double-spacer"></div>
+<% end %>
+
+<div class="js-articleSettings"></div>

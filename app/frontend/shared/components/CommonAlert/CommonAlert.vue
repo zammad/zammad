@@ -34,10 +34,15 @@ const icon = computed(() => {
 
 const classMap = getAlertClasses()
 
+const emit = defineEmits<{
+  dismiss: []
+}>()
+
 const dismissed = ref(false)
 
 const dismiss = () => {
   dismissed.value = true
+  emit('dismiss')
 }
 </script>
 
@@ -55,19 +60,19 @@ const dismiss = () => {
     <slot />
 
     <div
+      v-if="props.dismissible"
+      v-tooltip="$t('Dismiss alert')"
       :class="classMap.dismissButton"
       role="button"
       tabindex="0"
-      :aria-label="$t('Dismiss alert')"
       @click="dismiss"
       @keydown.enter="dismiss"
     >
       <CommonIcon
-        v-if="props.dismissible"
         size="tiny"
         decorative
         name="common-alert-dismiss"
-        class="mx-auto cursor-pointer md:mx-0"
+        class="mx-auto mt-0.5 cursor-pointer md:mx-0"
       />
     </div>
   </div>

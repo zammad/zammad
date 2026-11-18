@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { omit } from 'lodash-es'
+
 import type { FormRef, FormValues } from '#shared/components/Form/types.ts'
 import { useTicketSharedDraftStartDeleteMutation } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartDelete.api.ts'
 import { useTicketSharedDraftStartSingleQuery } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartSingle.api.ts'
@@ -11,8 +13,10 @@ import { openFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 
 export const useTicketSharedDraft = () => {
   const mapSharedDraftParams = (ticketId: string, form?: FormRef) => {
-    const { article: newArticle, ...ticketAttributes }: { article?: FormValues } =
-      form?.values || {}
+    const { article, ...ticketAttributes }: { article?: FormValues } = form?.values || {}
+
+    // The answered article is what this tab displays, not content of the draft.
+    const newArticle = article && omit(article, 'answeredArticleId')
 
     // Map values to the expected format
     if (newArticle) {

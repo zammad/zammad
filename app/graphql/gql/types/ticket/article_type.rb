@@ -51,7 +51,7 @@ module Gql::Types::Ticket
         argument :target_locale, String, required: false, description: 'The locale to translate into, e.g. "de-de".'
       end
 
-      field :translation, Gql::Types::ContentTranslationType, null: true, description: 'The stored translation of the current article content' do
+      field :translation, Gql::Types::Ticket::Article::TranslationType, null: true, description: 'The stored translation of the current article content' do
         argument :target_locale, String, description: 'The locale to translate into, e.g. "de-de".'
       end
     end
@@ -98,18 +98,23 @@ module Gql::Types::Ticket
     # Both batched per page and locale; without a locale there is nothing to look up.
     def translation_available(target_locale: nil)
       return if target_locale.blank?
+      return false if !article_translation_enabled?
 
       load_translation(target_locale, with_content: context[:article_translation_content_locale] == target_locale).then(&:present?)
     end
 
     def translation(target_locale:)
-      return if !Setting.get('content_translation_service') || !Setting.get('content_translation_ticket_article')
+      return if !article_translation_enabled?
       return if !Pundit.policy!(context.current_user, @object).agent_read_access?
 
       load_translation(target_locale, with_content: true)
     end
 
     private
+
+    def article_translation_enabled?
+      Setting.get('content_translation_service') && Setting.get('content_translation_ticket_article')
+    end
 
     def load_translation(target_locale, with_content:)
       (context[:article_translations] || {}).fetch([@object.id, target_locale]) do

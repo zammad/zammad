@@ -7,6 +7,31 @@ class ContentTranslation::Html::Fallback
   MARKER     = %r{(?<!\\)\{[[:space:]]*(?:/?[1-9]\d*|[1-9]\d*/)[[:space:]]*\}}
   FORMATTING = %r{\\([[:punct:]])|\*+}
 
+  # Also where the model put the marker on the line of its text.
+  SECTION = %r{[[:blank:]]*(?<!\\)\{[[:blank:]]*s[1-9]\d*[[:blank:]]*\}[[:blank:]]*\n?}
+
+  # @return [Array<String>] the text of every section of an answer, without markers and formatting
+  def self.texts(response)
+    response.split(SECTION).filter_map do |section|
+      text = plain(section.gsub(MARKER, '')).strip
+
+      text if text.delete('*').present?
+    end
+  end
+
+  # Bold and italic are dropped, asterisks that are not formatting stay. A stray brace leaves the
+  # text unreadable for the scanner, so then every asterisk goes.
+  def self.plain(text)
+    ContentTranslation::Html::Markdown.tokens(text).filter_map do |type, value|
+      next "\n" if type == :break
+
+      value if type == :text
+    end.join
+  rescue ContentTranslation::Html::InvalidTranslation
+    text.gsub(FORMATTING) { Regexp.last_match(1).to_s }
+  end
+  private_class_method :plain
+
   def initialize(response, fragment)
     @response = response
     @fragment = fragment
@@ -16,10 +41,7 @@ class ContentTranslation::Html::Fallback
   def render
     return if !@response.is_a?(String)
 
-    # Also where the model put the marker on the line of its text.
-    paragraphs = @response.split(%r{[[:blank:]]*(?<!\\)\{[[:blank:]]*s[1-9]\d*[[:blank:]]*\}[[:blank:]]*\n?})
-      .map { |paragraph| prose(paragraph) }
-      .compact_blank
+    paragraphs = self.class.texts(@response).map { |text| prose(text) }
     return if paragraphs.empty?
 
     (paragraphs.map { |paragraph| "<div>#{paragraph}</div>" } + resources).join
@@ -27,23 +49,8 @@ class ContentTranslation::Html::Fallback
 
   private
 
-  def prose(paragraph)
-    text = plain(paragraph.gsub(MARKER, '')).strip
-    return if text.delete('*').blank?
-
+  def prose(text)
     text.lines(chomp: true).map { |line| ERB::Util.html_escape(line) }.join('<br>')
-  end
-
-  # Bold and italic are dropped, asterisks that are not formatting stay. A stray brace leaves the
-  # text unreadable for the scanner, so then every asterisk goes.
-  def plain(text)
-    ContentTranslation::Html::Markdown.tokens(text).filter_map do |type, value|
-      next "\n" if type == :break
-
-      value if type == :text
-    end.join
-  rescue ContentTranslation::Html::InvalidTranslation
-    text.gsub(FORMATTING) { Regexp.last_match(1).to_s }
   end
 
   def resources

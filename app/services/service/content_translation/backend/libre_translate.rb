@@ -23,6 +23,9 @@ class Service::ContentTranslation::Backend::LibreTranslate < Service::ContentTra
     LibreTranslate::Client::ContentTooLargeError     => ContentTooLargeError,
   }.freeze
 
+  CLIENT_ERROR       = LibreTranslate::Client::Error
+  HTML_REFUSED_ERROR = LibreTranslate::Client::HtmlFormatUnsupportedError
+
   # What the connection test asks to be translated. Short enough to cost the instance nothing,
   # and its outcome is never read - only whether the instance accepted the request.
   PING_CONTENT = 'Hello'.freeze
@@ -35,6 +38,10 @@ class Service::ContentTranslation::Backend::LibreTranslate < Service::ContentTra
   # The server URL alone; an instance that requires no authentication needs no `api_key`.
   def self.required_config_keys
     %w[url]
+  end
+
+  def self.config_setting_name
+    'content_translation_libre_translate_config'
   end
 
   # The language listing proves the instance answers, but it is exempt from the key check - so only
@@ -70,56 +77,20 @@ class Service::ContentTranslation::Backend::LibreTranslate < Service::ContentTra
     LANGUAGE_CODES[locale.locale] || [locale.locale.split('-').first]
   end
 
-  def self.config
-    Setting.get('content_translation_service_config').to_h.with_indifferent_access
-  end
-
   def self.client(config)
     LibreTranslate::Client.new(url: config[:url], api_key: config[:api_key])
   end
 
-  # Only the refused HTML format is not mapped here - #translate answers that one itself.
-  def self.outcome_for(error)
-    ERRORS.fetch(error.class, UnreachableError)
-  end
-
-  # @return [Hash, NilClass] `content`, `backend`, `fresh` and `analytics_run`; nil altogether
-  #   without a translation.
-  def execute
-    stored = find_stored
-    return result(stored.content, fresh: false, analytics_run: stored.ai_analytics_run) if stored
-    return if persistence_strategy == :stored_only
-
-    target_language # refuses a target the instance does not serve, before any content is sent
-
-    translation = sanitize(translate)
-    return if translation.nil?
-
-    analytics_run = save_analytics_run(translation)
-
-    store(translation, analytics_run:)
-
-    result(translation, fresh: true, analytics_run:)
-  rescue LibreTranslate::Client::Error => e
-    raise self.class.outcome_for(e)
-  end
-
   private
 
-  def translate
-    return request(content, 'text') if !html
-
-    begin
-      request(content, 'html')
-    rescue LibreTranslate::Client::HtmlFormatUnsupportedError
-      # An instance too old for the HTML format answers in plain text, whose line breaks have to
-      # survive as markup - the translation replaces the body of an HTML article.
-      request(content.html2text(link_style: :plain), 'text').text2html
-    end
+  # LibreTranslate unescapes its HTML answer itself (since v1.2.7), so the extra texts arrive as text.
+  def extra_text_from_html(translation)
+    translation
   end
 
-  def request(text, format)
-    client.translate(text:, target: target_language, format:)
+  # A single text is sent as a string: only several need the list form.
+  def request(texts, html:)
+    Array(client.translate(text: texts.one? ? texts.first : texts, target: target_language, format: html ? 'html' : 'text'))
   end
 
   def target_language
@@ -133,9 +104,5 @@ class Service::ContentTranslation::Backend::LibreTranslate < Service::ContentTra
 
   def supported_languages
     client.languages
-  end
-
-  def client
-    @client ||= self.class.client(config)
   end
 end

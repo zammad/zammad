@@ -24,17 +24,21 @@ RSpec.describe 'AI translation result verification', :aggregate_failures, integr
       let(:html)             { scenario.fetch('html', true) }
       let(:reference)        { scenario.dig('expected_translation', locale_code) }
       let(:min_length_ratio) { scenario.fetch('min_length_ratio', 0.5) }
+      let(:extra_texts)      { { subject: scenario['subject'] }.compact_blank }
 
       # Any object can hold a translation; a ticket article is the first caller's object.
       let(:object) { create(:ticket_article, body: input, content_type: html ? 'text/html' : 'text/plain') }
 
-      let(:translation) do
+      let(:result) do
         Service::AI::Feature::Translate.execute(
           locale:               locale_code,
-          context_data:         { object:, body: input, html:, backend: 'ai' },
+          context_data:         { object:, body: input, extra_texts:, html:, backend: 'ai' },
           persistence_strategy: :request_only,
-        ).content.to_s
+        )
       end
+
+      let(:translation)         { result.content.to_s }
+      let(:subject_translation) { Service::ContentTranslation::StoredTranslation.extra_translations(result.stored_result, extra_texts)[:subject] }
 
       it 'translates the content and preserves everything around it' do
         expect_target_language
@@ -44,6 +48,7 @@ RSpec.describe 'AI translation result verification', :aggregate_failures, integr
         expect_no_markdown
         expect_no_truncation
         expect_reference_similarity if reference
+        expect_subject if extra_texts.present?
       end
     end
   end
@@ -131,6 +136,13 @@ RSpec.describe 'AI translation result verification', :aggregate_failures, integr
     similarity = cosine_similarity(*vectors)
 
     expect(similarity).to be >= 0.8, advisory("the answer is only #{(similarity * 100).round}% similar to the reference translation")
+  end
+
+  # A subject sent along with the content comes back translated, and apart from the content.
+  def expect_subject
+    expect(subject_translation).to be_present, advisory('the subject is missing from the answer')
+    expect(subject_translation).not_to eq(scenario['subject']), advisory('the subject was not translated')
+    expect(text_of(translation)).not_to include(subject_translation), advisory('the subject is part of the translated content')
   end
 
   def expected_language

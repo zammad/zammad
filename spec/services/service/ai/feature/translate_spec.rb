@@ -305,6 +305,133 @@ RSpec.describe Service::AI::Feature::Translate do
     end
   end
 
+  describe 'with extra texts', :aggregate_failures do
+    let(:context_data) { super().merge(extra_texts: { subject: 'Question about the world' }) }
+    let(:llm_response) { "{s1}\nHallo **Welt**.\n{s2}\nFrage zur Welt" }
+
+    def stored_extra_texts
+      ai_service.execute.stored_result.metadata['extra_texts']
+    end
+
+    it 'asks for them in the same request, as sections behind the content' do
+      ai_service.execute
+
+      expect(provider_calls.pluck(:prompt_user)).to eq(["{s1}\nHello **world**.\n{s2}\nQuestion about the world"])
+    end
+
+    it 'returns the content without them' do
+      expect(ai_service.execute.content).to eq('<p>Hallo <strong>Welt</strong>.</p>')
+    end
+
+    it 'stores their translations with the content, each with a digest of its text' do
+      expect(stored_extra_texts).to eq(
+        'subject' => { 'version' => Digest::SHA256.hexdigest('Question about the world'), 'content' => 'Frage zur Welt' },
+      )
+    end
+
+    it 'keeps the content as the result of the analytics run' do
+      expect(ai_service.execute.ai_analytics_run.content).to eq('<p>Hallo <strong>Welt</strong>.</p>')
+    end
+
+    # The row is keyed by the content alone, so translations stored before keep being served.
+    it 'looks up the stored translation by the content alone' do
+      expect(described_class.lookup_version(context_data, target_locale))
+        .to eq(described_class.lookup_version(context_data.except(:extra_texts), target_locale))
+    end
+
+    context 'when the answer does not tell them apart from the content' do
+      let(:llm_response) { "Hallo Welt.\nFrage zur Welt" }
+
+      it 'stores all of it as the content' do
+        expect(ai_service.execute.content).to eq('<div>Hallo Welt.<br>Frage zur Welt</div>')
+      end
+
+      it 'stores no translation of them' do
+        expect(stored_extra_texts).to be_nil
+      end
+    end
+
+    context 'when the content has no text to translate' do
+      let(:body)         { '<p><img src="cid:image@example.com"></p>' }
+      let(:llm_response) { "{s1}\nFrage zur Welt" }
+
+      it 'asks for them alone' do
+        ai_service.execute
+
+        expect(provider_calls.pluck(:prompt_user)).to eq(["{s1}\nQuestion about the world"])
+      end
+
+      it 'stores their translations with the content as it is' do
+        expect(ai_service.execute).to have_attributes(content: body)
+        expect(stored_extra_texts.dig('subject', 'content')).to eq('Frage zur Welt')
+      end
+
+      context 'when none of them comes back' do
+        let(:llm_response) { "{s1}\n" }
+
+        it 'stores nothing, as nothing was translated' do
+          expect { ai_service.execute }.not_to change(AI::StoredResult, :count)
+          expect(ai_service.execute).to be_nil
+        end
+      end
+    end
+
+    context 'without content' do
+      let(:context_data) { super().merge(body: '') }
+      let(:llm_response) { "{s1}\nFrage zur Welt" }
+
+      it 'stores their translations with empty content' do
+        expect(ai_service.execute).to have_attributes(content: '')
+        expect(stored_extra_texts.dig('subject', 'content')).to eq('Frage zur Welt')
+      end
+    end
+
+    context 'when the content comes back without text' do
+      let(:llm_response) { "{s1}\n\n{s2}\nFrage zur Welt" }
+
+      it 'stores nothing, although they were translated' do
+        expect { ai_service.execute }.not_to change(AI::StoredResult, :count)
+      end
+    end
+
+    context 'with plain text content' do
+      let(:html)         { false }
+      let(:body)         { "Price < 5 & > 3\nSecond line" }
+      let(:llm_response) { "{s1}\nPreis < 5 & > 3\nZweite Zeile\n{s2}\nFrage zur Welt" }
+
+      it 'tells the model about the sections' do
+        ai_service.execute
+
+        expect(provider_calls.first[:prompt_system])
+          .to include('simple plain text', 'split into sections', '{s1}')
+          .and not_include('{1}text{/1}')
+      end
+
+      it 'asks for them as sections behind the content' do
+        ai_service.execute
+
+        expect(provider_calls.pluck(:prompt_user)).to eq(["{s1}\n#{body}\n{s2}\nQuestion about the world"])
+      end
+
+      it 'returns the content without them' do
+        expect(ai_service.execute.content).to eq("Preis < 5 & > 3\nZweite Zeile")
+      end
+
+      it 'stores their translations' do
+        expect(stored_extra_texts.dig('subject', 'content')).to eq('Frage zur Welt')
+      end
+
+      context 'when the answer does not tell them apart from the content' do
+        let(:llm_response) { "Preis < 5 & > 3\nFrage zur Welt" }
+
+        it 'stores all of it as the content' do
+          expect(ai_service.execute.content).to eq("Preis < 5 & > 3\nFrage zur Welt")
+          expect(stored_extra_texts).to be_nil
+        end
+      end
+    end
+  end
+
   describe '.lookup_version_sql' do
     def sql_version(backend)
       sql = described_class.lookup_version_sql(backend, "ticket_articles.content_type ILIKE '%html%'", 'ticket_articles.body')

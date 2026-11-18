@@ -16,6 +16,9 @@ class Service::ContentTranslation::StoredTranslation
   # is a new version, so translations of the previous format are not served anymore.
   AI_HTML_FORMAT = 'hybrid-1'.freeze
 
+  # Where a row keeps the translations of the extra texts, in its metadata.
+  EXTRA_TEXTS_KEY = 'extra_texts'.freeze
+
   class << self
     # The row of an object and target locale, whichever service produced it.
     def lookup_attributes(object, locale)
@@ -52,18 +55,37 @@ class Service::ContentTranslation::StoredTranslation
       AI::StoredResult.find_by(**lookup_attributes(object, locale), version: version(content, html, backend))
     end
 
+    # The translations a row holds of the given extra texts. The row is keyed by the content alone,
+    # so each of them carries a digest of its own text: one that changed since has no translation,
+    # and neither has one the row never held.
+    #
+    # @param record [AI::StoredResult]
+    # @param extra_texts [Hash{Symbol => String}] the texts as they are now
+    # @return [Hash{Symbol => String}]
+    def extra_translations(record, extra_texts)
+      stored = record.metadata[EXTRA_TEXTS_KEY].to_h
+
+      extra_texts.each_with_object({}) do |(name, text), translations|
+        entry = stored[name.to_s]
+
+        translations[name] = entry['content'] if entry.is_a?(Hash) && entry['version'] == text_version(text)
+      end
+    end
+
     # @param translation [String] the translated content
+    # @param extra_texts [Hash{Symbol => String}] plain texts translated along with the content
+    # @param extra_translations [Hash{Symbol => String}] their translations, by the same names
     # @param metadata [Hash] what the producer reports about itself; the producing service is added
     #   here, so every row names it whatever wrote it.
     # @param analytics_run [AI::Analytics::Run, NilClass] nil for a backend that records none
     # @return [AI::StoredResult, NilClass]
-    def save(object:, locale:, content:, html:, backend:, translation:, metadata: {}, analytics_run: nil)
+    def save(object:, locale:, content:, html:, backend:, translation:, extra_texts: {}, extra_translations: {}, metadata: {}, analytics_run: nil)
       AI::StoredResult
         .find_or_initialize_by(**lookup_attributes(object, locale))
         .tap do |record|
           record.update!(
             version:          version(content, html, backend),
-            metadata:         metadata.merge('backend' => backend),
+            metadata:         metadata.merge('backend' => backend).merge(extra_texts_metadata(extra_texts, extra_translations)),
             content:          translation,
             ai_analytics_run: analytics_run,
           )
@@ -75,6 +97,21 @@ class Service::ContentTranslation::StoredTranslation
     # content - it has its own translation to answer with either way.
     rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
       find(object:, locale:, content:, html:, backend:)
+    end
+
+    private
+
+    # Without a translated extra text the metadata holds nothing about them.
+    def extra_texts_metadata(extra_texts, extra_translations)
+      entries = extra_translations.compact_blank.to_h do |name, translation|
+        [name.to_s, { 'version' => text_version(extra_texts[name]), 'content' => translation }]
+      end
+
+      entries.present? ? { EXTRA_TEXTS_KEY => entries } : {}
+    end
+
+    def text_version(text)
+      Digest::SHA256.hexdigest(text.to_s)
     end
   end
 end

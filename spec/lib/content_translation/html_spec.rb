@@ -321,6 +321,80 @@ RSpec.describe ContentTranslation::Html do
     end
   end
 
+  describe 'texts behind the content', :aggregate_failures do
+    subject(:document) { described_class.new(html, texts:) }
+
+    let(:html)  { '<p>Hello <b>John</b>,</p><p>read the guide.</p>' }
+    let(:texts) { { subject: 'Q&A about *the* {guide}' } }
+
+    it 'sends each as a section of its own behind the content, escaped like its text' do
+      expect(document.to_s).to eq("{s1}\nHello **John**,\n{s2}\nread the guide.\n{s3}\nQ&A about \\*the\\* \\{guide\\}")
+    end
+
+    it 'keeps their translations apart from the content' do
+      expect(translation("{s1}\nHallo **John**,\n{s2}\nlies die Anleitung.\n{s3}\nFragen zu \\*der\\* \\{Anleitung\\}"))
+        .to eq('<p>Hallo <strong>John</strong>,</p><p>lies die Anleitung.</p>')
+      expect(document.translated_texts).to eq(subject: 'Fragen zu *der* {Anleitung}')
+    end
+
+    it 'drops formatting the model added to a text instead of failing the content for it' do
+      translation("{s1}\nHallo **John**,\n{s2}\nlies die Anleitung.\n{s3}\n**Fragen** zur {Anleitung}")
+
+      expect(document.translated_texts).to eq(subject: 'Fragen zur {Anleitung}')
+    end
+
+    it 'has no translation of a text without the content being asked for' do
+      expect(document.translated_texts).to eq({})
+    end
+
+    context 'without texts' do
+      let(:texts) { {} }
+
+      it 'sends the content alone' do
+        expect(document.to_s).to eq(described_class.new(html).to_s)
+      end
+    end
+
+    context 'with content that has no text' do
+      let(:html) { '<div><img src="cid:1"></div>' }
+
+      it 'sends the texts alone' do
+        expect(document.to_s).to eq("{s1}\nQ&A about \\*the\\* \\{guide\\}")
+      end
+
+      it 'answers with the content as it is' do
+        expect(translation("{s1}\nFragen zur Anleitung")).to eq(html)
+        expect(document.translated_texts).to eq(subject: 'Fragen zur Anleitung')
+      end
+
+      it 'takes an answer without the marker for the text' do
+        translation('Fragen zur Anleitung')
+
+        expect(document.translated_texts).to eq(subject: 'Fragen zur Anleitung')
+      end
+    end
+
+    context 'when the answer cannot be rebuilt' do
+      it 'tells the texts apart by their first marker' do
+        expect(translation("{s1}\nHallo John,\nlies die Anleitung.\n{s3}\nFragen zur Anleitung"))
+          .to eq('<div>Hallo John,<br>lies die Anleitung.</div>')
+        expect(document.translated_texts).to eq(subject: 'Fragen zur Anleitung')
+      end
+
+      it 'takes a marker inside a line of the content for no start of the texts' do
+        expect(translation("Nutze {s3} im Text.\n{s3}\nFragen zur Anleitung")).to eq('<div>Nutze</div><div>im Text.</div>')
+        expect(document.translated_texts).to eq(subject: 'Fragen zur Anleitung')
+      end
+
+      # Nothing says where the content ends, and a guess could move content into the text.
+      it 'renders all of an answer without the first marker of the texts as content' do
+        expect(translation("Hallo John,\nlies die Anleitung.\nFragen zur Anleitung"))
+          .to eq('<div>Hallo John,<br>lies die Anleitung.<br>Fragen zur Anleitung</div>')
+        expect(document.translated_texts).to eq({})
+      end
+    end
+  end
+
   # Emphasis and markers nested at random, with punctuation next to them: an identity answer has to
   # come back with every character in the same formatting.
   describe 'randomly nested formatting' do

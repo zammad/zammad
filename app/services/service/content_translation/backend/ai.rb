@@ -21,22 +21,25 @@ class Service::ContentTranslation::Backend::AI < Service::ContentTranslation::Ba
     'ai'
   end
 
-  # @return [Hash, NilClass] `content`, `backend`, `fresh` and `analytics_run`; nil without a
-  #   translation. `backend` comes out of the store rather than from this class, because the row is
-  #   what records which service produced what is served.
+  # @return [Hash, NilClass] `content`, `extra_texts`, `backend`, `fresh` and `analytics_run`; nil
+  #   without a translation. `backend` and `extra_texts` come out of the store rather than from
+  #   this class, because the row is what records which service produced what is served.
   def execute
     result = Service::AI::Feature::Translate.execute(
       locale:               locale.locale,
-      context_data:         { object:, body: content, html:, backend: backend_name },
+      context_data:         { object:, body: content, extra_texts:, html:, backend: backend_name },
       persistence_strategy:,
       regeneration_of:,
     )
 
     return if result.nil?
 
+    stored = result.stored_result
+
     {
       content:       result.content,
-      backend:       result.stored_result&.metadata&.dig('backend') || backend_name,
+      extra_texts:   stored ? Service::ContentTranslation::StoredTranslation.extra_translations(stored, extra_texts) : {},
+      backend:       stored&.metadata&.dig('backend') || backend_name,
       fresh:         result.fresh,
       analytics_run: result.ai_analytics_run,
     }

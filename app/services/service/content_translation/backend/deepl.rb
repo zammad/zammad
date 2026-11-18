@@ -62,6 +62,9 @@ class Service::ContentTranslation::Backend::DeepL < Service::ContentTranslation:
     DeepL::Client::ContentTooLargeError     => ContentTooLargeError,
   }.freeze
 
+  CLIENT_ERROR       = DeepL::Client::Error
+  HTML_REFUSED_ERROR = DeepL::Client::HtmlRefusedError
+
   PING_CONTENT = 'Hello'.freeze
   PING_TARGET  = 'DE'.freeze
 
@@ -72,6 +75,10 @@ class Service::ContentTranslation::Backend::DeepL < Service::ContentTranslation:
   # DeepL has no unauthenticated mode, and the tier decides which host the key is sent to.
   def self.required_config_keys
     %w[api_key tier]
+  end
+
+  def self.config_setting_name
+    'content_translation_deepl_config'
   end
 
   def self.ping!(config)
@@ -88,56 +95,14 @@ class Service::ContentTranslation::Backend::DeepL < Service::ContentTranslation:
     DeepL::Client.new(tier: config[:tier], api_key: config[:api_key])
   end
 
-  # Only the refused markup is not mapped here - #translate answers that one itself.
-  def self.outcome_for(error)
-    ERRORS.fetch(error.class, UnreachableError)
-  end
-
-  # @return [Hash, NilClass] `content`, `backend`, `fresh` and `analytics_run`; nil altogether
-  #   without a translation.
-  def execute
-    stored = find_stored
-    return result(stored.content, fresh: false, analytics_run: stored.ai_analytics_run) if stored
-    return if persistence_strategy == :stored_only
-
-    target_language # refuses a target DeepL does not serve, before any content is sent
-
-    translation = sanitize(translate)
-    return if translation.nil?
-
-    analytics_run = save_analytics_run(translation)
-
-    store(translation, analytics_run:)
-
-    result(translation, fresh: true, analytics_run:)
-  rescue DeepL::Client::Error => e
-    raise self.class.outcome_for(e)
-  end
-
   private
 
-  def translate
-    return request(content, html: false) if !html
-
-    begin
-      request(content, html: true)
-    rescue DeepL::Client::HtmlRefusedError
-      # DeepL would not take this content as markup, and its answer is plain text whose line breaks
-      # have to survive as markup - the translation replaces the body of an HTML article.
-      request(content.html2text(link_style: :plain), html: false).text2html
-    end
-  end
-
-  def request(text, html:)
-    client.translate(text:, target: target_language, html:)
+  def request(texts, html:)
+    client.translate(text: texts, target: target_language, html:)
   end
 
   def target_language
     @target_language ||= LANGUAGE_CODES[locale.locale] ||
                          raise(UnsupportedLanguageError, format(__('The translation service does not support the target language %s.'), locale.locale))
-  end
-
-  def client
-    @client ||= self.class.client(config)
   end
 end

@@ -73,8 +73,9 @@ export const useArticleTranslationCache = () => {
 
   const write = (articleId: string, locale: string, translation: ArticleTranslationResult) => {
     writeField(articleId, locale, 'translation', {
-      __typename: 'ContentTranslation',
+      __typename: 'TicketArticleTranslation',
       content: translation.content,
+      subject: translation.subject ?? null,
       backend: translation.backend,
       translated: translation.translated,
     })

@@ -4,6 +4,7 @@ fragment ticketArticleTranslation on TicketArticle {
   id
   translation(targetLocale: $targetLocale) {
     content
+    subject
     backend
     translated
   }

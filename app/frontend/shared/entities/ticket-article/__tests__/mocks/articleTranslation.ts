@@ -10,6 +10,7 @@ export const createArticleTranslationMock = (
 ): TicketArticleTranslation => ({
   translationFor: vi.fn(() => undefined),
   isTranslationActive: vi.fn(() => false),
+  isTranslationDisplayed: vi.fn(() => false),
   hasDirectTranslationAction: vi.fn(() => false),
   showTranslation: vi.fn(() => Promise.resolve()),
   showOriginal: vi.fn(),

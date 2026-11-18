@@ -6272,23 +6272,53 @@ Setting.create_if_not_exists(
   state:       false,
   preferences: {
     authentication: true,
-    permission:     ['admin.integration'],
+    permission:     ['admin.integration', 'admin.ai_assistance_translation'],
     validations:    ['Setting::Validation::ContentTranslationService'],
   },
   frontend:    true,
 )
 
 Setting.create_if_not_exists(
-  title:       __('Translation Service Config'),
-  name:        'content_translation_service_config',
+  title:       __('Translation Provider'),
+  name:        'content_translation_provider',
   area:        'Integration::Translation',
-  description: __('Stores the translation service configuration.'),
+  description: __('Defines which translation provider is active.'),
+  options:     {},
+  state:       '',
+  preferences: {
+    authentication: true,
+    permission:     ['admin.integration', 'admin.ai_assistance_translation'],
+    validations:    ['Setting::Validation::ContentTranslationProvider'],
+  },
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
+  title:       __('DeepL Config'),
+  name:        'content_translation_deepl_config',
+  area:        'Integration::Translation',
+  description: __('Stores the DeepL configuration.'),
   options:     {},
   state:       {},
   preferences: {
     authentication: true,
     permission:     ['admin.integration'],
-    validations:    ['Setting::Validation::ContentTranslationServiceConfig'],
+    validations:    ['Setting::Validation::ContentTranslationDeepLConfig'],
+  },
+  frontend:    false,
+)
+
+Setting.create_if_not_exists(
+  title:       __('LibreTranslate Config'),
+  name:        'content_translation_libre_translate_config',
+  area:        'Integration::Translation',
+  description: __('Stores the LibreTranslate configuration.'),
+  options:     {},
+  state:       {},
+  preferences: {
+    authentication: true,
+    permission:     ['admin.integration'],
+    validations:    ['Setting::Validation::ContentTranslationLibreTranslateConfig'],
   },
   frontend:    false,
 )
@@ -6302,7 +6332,7 @@ Setting.create_if_not_exists(
   state:       false,
   preferences: {
     authentication: true,
-    permission:     ['admin.integration'],
+    permission:     ['admin.integration', 'admin.ai_assistance_translation'],
   },
   frontend:    true,
 )
@@ -6316,7 +6346,7 @@ Setting.create_if_not_exists(
   state:       false,
   preferences: {
     authentication: true,
-    permission:     ['admin.integration'],
+    permission:     ['admin.integration', 'admin.ai_assistance_translation'],
   },
   frontend:    true,
 )
@@ -6330,7 +6360,7 @@ Setting.create_if_not_exists(
   state:       [],
   preferences: {
     authentication: true,
-    permission:     ['admin.integration'],
+    permission:     ['admin.integration', 'admin.ai_assistance_translation'],
   },
   frontend:    false,
 )

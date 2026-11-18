@@ -114,14 +114,15 @@ RSpec.describe 'HTTP Logs endpoints', aggregate_failures: true, type: :request d
       let(:admin)      { create(:user, roles: [admin_role]) }
 
       before do
-        create(:http_log, facility: 'content_translation')
+        create(:http_log, facility: 'DeepL')
+        create(:http_log, facility: 'LibreTranslate')
       end
 
-      it 'returns the translation facility items' do
-        get '/api/v1/http_logs/content_translation', as: :json
+      it 'returns the items of one translation provider only' do
+        get '/api/v1/http_logs/DeepL', as: :json
 
         expect(response).to have_http_status(:ok)
-        expect(json_response.pluck('facility').uniq).to eq(['content_translation'])
+        expect(json_response.pluck('facility').uniq).to eq(['DeepL'])
       end
     end
 
@@ -130,11 +131,11 @@ RSpec.describe 'HTTP Logs endpoints', aggregate_failures: true, type: :request d
       let(:admin)      { create(:user, roles: [admin_role]) }
 
       before do
-        create(:http_log, facility: 'content_translation')
+        create(:http_log, facility: 'DeepL')
       end
 
-      it 'forbids listing the translation facility' do
-        get '/api/v1/http_logs/content_translation', as: :json
+      it 'forbids listing a translation provider facility' do
+        get '/api/v1/http_logs/DeepL', as: :json
 
         expect(response).to have_http_status(:forbidden)
       end

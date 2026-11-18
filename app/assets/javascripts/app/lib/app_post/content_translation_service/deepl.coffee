@@ -2,9 +2,7 @@
 
 # Keep in sync with the backends in app/services/service/content_translation/backend/.
 App.Config.set('deepl', {
-  key:                   'deepl'
   label:                 __('DeepL')
-  prio:                  3000
 
   credential_attributes: [
     {
@@ -21,6 +19,4 @@ App.Config.set('deepl', {
     }
     { name: 'api_key', display: __('API key'), tag: 'input', type: 'text', input_type: 'password', null: false }
   ]
-
-  available:             -> true
 }, 'ContentTranslationServices')

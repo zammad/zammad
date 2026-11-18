@@ -14,7 +14,7 @@ module Gql::Subscriptions
     argument :target_locale, String, description: 'The locale to translate into, e.g. "de-de".'
 
     field :article, Gql::Types::Ticket::ArticleType, null: true, description: 'The article the translation belongs to'
-    field :translation, Gql::Types::ContentTranslationType, null: true, description: 'The translation'
+    field :translation, Gql::Types::Ticket::Article::TranslationType, null: true, description: 'The translation'
     field :error, Gql::Types::AsyncExecutionErrorType, null: true, description: 'Error that occurred during the execution of the async job'
     field :analytics, Gql::Types::AI::Analytics::MetadataType, null: true, description: 'Analytics metadata'
 

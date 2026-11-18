@@ -478,6 +478,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                 availabilityWithoutLocale: translationAvailable
                 translation(targetLocale: $targetLocale) @include(if: $includeContent) {
                   content
+                  subject
                   backend
                   translated
                 }
@@ -488,14 +489,16 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
       QUERY
     end
 
+    def store_translation(article, **)
+      Service::ContentTranslation::StoredTranslation.save(
+        object: article, locale: Locale.find_by(locale: 'de-de'), content: article.body,
+        html: true, backend: 'ai', translation: '<p>Hallo</p>', **
+      )
+    end
+
     before do
       setup_content_translation
-      articles.first(2).each do |article|
-        Service::ContentTranslation::StoredTranslation.save(
-          object: article, locale: Locale.find_by(locale: 'de-de'), content: article.body,
-          html: true, backend: 'ai', translation: '<p>Hallo</p>'
-        )
-      end
+      articles.first(2).each { |article| store_translation(article) }
     end
 
     def stored_result_queries
@@ -513,12 +516,25 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
       allow(Service::ContentTranslation::TicketArticle).to receive(:execute).and_call_original
 
       expect(stored_result_queries.size).to eq(2)
-      expect(gql.result.nodes.first['translation']).to eq('content' => '<p>Hallo</p>', 'backend' => 'ai', 'translated' => true)
+      expect(gql.result.nodes.first['translation']).to eq('content' => '<p>Hallo</p>', 'subject' => nil, 'backend' => 'ai', 'translated' => true)
       expect(gql.result.nodes.last['translation']).to be_nil
       expect(Service::ContentTranslation::TicketArticle).not_to have_received(:execute)
 
       gql.execute(query, variables: variables.merge(targetLocale: 'fr-fr'))
       expect(gql.result.nodes.pluck('translation')).to all(be_nil)
+    end
+
+    # The subject has a digest of its own in the row, apart from the one of the body.
+    it 'returns the stored translation of the subject until the subject changes' do
+      articles.first(2).each do |article|
+        store_translation(article, extra_texts: { subject: article.subject }, extra_translations: { subject: 'Betreff' })
+      end
+      articles.second.update!(subject: 'Changed since')
+
+      gql.execute(query, variables:)
+
+      expect(gql.result.nodes.first['translation']).to include('content' => '<p>Hallo</p>', 'subject' => 'Betreff')
+      expect(gql.result.nodes.second['translation']).to include('content' => '<p>Hallo</p>', 'subject' => nil)
     end
 
     it 'keeps availability-only requests free of translated bodies' do
@@ -546,13 +562,20 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
       expect(gql.result.nodes.first).to include('translationAvailable' => false, 'translation' => nil)
     end
 
-    # Availability has no feature gate; only the emptied config hides it. Accepted while dormant.
-    it 'still reports availability while only the flags are off' do
+    # A stored translation outlives switching the feature off; neither field may give it away then.
+    it 'reports no availability while the flags are off' do
       Setting.set('content_translation_service', false)
       Setting.set('content_translation_ticket_article', false)
       gql.execute(query, variables:)
 
-      expect(gql.result.nodes.first).to include('translationAvailable' => true, 'translation' => nil)
+      expect(gql.result.nodes.first).to include('translationAvailable' => false, 'translation' => nil)
+    end
+
+    it 'reports no availability while only article translation is off' do
+      Setting.set('content_translation_ticket_article', false)
+      gql.execute(query, variables:)
+
+      expect(gql.result.nodes.first).to include('translationAvailable' => false, 'translation' => nil)
     end
 
     context 'with a customer', authenticated_as: :customer do

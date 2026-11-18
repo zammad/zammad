@@ -30,7 +30,7 @@ RSpec.describe Service::ContentTranslation::Backend::DeepL do
   before do
     # Without the validation: its connection test asks DeepL to translate, which would count
     # towards the requests the examples below expect.
-    Setting.set('content_translation_service_config', { 'provider' => 'deepl', 'api_key' => api_key, 'tier' => tier }, validate: false)
+    Setting.set('content_translation_deepl_config', { 'api_key' => api_key, 'tier' => tier }, validate: false)
 
     stub_translate(translation)
   end
@@ -123,6 +123,108 @@ RSpec.describe Service::ContentTranslation::Backend::DeepL do
       # have to survive as markup.
       it 'returns the plain text answer as HTML' do
         expect(translate).to include(content: 'Hallo<br>Welt.', fresh: true)
+      end
+
+      context 'with content that has no text' do
+        let(:content) { '<img src="cid:abc@zammad.example.com">' }
+
+        it 'sends no second request, as there is nothing to translate' do
+          translate
+
+          expect(WebMock).to have_requested(:post, endpoint).once
+        end
+
+        it 'returns no translation' do
+          expect(translate).to be_nil
+        end
+      end
+    end
+  end
+
+  describe 'translating extra texts along with the content' do
+    let(:extra_texts) { { subject: 'Questions & answers' } }
+
+    def stub_translations(*texts)
+      stub_request(:post, endpoint)
+        .to_return(status: 200, body: { translations: texts.map { |text| { text: } } }.to_json, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    def translate(**)
+      super(extra_texts:, **)
+    end
+
+    before { stub_translations(translation, 'Fragen &amp; Antworten') }
+
+    # They are plain text, which a request that keeps the markup would read as markup.
+    it 'sends them escaped, in the request of the content' do
+      translate
+
+      expect(WebMock).to have_requested(:post, endpoint)
+        .with(body: hash_including('tag_handling' => 'html', 'text' => [content, 'Questions &amp; answers'])).once
+    end
+
+    it 'returns their translations as plain text again' do
+      expect(translate).to include(content: translation, extra_texts: { subject: 'Fragen & Antworten' })
+    end
+
+    it 'serves them from the store along with the content' do
+      translate
+
+      expect(translate).to include(content: translation, extra_texts: { subject: 'Fragen & Antworten' }, fresh: false)
+    end
+
+    context 'with plain text content' do
+      let(:html)        { false }
+      let(:content)     { 'Hello world.' }
+      let(:translation) { 'Hallo Welt.' }
+
+      before { stub_translations(translation, 'Fragen & Antworten') }
+
+      it 'sends them as they are' do
+        translate
+
+        expect(WebMock).to have_requested(:post, endpoint).with(body: hash_including('text' => [content, 'Questions & answers'])).once
+      end
+
+      it 'returns their translations as they are' do
+        expect(translate).to include(content: translation, extra_texts: { subject: 'Fragen & Antworten' })
+      end
+    end
+
+    context 'when DeepL does not take the content as markup' do
+      before do
+        stub_request(:post, endpoint)
+          .with(body: hash_including('tag_handling' => 'html'))
+          .to_return(status: 400, body: { message: 'Bad request. Reason: invalid tags.' }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+        stub_request(:post, endpoint)
+          .with { |request| !JSON.parse(request.body).key?('tag_handling') }
+          .to_return(status: 200, body: { translations: [{ text: "Hallo\nWelt." }, { text: 'Fragen & Antworten' }] }.to_json, headers: { 'Content-Type' => 'application/json' })
+      end
+
+      it 'sends both again as plain text, in one request' do
+        translate
+
+        expect(WebMock).to have_requested(:post, endpoint).with(body: hash_including('text' => ['Hello world.', 'Questions & answers'])).once
+      end
+
+      # Only the content replaces markup; an extra text stays the plain text it is.
+      it 'turns only the content into HTML' do
+        expect(translate).to include(content: 'Hallo<br>Welt.', extra_texts: { subject: 'Fragen & Antworten' })
+      end
+    end
+
+    # The row is found by the content, so it cannot hold the extra texts of content it has no
+    # translation of.
+    context 'when the translation of the content is not usable' do
+      before { stub_translations('', 'Fragen &amp; Antworten') }
+
+      it 'returns nothing, although the extra texts are translated' do
+        expect(translate).to be_nil
+      end
+
+      it 'stores nothing' do
+        expect { translate }.not_to change(AI::StoredResult, :count)
       end
     end
   end

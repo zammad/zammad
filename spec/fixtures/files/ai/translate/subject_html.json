@@ -1,0 +1,12 @@
+{
+  "input": "<div>Hola,</div><div><br></div><div>adjunto la <strong>factura</strong> del pedido 4711. Por favor, revise <a href=\"https://example.com/pedido/4711\">el pedido</a> y confirme el pago antes del viernes.</div><div><br></div><div>Saludos<br>María</div>",
+  "subject": "Factura pendiente del pedido 4711",
+  "html": true,
+  "source_language": "es",
+  "target_locales": [
+    "de-de"
+  ],
+  "preserve": [
+    "https://example.com/pedido/4711"
+  ]
+}

@@ -4,7 +4,10 @@ import { keyBy } from 'lodash-es'
 import { computed, nextTick, ref, shallowRef, watch } from 'vue'
 
 import { EXTENSION_NAME as TEXT_TOOL_PLUGIN_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
-import type { MentionKnowledgeBaseRelatedAnswers } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import type {
+  FieldEditorNotice,
+  MentionKnowledgeBaseRelatedAnswers,
+} from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
 import type {
   ChangedField,
@@ -33,8 +36,10 @@ export const useTicketEditForm = (
   form: Ref<FormRef | undefined>,
   {
     knowledgeBaseRelatedAnswers,
+    articleBodyNotice,
   }: {
     knowledgeBaseRelatedAnswers?: () => MentionKnowledgeBaseRelatedAnswers
+    articleBodyNotice?: () => FieldEditorNotice | undefined
   } = {},
 ) => {
   const appName = useAppName()
@@ -104,6 +109,7 @@ export const useTicketEditForm = (
     articleType: undefined,
     internal: undefined,
     inReplyTo: undefined,
+    answeredArticleId: undefined,
     body: '',
   }
 
@@ -321,6 +327,7 @@ export const useTicketEditForm = (
         contentType: editorType,
         meta: editorMeta,
         signatureEnabled: computed(() => !!currentArticleType.value?.signature),
+        ...(articleBodyNotice && { notice: computed(articleBodyNotice) }),
       },
       required: articleTypeFieldProps.body.required,
     },
@@ -466,6 +473,12 @@ export const useTicketEditForm = (
       {
         type: 'hidden',
         name: 'inReplyTo',
+      },
+      {
+        // The article the reply was opened from, whatever the channel. A field rather than local
+        //  state, so that it is restored and cleared together with the rest of the form.
+        type: 'hidden',
+        name: 'answeredArticleId',
       },
       {
         if: '$currentArticleType.fields.subtype',

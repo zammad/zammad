@@ -78,6 +78,49 @@ RSpec.describe DeepL::Client do
       end
     end
 
+    context 'with several texts' do
+      def stub_translations(*translations)
+        stub_request(:post, endpoint)
+          .to_return(status: 200, body: { translations: }.to_json, headers: { 'Content-Type' => 'application/json' })
+      end
+
+      def translate
+        client.translate(text: ['Hello world.', 'Greeting'], target: 'DE')
+      end
+
+      before { stub_translations({ text: 'Hallo Welt.' }, { text: 'Begrüßung' }) }
+
+      it 'returns one translation per text, in their order' do
+        expect(translate).to eq(['Hallo Welt.', 'Begrüßung'])
+      end
+
+      it 'sends them in one request' do
+        translate
+
+        expect(WebMock).to have_requested(:post, endpoint).with(body: hash_including('text' => ['Hello world.', 'Greeting'])).once
+      end
+
+      # Which text an answer of another length leaves out cannot be told, so none of it is usable.
+      it 'raises for an answer with fewer translations than texts' do
+        stub_translations({ text: 'Hallo Welt.' })
+
+        expect { translate }.to raise_error(described_class::UnreachableError)
+      end
+
+      it 'raises for a translation that is no text' do
+        stub_translations({ text: 'Hallo Welt.' }, { text: 5 })
+
+        expect { translate }.to raise_error(described_class::UnreachableError)
+      end
+
+      # Dropping the entry would leave the right number of texts, in the wrong places.
+      it 'raises for an entry without a translation among the right number of others' do
+        stub_translations({ text: 'Hallo Welt.' }, { text: nil }, { text: 'Begrüßung' })
+
+        expect { translate }.to raise_error(described_class::UnreachableError)
+      end
+    end
+
     # A proxy or a captive portal can answer 200 with something else entirely; taking it for a
     # translation would hand the caller an empty article.
     context 'when the answer carries no translation' do
@@ -200,7 +243,7 @@ RSpec.describe DeepL::Client do
     before { stub_translate('Hallo Welt.') }
 
     it 'logs a translation' do
-      expect { translate }.to change { HttpLog.where(facility: 'content_translation', url: endpoint).count }.by(1)
+      expect { translate }.to change { HttpLog.where(facility: 'DeepL', url: endpoint).count }.by(1)
     end
 
     it 'does not log the API key' do

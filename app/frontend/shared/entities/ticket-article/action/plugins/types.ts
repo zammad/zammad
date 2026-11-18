@@ -29,6 +29,8 @@ export interface TicketArticleFormValues {
   cc?: string[]
   subtype?: string
   inReplyTo?: string
+  // Kept by the form for its own display only, never submitted.
+  answeredArticleId?: ID
   to?: string[]
   subject?: string
   attachments?: FileUploaded[]
@@ -75,6 +77,8 @@ export interface TicketArticleAction {
   link?: string
   alwaysVisible?: boolean
   separatorTop?: boolean // desktop popover menu only
+  // Puts the text selected in the article into the reply as a quote.
+  quotesSelection?: boolean
 
   // A returned promise keeps the triggering control in a pending state until it settles.
   perform?(

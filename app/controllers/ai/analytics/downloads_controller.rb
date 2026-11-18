@@ -41,6 +41,12 @@ class AI::Analytics::DownloadsController < ApplicationController
 
     scope = AI::Analytics::Run.all
 
+    # The translation providers that are no AI read their feedback on their own pages, which ask for
+    # it by name; everywhere else the download holds AI runs only.
+    if filters[:ai_service_name].blank?
+      scope = scope.where.not(ai_service_name: Service::ContentTranslation::Backend.non_ai_backend_names)
+    end
+
     DIRECT_FILTERS.each do |filter|
       scope = scope.where(filter => filters[filter]) if filters[filter].present?
     end

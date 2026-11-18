@@ -15,10 +15,11 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
         ticketArticleTranslate(articleId: $articleId, targetLocale: $targetLocale, force: $force, regenerationOfId: $regenerationOfId) {
           article {
             id
-            translation(targetLocale: $targetLocale) { content backend translated }
+            translation(targetLocale: $targetLocale) { content subject backend translated }
           }
           translation {
             content
+            subject
             backend
             translated
           }
@@ -200,7 +201,9 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
     end
 
     context 'with a translation service that answers in place' do
-      let(:url) { 'https://translate.example.com' }
+      let(:url)             { 'https://translate.example.com' }
+      let(:article_subject) { nil }
+      let(:article)         { create(:ticket_article, ticket:, subject: article_subject, body: '<p>Hello world.</p>', content_type: 'text/html') }
 
       before do
         stub_request(:get, "#{url}/languages")
@@ -218,6 +221,22 @@ RSpec.describe Gql::Mutations::Ticket::Article::Translate, :aggregate_failures, 
         expect(gql.result.data[:translation])
           .to include('content' => '<p>Hallo Welt.</p>', 'backend' => 'libre_translate', 'translated' => true)
         expect(gql.result.data[:analytics][:run]).to include('id' => be_present)
+      end
+
+      context 'with a subject' do
+        let(:article_subject) { 'Greeting' }
+
+        before do
+          stub_request(:post, "#{url}/translate")
+            .to_return(status: 200, body: { translatedText: ['<p>Hallo Welt.</p>', 'Begrüßung'] }.to_json, headers: { 'Content-Type' => 'application/json' })
+        end
+
+        it 'answers with the translated subject, on the article as well' do
+          gql.execute(query, variables:)
+
+          expect(gql.result.data[:translation]).to include('content' => '<p>Hallo Welt.</p>', 'subject' => 'Begrüßung')
+          expect(gql.result.data[:article][:translation]).to eq(gql.result.data[:translation])
+        end
       end
 
       context 'with an article in a language the agent reads in the original' do

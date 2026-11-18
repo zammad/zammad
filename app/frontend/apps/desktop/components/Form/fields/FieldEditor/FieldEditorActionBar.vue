@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { nextTick, shallowRef, toRef, ref, defineAsyncComponent, watch } from 'vue'
+import { computed, nextTick, shallowRef, toRef, ref, defineAsyncComponent, watch } from 'vue'
 
 import useEditorActionHelper from '#shared/components/Form/fields/FieldEditor/composables/useEditorActionHelper.ts'
 import { EXTENSION_NAME as TEXT_TOOL_EXTENSION_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
@@ -63,6 +63,28 @@ const { actions } = useEditorActions(editor, props.contentType, props.disabledEx
 const { popover, popoverTarget, isOpen, open, close } = usePopover()
 
 const subMenuPopoverContent = shallowRef<Component | Except<EditorButton, 'subMenu'>[]>()
+
+// Kept here, as the alert is gone while there is no notice: the notice the user dismissed stays
+// away when it comes back, until another notice was shown in between.
+const dismissedNoticeKey = ref<string>()
+
+watch(
+  () => props.formContext?.notice,
+  (current) => {
+    if (current && current.key !== dismissedNoticeKey.value) dismissedNoticeKey.value = undefined
+  },
+)
+
+const notice = computed(() => {
+  const current = props.formContext?.notice
+  if (!current || current.key === dismissedNoticeKey.value) return undefined
+
+  return current
+})
+
+const dismissNotice = () => {
+  dismissedNoticeKey.value = notice.value?.key
+}
 
 let currentSelection: Selection | undefined
 
@@ -141,6 +163,16 @@ watch(
       v-if="showAiAssistantTextToolsLoadingBanner && config.ai_assistance_text_tools"
       :editor="editor"
     />
+    <CommonAlert
+      v-if="notice"
+      :key="notice.key"
+      class="rounded-none! border-t border-blue-200 dark:border-gray-700"
+      variant="info"
+      dismissible
+      @dismiss="dismissNotice"
+    >
+      {{ $t(notice.text, ...(notice.textPlaceholder || [])) }}
+    </CommonAlert>
 
     <CommonPopover
       ref="popover"

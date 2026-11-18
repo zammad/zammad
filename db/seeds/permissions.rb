@@ -253,6 +253,12 @@ Permission.create_if_not_exists(
   preferences: { prio: 1335 }
 )
 Permission.create_if_not_exists(
+  name:        'admin.ai_assistance_translation',
+  label:       __('AI Translation'),
+  description: __('Manage AI translation of your system.'),
+  preferences: { prio: 1337 }
+)
+Permission.create_if_not_exists(
   name:        'admin.ai_agent',
   label:       __('AI Agents'),
   description: __('Manage AI agents of your system.'),

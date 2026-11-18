@@ -7,9 +7,12 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   let(:target_locale) { 'de-de' }
   let(:content_type)  { 'text/html' }
   let(:body)          { '<p>Hello <strong>world</strong>.</p>' }
-  let(:article)       { create(:ticket_article, body:, content_type:) }
+  let(:article)       { create(:ticket_article, subject: article_subject, body:, content_type:) }
   let(:llm_response)  { "{s1}\nHallo **Welt**." }
   let(:translated)    { '<p>Hallo <strong>Welt</strong>.</p>' }
+
+  # A subject is translated along with the body, which the contexts that name one cover.
+  let(:article_subject) { nil }
 
   # Every prompt pair the provider was asked with — the size doubles as the call count.
   let(:provider_calls) { [] }
@@ -56,6 +59,22 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
 
     expect(translate)
       .to have_attributes(content: translated, fresh: false)
+  end
+
+  describe 'with a subject', :aggregate_failures do
+    let(:article_subject) { 'Question about the world' }
+    let(:llm_response)    { "{s1}\nHallo **Welt**.\n{s2}\nFrage zur Welt" }
+
+    it 'translates it along with the body, in one request' do
+      expect(translate).to have_attributes(content: translated, extra_texts: { subject: 'Frage zur Welt' })
+      expect(provider_calls.pluck(:prompt_user)).to eq(["{s1}\nHello **world**.\n{s2}\nQuestion about the world"])
+    end
+
+    it 'serves a second request from the stored translation, with the subject' do
+      translate
+
+      expect(translate).to have_attributes(extra_texts: { subject: 'Frage zur Welt' }, fresh: false)
+    end
   end
 
   context 'when the AI provider is not configured' do
@@ -208,11 +227,12 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   end
 
   describe '.for_display' do
-    let(:cid)     { "#{SecureRandom.uuid}@zammad.example.com" }
-    let(:body)    { "<p>Hello</p><img src=\"cid:#{cid}\">" }
-    let(:article) { create(:ticket_article, body:, content_type:) }
+    let(:cid)         { "#{SecureRandom.uuid}@zammad.example.com" }
+    let(:body)        { "<p>Hello</p><img src=\"cid:#{cid}\">" }
+    let(:article)     { create(:ticket_article, body:, content_type:, subject: 'Subject') }
+    let(:extra_texts) { { subject: 'Betreff' } }
     let(:translation) do
-      Service::ContentTranslation::Base::Result[content: "<p>Hallo</p><img src=\"cid:#{cid}\">", backend: 'ai', translated: true, fresh: true, analytics_run: nil]
+      Service::ContentTranslation::Base::Result[content: "<p>Hallo</p><img src=\"cid:#{cid}\">", extra_texts:, source_extra_texts: { subject: 'Subject' }, backend: 'ai', translated: true, fresh: true, analytics_run: nil]
     end
 
     before do
@@ -235,9 +255,31 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
         .to include(backend: 'ai', translated: true)
     end
 
+    it 'carries the translated subject' do
+      expect(described_class.for_display(article, translation)).to include(subject: 'Betreff')
+    end
+
+    context 'without a translated subject' do
+      let(:extra_texts) { {} }
+
+      it 'carries none' do
+        expect(described_class.for_display(article, translation)).to include(subject: nil)
+      end
+    end
+
+    context 'with a subject changed while it was translated' do
+      before { article.update!(subject: 'Changed subject') }
+
+      it 'carries none' do
+        expect(described_class.for_display(article, translation)).to include(subject: nil)
+      end
+    end
+
     it 'accepts the hash a background job publishes' do
-      expect(described_class.for_display(article, { 'content' => '<p>Hallo</p>', 'backend' => 'deepl', 'translated' => true }))
-        .to eq(content: '<p>Hallo</p>', backend: 'deepl', translated: true)
+      published = { 'content' => '<p>Hallo</p>', 'extra_texts' => { 'subject' => 'Betreff' }, 'source_extra_texts' => { 'subject' => 'Subject' }, 'backend' => 'deepl', 'translated' => true }
+
+      expect(described_class.for_display(article, published))
+        .to eq(content: '<p>Hallo</p>', subject: 'Betreff', backend: 'deepl', translated: true)
     end
 
     it 'keeps a missing translation missing, so the client sees no empty one' do
@@ -255,10 +297,10 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   end
 
   describe 'resolving the configured translation service' do
-    # The config validation refuses such a service; a backend removed later leaves the same state
+    # The provider validation refuses such a service; a backend removed later leaves the same state
     # behind, which is exactly the one that must not fall back to another service.
     context 'with an unknown service' do
-      before { Setting.set('content_translation_service_config', { 'provider' => 'nope' }, validate: false) }
+      before { Setting.set('content_translation_provider', 'nope', validate: false) }
 
       it 'rejects instead of falling back' do
         expect { translate }
@@ -268,7 +310,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     end
 
     context 'with a blank service' do
-      before { Setting.set('content_translation_service_config', {}) }
+      before { Setting.set('content_translation_provider', '', validate: false) }
 
       it 'rejects instead of falling back' do
         expect { translate }
@@ -277,8 +319,8 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
       end
     end
 
-    context 'with a key that names something else in the namespace' do
-      before { Setting.set('content_translation_service_config', { 'provider' => 'base' }, validate: false) }
+    context 'with a name that names something else in the namespace' do
+      before { Setting.set('content_translation_provider', 'base', validate: false) }
 
       it 'rejects it' do
         expect { translate }.to raise_error(described_class::UnknownBackendError)
@@ -300,7 +342,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
 
       before do
         stub_const('Service::ContentTranslation::Backend::Echo', echo_backend)
-        Setting.set('content_translation_service_config', { 'provider' => 'echo' })
+        Setting.set('content_translation_provider', 'echo')
       end
 
       it 'is the one that answers' do
@@ -335,7 +377,8 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
 
       # Without the validation: its connection test asks the instance to translate, which would
       # count towards the requests the examples below expect.
-      Setting.set('content_translation_service_config', { 'provider' => 'libre_translate', 'url' => url }, validate: false)
+      Setting.set('content_translation_libre_translate_config', { 'url' => url }, validate: false)
+      Setting.set('content_translation_provider', 'libre_translate')
     end
 
     it 'answers with its translation' do
@@ -416,13 +459,18 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     let(:endpoint) { 'https://api-free.deepl.com/v2/translate' }
     let(:response) { '<p>Hallo <strong>Welt</strong>.</p>' }
 
-    before do
+    def stub_translations(*texts)
       stub_request(:post, endpoint)
-        .to_return(status: 200, body: { translations: [{ text: response }] }.to_json, headers: { 'Content-Type' => 'application/json' })
+        .to_return(status: 200, body: { translations: texts.map { |text| { text: } } }.to_json, headers: { 'Content-Type' => 'application/json' })
+    end
+
+    before do
+      stub_translations(response)
 
       # Without the validation: its connection test asks DeepL to translate, which would count
       # towards the requests the examples below expect.
-      Setting.set('content_translation_service_config', { 'provider' => 'deepl', 'api_key' => 'secret-key', 'tier' => 'free' }, validate: false)
+      Setting.set('content_translation_deepl_config', { 'api_key' => 'secret-key', 'tier' => 'free' }, validate: false)
+      Setting.set('content_translation_provider', 'deepl')
     end
 
     it 'answers with its translation' do
@@ -493,6 +541,126 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
 
       expect(translate).to have_attributes(content: response, backend: 'deepl', fresh: true)
     end
+
+    it 'answers without a subject for an article that has none' do
+      expect(described_class.for_display(article, translate)).to include(subject: nil)
+    end
+
+    # Such a row stays what it was before subjects were translated.
+    it 'stores nothing about a subject for an article that has none' do
+      translate
+
+      expect(AI::StoredResult.last.metadata).to eq('backend' => 'deepl')
+    end
+
+    # The subject is translated in the request of the body and kept in the stored row of it.
+    context 'with a subject' do
+      let(:article_subject)    { 'Printer broken' }
+      let(:translated_subject) { 'Drucker defekt' }
+
+      before { stub_translations(response, translated_subject) }
+
+      it 'answers with the translation of both' do
+        expect(translate)
+          .to have_attributes(content: response, extra_texts: { subject: translated_subject }, translated: true, fresh: true)
+      end
+
+      it 'sends both in one request' do
+        translate
+
+        expect(WebMock).to have_requested(:post, endpoint).with(body: hash_including('text' => [body, article_subject])).once
+      end
+
+      describe 'a second request' do
+        before { translate }
+
+        it 'is served both from the store' do
+          expect(translate)
+            .to have_attributes(content: response, extra_texts: { subject: translated_subject }, fresh: false)
+        end
+
+        it 'asks DeepL for nothing' do
+          translate
+
+          expect(WebMock).to have_requested(:post, endpoint).once
+        end
+
+        # The row is found by the body, so a new subject does not have it translated again.
+        context 'when the subject changed since' do
+          before { article.update!(subject: 'Printer repaired') }
+
+          it 'is served the body without a subject' do
+            expect(translate).to have_attributes(content: response, extra_texts: {}, translated: true, fresh: false)
+          end
+
+          it 'asks DeepL for nothing' do
+            translate
+
+            expect(WebMock).to have_requested(:post, endpoint).once
+          end
+        end
+      end
+
+      context 'with a translation stored before subjects were translated' do
+        before do
+          Service::ContentTranslation::StoredTranslation.save(
+            object: article, locale: Locale.find_by(locale: target_locale), content: body, html: true,
+            backend: 'deepl', translation: response
+          )
+        end
+
+        it 'serves the body without a subject' do
+          expect(translate).to have_attributes(content: response, extra_texts: {}, translated: true, fresh: false)
+        end
+
+        it 'asks DeepL for nothing' do
+          translate
+
+          expect(WebMock).not_to have_requested(:post, endpoint)
+        end
+      end
+
+      context 'without a body' do
+        before do
+          article.body = ''
+
+          stub_translations(translated_subject)
+        end
+
+        it 'translates the subject alone' do
+          expect(translate).to have_attributes(content: '', extra_texts: { subject: translated_subject }, translated: true)
+        end
+
+        it 'sends the subject only' do
+          translate
+
+          expect(WebMock).to have_requested(:post, endpoint).with(body: hash_including('text' => [article_subject])).once
+        end
+
+        it 'serves a second request from the store' do
+          translate
+
+          expect(translate).to have_attributes(content: '', extra_texts: { subject: translated_subject }, fresh: false)
+        end
+      end
+
+      # The language of the body decides for the subject too.
+      it 'translates neither of an article that is already in the target language' do
+        expect(translate(source_language: 'de')).to have_attributes(content: body, extra_texts: {}, translated: false)
+      end
+
+      it 'translates neither of an article in an excluded language' do
+        expect(translate(source_language: 'en', excluded_languages: %w[en]))
+          .to have_attributes(content: body, extra_texts: {}, translated: false, skip_reason: 'excluded_language')
+      end
+
+      it 'sends nothing for an article that is not translated' do
+        translate(source_language: 'de')
+        translate(source_language: 'en', excluded_languages: %w[en])
+
+        expect(WebMock).not_to have_requested(:post, endpoint)
+      end
+    end
   end
 
   # Showing that switching the service does not serve the previous one's translation needs a second
@@ -526,7 +694,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
     before { stub_const('Service::ContentTranslation::Backend::Mirror', mirror_backend) }
 
     def configure(provider)
-      Setting.set('content_translation_service_config', { 'provider' => provider })
+      Setting.set('content_translation_provider', provider)
     end
 
     it 'translates again instead of serving what the AI backend stored' do
@@ -591,7 +759,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   end
 
   context 'when the article language is already the target language' do
-    let(:article) { create(:ticket_article, body:, content_type:, detected_language: 'de') }
+    let(:article) { create(:ticket_article, subject: article_subject, body:, content_type:, detected_language: 'de') }
 
     it 'returns the original content as untranslated' do
       expect(translate)
@@ -611,7 +779,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   end
 
   context 'when the detected language has locales that differ by script' do
-    let(:article) { create(:ticket_article, body:, content_type:, detected_language: 'zh') }
+    let(:article) { create(:ticket_article, subject: article_subject, body:, content_type:, detected_language: 'zh') }
 
     it 'translates instead of skipping' do
       expect(translate(target_locale: 'zh-tw'))
@@ -620,7 +788,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   end
 
   context 'when the detected language is a Norwegian written standard' do
-    let(:article) { create(:ticket_article, body:, content_type:, detected_language: 'nb') }
+    let(:article) { create(:ticket_article, subject: article_subject, body:, content_type:, detected_language: 'nb') }
 
     it 'skips a request for the Norwegian locale' do
       expect(translate(target_locale: 'no-no'))
@@ -629,7 +797,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   end
 
   context 'with excluded languages' do
-    let(:article) { create(:ticket_article, body:, content_type:, detected_language: 'en') }
+    let(:article) { create(:ticket_article, subject: article_subject, body:, content_type:, detected_language: 'en') }
 
     it 'returns the original content with the reason' do
       expect(translate(excluded_languages: %w[en]))
@@ -688,7 +856,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   end
 
   context 'when the detected language names a script variant' do
-    let(:article) { create(:ticket_article, body:, content_type:, detected_language: 'zh-TW') }
+    let(:article) { create(:ticket_article, subject: article_subject, body:, content_type:, detected_language: 'zh-TW') }
 
     it 'skips a request for the same locale' do
       expect(translate(target_locale: 'zh-tw'))
@@ -702,7 +870,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   end
 
   context 'when the detected language names no script' do
-    let(:article) { create(:ticket_article, body:, content_type:, detected_language: 'sr') }
+    let(:article) { create(:ticket_article, subject: article_subject, body:, content_type:, detected_language: 'sr') }
 
     it 'skips a request for the script CLDR considers likely' do
       expect(translate(target_locale: 'sr-cyrl-rs'))
@@ -716,7 +884,7 @@ RSpec.describe Service::ContentTranslation::TicketArticle, performs_jobs: true d
   end
 
   context 'with a forced translation' do
-    let(:article) { create(:ticket_article, body:, content_type:, detected_language: 'de') }
+    let(:article) { create(:ticket_article, subject: article_subject, body:, content_type:, detected_language: 'de') }
 
     it 'translates although the article is already in the target language' do
       expect(translate(force: true))

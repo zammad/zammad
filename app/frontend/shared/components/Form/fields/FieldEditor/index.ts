@@ -36,6 +36,7 @@ const fieldDefinition = createInput(
     'signatureEnabled',
     'meta',
     'contentType',
+    'notice',
     'alternativeBackground',
     'inline',
     'extensionSet',

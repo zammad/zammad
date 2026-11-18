@@ -1,4 +1,0 @@
-<h2><%- @T('Recent Logs') %></h2>
-<p class="js-aiHint hide"><%- @hint %></p>
-
-<div class="js-log"></div>

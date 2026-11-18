@@ -44,19 +44,37 @@ class Service::ContentTranslation::TicketArticle < Service::ContentTranslation::
   #
   # @param article [Ticket::Article]
   # @param translation [Result, Hash, nil] as produced by this service, or as published by the job
-  # @return [Hash, nil] `content`, `backend` and `translated`; nil stays nil, a missing translation
-  #   must not turn into an empty one
+  # @return [Hash, nil] `content`, `subject`, `backend` and `translated`; nil stays nil, a missing
+  #   translation must not turn into an empty one
   def self.for_display(article, translation)
     return if translation.nil?
 
-    data = translation.to_h.symbolize_keys.slice(:content, :backend, :translated)
+    attributes = translation.to_h.deep_symbolize_keys
+    data       = attributes.slice(:content, :backend, :translated).merge(subject: translated_subject(article, attributes))
 
     return data if data[:content].blank?
 
     data.merge(content: article.class.insert_urls(article, data[:content]).first)
   end
 
+  # A translation published by the job may stem from a subject that was changed while it ran.
+  def self.translated_subject(article, attributes)
+    return if attributes.dig(:source_extra_texts, :subject) != extra_texts(article)[:subject]
+
+    attributes.dig(:extra_texts, :subject)
+  end
+  private_class_method :translated_subject
+
+  # @return [Hash{Symbol => String}] empty for an article without a subject
+  def self.extra_texts(article)
+    { subject: article.subject }.compact_blank
+  end
+
   private
+
+  def extra_texts
+    self.class.extra_texts(object)
+  end
 
   def ensure_feature_enabled!
     super

@@ -56,4 +56,30 @@ describe('CommonAlert.vue', () => {
     expect(alert).toHaveClass('common-alert-info')
     expect(view.getByIconName('close')).toBeInTheDocument()
   })
+
+  it('dismisses a dismissible alert', async () => {
+    const view = renderComponent(CommonAlert, {
+      props: {
+        dismissible: true,
+      },
+      slots: {
+        default: 'Dummy',
+      },
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'Dismiss alert' }))
+
+    expect(view.queryByTestId('common-alert')).not.toBeInTheDocument()
+    expect(view.emitted().dismiss).toHaveLength(1)
+  })
+
+  it('offers nothing to dismiss an alert with, unless it is dismissible', () => {
+    const view = renderComponent(CommonAlert, {
+      slots: {
+        default: 'Dummy',
+      },
+    })
+
+    expect(view.queryByRole('button')).not.toBeInTheDocument()
+  })
 })

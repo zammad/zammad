@@ -28,8 +28,7 @@ class LibreTranslate::Client
   # Shares its status with a refused API key, so only the wording separates the two.
   RATE_LIMIT_BAN = %r{too many request limits violations}i
 
-  # Named after the feature: that is what an admin looks for in the HTTP log.
-  LOG_FACILITY = 'content_translation'.freeze
+  LOG_FACILITY = 'LibreTranslate'.freeze
 
   attr_reader :url, :api_key
 
@@ -55,7 +54,8 @@ class LibreTranslate::Client
 
   # @param format [String] 'text' or 'html'; an instance too old for the latter raises
   #   HtmlFormatUnsupportedError
-  # @return [String] the translated text
+  # @param text [String, Array<String>] one text, or several for one request
+  # @return [String, Array<String>] the translated text, or one per given text in their order
   def translate(text:, target:, format:)
     body = { q: text, source: 'auto', target:, format: }
     body[:api_key] = api_key if api_key.present?
@@ -65,12 +65,19 @@ class LibreTranslate::Client
 
     # A URL pointing at something else than a LibreTranslate instance can answer 200 without one.
     translated = response.data['translatedText'] if response.data.is_a?(Hash)
-    raise UnreachableError if !translated.is_a?(String)
+    raise UnreachableError if !translation_of?(translated, text)
 
     translated
   end
 
   private
+
+  # A list is answered with a list of the same length, a single text with a single one.
+  def translation_of?(translated, text)
+    return translated.is_a?(String) if !text.is_a?(Array)
+
+    translated.is_a?(Array) && translated.size == text.size && translated.all?(String)
+  end
 
   # UserAgent builds the request and checks its address before its own error handling, so a URL
   # Ruby cannot parse, or one leading where no request may go, would leave the errors above as an

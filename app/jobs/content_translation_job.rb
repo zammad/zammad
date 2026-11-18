@@ -49,9 +49,11 @@ class ContentTranslationJob < AIJob
 
     {
       translation:         {
-        content:    translation.content,
-        backend:    translation.backend,
-        translated: translation.translated,
+        content:            translation.content,
+        extra_texts:        translation.extra_texts,
+        source_extra_texts: translation.source_extra_texts,
+        backend:            translation.backend,
+        translated:         translation.translated,
       },
       ai_analytics_run_id: translation.analytics_run&.id,
     }.compact

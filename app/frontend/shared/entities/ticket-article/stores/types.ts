@@ -14,6 +14,8 @@ export type ArticleTranslationTargetLocale =
 
 export interface ArticleTranslationResult {
   content?: Maybe<string>
+  // Absent for an article without a subject, and for a translation stored without one.
+  subject?: Maybe<string>
   backend?: Maybe<string>
   // False when nothing was translated: the article is already in the target language, or in one
   // the agent excluded.
@@ -43,6 +45,8 @@ export type ArticleTranslation =
 export interface TicketArticleTranslation {
   translationFor: (articleId: string) => ArticleTranslation | undefined
   isTranslationActive: (articleId: string) => boolean
+  // The translation is on screen in place of the original, which a pending or failed one is not.
+  isTranslationDisplayed: (articleId: string) => boolean
   hasDirectTranslationAction: (articleId: string) => boolean
   showTranslation: (articleId: string) => Promise<void>
   showOriginal: (articleId: string) => void

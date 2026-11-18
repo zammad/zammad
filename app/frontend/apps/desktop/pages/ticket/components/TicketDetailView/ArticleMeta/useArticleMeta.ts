@@ -66,8 +66,23 @@ const getMetaAddressLabel = (
 }
 
 export const useArticleMeta = (article: Ref<TicketArticle>) => {
-  const { ticket } = useTicketInformation()
+  const { ticket, articleTranslation } = useTicketInformation()
   const { isTicketAgent } = useTicketView(ticket)
+
+  // The subject is shown translated together with the body.
+  const translatedSubject = computed(() => {
+    if (!articleTranslation.isTranslationDisplayed(article.value.id)) return undefined
+
+    const translation = articleTranslation.translationFor(article.value.id)
+
+    return (translation?.status === 'done' && translation.subject) || undefined
+  })
+
+  const displayedArticle = computed(() =>
+    translatedSubject.value
+      ? { ...article.value, subject: translatedSubject.value }
+      : article.value,
+  )
 
   const links = computed(() => article.value.preferences?.links || [])
   const fields = computed(() => {
@@ -143,7 +158,7 @@ export const useArticleMeta = (article: Ref<TicketArticle>) => {
       },
     ]
 
-    return addNewFields(base as ChannelMetaField[], article)
+    return addNewFields(base as ChannelMetaField[], displayedArticle)
       .filter((field) => (field.show ? field.show(article.value) : true))
       .sort((a, b) => a.order - b.order)
   })

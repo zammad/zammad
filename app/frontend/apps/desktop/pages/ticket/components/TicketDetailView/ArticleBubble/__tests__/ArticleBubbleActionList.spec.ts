@@ -7,10 +7,12 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { createArticleTranslationMock } from '#shared/entities/ticket-article/__tests__/mocks/articleTranslation.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { replyToEmail } from '#shared/entities/ticket-article/action/plugins/email/reply.ts'
+import { getArticleSelection } from '#shared/entities/ticket-article/composables/getArticleSelection.ts'
 import {
   mockTicketArticleTranslationTargetLocalesQuery,
   mockTicketArticleTranslationTargetLocalesQueryError,
@@ -26,6 +28,10 @@ import ArticleBubbleActionList from '#desktop/pages/ticket/components/TicketDeta
 
 vi.mock('#shared/entities/ticket-article/action/plugins/email/reply.ts', () => ({
   replyToEmail: vi.fn(),
+}))
+
+vi.mock('#shared/entities/ticket-article/composables/getArticleSelection.ts', () => ({
+  getArticleSelection: vi.fn(),
 }))
 
 // The tab's translation state, as the bubble injects it.
@@ -483,6 +489,68 @@ describe('ArticleBubbleActionList', () => {
       const wrapper = renderArticleBubbleActionList({})
 
       expect(wrapper.queryByRole('button', { name: 'Translate article' })).not.toBeInTheDocument()
+    })
+  })
+
+  describe('quoting a selection', () => {
+    const selection = { text: 'Hello', html: '<p>Hello</p>', selection: null }
+
+    const { notifications, clearAllNotifications } = useNotifications()
+
+    beforeEach(() => {
+      clearAllNotifications()
+      vi.mocked(replyToEmail).mockClear()
+      vi.mocked(getArticleSelection).mockReturnValue(selection)
+    })
+
+    const replyOptions = async () => {
+      const wrapper = renderArticleBubbleActionList({ provideOverrides: { form: ref() } })
+
+      await wrapper.events.click(wrapper.getByRole('button', { name: 'Follow up' }))
+
+      return vi.mocked(replyToEmail).mock.calls[0][2]
+    }
+
+    it('hands a selection in an article shown in its original language on to the reply', async () => {
+      const options = await replyOptions()
+
+      expect(options.selection).toEqual(selection)
+      expect(notifications.value).toHaveLength(0)
+    })
+
+    it('drops a selection in an article displayed translated, and warns', async () => {
+      articleTranslation.isTranslationDisplayed = () => true
+
+      const options = await replyOptions()
+
+      expect(options.selection).toBeUndefined()
+      expect(notifications.value).toEqual([
+        expect.objectContaining({
+          type: 'warn',
+          message: 'Translated text cannot be quoted. Show the original to quote it.',
+        }),
+      ])
+    })
+
+    it('does not warn for an action that quotes nothing', async () => {
+      articleTranslation.isTranslationDisplayed = () => true
+
+      const wrapper = renderArticleBubbleActionList({ provideOverrides: { form: ref() } })
+
+      await wrapper.events.click(wrapper.getByRole('button', { name: 'Action menu button' }))
+      await wrapper.events.click(await wrapper.findByRole('menuitem', { name: 'Set to internal' }))
+
+      expect(notifications.value).toHaveLength(0)
+    })
+
+    it('does not warn for a translated article nothing is selected in', async () => {
+      articleTranslation.isTranslationDisplayed = () => true
+      vi.mocked(getArticleSelection).mockReturnValue(undefined)
+
+      const options = await replyOptions()
+
+      expect(options.selection).toBeUndefined()
+      expect(notifications.value).toHaveLength(0)
     })
   })
 })

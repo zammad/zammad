@@ -70,6 +70,7 @@ import TicketDetailBottomBar from '#desktop/pages/ticket/components/TicketDetail
 import { items as highlightMenuItems } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useHighlightMenuState.ts'
 import { useTicketScreenBehavior } from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/useTicketScreenBehavior.ts'
 
+import { useAnsweredArticleTranslationNotice } from '../../composables/useAnsweredArticleTranslationNotice.ts'
 import { ARTICLES_INFORMATION_KEY } from '../../composables/useArticleContext.ts'
 import { useProvideTicketSidebar } from '../../composables/useProvideTicketSidebar.ts'
 import { useTicketArticleReply } from '../../composables/useTicketArticleReply.ts'
@@ -246,6 +247,12 @@ const groupId = computed(() =>
 
 const relatedKnowledge = useTicketRelatedKnowledge(ticket, ticketId)
 
+const { notice: answeredArticleTranslationNotice } = useAnsweredArticleTranslationNotice(
+  values,
+  articleResult,
+  articleTranslation,
+)
+
 const {
   ticketSchema,
   articleSchema,
@@ -262,6 +269,7 @@ const {
   additionalAddArticleNotes,
 } = useTicketEditForm(ticket, form, {
   knowledgeBaseRelatedAnswers: relatedKnowledge.editorRelatedAnswers,
+  articleBodyNotice: () => answeredArticleTranslationNotice.value,
 })
 
 const {
@@ -689,7 +697,9 @@ const onEditFormSettled = () => {
 const handleShowArticleForm = (
   articleType: string,
   performReply: AppSpecificTicketArticleType['performReply'],
-) => openReplyForm({ articleType, ...performReply?.(ticket.value!) })
+) =>
+  // Not opened from an article: `null`, as an absent value would keep the one of an earlier reply.
+  openReplyForm({ articleType, answeredArticleId: null, ...performReply?.(ticket.value!) })
 </script>
 
 <template>

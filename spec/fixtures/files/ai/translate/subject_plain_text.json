@@ -1,0 +1,9 @@
+{
+  "input": "Dzień dobry,\n\nczy mogę prosić o ponowne przesłanie faktury za zamówienie 4711?\nNie mogę jej znaleźć w skrzynce odbiorczej.\n\nPozdrawiam\nJan Kowalski",
+  "subject": "Pytanie o fakturę za zamówienie 4711",
+  "html": false,
+  "source_language": "pl",
+  "target_locales": [
+    "en-us"
+  ]
+}

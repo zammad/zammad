@@ -253,6 +253,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'form_ticket_create_captcha_provider',
           'kb_self_hosted_video_servers',
           'content_translation_service',
+          'content_translation_provider',
           'content_translation_ticket_article',
           'content_translation_ticket_article_auto',
           'content_translation_ticket_article_auto_role_ids',

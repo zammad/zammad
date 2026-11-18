@@ -58,6 +58,7 @@ const actionPlugin: TicketArticleActionPlugin = {
           label: sender === EnumTicketArticleSenderName.Agent ? __('Follow up') : __('Reply'),
           icon: 'reply',
           alwaysVisible: true,
+          quotesSelection: true,
           perform: (t, a, o) => replyToEmail(t, a, o, config),
         },
         {
@@ -80,6 +81,7 @@ const actionPlugin: TicketArticleActionPlugin = {
           sender === EnumTicketArticleSenderName.Agent ? __('Follow up to all') : __('Reply all'),
         icon: 'reply-alt',
         alwaysVisible: true,
+        quotesSelection: true,
         perform: (t, a, o) => replyToEmail(t, a, o, config, true),
       })
     }

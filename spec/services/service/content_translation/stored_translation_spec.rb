@@ -58,6 +58,32 @@ RSpec.describe Service::ContentTranslation::StoredTranslation do
       expect { save }.not_to change(AI::StoredResult, :count)
     end
 
+    # Such a row has to stay what every row was before extra texts were translated.
+    it 'adds nothing to the metadata without extra texts' do
+      expect(save.metadata).to eq('backend' => 'libre_translate')
+    end
+
+    context 'with extra texts translated along with the content' do
+      let(:extra_texts) { { subject: 'Printer broken' } }
+
+      it 'keeps each translation with the digest of its text' do
+        expect(save(extra_texts:, extra_translations: { subject: 'Drucker defekt' }).metadata).to eq(
+          'backend'     => 'libre_translate',
+          'extra_texts' => { 'subject' => { 'version' => Digest::SHA256.hexdigest('Printer broken'), 'content' => 'Drucker defekt' } },
+        )
+      end
+
+      # The row is still found by its content alone, whatever happens to the extra texts.
+      it 'leaves the content and its digest as they are' do
+        expect(save(extra_texts:, extra_translations: { subject: 'Drucker defekt' }))
+          .to have_attributes(content: '<p>Hallo Welt.</p>', version: described_class.version(content, html, backend))
+      end
+
+      it 'keeps no blank translation' do
+        expect(save(extra_texts:, extra_translations: { subject: '' }).metadata).to eq('backend' => 'libre_translate')
+      end
+    end
+
     context 'when another request stored the same translation first' do
       let(:winner) { save }
 
@@ -118,6 +144,24 @@ RSpec.describe Service::ContentTranslation::StoredTranslation do
 
     it 'does not serve the translation of another object with the same content' do
       expect(find(object: create(:ticket_article, body: content))).to be_nil
+    end
+  end
+
+  describe '.extra_translations' do
+    let(:extra_texts) { { subject: 'Printer broken' } }
+    let(:record)      { save(extra_texts:, extra_translations: { subject: 'Drucker defekt' }) }
+
+    it 'serves the translation of a text that is still the same' do
+      expect(described_class.extra_translations(record, extra_texts)).to eq(subject: 'Drucker defekt')
+    end
+
+    it 'serves none for a text that changed since' do
+      expect(described_class.extra_translations(record, { subject: 'Printer repaired' })).to eq({})
+    end
+
+    # Stored before extra texts were translated, or for an object that had none then.
+    it 'serves none from a row that holds none' do
+      expect(described_class.extra_translations(save, extra_texts)).to eq({})
     end
   end
 

@@ -105,6 +105,15 @@ export interface FieldEditorContext {
 //   modules as the only suggestions.
 export type EditorExtensionSet = 'basic' | 'reduced'
 
+export interface FieldEditorNotice {
+  // Tells one notice from the next: a notice the user dismissed is shown again under another key.
+  key: string
+  // A source string, translated where it is shown.
+  text: string
+  // Values for the `%s` placeholders of `text`, inserted as they are.
+  textPlaceholder?: string[]
+}
+
 export interface FieldEditorProps {
   placeholder?: string
   groupId?: string
@@ -129,6 +138,11 @@ export interface FieldEditorProps {
    * @default 'text/html'
    */
   contentType?: EditorContentType
+  /**
+   * Shown below the toolbar for as long as it is set, unless the user dismisses it. Only the
+   * desktop editor renders it.
+   */
+  notice?: FieldEditorNotice
   /**
    * "meta" represents an object, where the key is a plugin, and the value is an object with plugin-specific options
    */

@@ -1,10 +1,16 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
+import { ref } from 'vue'
+
 import { queryByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
+import { EXTENSION_NAME as TEXT_TOOL_EXTENSION_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
+import type { FieldEditorNotice } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import { i18n } from '#shared/i18n.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
 import { FIELD_EDITOR_OPTIONS } from '#desktop/components/Form/fields/FieldEditor/useFieldEditorOptions.ts'
@@ -353,5 +359,110 @@ describe('basic toolbar testing', () => {
     })
 
     expect(popover).toHaveStyle('z-index: 100;')
+  })
+})
+
+describe('notice', () => {
+  const renderActionBar = (notice?: FieldEditorNotice, editor?: unknown) =>
+    renderComponent(FieldEditorActionBar, {
+      props: {
+        contentType: 'text/html',
+        visible: true,
+        disabledExtensions: [],
+        formId: getUuid(),
+        formContext: { notice },
+        editor,
+      },
+    })
+
+  it('shows the notice below the toolbar', () => {
+    const view = renderActionBar({ key: 'first', text: 'Mind the gap.' })
+
+    const notice = view.getByRole('alert')
+
+    expect(notice).toHaveTextContent('Mind the gap.')
+    expect(
+      view.getByRole('toolbar').compareDocumentPosition(notice) & Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy()
+  })
+
+  it('fills the placeholders of the translated notice', () => {
+    i18n.setTranslationMap(new Map([['Mind the %s.', 'Achte auf %s.']]))
+    onTestFinished(() => i18n.setTranslationMap(new Map()))
+
+    const view = renderActionBar({ key: 'first', text: 'Mind the %s.', textPlaceholder: ['gap'] })
+
+    expect(view.getByRole('alert')).toHaveTextContent('Achte auf gap.')
+  })
+
+  it('lets the user dismiss the notice, and shows the next one again', async () => {
+    const view = renderActionBar({ key: 'first', text: 'Mind the gap.' })
+
+    await view.events.click(view.getByRole('button', { name: 'Dismiss alert' }))
+
+    expect(view.queryByRole('alert')).not.toBeInTheDocument()
+
+    // The same notice handed over again stays away.
+    await view.rerender({ formContext: { notice: { key: 'first', text: 'Mind the gap.' } } })
+
+    expect(view.queryByRole('alert')).not.toBeInTheDocument()
+
+    await view.rerender({ formContext: { notice: { key: 'second', text: 'Mind the step.' } } })
+
+    expect(view.getByRole('alert')).toHaveTextContent('Mind the step.')
+  })
+
+  it('keeps a dismissed notice away when it comes back after there was none', async () => {
+    const view = renderActionBar({ key: 'first', text: 'Mind the gap.' })
+
+    await view.events.click(view.getByRole('button', { name: 'Dismiss alert' }))
+
+    await view.rerender({ formContext: { notice: undefined } })
+    await view.rerender({ formContext: { notice: { key: 'first', text: 'Mind the gap.' } } })
+
+    expect(view.queryByRole('alert')).not.toBeInTheDocument()
+
+    await view.rerender({ formContext: { notice: { key: 'second', text: 'Mind the step.' } } })
+
+    expect(view.getByRole('alert')).toHaveTextContent('Mind the step.')
+  })
+
+  it('shows a dismissed notice again when it comes back after another one', async () => {
+    const view = renderActionBar({ key: 'first', text: 'Mind the gap.' })
+
+    await view.events.click(view.getByRole('button', { name: 'Dismiss alert' }))
+
+    await view.rerender({ formContext: { notice: { key: 'second', text: 'Mind the step.' } } })
+    await view.rerender({ formContext: { notice: { key: 'first', text: 'Mind the gap.' } } })
+
+    expect(view.getByRole('alert')).toHaveTextContent('Mind the gap.')
+  })
+
+  it('shows nothing without a notice', () => {
+    const view = renderActionBar()
+
+    expect(view.queryByRole('alert')).not.toBeInTheDocument()
+  })
+
+  it('keeps the notice while the AI writing assistant hides the toolbar', async () => {
+    mockApplicationConfig({ ai_assistance_text_tools: false })
+
+    const showAiTextLoader = ref(false)
+
+    const view = renderActionBar(
+      { key: 'first', text: 'Mind the gap.' },
+      {
+        isActive: () => false,
+        getAttributes: () => ({}),
+        on: vi.fn(),
+        off: vi.fn(),
+        storage: { [TEXT_TOOL_EXTENSION_NAME]: { showAiTextLoader } },
+      },
+    )
+
+    showAiTextLoader.value = true
+
+    await waitFor(() => expect(view.getByRole('toolbar', { hidden: true })).not.toBeVisible())
+    expect(view.getByRole('alert')).toBeVisible()
   })
 })

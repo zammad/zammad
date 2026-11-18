@@ -8,7 +8,9 @@
 class Service::ContentTranslation::Base < Service::Base
   attr_reader :object, :target_locale, :source_language, :excluded_languages, :force, :background, :persistence_strategy, :regeneration_of
 
-  Result = Struct.new(:content, :backend, :translated, :fresh, :analytics_run, :skip_reason, keyword_init: true)
+  # `source_extra_texts` are the extra texts as they were translated, so a translation delivered
+  # later can tell whether they changed in between.
+  Result = Struct.new(:content, :extra_texts, :source_extra_texts, :backend, :translated, :fresh, :analytics_run, :skip_reason, keyword_init: true)
 
   class InvalidTargetLocaleError < StandardError
     def initialize(target_locale)
@@ -61,7 +63,7 @@ class Service::ContentTranslation::Base < Service::Base
 
     locale # rejects an unknown or inactive target before any content is touched
 
-    return untranslated_result if content.blank?
+    return untranslated_result if content.blank? && extra_texts.blank?
     return untranslated_result if same_language?
     return untranslated_result(skip_reason: 'excluded_language') if excluded_language?
 
@@ -82,6 +84,13 @@ class Service::ContentTranslation::Base < Service::Base
   # @return [Boolean] whether the content is HTML rather than plain text
   def html?
     raise NotImplementedError
+  end
+
+  # Plain texts of the object that are translated along with its content, in the same request.
+  #
+  # @return [Hash{Symbol => String}] by a name of the subclass's choice, without blank ones
+  def extra_texts
+    {}
   end
 
   # @return [String, NilClass] language code of the content, nil if unknown
@@ -118,7 +127,7 @@ class Service::ContentTranslation::Base < Service::Base
   # Nothing was translated - the content is empty, already in the target language, or excluded. The
   # caller still gets the content, so it has something to render.
   def untranslated_result(skip_reason: nil)
-    Result.new(content: content.to_s, backend: nil, translated: false, fresh: false, analytics_run: nil, skip_reason:)
+    Result.new(content: content.to_s, extra_texts: {}, backend: nil, translated: false, fresh: false, analytics_run: nil, skip_reason:)
   end
 
   # A stored translation is the configured backend's own, and serving it does not need that service
@@ -156,6 +165,7 @@ class Service::ContentTranslation::Base < Service::Base
     data = backend_class.execute(
       object:,
       content:,
+      extra_texts:,
       html:                 html?,
       locale:,
       persistence_strategy: strategy,
@@ -164,7 +174,7 @@ class Service::ContentTranslation::Base < Service::Base
 
     return if data.blank?
 
-    Result.new(translated: true, **data)
+    Result.new(translated: true, source_extra_texts: extra_texts, **data)
   end
 
   # A blank or unknown key is an error, not a fallback: the admin chose a service that is not there.

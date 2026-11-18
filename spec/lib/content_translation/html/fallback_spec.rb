@@ -97,4 +97,14 @@ RSpec.describe ContentTranslation::Html::Fallback do
       expect(rendered).to be_nil
     end
   end
+
+  describe '.texts' do
+    it 'answers with the text of every section, without markers and formatting' do
+      expect(described_class.texts(response)).to eq(["Hallo John,\nwie geht's?", '*Nicht* fett {1}.'])
+    end
+
+    it 'leaves out a section without text' do
+      expect(described_class.texts("{s1}\n{1/} **\n{s2}\nHallo")).to eq(['Hallo'])
+    end
+  end
 end

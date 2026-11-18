@@ -17,10 +17,11 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
         ticketArticleTranslationUpdates(ticketId: $ticketId, targetLocale: $targetLocale) {
           article {
             id
-            translation(targetLocale: $targetLocale) { content backend translated }
+            translation(targetLocale: $targetLocale) { content subject backend translated }
           }
           translation {
             content
+            subject
             backend
             translated
           }
@@ -79,7 +80,7 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
 
     it 'receives the article translation and analytics', :aggregate_failures do
       expect(broadcasted['translation'])
-        .to eq('content' => '<p>Hallo Welt.</p>', 'backend' => 'ai', 'translated' => true)
+        .to eq('content' => '<p>Hallo Welt.</p>', 'subject' => nil, 'backend' => 'ai', 'translated' => true)
       expect(broadcasted['article']).to eq('id' => gql.id(article), 'translation' => broadcasted['translation'])
       expect(broadcasted['analytics']).to include('run' => { 'id' => gql.id(ai_analytics_run) })
     end
@@ -97,6 +98,26 @@ RSpec.describe Gql::Subscriptions::Ticket::Article::TranslationUpdates, authenti
       ContentTranslationJob.new.perform(article, target_locale, service: 'Service::ContentTranslation::TicketArticle')
 
       expect(broadcasted(-1)['article']).to include('translation' => nil)
+    end
+
+    context 'with the subject translated along with the body' do
+      let(:service_result) do
+        super().tap do |result|
+          result.extra_texts        = { subject: 'Betreff' }
+          result.source_extra_texts = { subject: article.subject }
+        end
+      end
+
+      it 'receives the translated subject' do
+        expect(broadcasted['translation']).to include('content' => '<p>Hallo Welt.</p>', 'subject' => 'Betreff')
+      end
+
+      it 'does not expose a subject that was changed while it was translated' do
+        article.update!(subject: 'Changed after translation')
+        ContentTranslationJob.new.perform(article, target_locale, service: 'Service::ContentTranslation::TicketArticle')
+
+        expect(broadcasted(-1)['translation']).to include('content' => '<p>Hallo Welt.</p>', 'subject' => nil)
+      end
     end
   end
 

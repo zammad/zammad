@@ -70,6 +70,38 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
     end
   end
 
+  # The browser specs run without WebMock, so the clients are stubbed instead of their endpoints.
+  {
+    'deepl'           => { client: DeepL::Client, config: { 'api_key' => 'secret-key', 'tier' => 'free' } },
+    'libre_translate' => { client: LibreTranslate::Client, config: { 'url' => 'https://translate.example.com' } },
+  }.each do |provider, service|
+    context "with #{provider} as the active provider", performs_jobs: true do
+      before do
+        # Like the clients, one translation per given text: the backends send a list with the subject.
+        allow_any_instance_of(service[:client]).to receive(:translate) do |_client, text:, **|
+          text.is_a?(Array) ? text.map { 'Übersetzt.' } : 'Übersetzt.'
+        end
+        allow_any_instance_of(LibreTranslate::Client).to receive(:languages).and_return(%w[en de])
+
+        Setting.set("content_translation_#{provider}_config", service[:config], validate: false)
+        Setting.set('content_translation_provider', provider)
+
+        page.refresh
+        wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
+      end
+
+      it 'translates the articles through it' do
+        perform_enqueued_jobs(only: ContentTranslationJob) do
+          open_translation_menu
+
+          find('[data-test-id="translate-all-articles"]').click
+
+          expect(page).to have_text('Übersetzt.')
+        end
+      end
+    end
+  end
+
   context 'with a translation started elsewhere', performs_jobs: true do
     let(:pending_article) { create(:ticket_article, ticket:, body: 'Anything new?', content_type: 'text/plain') }
 
@@ -169,6 +201,80 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
     end
   end
 
+  context 'with an email article that has a subject' do
+    let(:article)  { articles.first }
+    let(:articles) { [create(:ticket_article, :inbound_email, ticket:, subject: 'Question about the world', body: 'Hello world.', content_type: 'text/plain')] }
+
+    def store_translations
+      Service::ContentTranslation::StoredTranslation.save(
+        object:             article,
+        locale:,
+        content:            article.body,
+        html:               false,
+        backend:            'ai',
+        translation:        'Hallo Welt.',
+        extra_texts:        { subject: article.subject },
+        extra_translations: { subject: 'Frage zur Welt' },
+      )
+    end
+
+    def show_article_details
+      find("[data-test-id=\"article-bubble-body-#{article.id}\"]").click
+    end
+
+    it 'switches the subject together with the body' do
+      show_article_details
+
+      within "#article-#{article.id}" do
+        expect(page).to have_text('Question about the world')
+
+        click_on 'Translate article'
+
+        expect(page).to have_text('Frage zur Welt').and(have_text('Hallo Welt.'))
+        expect(page).to have_no_text('Question about the world')
+
+        click_on 'Show original'
+
+        expect(page).to have_text('Question about the world').and(have_text('Hello world.'))
+      end
+    end
+
+    it 'translates the subject with the whole ticket' do
+      open_translation_menu
+      find('[data-test-id="translate-all-articles"]').click
+
+      expect(page).to have_text('Hallo Welt.')
+
+      show_article_details
+
+      within "#article-#{article.id}" do
+        expect(page).to have_text('Frage zur Welt')
+      end
+    end
+
+    context 'with the subject field in the reply' do
+      before do
+        Setting.set('ui_ticket_zoom_article_email_subject', true)
+
+        refresh
+        wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
+      end
+
+      it 'replies to the translated article with the original subject' do
+        find("#article-#{article.id}").hover
+        within "#article-#{article.id}" do
+          click_on 'Translate article'
+
+          expect(page).to have_text('Hallo Welt.')
+
+          find('button', exact_text: 'Reply', visible: :all).click
+        end
+
+        expect(page).to have_field('Subject', with: 'Question about the world')
+      end
+    end
+  end
+
   it 'translates the whole ticket and returns it to its originals' do
     open_translation_menu
 
@@ -179,6 +285,96 @@ RSpec.describe 'Desktop > Ticket > Article translation', app: :desktop_view, aut
     find('[data-test-id="translate-all-articles"]').click
 
     expect(page).to have_text('Hello world.').and(have_text('How are you?'))
+  end
+
+  context 'when replying to an article displayed translated' do
+    let(:article) { articles.last }
+    let(:hint)    { 'The original message was written in another language.' }
+
+    it 'shows the hint in the reply form until the article shows its original again' do
+      find("#article-#{article.id}").hover
+      within "#article-#{article.id}" do
+        click_on 'Translate article'
+
+        expect(page).to have_text('Wie geht es dir?')
+
+        click_on 'Reply'
+      end
+
+      expect(page).to have_css('[role="alert"]', text: hint)
+
+      find("#article-#{article.id}").hover
+      within "#article-#{article.id}" do
+        click_on 'Show original'
+
+        expect(page).to have_text('How are you?')
+      end
+
+      expect(page).to have_no_text(hint)
+    end
+
+    it 'keeps a dismissed hint away when the article is translated again during that reply' do
+      find("#article-#{article.id}").hover
+      within "#article-#{article.id}" do
+        click_on 'Translate article'
+
+        expect(page).to have_text('Wie geht es dir?')
+
+        click_on 'Reply'
+      end
+
+      find('[role="alert"] [aria-label="Dismiss alert"]').click
+
+      expect(page).to have_no_text(hint)
+
+      find("#article-#{article.id}").hover
+      within "#article-#{article.id}" do
+        click_on 'Show original'
+
+        expect(page).to have_text('How are you?')
+
+        click_on 'Translate article'
+
+        expect(page).to have_text('Wie geht es dir?')
+      end
+
+      expect(page).to have_no_text(hint)
+    end
+
+    it 'shows a dismissed hint again for a reply to the article after a reply to another translated one' do
+      other_article = articles.first
+
+      find("#article-#{article.id}").hover
+      within "#article-#{article.id}" do
+        click_on 'Translate article'
+
+        expect(page).to have_text('Wie geht es dir?')
+
+        click_on 'Reply'
+      end
+
+      find('[role="alert"] [aria-label="Dismiss alert"]').click
+
+      expect(page).to have_no_text(hint)
+
+      find("#article-#{other_article.id}").hover
+      within "#article-#{other_article.id}" do
+        click_on 'Translate article'
+
+        expect(page).to have_text('Hallo Welt.')
+
+        find('button', exact_text: 'Reply', visible: :all).click
+      end
+
+      expect(page).to have_css('[role="alert"]', text: hint)
+
+      find("#article-#{article.id}").hover
+      within "#article-#{article.id}" do
+        click_on 'Reply'
+      end
+
+      expect(page).to have_css('[role="alert"]', text: hint)
+    end
   end
 
   context 'when the agent is outside the configured roles' do

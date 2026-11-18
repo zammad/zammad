@@ -29,10 +29,12 @@ RSpec.describe ContentTranslationJob, type: :job do
 
       let(:service_result) do
         Service::ContentTranslation::Base::Result[
-          content:       '<p>Hallo Welt.</p>',
-          backend:       'ai',
-          translated:    true,
-          fresh:         true,
+          content:            '<p>Hallo Welt.</p>',
+          extra_texts:        { subject: 'Hallo' },
+          source_extra_texts: { subject: 'Hello' },
+          backend:            'ai',
+          translated:         true,
+          fresh:              true,
           analytics_run:,
         ]
       end
@@ -57,7 +59,7 @@ RSpec.describe ContentTranslationJob, type: :job do
             article,
             target_locale,
             {
-              translation:         { content: '<p>Hallo Welt.</p>', backend: 'ai', translated: true },
+              translation:         { content: '<p>Hallo Welt.</p>', extra_texts: { subject: 'Hallo' }, source_extra_texts: { subject: 'Hello' }, backend: 'ai', translated: true },
               ai_analytics_run_id: analytics_run.id,
             }
           )

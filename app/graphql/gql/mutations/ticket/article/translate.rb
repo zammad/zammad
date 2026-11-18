@@ -17,7 +17,7 @@ module Gql::Mutations
     argument :regeneration_of_id, GraphQL::Types::ID, loads: Gql::Types::AI::Analytics::RunType, required: false, description: 'The previous AI run to regenerate the translation for (if any)'
 
     field :article, Gql::Types::Ticket::ArticleType, null: false, description: 'The article whose translation was requested'
-    field :translation, Gql::Types::ContentTranslationType, null: true, description: 'The translation, if one is available already'
+    field :translation, Gql::Types::Ticket::Article::TranslationType, null: true, description: 'The translation, if one is available already'
     field :analytics, Gql::Types::AI::Analytics::MetadataType, null: true, description: 'Analytics metadata'
     field :pending_backend, String, null: true, description: 'The service producing the translation while it is pending, e.g. "ai"'
 

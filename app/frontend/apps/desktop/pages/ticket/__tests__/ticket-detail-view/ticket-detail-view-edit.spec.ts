@@ -703,7 +703,11 @@ describe('Ticket detail view', () => {
 
       await getNode('form-ticket-edit-1')?.settled
 
-      await view.events.click(await view.findByRole('button', { name: 'Add internal note' }))
+      const toolbar = view.getByRole('toolbar', { name: 'Ticket actions' })
+
+      await view.events.click(
+        await within(toolbar).findByRole('button', { name: 'Add internal note' }),
+      )
 
       expect(await view.findByRole('heading', { level: 2, name: 'Reply' })).toBeInTheDocument()
 
@@ -822,8 +826,12 @@ describe('Ticket detail view', () => {
 
       await getNode('form-ticket-edit-1')?.settled
 
+      const toolbar = view.getByRole('toolbar', { name: 'Ticket actions' })
+
       // Discard changes inside the reply form
-      await view.events.click(await view.findByRole('button', { name: 'Add internal note' }))
+      await view.events.click(
+        await within(toolbar).findByRole('button', { name: 'Add internal note' }),
+      )
 
       expect(await view.findByRole('heading', { level: 2, name: 'Reply' })).toBeInTheDocument()
 

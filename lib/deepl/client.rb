@@ -17,7 +17,7 @@ class DeepL::Client
     'pro'  => 'https://api.deepl.com',
   }.freeze
 
-  LOG_FACILITY = 'content_translation'.freeze
+  LOG_FACILITY = 'DeepL'.freeze
 
   # DeepL names the parameter it refused, and the target language is the only one a caller can act
   # on. The backend keeps an unsupported target off the request path, so this catches one DeepL
@@ -31,20 +31,22 @@ class DeepL::Client
 
   # @param html [Boolean] whether DeepL has to keep the markup of the content; it raises
   #   HtmlRefusedError for content it will not take that way
-  # @return [String] the translated text
+  # @param text [String, Array<String>] one text, or several for one request
+  # @return [String, Array<String>] the translated text, or one per given text in their order
   def translate(text:, target:, html: false)
-    body = { text: [text], target_lang: target }
+    texts = Array(text)
+    body  = { text: texts, target_lang: target }
     body[:tag_handling] = 'html' if html
 
     response = UserAgent.post("#{base_url}/v2/translate", body, request_options)
     raise_for(response, html:) if !response.success?
 
-    # An answer that carries no translation must not reach a caller as one.
+    # An answer that does not carry a translation of every text must not reach a caller as one.
     translations = response.data['translations'] if response.data.is_a?(Hash)
-    translated   = translations.first['text'] if translations.is_a?(Array) && translations.first.is_a?(Hash)
-    raise UnreachableError if !translated.is_a?(String)
+    translated   = Array(translations).map { |translation| translation['text'] if translation.is_a?(Hash) }
+    raise UnreachableError if translated.size != texts.size || !translated.all?(String)
 
-    translated
+    text.is_a?(Array) ? translated : translated.first
   end
 
   private

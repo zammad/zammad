@@ -21,8 +21,8 @@ RSpec.describe Setting::Validation::ContentTranslationService do
   context 'with a false value' do
     it_behaves_like 'not raising an error', value: false
 
-    context 'when the config names a service' do
-      before { Setting.set('content_translation_service_config', { 'provider' => 'ai' }) }
+    context 'when a provider is active' do
+      before { Setting.set('content_translation_provider', 'ai') }
 
       it_behaves_like 'not raising an error', value: false
     end
@@ -31,15 +31,15 @@ RSpec.describe Setting::Validation::ContentTranslationService do
   context 'with a true value' do
     it_behaves_like 'raising an error', value: true
 
-    context 'when the config names a service' do
-      before { Setting.set('content_translation_service_config', { 'provider' => 'ai' }) }
+    context 'when a provider is active' do
+      before { Setting.set('content_translation_provider', 'ai') }
 
       it_behaves_like 'not raising an error', value: true
     end
 
-    # The config validation refuses this; a backend removed later leaves the same state behind.
-    context 'when the config names an unknown service' do
-      before { Setting.set('content_translation_service_config', { 'provider' => 'nope' }, validate: false) }
+    # The provider validation refuses this; a backend removed later leaves the same state behind.
+    context 'when the active provider is unknown' do
+      before { Setting.set('content_translation_provider', 'nope', validate: false) }
 
       it_behaves_like 'raising an error', value: true
     end

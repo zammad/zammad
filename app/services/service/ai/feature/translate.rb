@@ -4,7 +4,6 @@
 # belongs to - the caller passes it as `object`, so the translation is stored per object and
 # target locale.
 class Service::AI::Feature::Translate < Service::AI::Feature
-
   def self.identifier
     Service::ContentTranslation::StoredTranslation::IDENTIFIER
   end
@@ -46,7 +45,7 @@ class Service::AI::Feature::Translate < Service::AI::Feature
   # of the object it belongs to - so only HTML that sanitization allows may be stored.
   def post_transform_result(result)
     body = result.to_s
-    body = html_document.translate(body) if html?
+    body = document.translate(body) if document
     body = HtmlSanitizer.strict(body) if html? && body
 
     # The sanitizer answers with its own message rather than raising when it gives up on the HTML.
@@ -54,29 +53,49 @@ class Service::AI::Feature::Translate < Service::AI::Feature
     # the content itself changes.
     return if body == HtmlSanitizer::UNPROCESSABLE_HTML_MSG
 
-    # Nothing usable came back, or sanitizing removed everything: store nothing instead of
-    # serving an empty translation until the content changes.
-    return if body.blank?
+    # HTML without text comes back as it is, so without an extra text nothing was translated.
+    return if html? && !document.content? && extra_translations.empty?
 
-    body
+    # Nothing usable came back, or sanitizing removed everything: store nothing instead of
+    # serving an empty translation until the content changes. Only where there is no content,
+    # the extra texts are all there is to come back.
+    return if body.blank? && (context_data[:body].present? || extra_translations.empty?)
+
+    body.to_s
   end
 
   private
 
   # HTML without any text to translate, only an image or code for example, needs no request.
   def request_fresh
-    return if html? && html_document.sections.empty?
+    return if html? && document.sections.empty?
 
     super
   end
 
-  # The model gets the HTML as text with markers, see ContentTranslation::Html.
+  # The model gets HTML, and plain text with extra texts in front of it, as text with markers, see
+  # ContentTranslation::Html and ContentTranslation::Text.
   def transform_user_prompt(prompt)
-    html? ? html_document.to_s : prompt
+    document ? document.to_s : prompt
   end
 
-  def html_document
-    @html_document ||= ContentTranslation::Html.new(context_data[:body])
+  def document
+    return @document if defined?(@document)
+
+    @document = if html?
+                  ContentTranslation::Html.new(context_data[:body], texts: extra_texts)
+                elsif extra_texts.present?
+                  ContentTranslation::Text.new(context_data[:body], texts: extra_texts)
+                end
+  end
+
+  # Plain texts translated along with the content, in the same request.
+  def extra_texts
+    context_data[:extra_texts].to_h
+  end
+
+  def extra_translations
+    document ? document.translated_texts.compact_blank : {}
   end
 
   # Through the store rather than through the feature base: a backend without an AI feature writes
@@ -84,9 +103,11 @@ class Service::AI::Feature::Translate < Service::AI::Feature
   def save_result(result, ai_analytics_run:)
     Service::ContentTranslation::StoredTranslation.save(
       **store_key,
-      translation:   result,
-      metadata:      provider.metadata,
-      analytics_run: ai_analytics_run,
+      translation:        result,
+      extra_texts:,
+      extra_translations:,
+      metadata:           provider.metadata,
+      analytics_run:      ai_analytics_run,
     )
   end
 

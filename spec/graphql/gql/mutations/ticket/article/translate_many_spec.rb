@@ -29,7 +29,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
             article {
               id
               translationAvailable(targetLocale: $targetLocale)
-              translation(targetLocale: $targetLocale) @include(if: $includeContent) { content backend translated }
+              translation(targetLocale: $targetLocale) @include(if: $includeContent) { content subject backend translated }
             }
             translated
             skipReason
@@ -57,15 +57,15 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
     }
   end
 
-  def store_translation(article, translation, analytics_run: nil)
+  def store_translation(article, translation, backend: 'ai', **)
     Service::ContentTranslation::StoredTranslation.save(
-      object:        article,
+      object:      article,
       locale:,
-      content:       article.body,
-      html:          true,
-      backend:       'ai',
+      content:     article.body,
+      html:        true,
+      backend:,
       translation:,
-      analytics_run:,
+      **,
     )
   end
 
@@ -94,13 +94,13 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
         expect(Service::ContentTranslation::TicketArticle).to have_received(:stored_translations).with([skipped_article], target_locale).once
         expect(gql.result.data[:results]).to contain_exactly(
           {
-            'article'    => { 'id' => gql.id(articles.first), 'translationAvailable' => true, 'translation' => { 'content' => '<p>Hallo Welt.</p>', 'backend' => 'ai', 'translated' => true } },
+            'article'    => { 'id' => gql.id(articles.first), 'translationAvailable' => true, 'translation' => { 'content' => '<p>Hallo Welt.</p>', 'subject' => nil, 'backend' => 'ai', 'translated' => true } },
             'translated' => true,
             'skipReason' => nil,
             'analytics'  => { 'run' => nil, 'usage' => nil },
           },
           {
-            'article'    => { 'id' => gql.id(skipped_article), 'translationAvailable' => true, 'translation' => { 'content' => '<p>Manuell</p>', 'backend' => 'ai', 'translated' => true } },
+            'article'    => { 'id' => gql.id(skipped_article), 'translationAvailable' => true, 'translation' => { 'content' => '<p>Manuell</p>', 'subject' => nil, 'backend' => 'ai', 'translated' => true } },
             'translated' => false,
             'skipReason' => nil,
             'analytics'  => { 'run' => nil, 'usage' => nil },
@@ -156,6 +156,25 @@ RSpec.describe Gql::Mutations::Ticket::Article::TranslateMany, :aggregate_failur
 
         expect(result_for(articles.first)['analytics'])
           .to include('usage' => { 'userHasProvidedFeedback' => true })
+      end
+    end
+
+    context 'with a stored translation that holds the subject' do
+      before do
+        Setting.set('content_translation_deepl_config', { 'api_key' => 'secret-key', 'tier' => 'free' }, validate: false)
+        Setting.set('content_translation_provider', 'deepl')
+
+        store_translation(
+          articles.first, '<p>Hallo Welt.</p>',
+          backend: 'deepl', extra_texts: { subject: articles.first.subject }, extra_translations: { subject: 'Betreff' }
+        )
+      end
+
+      it 'returns the translated subject with the article' do
+        gql.execute(query, variables:)
+
+        expect(gql.result.data[:results].first['article']['translation'])
+          .to include('content' => '<p>Hallo Welt.</p>', 'subject' => 'Betreff')
       end
     end
 

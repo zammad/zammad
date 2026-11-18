@@ -40,7 +40,7 @@ RSpec.describe Service::ContentTranslation::Backend::LibreTranslate do
   before do
     # Without the validation, because saving the config runs the connection test - which would ask
     # the instance and fill the language cache before the examples below have said anything.
-    Setting.set('content_translation_service_config', { 'provider' => 'libre_translate', 'url' => url, 'api_key' => api_key }.compact, validate: false)
+    Setting.set('content_translation_libre_translate_config', { 'url' => url, 'api_key' => api_key }.compact, validate: false)
 
     stub_hostname_resolution(url)
     stub_languages(languages)
@@ -135,6 +135,102 @@ RSpec.describe Service::ContentTranslation::Backend::LibreTranslate do
       # have to survive as markup.
       it 'returns the plain text answer as HTML' do
         expect(translate).to include(content: 'Hallo<br>Welt.', fresh: true)
+      end
+    end
+  end
+
+  describe 'translating extra texts along with the content' do
+    let(:extra_texts) { { subject: 'Questions & answers' } }
+
+    def translate(**)
+      super(extra_texts:, **)
+    end
+
+    # LibreTranslate unescapes the answer to an HTML request itself.
+    before { stub_translate([translation, 'Fragen & Antworten']) }
+
+    # They are plain text, which a request in the HTML format would read as markup.
+    it 'sends them escaped, as a list with the content' do
+      translate
+
+      expect(WebMock).to have_requested(:post, endpoint)
+        .with(body: hash_including('format' => 'html', 'q' => [content, 'Questions &amp; answers'])).once
+    end
+
+    it 'returns their translations as plain text again' do
+      expect(translate).to include(content: translation, extra_texts: { subject: 'Fragen & Antworten' })
+    end
+
+    it 'serves them from the store along with the content' do
+      translate
+
+      expect(translate).to include(content: translation, extra_texts: { subject: 'Fragen & Antworten' }, fresh: false)
+    end
+
+    context 'with literal markup in them' do
+      let(:extra_texts) { { subject: 'Use &amp; and <br> literally' } }
+
+      before { stub_translate([translation, 'Verwende &amp; und <br> wörtlich']) }
+
+      it 'keeps it as it is' do
+        expect(translate).to include(extra_texts: { subject: 'Verwende &amp; und <br> wörtlich' })
+      end
+    end
+
+    context 'with plain text content' do
+      let(:html)        { false }
+      let(:content)     { 'Hello world.' }
+      let(:translation) { 'Hallo Welt.' }
+
+      before { stub_translate([translation, 'Fragen & Antworten']) }
+
+      it 'sends them as they are' do
+        translate
+
+        expect(WebMock).to have_requested(:post, endpoint)
+          .with(body: hash_including('format' => 'text', 'q' => [content, 'Questions & answers'])).once
+      end
+
+      it 'returns their translations as they are' do
+        expect(translate).to include(content: translation, extra_texts: { subject: 'Fragen & Antworten' })
+      end
+    end
+
+    context 'when the instance does not accept HTML' do
+      before do
+        stub_request(:post, endpoint)
+          .with(body: hash_including('format' => 'html'))
+          .to_return(status: 400, body: { error: 'html format is not supported' }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+        stub_request(:post, endpoint)
+          .with(body: hash_including('format' => 'text'))
+          .to_return(**answer(["Hallo\nWelt.", 'Fragen & Antworten']))
+      end
+
+      it 'sends both again as plain text, in one request' do
+        translate
+
+        expect(WebMock).to have_requested(:post, endpoint)
+          .with(body: hash_including('format' => 'text', 'q' => ['Hello world.', 'Questions & answers'])).once
+      end
+
+      # Only the content replaces markup; an extra text stays the plain text it is.
+      it 'turns only the content into HTML' do
+        expect(translate).to include(content: 'Hallo<br>Welt.', extra_texts: { subject: 'Fragen & Antworten' })
+      end
+    end
+
+    # The row is found by the content, so it cannot hold the extra texts of content it has no
+    # translation of.
+    context 'when the translation of the content is not usable' do
+      before { stub_translate(['', 'Fragen & Antworten']) }
+
+      it 'returns nothing, although the extra texts are translated' do
+        expect(translate).to be_nil
+      end
+
+      it 'stores nothing' do
+        expect { translate }.not_to change(AI::StoredResult, :count)
       end
     end
   end

@@ -6,6 +6,7 @@ export const TicketArticleTranslationFragmentDoc = gql`
   id
   translation(targetLocale: $targetLocale) {
     content
+    subject
     backend
     translated
   }

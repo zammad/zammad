@@ -1,0 +1,20 @@
+<div class="page-header">
+  <div class="page-header-title">
+    <div class="zammad-switch zammad-switch--small js-providerSwitch">
+      <input name="content-translation-ai" type="checkbox" id="content-translation-ai" <% if @checked: %>checked<% end %>>
+      <label for="content-translation-ai"></label>
+    </div>
+    <h1><%- @T(@header) %></h1>
+  </div>
+  <div class="page-header-meta">
+    <% for button in @buttons: %>
+      <a data-type="<%= button['data-type'] %>" class="btn <%= button.class %>" href="#"><%- @T(button.name) %></a>
+    <% end %>
+  </div>
+</div>
+
+<div class="page-content">
+  <p><%- @T(@description) %></p>
+
+  <div class="js-articleSettings"></div>
+</div>

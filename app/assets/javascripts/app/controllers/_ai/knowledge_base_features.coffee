@@ -164,4 +164,4 @@ class KnowledgeBaseFeatures extends App.ControllerAIFeatureBase
   failLocal: =>
     @render()
 
-App.Config.set('KnowledgeBaseFeatures', { prio: 1080, name: __('Knowledge Base Assistant'), parent: '#ai', target: '#ai/knowledge_base_features', controller: KnowledgeBaseFeatures, permission: ['admin.ai_knowledge_base'] }, 'NavBarAdmin')
+App.Config.set('KnowledgeBaseFeatures', { prio: 1225, name: __('Knowledge Base Assistant'), parent: '#ai', target: '#ai/knowledge_base_features', controller: KnowledgeBaseFeatures, permission: ['admin.ai_knowledge_base'] }, 'NavBarAdmin')

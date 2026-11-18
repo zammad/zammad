@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 # What a translation backend has to answer for the content translation services. A backend maps
-# one translation service onto backend-neutral data; which one is used comes from the service config.
+# one translation service onto backend-neutral data; which one is used comes from the active provider.
 class Service::ContentTranslation::Backend::Base < Service::Base
   # Every failure of a translation service comes out as one of these, so a caller tells the
   # outcomes apart by class rather than by the wording the service answered with.
@@ -37,7 +37,7 @@ class Service::ContentTranslation::Backend::Base < Service::Base
     end
   end
 
-  attr_reader :object, :content, :html, :locale, :persistence_strategy, :regeneration_of
+  attr_reader :object, :content, :extra_texts, :html, :locale, :persistence_strategy, :regeneration_of
 
   # Raises when the service behind this backend is not usable. Whether translation is switched on
   # at all is not its question - the content translation services ask that before.
@@ -62,9 +62,24 @@ class Service::ContentTranslation::Backend::Base < Service::Base
     raise NotImplementedError
   end
 
-  # Keys the service config must carry for this backend, beside `provider`.
+  # Keys this backend's own config must carry.
   def self.required_config_keys
     []
+  end
+
+  def self.config_complete?(config)
+    required_config_keys.all? { |key| config[key].present? }
+  end
+
+  # The setting that holds this backend's own config; nil for a backend configured elsewhere.
+  def self.config_setting_name
+    nil
+  end
+
+  def self.config
+    return ActiveSupport::HashWithIndifferentAccess.new if config_setting_name.nil?
+
+    Setting.get(config_setting_name).to_h.with_indifferent_access
   end
 
   # The locales this backend can translate into, out of the given active ones. Everything by
@@ -76,9 +91,11 @@ class Service::ContentTranslation::Backend::Base < Service::Base
     locales
   end
 
-  def initialize(object:, content:, html:, locale:, persistence_strategy: :stored_or_request, regeneration_of: nil)
+  # @param extra_texts [Hash{Symbol => String}] plain texts translated along with the content
+  def initialize(object:, content:, html:, locale:, extra_texts: {}, persistence_strategy: :stored_or_request, regeneration_of: nil)
     @object               = object
     @content              = content
+    @extra_texts          = extra_texts
     @html                 = html
     @locale               = locale
     @persistence_strategy = persistence_strategy

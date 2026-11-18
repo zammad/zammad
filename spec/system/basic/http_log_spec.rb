@@ -64,20 +64,29 @@ RSpec.describe 'HTTP log widget', type: :system do
     include_examples 'HTTP log', facility: 'sipgate.io', path: '#system/integration/sipgate'
   end
 
-  describe 'System > Integrations > Content Translation' do
-    before do
-      grant_content_translation_permission
-    end
-
+  describe 'System > Integrations > DeepL' do
     # The log sits in its own tab, so the screen needs one more step than a plain visit.
     def open_http_log
-      visit '#system/integration/content_translation'
+      visit '#system/integration/deepl'
 
       within :active_content do
         find('.nav-tabs a[href="#logs"]').click
       end
     end
 
-    include_examples 'HTTP log', facility: 'content_translation', path: '#system/integration/content_translation'
+    include_examples 'HTTP log', facility: 'DeepL', path: '#system/integration/deepl'
+  end
+
+  describe 'System > Integrations > LibreTranslate' do
+    # The log sits in its own tab, so the screen needs one more step than a plain visit.
+    def open_http_log
+      visit '#system/integration/libre_translate'
+
+      within :active_content do
+        find('.nav-tabs a[href="#logs"]').click
+      end
+    end
+
+    include_examples 'HTTP log', facility: 'LibreTranslate', path: '#system/integration/libre_translate'
   end
 end

@@ -1,11 +1,3 @@
-<div class="page-header-title">
-  <div class="zammad-switch zammad-switch--small js-ticketArticleSetting">
-    <input name="content_translation_ticket_article" type="checkbox" id="content-translation-ticket-article" <% if @ticketArticle: %>checked<% end %>>
-    <label for="content-translation-ticket-article"></label>
-  </div>
-  <h2><%- @T('Ticket articles translation') %></h2>
-</div>
-<p><%- @T('This service allows agents to translate articles to their configured UI language or other languages of their choice.') %></p>
 <div class="alert alert--warning js-languageDetectionAlert hide"><%- @alert %></div>
 
 <div class="page-header-title">
@@ -13,7 +5,7 @@
     <input name="content_translation_ticket_article_auto" type="checkbox" id="content-translation-ticket-article-auto" <% if @ticketArticleAuto: %>checked<% end %>>
     <label for="content-translation-ticket-article-auto"></label>
   </div>
-  <h3><%- @T('Allow translation of all articles at once') %></h3>
+  <h2><%- @T('Allow translation of all articles at once') %></h2>
 </div>
 <p><%- @T('Allow specific roles to translate all articles in one ticket at once. Use with caution, as this can result in a large number of translation calls and may incur additional costs.') %></p>
 

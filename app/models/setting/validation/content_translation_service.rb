@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-# The flag may only say that a translation service is configured while the config names one that
+# The flag may only say that a translation service is configured while the active provider
 # resolves; otherwise the agent side would offer a translation that cannot run.
 class Setting::Validation::ContentTranslationService < Setting::Validation::Base
 

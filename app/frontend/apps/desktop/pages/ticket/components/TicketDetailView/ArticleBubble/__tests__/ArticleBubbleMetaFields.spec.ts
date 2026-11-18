@@ -6,9 +6,12 @@ import { expect } from 'vitest'
 import { type ExtendedRenderResult, renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
-import { type createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
-import { type createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import { createArticleTranslationMock } from '#shared/entities/ticket-article/__tests__/mocks/articleTranslation.ts'
+import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
+import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import type { ArticleTranslation } from '#shared/entities/ticket-article/stores/types.ts'
 
+import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import iconAliasMapRaw from '#desktop/initializer/desktopIconsAliasesMap.ts'
 import { mockDetailViewSetup } from '#desktop/pages/ticket/components/TicketDetailView/__tests__/support/article-detail-view-mocks.ts'
 import { modules as articleTypeModules } from '#desktop/pages/ticket/components/TicketDetailView/article-type/index.ts'
@@ -195,6 +198,69 @@ describe('ArticleBubbleMetaFields', () => {
       expect(wrapper.getByText('5.00 minute(s)')).toBeInTheDocument()
 
       expect(wrapper.queryByText('for activity type')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('subject of a translated article', () => {
+    const renderTranslated = (translation?: ArticleTranslation) =>
+      renderComponent(
+        {
+          setup() {
+            provideTicketInformationMocks(createDummyTicket(), {
+              articleTranslation: createArticleTranslationMock({
+                translationFor: () => translation,
+                isTranslationDisplayed: () =>
+                  translation?.status === 'done' && !!translation.translated,
+              }),
+            })
+
+            return {
+              article: createDummyArticle({ articleType: 'email', subject: 'Test subject' }),
+            }
+          },
+          components: { ArticleBubbleMetaFields },
+          template: `<ArticleBubbleMetaFields :article="article" />`,
+        },
+        { router: true },
+      )
+
+    it('shows the translated subject together with the translated body', () => {
+      const wrapper = renderTranslated({
+        status: 'done',
+        translated: true,
+        content: '<p>Hallo</p>',
+        subject: 'Testbetreff',
+      })
+
+      expect(wrapper.getByText('Testbetreff')).toBeInTheDocument()
+      expect(wrapper.queryByText('Test subject')).not.toBeInTheDocument()
+    })
+
+    it('shows the original subject of a translation that has none', () => {
+      const wrapper = renderTranslated({
+        status: 'done',
+        translated: true,
+        content: '<p>Hallo</p>',
+        subject: null,
+      })
+
+      expect(wrapper.getByText('Test subject')).toBeInTheDocument()
+    })
+
+    it('shows the original subject of an article that was left untranslated', () => {
+      const wrapper = renderTranslated({
+        status: 'done',
+        translated: false,
+        subject: 'Testbetreff',
+      })
+
+      expect(wrapper.getByText('Test subject')).toBeInTheDocument()
+    })
+
+    it('shows the original subject while the translation is on its way', () => {
+      const wrapper = renderTranslated({ status: 'pending' })
+
+      expect(wrapper.getByText('Test subject')).toBeInTheDocument()
     })
   })
 })

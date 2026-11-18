@@ -7,8 +7,11 @@ RSpec.describe Service::ContentTranslation::TicketArticle::TranslateMany, perfor
 
   let(:agent)         { create(:agent, groups: [ticket.group]) }
   let(:ticket)        { create(:ticket) }
-  let(:articles)      { create_list(:ticket_article, 2, ticket:, body: 'Hello world.', content_type: 'text/plain') }
+  let(:articles)      { create_list(:ticket_article, 2, ticket:, subject: article_subject, body: 'Hello world.', content_type: 'text/plain') }
   let(:target_locale) { 'de-de' }
+
+  # A subject is translated along with the body, which the context that names one covers.
+  let(:article_subject) { nil }
 
   let(:translate) { service.execute(articles:, target_locale:, generate_missing: true) }
 
@@ -31,7 +34,8 @@ RSpec.describe Service::ContentTranslation::TicketArticle::TranslateMany, perfor
       let(:response) { provider == 'deepl' ? { translations: [{ text: 'Hallo Welt.' }] } : { translatedText: 'Hallo Welt.' } }
 
       before do
-        Setting.set('content_translation_service_config', { provider:, api_key: 'test', tier: 'free', url: 'https://translate.example.com' }, validate: false)
+        Setting.set("content_translation_#{provider}_config", { api_key: 'test', tier: 'free', url: 'https://translate.example.com' }, validate: false)
+        Setting.set('content_translation_provider', provider)
         stub_hostname_resolution('https://translate.example.com')
         stub_request(:get, 'https://translate.example.com/languages')
           .to_return_json(body: [{ code: 'en' }, { code: 'de' }])
@@ -50,11 +54,26 @@ RSpec.describe Service::ContentTranslation::TicketArticle::TranslateMany, perfor
         expect(Gql::Subscriptions::Ticket::Article::TranslationUpdates)
           .to have_received(:trigger_for).with(
             anything, target_locale,
-            { translation: { content: 'Hallo Welt.', backend: provider, translated: true }, ai_analytics_run_id: be_present }
+            { translation: { content: 'Hallo Welt.', extra_texts: {}, source_extra_texts: {}, backend: provider, translated: true }, ai_analytics_run_id: be_present }
           ).twice
         expect { service.execute(articles:, target_locale:, generate_missing: true) }.not_to have_enqueued_job(ContentTranslationJob)
         expect(service.execute(articles:, target_locale:, generate_missing: true).pluck(:translation))
           .to all(have_attributes(content: 'Hallo Welt.', translated: true))
+      end
+
+      context 'with a subject' do
+        let(:article_subject) { 'Greeting' }
+        let(:response) do
+          provider == 'deepl' ? { translations: [{ text: 'Hallo Welt.' }, { text: 'Begrüßung' }] } : { translatedText: ['Hallo Welt.', 'Begrüßung'] }
+        end
+
+        it 'generates its translation along with the one of the body' do
+          translate
+          perform_enqueued_jobs(only: ContentTranslationJob)
+
+          expect(service.execute(articles:, target_locale:, generate_missing: true).pluck(:translation))
+            .to all(have_attributes(content: 'Hallo Welt.', extra_texts: { subject: 'Begrüßung' }))
+        end
       end
     end
   end
