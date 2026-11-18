@@ -153,7 +153,7 @@ Elasticsearch, tags, mentions, checklists and every indexed attribute, including
 `field:value` syntax. A customer could therefore learn whether an internal note contains a term by
 watching which of their tickets show up. For the customer access, the search now matches only
 non-internal articles with their attachments and the ticket fields `title`, `number`, `hook_number`,
-`state.name`, `customer.firstname`, `customer.lastname` and `organization.name`. Field syntax on any
+`state.name`, `group.name`, `customer.firstname`, `customer.lastname` and `organization.name`. Field syntax on any
 other field is treated as literal text. The `condition` parameter of `GET /api/v1/tickets/search` and
 the `filter` argument of the GraphQL search accept only ticket attributes visible to customers plus
 `customer.firstname`, `customer.lastname`, `owner.firstname`, `owner.lastname` and
