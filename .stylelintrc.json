@@ -12,7 +12,6 @@
     "declaration-block-no-duplicate-properties": null,
     "declaration-block-no-redundant-longhand-properties": null,
     "declaration-block-no-shorthand-property-overrides": null,
-    "declaration-block-single-line-max-declarations": null,
     "font-family-no-missing-generic-family-keyword": null,
     "function-calc-no-unspaced-operator": null,
     "hue-degree-notation": null,
