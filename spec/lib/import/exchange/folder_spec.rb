@@ -23,7 +23,7 @@ RSpec.describe Import::Exchange::Folder, :integration do
   describe '#display_path (#2152)', :use_vcr do
     subject(:folder)         { described_class.new(ews_connection) }
 
-    let(:ews_connection)     { Viewpoint::EWSClient.new(endpoint, user, pass) }
+    let(:ews_connection)     { Viewpoint::EWSClient.new({ endpoint: endpoint, type: 'basic', user: user, password: pass }) }
     let(:endpoint)           { 'https://exchange.example.com/EWS/Exchange.asmx' }
     let(:user)               { 'user@example.com' }
     let(:pass)               { 'password' }

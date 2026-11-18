@@ -76,18 +76,42 @@ RSpec.describe 'Exchange integration endpoint', type: :request do
   end
 
   describe 'autodiscovery' do
+    let(:client) { Autodiscover::Client.new(email: 'user@example.com', password: 'secret') }
+
+    before do
+      allow(Autodiscover::Client).to receive(:new).with(any_args).and_return(client)
+      allow(client).to receive(:autodiscover)
+    end
+
     # see https://github.com/zammad/zammad/issues/2065
     context 'when Autodiscover gem raises Errno::EADDRNOTAVAIL (#2065)' do
-      let(:client) { instance_double(Autodiscover::Client) }
+      before do
+        allow(client).to receive(:autodiscover).and_raise(Errno::EADDRNOTAVAIL)
+      end
 
       it 'rescues and responds with an empty hash (to proceed to manual configuration)' do
-        allow(Autodiscover::Client).to receive(:new).with(any_args).and_return(client)
-        allow(client).to receive(:autodiscover).and_raise(Errno::EADDRNOTAVAIL)
-
         post api_v1_integration_exchange_autodiscover_path,
              params: {}, as: :json
 
         expect(json_response).to eq('result' => 'ok')
+      end
+    end
+
+    it 'verifies SSL against the store with the custom SSL certificates' do
+      certificate = create(:ssl_certificate, fixture: 'RootCA')
+
+      post api_v1_integration_exchange_autodiscover_path,
+           params: {}, as: :json
+
+      expect(client.http.ssl_config.cert_store.verify(certificate.certificate_parsed)).to be(true)
+    end
+
+    context 'with disabled SSL verification' do
+      it 'does not verify SSL' do
+        post api_v1_integration_exchange_autodiscover_path,
+             params: { disable_ssl_verify: true }, as: :json
+
+        expect(client.http.ssl_config.verify_mode).to eq(OpenSSL::SSL::VERIFY_NONE)
       end
     end
   end

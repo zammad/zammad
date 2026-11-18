@@ -90,8 +90,12 @@ class Integration::ExchangeController < ApplicationController
       password: params[:password],
     )
 
+    # HTTPClient verifies against its own bundled CA list and ignores the custom SSL certificates
+    # Zammad applies to the default OpenSSL context, so their store has to be passed explicitly.
     if params[:disable_ssl_verify]
       client.http.ssl_config.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    else
+      client.http.ssl_config.cert_store = Certificate::ApplySSLCertificates.ensure_fresh_ssl_context
     end
 
     begin
