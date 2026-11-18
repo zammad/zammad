@@ -10,7 +10,13 @@
 # Set the maximum possible max_run_time for any job to a high value, and set a sensible default
 #   in ApplicationJob.max_run_time. Then specific jobs like AsyncImportJob can override this with a
 #   higher value.
-Delayed::Worker.max_run_time = 7.days
+module Delayed
+  class Worker
+    ZAMMAD_MAX_RUN_TIME = 7.days
+  end
+end
+
+Delayed::Worker.max_run_time = Delayed::Worker::ZAMMAD_MAX_RUN_TIME
 
 module ActiveJob
   module QueueAdapters

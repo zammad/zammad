@@ -26,7 +26,7 @@ class BackgroundServices
       end
 
       def launch
-        Delayed::Worker.reset
+        reset_worker_settings
 
         loop do
           break if BackgroundServices.shutdown_requested
@@ -55,6 +55,13 @@ class BackgroundServices
       end
 
       private
+
+      # Delayed::Worker.reset initializes the thread-local worker settings, but it also resets the process-wide
+      #   max_run_time to 4 hours. Reapply the fixed value, as another thread may be in the middle of its own reset.
+      def reset_worker_settings
+        Delayed::Worker.reset
+        Delayed::Worker.max_run_time = Delayed::Worker::ZAMMAD_MAX_RUN_TIME
+      end
 
       def process_results(result, realtime)
         result.sum.zero? ? process_empty : process_busy(result, realtime)
