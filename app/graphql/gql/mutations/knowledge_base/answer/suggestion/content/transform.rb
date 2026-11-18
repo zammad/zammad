@@ -7,25 +7,34 @@ module Gql::Mutations
     description 'Transform the content of a knowledge base answer suggestion to be usable in the frontend'
 
     argument :translation_id, GraphQL::Types::ID, 'Answer translation ID to get the contents for'
-    argument :form_id, Gql::Types::FormIdType, 'Form identifier of current form to copy attachments to'
+    argument :form_id, Gql::Types::FormIdType, required: false, description: 'Form identifier of current form to copy attachments to; without one, the images are embedded as data and no attachments are returned'
 
     field :body, String, null: true, description: 'Answer translation content'
     field :attachments, [Gql::Types::StoredFileType], null: true, description: 'Attachments of the answer'
 
-    requires_permission 'ticket.agent'
+    # Also for chat agents without ticket access, who insert answers into a chat message.
+    requires_permission 'ticket.agent', 'chat.agent'
 
-    def resolve(translation_id:, form_id:)
+    def resolve(translation_id:, form_id: nil)
       translation = Gql::ZammadSchema.authorized_object_from_id(translation_id, type: ::KnowledgeBase::Answer::Translation, user: context.current_user)
 
       {
-        body:        KnowledgeBaseRichText.link_video_widgets(convert_body(translation, form_id)),
-        attachments: clone_attachments(translation, form_id)
+        body:        convert_body(translation, form_id),
+        attachments: form_id.present? ? clone_attachments(translation, form_id) : nil
       }
     end
 
     private
 
     def convert_body(translation, form_id)
+      # Before the images: an embedded image can be longer than the parser of the links takes.
+      body = resolve_answer_links(translation.content.body.dup)
+      body = form_id.present? ? body_with_copied_images(body, translation, form_id) : body_with_embedded_images(body, translation)
+
+      KnowledgeBaseRichText.link_video_widgets(body)
+    end
+
+    def body_with_copied_images(body, translation, form_id)
       # Consider moving this to the CanCloneAttachments concern in future.
       content_attachments = translation.content.attachments.map do |elem|
         Store.create!(
@@ -36,7 +45,17 @@ module Gql::Mutations
           preferences: elem.preferences,
         )
       end
-      body = HasRichText.insert_urls(translation.content.body.dup, content_attachments)
+      HasRichText.insert_urls(body, content_attachments)
+    end
+
+    # For a message without a form, like a chat message, whose reader cannot load an attachment URL.
+    def body_with_embedded_images(body, translation)
+      scrubber = HtmlSanitizer::Scrubber::InsertInlineImages.new(translation.content.attachments)
+
+      ScrubHtml.new(body, scrubber).scrub!.to_s
+    end
+
+    def resolve_answer_links(body)
       KnowledgeBaseRichText.resolve_answer_links(body, detach: true) { |target| publicly_visible?(target) ? target.public_url : agent_url(target) }
     end
 

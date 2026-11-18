@@ -7,6 +7,8 @@ import { defineComponent, h, onMounted, useTemplateRef } from 'vue'
 
 import { mountComponent } from '#tests/browser/utils.ts'
 
+import { mockKnowledgeBaseAnswerSuggestionContentTransformMutation } from '#shared/components/Form/fields/FieldEditor/graphql/mutations/knowledgeBase/suggestion/content/transform.mocks.ts'
+import { mockKnowledgeBaseAnswerSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/knowledgeBase/answerSuggestions.mocks.ts'
 import { mockTextModuleSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/textModule/textModuleSuggestions.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
@@ -18,10 +20,14 @@ const PNG_DATA_URL =
 // Pasted image files are only taken in when the system shows their type inline.
 const config = { 'active_storage.content_types_allowed_inline': ['image/png', 'image/jpeg'] }
 
-const mountComposer = async (permissions?: string[]) => {
+const mountComposer = async (permissions?: string[], extraConfig = {}) => {
   const send = vi.fn(() => Promise.resolve())
 
-  await mountComponent(ChatComposer, { send }, { config, permissions })
+  await mountComponent(
+    ChatComposer,
+    { send },
+    { config: { ...config, ...extraConfig }, permissions },
+  )
 
   const field = page.getByRole('textbox', { name: 'Message' })
 
@@ -245,6 +251,247 @@ describe('ChatComposer in the browser', () => {
 
     await expect.poll(() => send.mock.calls.length).toBe(2)
     expect(send.mock.calls[1][0]).toBe(written)
+  })
+
+  describe('knowledge base answers', () => {
+    // A published answer is there to read for every agent.
+    const knowledgeBase = { kb_active_publicly: true }
+
+    const mockAnswers = (body: string) => {
+      mockKnowledgeBaseAnswerSuggestionsQuery({
+        knowledgeBaseAnswerSuggestions: [
+          {
+            id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+            title: 'Returns',
+            categoryTreeTranslation: [],
+          },
+        ],
+      })
+
+      mockKnowledgeBaseAnswerSuggestionContentTransformMutation({
+        knowledgeBaseAnswerSuggestionContentTransform: { body, attachments: null },
+      })
+    }
+
+    const pickAnswer = async (field: Awaited<ReturnType<typeof mountComposer>>['field']) => {
+      await userEvent.click(field)
+      await userEvent.keyboard('??ret')
+
+      await expect.element(page.getByTestId('mention-knowledge-base')).toMatchTextContent('Returns')
+      await expect.element(field).toHaveAttribute('aria-activedescendant')
+
+      await userEvent.keyboard('{Enter}')
+    }
+
+    it('inserts the answer picked with Enter instead of sending, and sends it with its link and image', async () => {
+      mockAnswers(
+        `<p>Print the <a href="https://example.com/label">label</a>.</p><p><img src="${PNG_DATA_URL}"></p>`,
+      )
+
+      const { send, field } = await mountComposer(['chat.agent'], knowledgeBase)
+
+      await pickAnswer(field)
+
+      await expect.poll(() => field.element().textContent).toContain('Print the label.')
+      expect(send).not.toHaveBeenCalled()
+
+      await userEvent.keyboard('{Enter}')
+
+      await expect.poll(() => send.mock.calls.length).toBe(1)
+      expect(send.mock.calls[0]).toEqual([
+        expect.stringMatching(
+          /^Print the <a [^>]*href="https:\/\/example\.com\/label"[^>]*>label<\/a>\.<br><img [^>]*src="data:image\/png;base64,/,
+        ),
+      ])
+    })
+
+    describe('while the picked answer still loads', () => {
+      const mockSlowAnswer = () => {
+        let deliver: () => void = () => {}
+
+        mockKnowledgeBaseAnswerSuggestionsQuery({
+          knowledgeBaseAnswerSuggestions: [
+            {
+              id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+              title: 'Returns',
+              categoryTreeTranslation: [],
+            },
+          ],
+        })
+
+        const transform = mockKnowledgeBaseAnswerSuggestionContentTransformMutation(
+          () =>
+            new Promise((resolve) => {
+              deliver = () =>
+                resolve({
+                  knowledgeBaseAnswerSuggestionContentTransform: {
+                    body: '<p>Answer</p>',
+                    attachments: null,
+                  },
+                })
+            }),
+        )
+
+        return {
+          deliver: async () => {
+            await transform.waitForCalls()
+            deliver()
+          },
+        }
+      }
+
+      it('puts it in place of the search, also after text was written before it', async () => {
+        const { deliver } = mockSlowAnswer()
+
+        const { field } = await mountComposer(['chat.agent'], knowledgeBase)
+
+        await userEvent.click(field)
+        await userEvent.keyboard('Hello ')
+        await pickAnswer(field)
+
+        await userEvent.keyboard('{Control>}{Home}{/Control}Hi ')
+        await deliver()
+
+        // The search goes with the space before it, as for every pick.
+        await expect.poll(() => field.element().textContent).toBe('Hi HelloAnswer')
+      })
+
+      it('keeps text written meanwhile at the start of the line the search opens', async () => {
+        const { deliver } = mockSlowAnswer()
+
+        const { field } = await mountComposer(['chat.agent'], knowledgeBase)
+
+        await pickAnswer(field)
+
+        await userEvent.keyboard('{Control>}{Home}{/Control}Hi ')
+        await deliver()
+
+        await expect.poll(() => field.element().textContent).toBe('Hi Answer')
+      })
+
+      it('inserts nothing once the search was deleted, also with the space before it left', async () => {
+        const { deliver } = mockSlowAnswer()
+
+        const { field } = await mountComposer(['chat.agent'], knowledgeBase)
+
+        await userEvent.click(field)
+        await userEvent.keyboard('Hello ')
+        await pickAnswer(field)
+
+        await userEvent.keyboard('{Backspace}{Backspace}{Backspace}{Backspace}{Backspace}')
+        await expect.poll(() => field.element().textContent?.trim()).toBe('Hello')
+
+        await deliver()
+        // Long enough for a late insertion to show.
+        await new Promise((resolve) => setTimeout(resolve, 300))
+
+        expect(field.element().textContent?.trim()).toBe('Hello')
+      })
+
+      it('inserts nothing into the next message once the search was sent', async () => {
+        const { deliver } = mockSlowAnswer()
+
+        const { send, field } = await mountComposer(['chat.agent'], knowledgeBase)
+
+        await pickAnswer(field)
+
+        await userEvent.keyboard('{Escape}')
+        await expect.element(field).not.toHaveAttribute('aria-expanded')
+        await expect.element(field).toHaveFocus()
+        await userEvent.keyboard('{Enter}')
+
+        await expect.poll(() => send.mock.calls.length).toBe(1)
+        expect(send).toHaveBeenCalledWith('??ret')
+
+        await deliver()
+        // Long enough for a late insertion to show.
+        await new Promise((resolve) => setTimeout(resolve, 300))
+
+        expect(field.element().textContent).toBe('')
+      })
+
+      it('leaves the focus in another message input the agent has moved to meanwhile', async () => {
+        const { deliver } = mockSlowAnswer()
+
+        const TwoComposers = defineComponent({
+          setup() {
+            const send = () => Promise.resolve()
+
+            return () => [h(ChatComposer, { send }), h(ChatComposer, { send })]
+          },
+        })
+
+        await mountComponent(
+          TwoComposers,
+          {},
+          { config: { ...config, ...knowledgeBase }, permissions: ['chat.agent'] },
+        )
+
+        const first = page.getByRole('textbox', { name: 'Message' }).first()
+        const second = page.getByRole('textbox', { name: 'Message' }).last()
+
+        await expect.element(second).toBeInTheDocument()
+
+        await pickAnswer(first)
+        await userEvent.click(second)
+        await deliver()
+
+        await expect.poll(() => first.element().textContent).toBe('Answer')
+        await expect.element(second).toHaveFocus()
+
+        await userEvent.keyboard('Next')
+
+        await expect.element(second).toHaveTextContent('Next')
+        expect(first.element().textContent).toBe('Answer')
+      })
+    })
+
+    it('offers them to an agent with access to tickets too', async () => {
+      mockAnswers('<p>Answer</p>')
+
+      const { field } = await mountComposer(['ticket.agent'], knowledgeBase)
+
+      await pickAnswer(field)
+
+      await expect.poll(() => field.element().textContent).toContain('Answer')
+    })
+
+    it('opens no list without a knowledge base to read, so Enter sends the "??"', async () => {
+      mockAnswers('<p>Answer</p>')
+
+      const { send, field } = await mountComposer(['chat.agent'], {
+        kb_active: true,
+        kb_active_publicly: false,
+      })
+
+      await userEvent.click(field)
+      await userEvent.keyboard('Why ??')
+
+      await expect.element(field).not.toHaveAttribute('aria-haspopup')
+      expect(page.getByTestId('mention-knowledge-base').query()).toBeNull()
+
+      await userEvent.keyboard('{Enter}')
+
+      await expect.poll(() => send.mock.calls.length).toBe(1)
+      expect(send).toHaveBeenCalledWith('Why ??')
+    })
+
+    it('inserts no answer that would take the message beyond its limit, and says so', async () => {
+      mockAnswers(`<p>${'a'.repeat(40001)}</p>`)
+
+      const { send, field } = await mountComposer(['chat.agent'], knowledgeBase)
+
+      await pickAnswer(field)
+
+      await expect.element(page.getByText('Character limit reached')).toBeInTheDocument()
+      expect(field.element().textContent).not.toContain('aaaa')
+
+      // The search stays and holds the Enter, so the customer never gets the "??".
+      await userEvent.keyboard('{Enter}')
+
+      await expect.element(field).toHaveTextContent('??ret')
+      expect(send).not.toHaveBeenCalled()
+    })
   })
 
   describe('text modules', () => {

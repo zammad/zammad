@@ -75,6 +75,22 @@ RSpec.describe Gql::Queries::KnowledgeBase::Answer::Suggestions, current_user_id
       end
     end
 
+    context 'with an agent who has chat access but no ticket access', authenticated_as: :chat_agent do
+      let(:chat_agent)   { create(:user, roles: [create(:role, permission_names: 'chat.agent')]) }
+      let(:search_query) { knowledge_base_answer_translation.title[0..2] }
+
+      it 'finds the answers the agent may read' do
+        expect(gql.result.data).to contain_exactly(include('id' => Gql::ZammadSchema.id_from_object(knowledge_base_answer_translation)))
+      end
+    end
+
+    context 'with a user who has neither chat nor ticket access', authenticated_as: :user do
+      let(:user)         { create(:user, roles: [create(:role, permission_names: 'knowledge_base.reader')]) }
+      let(:search_query) { knowledge_base_answer_translation.title[0..2] }
+
+      it_behaves_like 'graphql responds with forbidden'
+    end
+
     context 'with a customer', authenticated_as: :customer do
       let(:search_query) { knowledge_base_answer_translation.title[0..2] }
 

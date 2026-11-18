@@ -2,13 +2,14 @@
 
 module Gql::Queries
   class KnowledgeBase::Answer::Suggestions < BaseQuery
-    description 'Suggestions for insertable knowledge base answers in a new ticket article'
+    description 'Suggestions for insertable knowledge base answers in a new ticket article or chat message'
 
     argument :query, String, description: 'Answers to search for'
 
     type [Gql::Types::KnowledgeBase::Answer::TranslationType], null: true
 
-    requires_permission 'ticket.agent'
+    # Also for chat agents without ticket access, who insert answers into a chat message.
+    requires_permission 'ticket.agent', 'chat.agent'
 
     def resolve(query:)
       results = SearchKnowledgeBaseBackend.new(

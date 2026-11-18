@@ -71,4 +71,77 @@ describe('Testing "knowledge base" popup: "??" command', () => {
     await expect.element(page.getByText('Zammad.png')).toBeInTheDocument()
     await expect.element(page.getByText('923 KB')).toBeInTheDocument()
   })
+
+  it('adds no attachments of an answer whose search was deleted while it loaded', async () => {
+    const suggestions = mockKnowledgeBaseAnswerSuggestionsQuery({
+      knowledgeBaseAnswerSuggestions: [
+        {
+          id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+          title: 'How to create a ticket?',
+          categoryTreeTranslation: [],
+        },
+      ],
+    })
+
+    let deliver: () => void = () => {}
+
+    const transform = mockKnowledgeBaseAnswerSuggestionContentTransformMutation(
+      () =>
+        new Promise((resolve) => {
+          deliver = () =>
+            resolve({
+              knowledgeBaseAnswerSuggestionContentTransform: {
+                body: 'knowledge base answer body',
+                attachments: [
+                  {
+                    id: convertToGraphQLId('Store', 2062),
+                    name: 'Zammad.png',
+                    size: 945213,
+                    type: 'image/png',
+                    preferences: { 'Content-Type': 'image/png' },
+                  },
+                ],
+              },
+            })
+        }),
+    )
+
+    await mountEditorWithAttachments({}, { permissions: ['ticket.agent'] })
+
+    const editor = await findEditor()
+
+    await userEvent.type(editor, '??How')
+    await waitForLastSearch(suggestions, { query: 'How' })
+
+    await expect
+      .element(page.getByTestId('mention-knowledge-base'))
+      .toMatchTextContent('How to create a ticket?')
+    await expect.element(editor).toHaveAttribute('aria-activedescendant')
+
+    await userEvent.keyboard('{Enter}')
+    await userEvent.keyboard('{Backspace}{Backspace}{Backspace}{Backspace}{Backspace}')
+    await expect.poll(() => editor.element().textContent).toBe('')
+
+    await transform.waitForCalls()
+    deliver()
+    // Long enough for a late insertion to show.
+    await new Promise((resolve) => setTimeout(resolve, 300))
+
+    expect(editor.element().textContent).toBe('')
+    expect(page.getByText('Zammad.png').query()).toBeNull()
+  })
+
+  it('opens no list for an agent with chat access but no ticket access', async () => {
+    mockKnowledgeBaseAnswerSuggestionsQuery({ knowledgeBaseAnswerSuggestions: [] })
+
+    await mountEditorWithAttachments({}, { permissions: ['chat.agent'] })
+
+    const editor = await findEditor()
+
+    await userEvent.type(editor, '??How')
+
+    // Set as soon as a list opens, also while it loads.
+    await expect.element(editor).not.toHaveAttribute('aria-haspopup')
+    expect(page.getByTestId('mention-knowledge-base').query()).toBeNull()
+  })
 })

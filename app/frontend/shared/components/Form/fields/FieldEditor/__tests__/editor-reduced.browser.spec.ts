@@ -5,6 +5,8 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { page, userEvent } from 'vitest/browser'
 
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import { mockKnowledgeBaseAnswerSuggestionContentTransformMutation } from '#shared/components/Form/fields/FieldEditor/graphql/mutations/knowledgeBase/suggestion/content/transform.mocks.ts'
+import { mockKnowledgeBaseAnswerSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/knowledgeBase/answerSuggestions.mocks.ts'
 import { mockTextModuleSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/textModule/textModuleSuggestions.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
@@ -136,6 +138,55 @@ describe('Form - Field - Editor - reduced set', () => {
     await popup.getByText(/Our logo/).click()
 
     await expect.poll(value).toMatch(/^Our logo:<br><img [^>]*src="data:image\/png;base64,/)
+
+    const image = (await findEditor()).element().querySelector('img[src]')
+
+    expect(image?.closest('[data-node-view-wrapper]')).not.toHaveClass('opacity-50')
+  })
+
+  it('inserts a knowledge base answer as plain lines with its embedded image, which is not waiting for an upload', async () => {
+    mockKnowledgeBaseAnswerSuggestionsQuery({
+      knowledgeBaseAnswerSuggestions: [
+        {
+          id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+          title: 'Returns',
+          categoryTreeTranslation: [],
+        },
+      ],
+    })
+
+    const transform = mockKnowledgeBaseAnswerSuggestionContentTransformMutation({
+      knowledgeBaseAnswerSuggestionContentTransform: {
+        body: `<h2>Returns</h2><ul><li>Pack it</li></ul><table><tbody><tr><td>Label</td></tr></tbody></table><p><img src="${PNG_DATA_URL}"></p>`,
+        attachments: null,
+      },
+    })
+
+    // As the chat composer hands it over: its agents need no ticket access for the list.
+    await mountEditor(
+      {
+        extensionSet: 'reduced',
+        meta: { mentionKnowledgeBase: { permission: ['ticket.agent', 'chat.agent'] } },
+      },
+      { config: { ...config, kb_active_publicly: true }, permissions: ['chat.agent'] },
+    )
+
+    await userEvent.click(await findEditor())
+    await userEvent.keyboard('??ret')
+
+    const popup = page.getByTestId('mention-knowledge-base')
+
+    await expect.element(popup).toMatchTextContent('Returns')
+    await popup.getByText('Returns').click()
+
+    await expect
+      .poll(value)
+      .toMatch(
+        /^Returns<br>Pack it<br>Label<br><img [^>]*src="data:image\/png;base64,[^"]+"[^>]*>$/,
+      )
+
+    // Asked without a form, so nothing is copied into an upload cache.
+    expect((await transform.waitForCalls()).at(-1)?.variables).toMatchObject({ formId: null })
 
     const image = (await findEditor()).element().querySelector('img[src]')
 

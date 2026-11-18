@@ -3137,7 +3137,7 @@ export type MutationsKnowledgeBaseAnswerDeleteArgs = {
 
 /** All available mutations */
 export type MutationsKnowledgeBaseAnswerSuggestionContentTransformArgs = {
-  formId: Scalars['FormId']['input'];
+  formId?: InputMaybe<Scalars['FormId']['input']>;
   translationId: Scalars['ID']['input'];
 };
 
@@ -4412,7 +4412,7 @@ export type Queries = {
   knowledgeBase?: Maybe<KnowledgeBase>;
   /** Fetch a single knowledge base answer */
   knowledgeBaseAnswer: KnowledgeBaseAnswer;
-  /** Suggestions for insertable knowledge base answers in a new ticket article */
+  /** Suggestions for insertable knowledge base answers in a new ticket article or chat message */
   knowledgeBaseAnswerSuggestions?: Maybe<Array<KnowledgeBaseAnswerTranslation>>;
   /** Fetch the paginated answers directly below a knowledge base category */
   knowledgeBaseAnswers: KnowledgeBaseAnswerConnection;

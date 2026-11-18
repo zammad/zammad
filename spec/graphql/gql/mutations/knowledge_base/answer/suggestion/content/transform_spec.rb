@@ -225,4 +225,102 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Suggestion::Content::Trans
       expect(gql.result.error_type).to eq(Exceptions::Forbidden)
     end
   end
+
+  context 'without a form, as for a chat message', authenticated_as: :agent do
+    let(:agent)                  { create(:agent) }
+    let!(:knowledge_base_answer) { create(:knowledge_base_answer, :published, :with_image, :with_attachment) }
+
+    let(:mutation) do
+      <<~MUTATION
+        mutation knowledgeBaseAnswerSuggestionContentTransform($translationId: ID!) {
+          knowledgeBaseAnswerSuggestionContentTransform(translationId: $translationId) {
+            body
+            attachments {
+              id
+            }
+          }
+        }
+      MUTATION
+    end
+
+    let(:variables) { { translationId: Gql::ZammadSchema.id_from_object(knowledge_base_answer.translation) } }
+
+    it 'copies nothing into an upload cache' do
+      expect { gql.execute(mutation, variables: variables) }.not_to change(Store, :count)
+    end
+
+    it 'embeds the inline images as data and returns no attachments', :aggregate_failures do
+      gql.execute(mutation, variables: variables)
+
+      expect(gql.result.data[:body]).to include('src="data:image/jpeg;base64,/9j/')
+      expect(gql.result.data[:body]).not_to include('cid:')
+      expect(gql.result.data[:attachments]).to be_nil
+    end
+
+    context 'with a link to another answer' do
+      let(:target_translation)     { create(:knowledge_base_answer, :published).translation }
+      let!(:knowledge_base_answer) do
+        create(:knowledge_base_answer, :published, translation_attributes: {
+                 content: build(:knowledge_base_answer_translation_content, body: "<a href='/desktop/knowledge-base/locale/en-us/answer/1' data-target-type='knowledge-base-answer' data-target-id='#{target_translation.id}'>See also</a>")
+               })
+      end
+
+      it 'turns the link into an ordinary one to the public answer page' do
+        gql.execute(mutation, variables: variables)
+
+        expect(gql.result.data[:body]).to eq("<a href=\"#{target_translation.public_url}\">See also</a>")
+      end
+    end
+
+    context 'with an inline image larger than the parser takes in one attribute' do
+      let(:image_size) { 8.megabytes }
+
+      before do
+        content = knowledge_base_answer.translation.content
+        image   = content.attachments.first
+
+        create(:store, object: image.store_object.name, o_id: image.o_id, data: 'a' * image_size, filename: image.filename, preferences: image.preferences)
+        image.destroy!
+
+        content.update_column(:body, "#{content.body}<p>After the image</p>")
+      end
+
+      it 'returns the whole image and the text after it', :aggregate_failures do
+        gql.execute(mutation, variables: variables)
+
+        expect(gql.result.data[:body]).to include("base64,#{Base64.strict_encode64('a' * image_size)}\"")
+        expect(gql.result.data[:body]).to include('<p>After the image</p>')
+      end
+    end
+
+    context 'with an agent who has chat access but no ticket access', authenticated_as: :chat_agent do
+      let(:chat_agent) { create(:user, roles: [create(:role, permission_names: 'chat.agent')]) }
+
+      it 'returns the answer' do
+        gql.execute(mutation, variables: variables)
+
+        expect(gql.result.data[:body]).to include('src="data:image/jpeg;base64,')
+      end
+
+      context 'with an internal answer the agent may not read' do
+        let!(:knowledge_base_answer) { create(:knowledge_base_answer, :internal) }
+
+        it 'raises a forbidden error' do
+          gql.execute(mutation, variables: variables)
+
+          expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+        end
+      end
+    end
+
+    context 'with a user who has neither chat nor ticket access', authenticated_as: :user do
+      let(:user) { create(:user, roles: [create(:role, permission_names: 'knowledge_base.reader')]) }
+
+      it 'raises a forbidden error' do
+        gql.execute(mutation, variables: variables)
+
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
+    end
+  end
 end

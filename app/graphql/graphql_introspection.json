@@ -16280,15 +16280,11 @@
                 },
                 {
                   "name": "formId",
-                  "description": "Form identifier of current form to copy attachments to",
+                  "description": "Form identifier of current form to copy attachments to; without one, the images are embedded as data and no attachments are returned",
                   "type": {
-                    "kind": "NON_NULL",
-                    "name": null,
-                    "ofType": {
-                      "kind": "SCALAR",
-                      "name": "FormId",
-                      "ofType": null
-                    }
+                    "kind": "SCALAR",
+                    "name": "FormId",
+                    "ofType": null
                   },
                   "defaultValue": null
                 }
@@ -24367,7 +24363,7 @@
             },
             {
               "name": "knowledgeBaseAnswerSuggestions",
-              "description": "Suggestions for insertable knowledge base answers in a new ticket article",
+              "description": "Suggestions for insertable knowledge base answers in a new ticket article or chat message",
               "args": [
                 {
                   "name": "query",

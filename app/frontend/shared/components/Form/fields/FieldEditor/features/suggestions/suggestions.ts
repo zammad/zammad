@@ -14,7 +14,7 @@ import type { MentionType } from '#shared/components/Form/fields/FieldEditor/typ
 import { setFloatingPopover } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import { getEditorComponents } from '#shared/components/Form/initializeFieldEditor.ts'
 
-import type { Content, Editor } from '@tiptap/core'
+import type { Content, Editor, EditorEvents } from '@tiptap/core'
 import type { SuggestionOptions, SuggestionProps } from '@tiptap/suggestion'
 
 interface MentionOptions<T> {
@@ -33,8 +33,12 @@ interface MentionOptions<T> {
 
   items(props: { query: string; editor: Editor }): T[] | Promise<T[]>
 
-  // oxlint-disable-next-line no-explicit-any
-  insert(props: Record<string, any>): Content | Promise<Content>
+  // Content that loads asks `isStillWanted` before it leaves anything else behind, like attachments.
+  insert(
+    // oxlint-disable-next-line no-explicit-any
+    props: Record<string, any>,
+    isStillWanted: () => boolean,
+  ): Content | Promise<Content>
 }
 
 enum Type {
@@ -83,28 +87,75 @@ export default function buildMentionExtension<T>(
       const { nodeAfter } = editor.view.state.selection.$to
       const overrideSpace = nodeAfter?.text?.startsWith(' ')
 
-      // activators start with a space, so we need to decrease the range
-      range.from -= 1
-      if (overrideSpace) {
-        range.to += 1
+      // Activators start with a space, so the replaced range starts one earlier. A copy: the range
+      //   belongs to the open list, which stays open for another pick when the content is refused.
+      let replacedRange = {
+        from: range.from - 1,
+        to: overrideSpace ? range.to + 1 : range.to,
       }
 
-      const insert = (content: Content) => {
+      // The search itself: the replaced range may outlive it with the space before it.
+      let searchRange = { from: range.from, to: range.to }
+
+      const insert = (content: Content, takeFocus = true) => {
         // Images of an inserted text module or answer belong to this draft, like pasted ones -
         //   where the editor uploads its images at all.
         if (typeof content === 'string' && inlineImageUploadsPluginKey.get(editor.state))
           claimInlineImages(getEditorFormId(editor), content)
 
-        editor.chain().focus().insertContentAt(range, content).run()
+        const chain = takeFocus ? editor.chain().focus() : editor.chain()
+
+        // Where the search opens a line, the range starts before the line, and text written at its
+        //   start while the content loaded lies in between. That text stays.
+        const from =
+          searchRange.from - replacedRange.from > 1 ? searchRange.from : replacedRange.from
+
+        chain.insertContentAt({ from, to: replacedRange.to }, content).run()
       }
 
-      const content = options.insert(props)
+      // Nothing left to replace once the search text is gone, e.g. deleted or sent, or the editor is.
+      const isStillWanted = () => !editor.isDestroyed && searchRange.from !== searchRange.to
 
-      if (content instanceof Promise) {
-        content.then((c) => insert(c))
-      } else {
+      const content = options.insert(props, isStillWanted)
+
+      if (!(content instanceof Promise)) {
         insert(content)
+        return
       }
+
+      // While the content loads, the ranges follow what is written meanwhile; text typed at either
+      //   edge stays outside of them.
+      const trackRange = ({ transaction, appendedTransactions }: EditorEvents['transaction']) => {
+        const follow = ({ from, to }: typeof replacedRange, { mapping }: typeof transaction) => {
+          const mappedFrom = mapping.map(from)
+
+          return { from: mappedFrom, to: Math.max(mappedFrom, mapping.map(to, -1)) }
+        }
+
+        ;[transaction, ...appendedTransactions].forEach((tr) => {
+          replacedRange = follow(replacedRange, tr)
+          searchRange = follow(searchRange, tr)
+        })
+      }
+
+      editor.on('transaction', trackRange)
+
+      // Loaded content leaves the focus where the writer has moved to meanwhile, e.g. another chat.
+      const hasFocusMovedOn = () => {
+        const { activeElement } = document
+
+        return (
+          !!activeElement &&
+          activeElement !== document.body &&
+          !editor.view.dom.contains(activeElement)
+        )
+      }
+
+      content
+        .then((loaded) => {
+          if (isStillWanted()) insert(loaded, !hasFocusMovedOn())
+        })
+        .finally(() => editor.off('transaction', trackRange))
     },
     render() {
       let component: VueRenderer | null

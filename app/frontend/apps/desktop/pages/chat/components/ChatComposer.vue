@@ -14,6 +14,7 @@ import { isComposing } from '#shared/utils/events.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useChatMessageInputs } from '#desktop/entities/chat/composables/useChatMessageInputs.ts'
+import { useKnowledgeBaseAccess } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAccess.ts'
 
 interface Props {
   // Rejects when the message could not be stored, which puts it back into the field.
@@ -30,9 +31,17 @@ const emit = defineEmits<{
 // The limit of a message in the old interface, which counts the text and not the images in it.
 const MAX_LENGTH = 40000
 
-// The footer only carries the limit: the old interface shows no counter either.
+const { canBrowse: canBrowseKnowledgeBase } = useKnowledgeBaseAccess()
+
+// The footer only carries the limit: the old interface shows no counter either. Without a knowledge
+//   base to read, `??` opens no list, which would hold back the Enter of a message with `??` in it.
 const editorMeta: FieldEditorProps['meta'] = {
   footer: { maxlength: MAX_LENGTH, disabled: true },
+  mentionKnowledgeBase: {
+    disabled: !canBrowseKnowledgeBase.value,
+    // Also for chat agents without ticket access.
+    permission: ['ticket.agent', 'chat.agent'],
+  },
 }
 
 const fieldId = `chat-composer-${useId()}`

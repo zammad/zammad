@@ -67,17 +67,19 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   )
 
   // Shared by `??` and the insert from outside the editor, so both bring the same content.
-  //   Attachments are only added while the editor that asked for them is still there.
-  const loadAnswerContent = async (translationId: ID, isEditorAlive = () => true) => {
+  //   Attachments are only added while the answer is still wanted: the editor that asked for it is
+  //   there, and so is the search it replaces. Without a form, like in a chat message, the images
+  //   come embedded and there are no attachments.
+  const loadAnswerContent = async (translationId: ID, isStillWanted: () => boolean) => {
     const { meta: editorMeta = {}, formId } = context.value
     const meta = editorMeta[EXTENSION_NAME] || {}
 
     const result = await translateHandler.send({
       translationId,
-      formId,
+      formId: formId || null,
     })
 
-    if (!isEditorAlive()) return ''
+    if (!isStillWanted()) return ''
 
     const attachmentsNodeName = meta?.attachmentsNodeName
 
@@ -140,7 +142,8 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     addOptions() {
       return {
         ...(this as unknown as { parent: () => MentionOptions }).parent?.(),
-        permission: 'ticket.agent',
+        // An editor outside of a ticket names who gets the list in it, like the chat composer.
+        permission: context.value.meta?.[EXTENSION_NAME]?.permission ?? ['ticket.agent'],
       }
     },
   }).configure({
@@ -149,8 +152,8 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
       type: 'knowledge-base',
       label: __('Knowledge base articles'),
       placeholder: __('Start typing to search in knowledge base…'),
-      insert: (props: MentionKnowledgeBaseItem | MentionKnowledgeBaseRelatedItem) =>
-        loadAnswerContent(props.id),
+      insert: (props: MentionKnowledgeBaseItem | MentionKnowledgeBaseRelatedItem, isStillWanted) =>
+        loadAnswerContent(props.id, isStillWanted),
       // The related answers are at hand, so they skip the debounce. A search still on its way when the
       //   term is cleared is discarded by the suggestion plugin.
       items: ({ query }) => (query ? searchKnowledgeBaseMentions({ query }) : getRelatedMentions()),

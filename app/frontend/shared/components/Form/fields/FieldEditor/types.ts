@@ -166,6 +166,8 @@ export interface FieldEditorProps {
     }
     mentionKnowledgeBase?: {
       disabled?: boolean
+      // who gets the list in this editor, instead of agents with ticket access
+      permission?: string[]
       // where to put attachments from knowledge base, if any are available
       attachmentsNodeName?: string
       // answers related to the record being edited, offered before a search term is typed;

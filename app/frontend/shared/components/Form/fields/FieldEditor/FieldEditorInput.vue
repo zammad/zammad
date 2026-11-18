@@ -155,8 +155,13 @@ const clipboardHtmlHasText = (clipboardData: DataTransfer) => {
   return Boolean(new DOMParser().parseFromString(html, 'text/html').body.textContent?.trim())
 }
 
-// The reduced set keeps the image and the text modules: no signature, other suggestions or AI tools.
-const reducedExtensionNames = new Set([imageExtensionName, textModuleExtensionName])
+// The reduced set keeps the image, the text modules and the knowledge base answers: no signature,
+//   user mentions or AI tools.
+const reducedExtensionNames = new Set([
+  imageExtensionName,
+  textModuleExtensionName,
+  knowledgeBaseMentionExtensionName,
+])
 
 if (isReduced) {
   customExtensions.forEach((extension) => {

@@ -1563,7 +1563,7 @@ export type AutocompleteSearchUserQuery = { autocompleteSearchUser: Array<{ __ty
 
 export type KnowledgeBaseAnswerSuggestionContentTransformMutationVariables = Exact<{
   translationId: string | number;
-  formId: string;
+  formId?: string | null | undefined;
 }>;
 
 

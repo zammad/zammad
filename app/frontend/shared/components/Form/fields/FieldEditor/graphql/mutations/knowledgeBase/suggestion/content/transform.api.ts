@@ -5,7 +5,7 @@ import { ErrorsFragmentDoc } from '../../../../../../../../../graphql/fragments/
 import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const KnowledgeBaseAnswerSuggestionContentTransformDocument = gql`
-    mutation knowledgeBaseAnswerSuggestionContentTransform($translationId: ID!, $formId: FormId!) {
+    mutation knowledgeBaseAnswerSuggestionContentTransform($translationId: ID!, $formId: FormId) {
   knowledgeBaseAnswerSuggestionContentTransform(
     translationId: $translationId
     formId: $formId
