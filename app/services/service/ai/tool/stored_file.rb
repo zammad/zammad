@@ -5,7 +5,7 @@ class Service::AI::Tool::StoredFile
   # @param file [Store]
   # @return [String] the type the file was stored with, without its parameters, empty where it has none
   def self.mime_type(file)
-    content_type(file).split(';').first.to_s.strip.downcase
+    file.mime_type
   end
 
   # @param file [Store]

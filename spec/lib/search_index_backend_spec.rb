@@ -1579,12 +1579,13 @@ RSpec.describe SearchIndexBackend do
   end
 
   describe '.attachment_ignored?', searchindex: false do
+    let(:preferences) { {} }
     let(:store) do
-      create(:store,
-             object:   'SomeObject',
-             o_id:     1,
-             data:     'some content',
-             filename:)
+      build(:store,
+            object:      'SomeObject',
+            o_id:        1,
+            filename:,
+            preferences:)
     end
 
     context 'when attachment is indexable', searchindex: false do
@@ -1600,6 +1601,182 @@ RSpec.describe SearchIndexBackend do
 
       it 'return true' do
         expect(described_class).to be_attachment_ignored(store)
+      end
+    end
+
+    context 'when attachment has an indexable extension but an ignored MIME type' do
+      let(:filename)    { 'image.gif' }
+      let(:preferences) { { 'Mime-Type' => 'image/png' } }
+
+      it 'return false' do
+        expect(described_class).not_to be_attachment_ignored(store)
+      end
+    end
+
+    context 'when attachment has no extension' do
+      let(:filename) { 'noname' }
+
+      context 'with an ignored MIME type' do
+        let(:preferences) { { 'Mime-Type' => 'image/png' } }
+
+        it 'return true' do
+          expect(described_class).to be_attachment_ignored(store)
+        end
+      end
+
+      context 'with an ignored content type including parameters' do
+        let(:preferences) { { 'Content-Type' => 'image/jpeg; name=noname' } }
+
+        it 'return true' do
+          expect(described_class).to be_attachment_ignored(store)
+        end
+      end
+
+      context 'with an ignored MIME type whose preferred extension is not ignored' do
+        let(:preferences) { { 'Mime-Type' => 'video/quicktime' } }
+
+        it 'return true' do
+          expect(described_class).to be_attachment_ignored(store)
+        end
+      end
+
+      [
+        'image/jpg; name=noname',
+        'image/jpe; name=noname',
+        'image/pjpeg; name=noname',
+        'image/x-jpeg; name=noname',
+        'image/x-jpg; name=noname',
+        'image/x-png; name=noname',
+        'image/x-citrix-png; name=noname',
+        'image/x-citrix-jpeg; name=noname',
+        'image/x-citrix-pjpeg; name=noname',
+        'video/mpg; name=noname',
+        'video/x-mpeg; name=noname',
+        'video/x-quicktime; name=noname',
+      ].each do |alias_content_type|
+        context "with a non-standard alias of an ignored MIME type (#{alias_content_type})" do
+          let(:preferences) { { 'Content-Type' => alias_content_type } }
+
+          it 'return true' do
+            expect(described_class).to be_attachment_ignored(store)
+          end
+        end
+      end
+
+      [
+        'image/jpg name=noname',
+        '"image/jpg"',
+        'image/jpg, name=noname',
+      ].each do |malformed_content_type|
+        context "with a malformed content type of an ignored MIME type (#{malformed_content_type})" do
+          let(:preferences) { { 'Content-Type' => malformed_content_type } }
+
+          it 'return true' do
+            expect(described_class).to be_attachment_ignored(store)
+          end
+        end
+      end
+
+      context 'with an audio MIME type' do
+        let(:preferences) { { 'Content-Type' => 'audio/wav' } }
+
+        it 'return false' do
+          expect(described_class).not_to be_attachment_ignored(store)
+        end
+
+        context 'when an admin ignores one of its extensions' do
+          before do
+            Setting.set('es_attachment_ignore', Setting.get('es_attachment_ignore') + ['.wav'])
+          end
+
+          it 'return true' do
+            expect(described_class).to be_attachment_ignored(store)
+          end
+        end
+      end
+
+      context 'with a non-media MIME type listing an ignored extension' do
+        let(:preferences) { { 'Content-Type' => 'application/octet-stream' } }
+
+        it 'return false' do
+          expect(described_class).not_to be_attachment_ignored(store)
+        end
+      end
+
+      context 'with a text MIME type listing an extension an admin ignores' do
+        let(:preferences) { { 'Content-Type' => 'text/plain' } }
+
+        before do
+          Setting.set('es_attachment_ignore', Setting.get('es_attachment_ignore') + ['.log'])
+        end
+
+        it 'return false' do
+          expect(described_class).not_to be_attachment_ignored(store)
+        end
+      end
+
+      context 'with an empty ignore list' do
+        let(:preferences) { { 'Content-Type' => 'image/png' } }
+
+        before do
+          Setting.set('es_attachment_ignore', [])
+        end
+
+        it 'return false' do
+          expect(described_class).not_to be_attachment_ignored(store)
+        end
+      end
+
+      context 'with a malformed MIME type' do
+        let(:preferences) { { 'Mime-Type' => ';' } }
+
+        it 'return false' do
+          expect(described_class).not_to be_attachment_ignored(store)
+        end
+      end
+
+      context 'with an indexable MIME type' do
+        let(:preferences) { { 'Mime-Type' => 'text/plain' } }
+
+        it 'return false' do
+          expect(described_class).not_to be_attachment_ignored(store)
+        end
+      end
+
+      context 'with an unknown MIME type' do
+        let(:preferences) { { 'Mime-Type' => 'foo/bar' } }
+
+        it 'return false' do
+          expect(described_class).not_to be_attachment_ignored(store)
+        end
+      end
+
+      context 'with an attachment that has no MIME type' do
+        let(:attachment) { Struct.new(:filename).new('noname') }
+
+        it 'return false' do
+          expect(described_class).not_to be_attachment_ignored(attachment)
+        end
+      end
+
+      context 'without a MIME type' do
+        it 'return false' do
+          expect(described_class).not_to be_attachment_ignored(store)
+        end
+      end
+    end
+
+    context 'when attachment has an extension mime-types does not know' do
+      let(:preferences) { { 'Content-Type' => 'video/mpeg' } }
+
+      %w[part1.06090408.01060107 noname.].each do |unknown_extension_filename|
+        context "with filename #{unknown_extension_filename}" do
+          let(:filename) { unknown_extension_filename }
+
+          it 'return true' do
+            expect(described_class).to be_attachment_ignored(store)
+          end
+        end
       end
     end
   end

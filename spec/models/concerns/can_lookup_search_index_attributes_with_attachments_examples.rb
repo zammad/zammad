@@ -45,6 +45,24 @@ RSpec.shared_examples 'CanLookupSearchIndexAttributesWithAttachments' do
       end
     end
 
+    context 'when an attachment without extension is ignored due to its MIME type' do
+      before do
+        create(:store, :image,
+               object:      described_class.name,
+               o_id:        subject.id,
+               filename:    'noname',
+               preferences: { 'Content-Type' => 'image/png; name=noname', 'Mime-Type' => 'image/png' })
+      end
+
+      it 'does not include the attachment in the results' do
+        expect(subject.search_index_attachments_lookup(0)).to include(
+          include('_name' => 'example.txt'),
+        ).and not_include(
+          include('_name' => 'noname'),
+        )
+      end
+    end
+
     context 'when an attachment is too big' do
       before do
         Setting.set('es_attachment_max_size_in_mb', 2)

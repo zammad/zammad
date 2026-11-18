@@ -1245,13 +1245,47 @@ helper method for making HTTP calls and raising error if response was not succes
     }
   end
 
+  # Only media stand in by MIME type: document types list extensions an admin may ignore (text/plain lists .log).
+  ATTACHMENT_IGNORE_MEDIA_TYPES = %w[image video audio].freeze
+  ATTACHMENT_IGNORE_MIME_TYPE_ALIASES = {
+    'image/jpg'            => 'image/jpeg',
+    'image/jpe'            => 'image/jpeg',
+    'image/pjpeg'          => 'image/jpeg',
+    'image/x-jpeg'         => 'image/jpeg',
+    'image/x-jpg'          => 'image/jpeg',
+    'image/x-png'          => 'image/png',
+    'image/x-citrix-jpeg'  => 'image/jpeg',
+    'image/x-citrix-pjpeg' => 'image/jpeg',
+    'image/x-citrix-png'   => 'image/png',
+    'video/mpg'            => 'video/mpeg',
+    'video/x-mpeg'         => 'video/mpeg',
+    'video/x-quicktime'    => 'video/quicktime',
+  }.freeze
+
   def self.attachment_ignored?(attachment)
     return true if attachment.filename.blank?
 
-    extension = File.extname(attachment.filename).downcase
+    ignored_extensions = Setting.get('es_attachment_ignore')
+    return false if ignored_extensions.blank?
 
-    Setting.get('es_attachment_ignore').include?(extension)
+    extension = File.extname(attachment.filename).downcase
+    return true if ignored_extensions.include?(extension)
+
+    # Inline images are often stored as "noname" or under their Content-ID, so the extension says nothing.
+    return false if MIME::Types.type_for(extension).any?
+
+    attachment_media_extensions(attachment).any? { |media_extension| ignored_extensions.include?(".#{media_extension}") }
   end
+
+  def self.attachment_media_extensions(attachment)
+    mime_type = MIME::Type.simplified(attachment.try(:mime_type).to_s).to_s
+    mime_type = ATTACHMENT_IGNORE_MIME_TYPE_ALIASES.fetch(mime_type, mime_type)
+
+    MIME::Types[mime_type]
+      .select { |type| ATTACHMENT_IGNORE_MEDIA_TYPES.include?(type.media_type) }
+      .flat_map(&:extensions)
+  end
+  private_class_method :attachment_media_extensions
 
   def self.attachment_too_big?(attachment)
     return true if attachment.content.blank?

@@ -472,6 +472,46 @@ RSpec.describe Store, type: :model do
         it { is_expected.not_to be_inline }
       end
     end
+
+    describe '#mime_type' do
+      context 'when Content-Type and Mime-Type differ' do
+        let(:preferences) { { 'Content-Type' => 'Image/PNG; name=noname', 'Mime-Type' => 'image/jpeg' } }
+
+        it 'returns Content-Type without its parameters' do
+          expect(store.mime_type).to eq('image/png')
+        end
+      end
+
+      context 'when only Mime-Type is present' do
+        let(:preferences) { { 'Mime-Type' => 'image/jpeg' } }
+
+        it 'returns Mime-Type' do
+          expect(store.mime_type).to eq('image/jpeg')
+        end
+      end
+
+      context 'when Content-Type is blank' do
+        let(:preferences) { { 'Content-Type' => '', 'Mime-Type' => 'image/jpeg' } }
+
+        it 'returns Mime-Type' do
+          expect(store.mime_type).to eq('image/jpeg')
+        end
+      end
+
+      context 'when Content-Type has parameters only' do
+        let(:preferences) { { 'Content-Type' => '; name=noname', 'Mime-Type' => 'image/jpeg' } }
+
+        it 'returns Mime-Type' do
+          expect(store.mime_type).to eq('image/jpeg')
+        end
+      end
+
+      context 'when no type is present' do
+        it 'returns an empty string' do
+          expect(store.mime_type).to eq('')
+        end
+      end
+    end
   end
 
   context 'when preferences exceed storage size' do
