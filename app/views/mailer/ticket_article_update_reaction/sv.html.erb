@@ -1,9 +1,9 @@
-Updaterat ärende (#{ticket.title})
+Uppdaterat ärende (#{ticket.title})
 
 <div>Hej #{recipient.firstname},</div>
 <br>
 <div>
-<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagerade med <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> på meddelande från #{article.created_by.fullname}
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagerade med <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> på ett meddelande från #{article.created_by.fullname}:
 </div>
 <br>
 <% if @objects[:article] %>
@@ -15,5 +15,5 @@ Updaterat ärende (#{ticket.title})
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Visa i #{config.product_name}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Visa detta i #{config.product_name}</a>
 </div>

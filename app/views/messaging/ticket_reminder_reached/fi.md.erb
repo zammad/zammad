@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Muistutukset saavutettu_
+Tiketti kaipaa huomiota: muistutukset saavutettu tiketille (#{ticket.title}) asiakkaalta "*#{ticket.customer.longname}*"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
