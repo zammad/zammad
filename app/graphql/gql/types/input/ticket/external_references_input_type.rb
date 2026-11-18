@@ -18,5 +18,10 @@ module Gql::Types::Input::Ticket
              [Integer],
              required:    false,
              description: 'Object ids for the Idoit integration'
+
+    argument :idoit_up,
+             [String],
+             required:    false,
+             description: 'Object ids for the i-doit up integration'
   end
 end

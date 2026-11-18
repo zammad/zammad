@@ -17308,7 +17308,7 @@ msgid "Shared draft"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:89
-#: app/services/service/ticket/create.rb:231
+#: app/services/service/ticket/create.rb:236
 #: app/services/service/ticket/update.rb:86
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
@@ -19314,6 +19314,14 @@ msgstr ""
 
 #: lib/idoit_up.rb:180
 msgid "The i-doit up integration requires a user with an email address."
+msgstr ""
+
+#: app/graphql/gql/mutations/ticket/external_references/idoit_up_object_add.rb:30
+msgid "The i-doit up object could not be found."
+msgstr ""
+
+#: app/graphql/gql/mutations/ticket/external_references/idoit_up_object_add.rb:24
+msgid "The i-doit up object is already present on the ticket."
 msgstr ""
 
 #: db/seeds/settings.rb:2394
@@ -24728,6 +24736,14 @@ msgstr ""
 
 #: db/seeds/settings.rb:5411
 msgid "i-doit up integration"
+msgstr ""
+
+#: app/graphql/gql/mutations/ticket/external_references/idoit_up_object_add.rb:12
+#: app/graphql/gql/mutations/ticket/external_references/idoit_up_object_remove.rb:12
+#: app/graphql/gql/queries/autocomplete_search/idoit_up_object_types.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_up_object_list.rb:13
+#: app/graphql/gql/queries/ticket/external_references/idoit_up_object_search.rb:15
+msgid "i-doit up integration is not enabled"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:161

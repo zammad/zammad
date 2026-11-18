@@ -333,9 +333,10 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
       before do
         ticket_data[:external_references] = {
-          gitlab: [gitlab_link],
-          github: [github_link],
-          idoit:  [42],
+          gitlab:   [gitlab_link],
+          github:   [github_link],
+          idoit:    [42],
+          idoit_up: ['00000000Test0042'],
         }
       end
 
@@ -372,6 +373,16 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
         it 'adds idoit object ids' do
           expect(service_result.preferences).to eq({ 'idoit' => { 'object_ids' => [42] } })
+        end
+      end
+
+      context 'when i-doit up is enabled' do
+        before do
+          Setting.set('idoit_up_integration', true)
+        end
+
+        it 'adds i-doit up object ids' do
+          expect(service_result.preferences).to eq({ 'idoit_up' => { 'object_ids' => ['00000000Test0042'] } })
         end
       end
     end

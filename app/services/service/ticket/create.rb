@@ -180,13 +180,17 @@ class Service::Ticket::Create < Service::Base
       ticket_data[:preferences][key] = { issue_links: input.map(&:to_s) }
     end
 
-    # idoit
-    idoit_object_ids = external_references[:idoit]
+    move_object_ids_to_preferences(ticket_data, external_references, :idoit)
+    move_object_ids_to_preferences(ticket_data, external_references, :idoit_up)
+  end
 
-    return if idoit_object_ids.blank? || !Setting.get('idoit_integration')
+  def move_object_ids_to_preferences(ticket_data, external_references, key)
+    object_ids = external_references[key]
+
+    return if object_ids.blank? || !Setting.get("#{key}_integration")
 
     ticket_data[:preferences] ||= {}
-    ticket_data[:preferences][:idoit] = { object_ids: idoit_object_ids }
+    ticket_data[:preferences][key] = { object_ids: object_ids }
   end
 
   def customer?(group_id)

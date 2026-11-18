@@ -1,0 +1,42 @@
+# Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
+
+module Gql::Queries
+  class AutocompleteSearch::IdoitUpObjectTypes < BaseQuery
+
+    description 'Search for i-doit up object types'
+
+    argument :input, Gql::Types::Input::AutocompleteSearch::InputType, required: true, description: 'The input object for the autocomplete search'
+
+    type [Gql::Types::AutocompleteSearch::EntryType], null: false
+
+    requires_permission 'ticket.agent'
+    requires_enabled_setting 'idoit_up_integration', error_message: __('i-doit up integration is not enabled')
+
+    def resolve(input:)
+      filtered_results(input).first(input.limit || 10)&.map do |type|
+        { value: type['id'], label: type['title'] }
+      end
+    end
+
+    private
+
+    def api_call
+      IdoitUp.query('cmdb.object_types', user: context.current_user)['result'] || []
+    end
+
+    def filtered_results(input)
+      filter = normalize_query(input.query)
+      results = api_call
+
+      return results if filter.blank?
+
+      results.select { |result| result['title'].downcase.include?(filter) }
+    end
+
+    def normalize_query(query)
+      return '' if query == '*'
+
+      query.downcase.delete_prefix('*').delete_suffix('*')
+    end
+  end
+end
