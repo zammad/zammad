@@ -263,6 +263,7 @@ AAAFoAAAAAAAAAkAAAAAEAAACQAAAAAQADk=" })
   describe '.facility_to_permission' do
     it 'returns correct permission for known facility' do
       expect(described_class.facility_to_permission('GitHub')).to eq('admin.integration')
+      expect(described_class.facility_to_permission('idoit_up')).to eq('admin.integration')
       expect(described_class.facility_to_permission('webhook')).to eq('admin.webhook')
       expect(described_class.facility_to_permission('cti')).to eq('admin.integration')
       expect(described_class.facility_to_permission('DeepL')).to eq('admin.integration')

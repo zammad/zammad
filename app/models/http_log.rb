@@ -96,6 +96,7 @@ optional you can put the max oldest chat entries as argument
       'GitHub'             => 'admin.integration',
       'GitLab'             => 'admin.integration',
       'idoit'              => 'admin.integration',
+      'idoit_up'           => 'admin.integration',
       'ldap'               => 'admin.integration',
       'LibreTranslate'     => 'admin.integration',
       'MicrosoftGraph'     => 'admin.channel_microsoft_graph',

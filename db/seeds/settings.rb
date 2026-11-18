@@ -5409,6 +5409,46 @@ Setting.create_if_not_exists(
   frontend:    false,
 )
 Setting.create_if_not_exists(
+  title:       __('i-doit up integration'),
+  name:        'idoit_up_integration',
+  area:        'Integration::Switch',
+  description: __('Defines if the i-doit up integration is enabled or not.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'idoit_up_integration',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       false,
+  preferences: {
+    prio:           1,
+    authentication: true,
+    permission:     ['admin.integration'],
+  },
+  frontend:    true
+)
+Setting.create_if_not_exists(
+  title:       __('i-doit up config'),
+  name:        'idoit_up_config',
+  area:        'Integration::IdoitUp',
+  description: __('Defines the i-doit up config.'),
+  options:     {},
+  state:       {},
+  preferences: {
+    prio:       2,
+    permission: ['admin.integration'],
+  },
+  frontend:    false,
+)
+Setting.create_if_not_exists(
   title:       __('GitLab integration'),
   name:        'gitlab_integration',
   area:        'Integration::Switch',

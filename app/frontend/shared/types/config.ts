@@ -57,6 +57,7 @@ export interface ConfigList {
   gitlab_integration?: boolean | null
   http_type?: 'https' | 'http' | null
   idoit_integration?: boolean | null
+  idoit_up_integration?: boolean | null
   import_backend: string
   import_mode?: boolean | null
   kb_active: boolean
