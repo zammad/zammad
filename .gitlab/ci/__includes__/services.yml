@@ -8,7 +8,7 @@
     #   asserts this at startup (spec/support/capybara/playwright_driver.rb),
     #   so a gem bump fails fast here instead of at the server's version
     #   handshake.
-    PLAYWRIGHT_VERSION: '1.64.1'
+    PLAYWRIGHT_VERSION: '1.65.1'
 
 .variables_playwright_firefox:
   extends: .variables_playwright
