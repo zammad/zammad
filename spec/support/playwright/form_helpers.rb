@@ -119,10 +119,12 @@ module PlaywrightNative
         menu = page.locator("##{combobox.get_attribute('aria-controls')}").get_by_role('menu')
         expect(menu).to be_visible
         wait_for_menu_to_open(menu)
+        multiple = menu.get_by_role('listbox').get_attribute('aria-multiselectable') == 'true'
 
         yield combobox, menu
 
-        page.keyboard.press('Escape') if menu.visible?
+        # A single choice closes the menu. Escape while it closes would close a flyout around it.
+        page.keyboard.press('Escape') if multiple
         expect(menu).to have_count(0)
       end
     end

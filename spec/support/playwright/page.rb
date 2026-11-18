@@ -25,20 +25,38 @@ module PlaywrightNative
 
     attr_reader :browser_context
 
-    SCROLL_OFFSET = <<~JS.freeze
+    SCROLL_AREA = <<~JS.freeze
       (element) => {
         for (let area = element.parentElement; area; area = area.parentElement) {
           const { overflowY } = getComputedStyle(area)
-          if (['auto', 'scroll'].includes(overflowY) && area.scrollHeight > area.clientHeight) return area.scrollTop
+          if (['auto', 'scroll'].includes(overflowY) && area.scrollHeight > area.clientHeight) return area
         }
 
-        return document.scrollingElement.scrollTop
+        return document.scrollingElement
       }
     JS
+
+    SCROLL_OFFSET = "(element) => (#{SCROLL_AREA})(element).scrollTop".freeze
 
     # How far the area around the element is scrolled, e.g. the articles of a ticket.
     def scroll_offset(element)
       element.evaluate(SCROLL_OFFSET)
+    end
+
+    # The wheel does not wait for the scrolling. Waits until the area around the element moved, or
+    #   cannot move further that way. The mouse has to be over the area.
+    def scroll_with_wheel(element, delta_y)
+      offset = scroll_offset(element)
+      page.mouse.wheel(0, delta_y)
+
+      page.wait_for_function(<<~JS, arg: [element.element_handle, offset, delta_y])
+        ([element, offset, deltaY]) => {
+          const area = (#{SCROLL_AREA})(element)
+          const end = area.scrollHeight - area.clientHeight
+
+          return deltaY > 0 ? area.scrollTop > offset || area.scrollTop >= end - 1 : area.scrollTop < offset || area.scrollTop <= 0
+        }
+      JS
     end
 
     def wait_for_scroll_offset(element, offset)

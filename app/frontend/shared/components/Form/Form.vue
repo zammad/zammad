@@ -740,6 +740,13 @@ const updateSchemaDataField = (
   }
 }
 
+// A changed value used the marker up in its commit already. FormKit does not commit an unchanged
+//   value, so the marker would otherwise fall on the next commit, e.g. one with the user's typing.
+const inputFormUpdaterValue = (node: FormKitNode, value: FormFieldValue) => {
+  node.input(value, false)
+  node.props.formUpdaterValueChange = false
+}
+
 // We have some flags which are used for some detection related to some additional logic.
 // - formUpdaterValueChange: This flag is set when the value is changed by the form updater to avoid re-trigger of
 // the form updater (this is needed because "updaterChangedFields" can already be reseted again, but value changes can be delayed).
@@ -852,9 +859,9 @@ const updateChangedFields = (
           // from node.input() will automatically trigger dirty re-evaluation.
           // The plugin already captured _init synchronously during field creation,
           // before settled resolves, so the baseline is correct.
-          deferredInputs.push(node.settled.then(() => node.input(value, false)))
-        } else {
-          node?.input(value, false)
+          deferredInputs.push(node.settled.then(() => inputFormUpdaterValue(node, value)))
+        } else if (node) {
+          inputFormUpdaterValue(node, value)
         }
       })
     }
@@ -1160,7 +1167,8 @@ const buildStaticSchema = () => {
         plugins,
         validationMessages: field.validationMessages,
         validationRules: field.validationRules,
-        triggerFormUpdater: field.triggerFormUpdater ?? !!props.formUpdaterId,
+        triggerFormUpdater:
+          field.triggerFormUpdater ?? (!!props.formUpdaterId && !props.formUpdaterInitialOnly),
       },
     }
   }

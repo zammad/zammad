@@ -1625,6 +1625,9 @@ describe('Form.vue - Form Updater - reacts not on updates when it is in initial 
       expect(wrapper.getByLabelText(fieldLabel)).toBeInTheDocument()
     })
 
+    // System specs wait for an answer after a change of a field marked like this.
+    expect(wrapper.container.querySelector('[data-triggers-form-updater]')).toBeNull()
+
     await selectValue(wrapper, 'Type', 'Incident')
 
     await waitUntil(() => mockFormUpdaterApi.calls.resolve === 1)

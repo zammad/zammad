@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_view, authenticated_as: :agent1, type: :system do
+RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_view, authenticated_as: :agent1, type: :playwright do
   let(:agent1)    { create(:agent, groups: [group]) }
   let(:agent2)    { create(:agent, groups: [group]) }
   let(:signature) { create(:signature) }
@@ -12,22 +12,12 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
   let(:first_cite)  { 'First selectable customer text to cite.' }
   let(:second_cite) { 'Second selectable customer text to cite.' }
 
-  let(:article_body) do
-    [
-      "<p>#{first_cite}</p>",
-      "<p>#{second_cite}</p>",
-    ].join
-  end
-
   let(:article) do
     create(:ticket_article, :inbound_email,
-           ticket: ticket, body: article_body, content_type: 'text/html', from: customer.email)
+           ticket: ticket, body: "<p>#{first_cite}</p><p>#{second_cite}</p>", content_type: 'text/html', from: customer.email)
   end
 
   let(:ticket) { create(:ticket, group:, customer:, title: 'Editor scenario test') }
-
-  let(:support_type)    { create(:ticket_time_accounting_type, name: 'Support') }
-  let(:consulting_type) { create(:ticket_time_accounting_type, name: 'Consulting') }
 
   let(:text_module) do
     create(:text_module,
@@ -36,474 +26,210 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
            content:  'Hello #{ticket.customer.firstname},') # rubocop:disable Lint/InterpolationCheck
   end
 
+  let(:toolbar) { field('Text').get_by_role('toolbar') }
+  let(:table)   { editor('Text').get_by_role('table') }
+
   before do
     Setting.set('time_accounting', true)
     Setting.set('time_accounting_types', true)
     Setting.set('time_accounting_unit', 'minute')
 
-    support_type
-    consulting_type
+    create(:ticket_time_accounting_type, name: 'Support')
+    create(:ticket_time_accounting_type, name: 'Consulting')
     text_module
     agent2
     article
 
-    visit "/tickets/#{ticket.id}"
-    wait_for_form_to_settle("form-ticket-edit-#{ticket.id}")
+    open_desktop_ticket(ticket)
   end
 
-  def start_reply_with_cite
-    cite_article_text(first_cite)
+  def reply
+    ticket_article(first_cite).get_by_role('button', name: 'Reply', exact: true).click
+  end
 
-    # The signature is inserted asynchronously after the reply form opens -
-    # typing before it landed can swallow the keystrokes.
+  # A triple click selects the paragraph, the reply quotes the selection.
+  def reply_with_quote(text)
+    ticket_article(first_cite).get_by_text(text, exact: true).click(clickCount: 3)
+    reply
+
+    expect(editor('Text').get_by_role('blockquote').filter(hasText: text)).to be_visible
+  end
+
+  # The signature is added after the reply form opens and moves the cursor, typing before may get lost.
+  def start_reply_with_quote
+    reply_with_quote(first_cite)
     wait_for_test_flag('editor.signatureAdd')
-    editor = find_editor('Text')
-    wait_for_editor_ready(editor)
-    editor_focus_flag = editor_test_flag(editor, 'focused')
-    wait_for_test_flag(editor_focus_flag)
 
-    editor.input_element.send_keys(' First reply text.')
+    expect(editor('Text')).to be_focused
+    type_in_editor('Text', ' First reply text.')
+  end
 
-    editor_focus_flag
+  # ProseMirror learns of a cursor moved by keys only asynchronously, and not at all once a toolbar
+  #   button took the focus. A click right of the text puts the cursor at its end right away.
+  def click_end_of(block)
+    box = block.bounding_box
+    block.click(position: { x: box['width'] - 1, y: box['height'] / 2 })
+  end
+
+  # A toolbar button takes the focus, and the editor gets it back one animation frame later.
+  def expect_editor_focused
+    expect(editor('Text')).to be_focused
+  end
+
+  def add_heading(level)
+    toolbar.get_by_role('button', name: 'Add heading', exact: true).click
+    page.get_by_role('region', name: 'Add heading').get_by_role('button', name: level, exact: true).click
+
+    expect_editor_focused
+  end
+
+  def insert_text_module
+    toolbar.get_by_role('button', name: 'Insert text from text module', exact: true).click
+    page.get_by_role('listbox', name: 'Text modules').get_by_role('option', name: text_module.name).click
+
+    expect(editor('Text')).to contain_text("Hello #{customer.firstname},")
+  end
+
+  # The reply form is too narrow for the whole toolbar.
+  def insert_table
+    toolbar.get_by_role('button', name: 'Overflow menu', exact: true).click
+    page.get_by_role('menuitem', name: 'Insert table').click
+
+    expect(table).to be_visible
+  end
+
+  def choose_table_option(option)
+    page.get_by_role('button', name: 'Table options', exact: true).click
+    page.get_by_role('menuitem', name: option).click
+  end
+
+  # The toolbar sticks below the ticket header, it has to stay in view and uncovered while the
+  #   draft scrolls.
+  def expect_toolbar_reachable
+    page.wait_for_function(<<~JS, arg: toolbar.element_handle)
+      (toolbar) => {
+        const { top, bottom, left, width } = toolbar.getBoundingClientRect()
+        const reachable = (y) => toolbar.contains(document.elementFromPoint(left + width / 2, y))
+
+        return top >= 0 && bottom <= window.innerHeight && reachable(top + 1) && reachable(bottom - 1)
+      }
+    JS
+  rescue Playwright::TimeoutError
+    raise 'The editor toolbar is out of view or covered'
   end
 
   it 'keeps the editor toolbar reachable while scrolling the draft' do
-    start_reply_with_cite
+    start_reply_with_quote
 
-    expect_toolbar_visible_while_scrolling
+    type_in_editor('Text', *(1..8).flat_map { |line| [:enter, "Draft filler line #{line}."] })
+
+    editor('Text').hover
+
+    scroll_with_wheel(editor('Text'), 5000)
+    expect_toolbar_reachable
+
+    scroll_with_wheel(editor('Text'), -150)
+    expect_toolbar_reachable
+
+    scroll_with_wheel(editor('Text'), 5000)
+    expect_toolbar_reachable
   end
 
-  it 'formats a cited reply with a text module, headings and a table' do
-    start_reply_with_cite
+  it 'formats a quoted reply with a text module, headings and a table' do
+    start_reply_with_quote
 
-    cite_article_text(second_cite)
-    find_editor('Text').input_element.send_keys(' Second reply text.')
+    reply_with_quote(second_cite)
+    expect_editor_focused
+    type_in_editor('Text', ' Second reply text.')
 
-    insert_text_module_at_top
+    # The second quote went to the top, above an empty paragraph.
+    editor('Text').get_by_role('paragraph').first.click
+    insert_text_module
+    add_heading('Heading 1')
 
-    apply_heading_to_current_block('Heading 1')
+    click_end_of(editor('Text').get_by_role('heading', level: 1))
+    type_in_editor('Text', :enter)
+    add_heading('Heading 2')
+    type_in_editor('Text', 'Customer wrote')
 
-    add_h2_below_top_heading('Customer wrote')
+    click_end_of(editor('Text').get_by_role('paragraph').filter(hasText: 'First reply text.'))
+    type_in_editor('Text', :enter)
+    add_heading('Heading 2')
+    type_in_editor('Text', 'Customer continued')
 
-    add_h2_before_second_cite('Customer continued')
+    click_end_of(editor('Text').get_by_role('paragraph').filter(hasText: 'Second reply text.'))
+    insert_table
 
-    insert_table_at_end_of_draft
-    select_table_option('Toggle header row')
-    select_table_option('Toggle header column')
-    fill_first_table_cell('A1')
-    insert_row_between_existing_rows
+    # Inserting the table leaves the cursor in a new paragraph below it.
+    table.get_by_role('row').first.click
+    choose_table_option('Toggle header row')
+    choose_table_option('Toggle header column')
+
+    table.get_by_role('row').first.get_by_role('rowheader').click
+    type_in_editor('Text', 'A1')
+    choose_table_option('Insert row below')
+
+    expect(editor('Text').get_by_role('heading', level: 1)).to have_text("Hello #{customer.firstname},")
+    expect(editor('Text').get_by_role('heading', level: 2)).to have_text(['Customer wrote', 'Customer continued'])
+    expect(table.get_by_role('row')).to have_count(4)
+    expect(table.get_by_role('row').first.get_by_role('rowheader')).to have_text('A1')
+    expect(table.get_by_role('columnheader')).to have_count(0)
   end
 
   it 'submits a reply with tag and accounted time, then mentions an agent in an internal note', performs_jobs: true do
-    editor_focus_flag = start_reply_with_cite
+    start_reply_with_quote
 
-    add_tag('editor-scenario')
+    content_sidebar.get_by_role('button', name: 'Add tag', exact: true).click
+    search_for_option('Add tag', 'editor-scenario') { page.keyboard.press('Enter') }
 
-    click_on 'Update'
+    expect(notification('Ticket tag added successfully')).to be_visible
+    expect(ticket.reload.tag_list).to include('editor-scenario')
 
-    account_time(type: 'Support', minutes: '15')
+    page.get_by_role('button', name: 'Update', exact: true).click
 
-    add_internal_note_with_mention(agent2, editor_focus_flag:)
+    time_accounting = flyout('Time accounting')
+    wait_for_form_to_settle('form-ticket-time-accounting')
+    select_option('Activity type', 'Support', within: time_accounting)
+    fill_field('Accounted time', '15', within: time_accounting)
+    time_accounting.get_by_role('button', name: 'Account time', exact: true).click
 
+    wait_until('Reply not created') { ticket.articles.reload.count == 2 }
+    expect(ticket.articles.last.ticket_time_accounting).to have_attributes(time_unit: 15)
+
+    add_internal_note_button.click
+    mention_in_editor('Text', agent2)
+    page.get_by_role('button', name: 'Update', exact: true).click
+
+    wait_for_form_to_settle('form-ticket-time-accounting')
+    flyout('Time accounting').get_by_role('button', name: 'Skip', exact: true).click
+
+    wait_until('Internal note not created') { ticket.articles.reload.count == 3 }
     perform_enqueued_jobs
 
-    expect_subscriber_avatar(agent2)
+    expect(ticket.reload.mentions.map(&:user)).to include(agent2)
+    expect(content_sidebar.get_by_role('group', name: 'Subscribers').get_by_role('img', name: "Avatar (#{agent2.fullname})")).to be_visible
   end
 
-  # An inline quote gets the signature above it, a full quote below it (zammad#2319).
+  # An inline quote gets the signature below it, a full quote above it (zammad#2319).
   it 'adds the signature after an inline quote' do
-    cite_article_text(first_cite)
-
+    reply_with_quote(first_cite)
     wait_for_test_flag('editor.signatureAdd')
 
-    editor = find_editor('Text')
-    wait_for_editor_ready(editor)
-
-    within(reply_form) do
-      expect(page).to have_css('[data-signature="true"]', text: agent1.fullname)
-    end
-
-    expect(editor_content.index('data-signature')).to be > editor_content.index('<blockquote')
+    expect(editor('Text')).to have_text(%r{#{Regexp.escape(first_cite)}.*#{Regexp.escape(agent1.fullname)}})
   end
 
-  # In the default configuration (no full quote) a reply without a selection opens with an
-  # empty body, so the signature handling is the only thing that fills the editor.
+  # Without full quote, a reply without a selection opens with an empty body, so the signature
+  #   handling is the only thing that fills the editor.
   it 'adds the signature when replying without a selection and without full quote' do
-    within "#article-#{article.id}" do
-      find('button', exact_text: 'Reply', visible: :all).click
-    end
-
+    reply
     wait_for_test_flag('editor.signatureAdd')
 
-    editor = find_editor('Text')
-    wait_for_editor_ready(editor)
+    expect(editor('Text')).to contain_text(agent1.fullname)
+    expect(editor('Text').get_by_role('blockquote')).to have_count(0)
 
-    within(reply_form) do
-      expect(page).to have_css('[data-signature="true"]', text: agent1.fullname)
-      expect(page).to have_no_css('blockquote')
-    end
+    expect_editor_focused
+    type_in_editor('Text', 'Reply above the signature.')
 
-    wait_for_test_flag(editor_test_flag(editor, 'focused'))
-    editor.input_element.send_keys('Reply above the signature.')
-
-    # The cursor has to sit above the signature, not inside or after it.
-    expect(reply_form).to have_css(
-      'p:first-of-type', text: 'Reply above the signature.'
-    )
-  end
-
-  # TipTap on macOS does not bind Cmd+Up / Cmd+Down to "start/end of
-  # document", so sending those shortcuts leaves the caret wherever the click
-  # landed. Drive ProseMirror's selection directly via the DOM Selection API.
-  def move_editor_cursor_to_edge(collapse_to_start)
-    page.execute_script(<<~JS)
-      var box = document.querySelector('#ticketArticleReplyForm [role="textbox"]');
-      if (!box) return;
-      box.focus();
-      var range = document.createRange();
-      range.selectNodeContents(box);
-      range.collapse(#{collapse_to_start});
-      var sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    JS
-  end
-
-  def move_editor_cursor_to_start
-    move_editor_cursor_to_edge(true)
-  end
-
-  def move_editor_cursor_to_end
-    move_editor_cursor_to_edge(false)
-  end
-
-  # The editor toolbar is sticky below the ticket header. With a draft long
-  # enough to scroll, the toolbar has to stay reachable - fully inside the
-  # viewport and below the header - while scrolling up/down in the draft.
-  def expect_toolbar_visible_while_scrolling
-    editor = find_editor('Text').input_element
-
-    # Make sure the draft includes some lines so it can be scrolled.
-    8.times { |i| editor.send_keys(:enter, "Draft filler line #{i + 1}.") }
-
-    scroll_area = %(document.querySelector('[data-test-id="ticket-detail-content-container"]'))
-
-    page.execute_script("#{scroll_area}.scrollTop = #{scroll_area}.scrollHeight")
-    expect_editor_toolbar_reachable
-
-    page.execute_script("#{scroll_area}.scrollTop -= 150")
-    expect_editor_toolbar_reachable
-
-    page.execute_script("#{scroll_area}.scrollTop = #{scroll_area}.scrollHeight")
-    expect_editor_toolbar_reachable
-  end
-
-  def expect_editor_toolbar_reachable
-    # Retry via wait.until, so transient layout states (e.g. the top bar
-    # swapping between full and clipped details on scroll) do not flake.
-    wait.until do
-      page.evaluate_script(<<~JS)
-        (function () {
-          var toolbar = document.querySelector('#ticketArticleReplyForm [role="toolbar"]');
-          if (!toolbar) return false;
-          var rect = toolbar.getBoundingClientRect();
-          var headerBottom = 0;
-          document.querySelectorAll('[data-test-id="ticket-detail-top-bar-clipped-details"], [data-test-id="ticket-detail-top-bar-full-details"]').forEach(function (header) {
-            var headerRect = header.getBoundingClientRect();
-            if (headerRect.height > 0) headerBottom = Math.max(headerBottom, headerRect.bottom);
-          });
-          return rect.height > 0 && rect.top >= headerBottom - 1 && rect.bottom <= window.innerHeight;
-        })()
-      JS
-    end
-  end
-
-  def cite_article_text(text)
-    expect(page).to have_css("#article-#{article.id} .inner-article-body p", text: text)
-
-    page.execute_script(<<~JS)
-      var root = document.querySelector('#article-#{article.id} .inner-article-body');
-      var paragraph = Array.from(root.querySelectorAll('p')).find(function (node) {
-        return node.textContent === #{text.to_json};
-      });
-      var range = document.createRange();
-      range.selectNodeContents(paragraph);
-      var selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-    JS
-
-    within "#article-#{article.id}" do
-      find('button', exact_text: 'Reply', visible: :all).click
-    end
-
-    expect(page).to have_css('blockquote', text: text)
-  end
-
-  def reply_form
-    find('#ticketArticleReplyForm')
-  end
-
-  def editor_content
-    page.evaluate_script(%(document.querySelector('#ticketArticleReplyForm [role="textbox"]').innerHTML))
-  end
-
-  # Click an editor toolbar action by its accessible label, falling back to the
-  # "Overflow menu" popover when the toolbar wraps and the action is not
-  # rendered directly. The popover items appear in the body, outside the form.
-  def click_editor_toolbar_action(label)
-    in_toolbar = false
-    within(reply_form) do
-      # An action that wrapped out of the visible toolbar row stays in the
-      # DOM, but is disabled (ActionButton.vue) and reachable only via the
-      # overflow menu. Detect direct availability via the enabled state:
-      # Playwright reports the clipped button as visible.
-      if has_button?(label, disabled: false, wait: 0.5)
-        in_toolbar = true
-        find_button(label, disabled: false).click
-      else
-        find('button[aria-label="Overflow menu"]').click
-      end
-    end
-    return if in_toolbar
-
-    find('[data-test-id="popover-menu-item"]', exact_text: label).click
-  end
-
-  def insert_text_module_at_top
-    move_editor_cursor_to_start
-
-    click_editor_toolbar_action('Insert text from text module')
-
-    within '[data-test-id="mention-text"]' do
-      find('li[role="option"]', text: text_module.name).click
-    end
-
-    within(reply_form) do
-      expect(page).to have_text("Hello #{customer.firstname},")
-    end
-  end
-
-  def apply_heading_to_current_block(level_label)
-    click_editor_toolbar_action('Add heading')
-
-    find('[data-test-id="popover-menu-item"]', exact_text: level_label).click
-
-    expected_tag = level_label == 'Heading 1' ? 'h1' : 'h2'
-    within(reply_form) do
-      expect(page).to have_css(expected_tag)
-    end
-  end
-
-  # Place cursor at end of the top heading line and press Enter to create a new
-  # block between the heading and the first cited blockquote, then format that
-  # new block as H2.
-  def add_h2_below_top_heading(text)
-    move_editor_cursor_to_start
-    editor = find_editor('Text').input_element
-    editor.send_keys(:end, :enter)
-
-    apply_heading_to_current_block('Heading 2')
-
-    editor.send_keys(text)
-  end
-
-  # Position the caret at the end of the "First reply text." paragraph (the
-  # block immediately above the second cited blockquote), press Enter to insert
-  # a new block between it and the second blockquote, then format as H2.
-  def add_h2_before_second_cite(text)
-    editor = find_editor('Text').input_element
-    first_reply_paragraph = find('#ticketArticleReplyForm [role="textbox"] p', exact_text: 'First reply text.')
-
-    page.execute_script(<<~JS, first_reply_paragraph.native)
-      var paragraph = arguments[0];
-      var range = document.createRange();
-      range.selectNodeContents(paragraph);
-      range.collapse(false);
-      var selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-    JS
-
-    editor.send_keys(:enter)
-
-    apply_heading_to_current_block('Heading 2')
-
-    editor.send_keys(text)
-  end
-
-  def insert_table_at_end_of_draft
-    move_editor_cursor_to_end
-
-    click_editor_toolbar_action('Insert table')
-
-    within(reply_form) do
-      expect(page).to have_table
-      # The Insert table action chains an empty <p> at the end of the document
-      # which leaves the caret outside the table. Click into the first cell so
-      # the contextual "Table options" button becomes available.
-      first('table tr:first-child td, table tr:first-child th').click
-    end
-  end
-
-  def select_table_option(label)
-    # The "Table options" button is a separate floating control (absolutely
-    # positioned next to the table) rather than a toolbar action.
-    find('button[aria-label="Table options"]').click
-
-    find('[data-test-id="popover-menu-item"]', exact_text: label).click
-  end
-
-  def fill_first_table_cell(content)
-    within(reply_form) do
-      cell = first('table tr:first-child td, table tr:first-child th')
-      cell.click
-      cell.send_keys(content)
-    end
-  end
-
-  def insert_row_between_existing_rows
-    within(reply_form) do
-      # Cursor in a cell of the first row → "Insert row below" creates a row
-      # between the first and second existing rows.
-      first('table tr:first-child td, table tr:first-child th').click
-    end
-
-    select_table_option('Insert row below')
-
-    within(reply_form) do
-      expect(page).to have_css('table tr', count: 4)
-    end
-  end
-
-  def add_tag(tag)
-    click_on 'Add tag'
-
-    find_autocomplete('Add tag').open.input_element.fill_in(with: tag).send_keys(:tab)
-
-    wait_for_gql('shared/entities/tags/graphql/mutations/assignment/add.graphql', number: 1)
-
-    expect(page).to have_text('Ticket tag added successfully')
-    expect(ticket.reload.tag_list).to include(tag)
-  end
-
-  def account_time(type:, minutes:)
-    expect(page).to have_css('#flyout-ticket-time-accounting', text: 'Time accounting')
-
-    # Wait for the flyout form to fully settle before interacting - its
-    # initial form updater response rewrites the activity type select
-    # (options), which closes an already-opened dropdown menu.
-    wait_for_form_to_settle('form-ticket-time-accounting')
-
-    # find_select must run unscoped because its dropdown menu is teleported to
-    # the document body. A `within '#flyout-...'` would scope the menu lookup
-    # to the aside and the option click would never find it.
-    find_select('Activity type').select_option(type)
-    find_input('Accounted time').type(minutes)
-
-    within '#flyout-ticket-time-accounting' do
-      click_on 'Account time'
-    end
-
-    # Wait for the second ticketUpdate mutation — the first one failed because
-    # time accounting was missing, the second one (after the flyout) is the
-    # one that actually creates the article. Waiting on this signals that the
-    # form's reset/close handler has run.
-    wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql', number: 2)
-
-    expect(page).to have_text('Ticket updated successfully.')
-
-    last_article = ticket.reload.articles.last
-    expect(last_article.ticket_time_accounting).to be_present
-    expect(last_article.ticket_time_accounting.time_unit.to_i).to eq(minutes.to_i)
-  end
-
-  def add_internal_note_with_mention(agent, editor_focus_flag:)
-    # Wait for the previously-sent reply article to settle into the list.
-    expect(page).to have_css("#article-#{ticket.reload.articles.last.id}")
-
-    # The action panel button renders only after the reply form has fully
-    # torn down (form and panel are mutually-exclusive branches in
-    # ArticleReply.vue, gated on newArticlePresent), and the whole block is
-    # additionally v-show-gated on the article list loading state. Waiting
-    # for the button itself covers all of that; the teardown can outlast the
-    # default Capybara wait time.
-    expect(page).to have_button('Add internal note', wait: 30)
-
-    click_button_when_centered('Add internal note')
-    wait_for_test_flag(editor_focus_flag)
-
-    # Wait for the freshly remounted reply form to be ready before
-    # interacting with the editor. The Mention user button is part of the
-    # note-mode toolbar, and [role="textbox"] is the TipTap editor's input —
-    # both render once the form has finished mounting with the note schema.
-    # Use page-level matchers so they re-resolve the form on each retry —
-    # the form was just remounted, so a previously-held reply_form element
-    # handle from before the submission would be stale.
-    expect(page).to have_css('#ticketArticleReplyForm button[aria-label="Mention user"]')
-    expect(page).to have_css('#ticketArticleReplyForm [role="textbox"]')
-
-    # Focus the editor and type activator + query in one call, so the
-    # mention plugin (200ms debounced) sees a non-empty query at the
-    # debounce boundary.
-    mention_query = "@@#{agent.firstname}"
-    suggestion = '[data-test-id="mention-user"] li[role="option"]'
-
-    editor = find_editor('Text').input_element
-    editor.click
-    editor.send_keys(mention_query)
-
-    expect(page).to have_css(suggestion, text: agent.fullname)
-
-    find(suggestion, text: agent.fullname).click
-
-    expect(page).to have_css('#ticketArticleReplyForm [data-mention-user-id]', text: agent.fullname)
-
-    click_on 'Update'
-
-    # The internal note submission also opens the Time accounting flyout
-    # (because time_accounting is enabled). Skip it.
-    expect(page).to have_css('#flyout-ticket-time-accounting', text: 'Time accounting')
-
-    # Wait for the flyout form to fully settle before interacting - its
-    # initial form updater response re-renders the form (see account_time
-    # above), which can otherwise pull the Skip button out from under a
-    # click that lands mid-render.
-    wait_for_form_to_settle('form-ticket-time-accounting')
-
-    within '#flyout-ticket-time-accounting' do
-      click_on 'Skip'
-    end
-
-    expect(page).to have_text('Ticket updated successfully.')
-  end
-
-  def click_button_when_centered(label)
-    button = find('button', text: label, exact_text: true)
-
-    # scroll_to needs the plain Capybara element - a bare top-level find
-    # here goes through both CapybaraCustomExtensions#find and the
-    # Capybara::DSL#find it calls super into (which re-resolves the also
-    # overridden `page`), so the result is wrapped twice. #element only
-    # peels one layer, still leaving a delegator that Capybara does not
-    # recognize as an element (the Playwright driver raises when
-    # serializing it as a script argument). #to_capybara_node unwraps any
-    # number of delegator layers.
-    page.scroll_to(button.to_capybara_node, align: :center)
-    wait.until { !button.obscured? }
-
-    button.click
-  end
-
-  def expect_subscriber_avatar(agent)
-    section = find('#ticketSidebar', text: 'Subscribers')
-    button = section.first('button')
-    section.click if button&.[]('aria-expanded') == 'false'
-
-    within '#ticketSidebar' do
-      expect(page).to have_css(%(span[aria-label="Avatar (#{agent.fullname})"]))
-    end
-
-    expect(ticket.reload.mentions.map(&:user)).to include(agent)
+    expect(editor('Text').get_by_role('paragraph').first).to have_text('Reply above the signature.')
   end
 end
