@@ -5,7 +5,7 @@ module Ticket::Search
 
   include CanSearch
 
-  CUSTOMER_SEARCH_FIELDS         = %w[title number hook_number state.name customer.firstname customer.lastname organization.name].freeze
+  CUSTOMER_SEARCH_FIELDS         = %w[title number hook_number state.name group.name customer.firstname customer.lastname organization.name].freeze
   CUSTOMER_SEARCH_SYNTAX_FIELDS  = (CUSTOMER_SEARCH_FIELDS + %w[id]).freeze
   CUSTOMER_SEARCH_ARTICLE_FIELDS = %w[article.subject article.body article.from article.to article.cc article.attachment._name article.attachment.content].freeze
 

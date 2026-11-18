@@ -301,6 +301,69 @@ RSpec.describe Ticket::Search do
     end
   end
 
+  describe 'Ticket Search: search by group.name does not work for customers and misses own customer tickets for dual-role (Agent+Customer) users #6566', searchindex: true do
+    let(:group)          { create(:group, name: 'HR') }
+    let(:other_group)    { create(:group, name: 'Helpdesk') }
+    let(:customer)       { create(:customer) }
+    let(:agent)          { create(:agent, groups: [group, other_group]) }
+    let(:agent_customer) { create(:agent_and_customer, groups: [create(:group)]) }
+    let(:ticket)         { create(:ticket, group:, customer: ticket_customer, state: Ticket::State.find_by(name: 'open')) }
+    let(:other_ticket)   { create(:ticket, group: other_group, customer: ticket_customer) }
+
+    before do
+      ticket
+      other_ticket
+      searchindex_model_reload([Ticket])
+    end
+
+    def search(query)
+      Ticket.search(current_user: user, query: query)
+    end
+
+    shared_examples 'search for tickets by group' do
+      it 'finds the ticket by its group' do
+        expect(search('group.name:HR')).to eq([ticket])
+      end
+
+      it 'finds the ticket by its group without field syntax' do
+        expect(search('HR')).to eq([ticket])
+      end
+
+      it 'finds the ticket by its group and state' do
+        expect(search('group.name:HR AND state.name:open')).to eq([ticket])
+      end
+
+      it 'does not find the ticket by its group and another state' do
+        expect(search('group.name:HR AND state.name:closed')).to eq([])
+      end
+
+      it 'does not find the ticket by excluding its group' do
+        expect(search('!group.name:HR')).to eq([other_ticket])
+      end
+    end
+
+    context 'when user is customer' do
+      let(:user)            { customer }
+      let(:ticket_customer) { customer }
+
+      include_examples 'search for tickets by group'
+    end
+
+    context 'when user is agent' do
+      let(:user)            { agent }
+      let(:ticket_customer) { customer }
+
+      include_examples 'search for tickets by group'
+    end
+
+    context 'when user is agent and customer' do
+      let(:user)            { agent_customer }
+      let(:ticket_customer) { agent_customer }
+
+      include_examples 'search for tickets by group'
+    end
+  end
+
   describe 'internal article access' do
     let(:group)          { create(:group) }
     let(:other_group)    { create(:group) }
