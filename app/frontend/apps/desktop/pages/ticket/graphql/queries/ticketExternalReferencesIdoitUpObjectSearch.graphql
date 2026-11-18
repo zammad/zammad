@@ -1,0 +1,6 @@
+
+query ticketExternalReferencesIdoitUpObjectSearch ($idoitUpTypeId: String, $limit: Int!, $query: String, ){
+  ticketExternalReferencesIdoitUpObjectSearch(idoitUpTypeId: $idoitUpTypeId, limit: $limit, query: $query) {
+    ...IdoitUpObjectAttributes
+  }
+}

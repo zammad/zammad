@@ -1,6 +1,6 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends number | string">
 import { computed } from 'vue'
 
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
@@ -8,7 +8,7 @@ import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 interface Props {
-  id: number
+  id: T
   showId?: boolean
   title: string
   link: string
@@ -19,7 +19,7 @@ interface Props {
 const props = defineProps<Props>()
 
 defineEmits<{
-  remove: [{ id: number }]
+  remove: [{ id: T }]
 }>()
 
 const linkContent = computed(() => {

@@ -1,0 +1,238 @@
+<!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
+
+<script setup lang="ts">
+import { isEqual } from 'lodash-es'
+import { computed, ref, toRef, watch } from 'vue'
+
+import type { FormRef } from '#shared/components/Form/types.ts'
+import { MutationHandler, QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import { useQuickSearchInput } from '#desktop/components/Search/QuickSearch/useQuickSearchInput.ts'
+import type { TicketSidebarPlugin } from '#desktop/pages/ticket/components/TicketSidebar/plugins/types.ts'
+import TicketSidebarContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarContent.vue'
+import ExternalReferenceContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/ExternalReferenceContent.vue'
+import ExternalReferenceLink from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/ExternalReferenceLink.vue'
+import TicketSidebarIdoitUpContentSkeleton from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/TicketSidebarIdoitUpContentSkeleton.vue'
+import type { FormDataRecords } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/types.ts'
+import { useIdoitUpCacheHandlers } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/useIdoitUpCacheHandlers.ts'
+import { useIdoitUpFormHelpers } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/useIdoitUpFormHelpers.ts'
+import { useTicketExternalReferencesIdoitUpObjectAddMutation } from '#desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIdoitUpObjectAdd.api.ts'
+import { useTicketExternalReferencesIdoitUpObjectRemoveMutation } from '#desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIdoitUpObjectRemove.api.ts'
+import { useTicketExternalReferencesIdoitUpObjectListQuery } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIdoitUpObjectList.api.ts'
+import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
+
+interface Props {
+  sidebarPlugin: TicketSidebarPlugin
+  objectIds: string[]
+  screenType: TicketSidebarScreenType
+  isTicketEditable: boolean
+  ticketId?: string
+  form?: FormRef
+}
+const props = defineProps<Props>()
+
+const persistentStates = defineModel<ObjectLike>({ required: true })
+
+const config = toRef(useApplicationStore(), 'config')
+
+const { openQuickSearchWith } = useQuickSearchInput()
+
+const searchLinkedTickets = (idoitUpObjectId: string) =>
+  openQuickSearchWith(`preferences.idoit_up.object_ids:${idoitUpObjectId}`)
+
+const skipNextObjectUpdate = ref(false)
+
+const { open } = useFlyout({
+  name: 'idoit_up',
+  component: () => import('./IdoitUpFlyout.vue'),
+})
+
+const objectListQuery = new QueryHandler(
+  useTicketExternalReferencesIdoitUpObjectListQuery({
+    variables: () => ({
+      ticketId: props.ticketId,
+      idoitUpObjectIds: props.ticketId ? undefined : props.objectIds,
+    }),
+    enabled: () =>
+      props.screenType === TicketSidebarScreenType.TicketCreate
+        ? props.objectIds?.length > 0
+        : !!props.ticketId,
+    fetchPolicy:
+      props.screenType === TicketSidebarScreenType.TicketCreate
+        ? 'cache-first'
+        : 'cache-and-network',
+  }),
+  {
+    errorShowNotification: false,
+  },
+)
+
+const result = objectListQuery.result()
+
+const isLoading = objectListQuery.loadingWithoutCachedResult()
+
+const queryError = objectListQuery.operationError()
+
+const error = computed(() =>
+  queryError.value
+    ? __(`Error fetching information from i-doit up. Please contact your administrator.`)
+    : null,
+)
+
+const objectList = computed(() => {
+  return result.value?.ticketExternalReferencesIdoitUpObjectList || []
+})
+
+const { removeObjectListCacheUpdate, modifyObjectItemAddCache } = useIdoitUpCacheHandlers(
+  toRef(props, 'objectIds'),
+  toRef(props, 'ticketId'),
+)
+
+const { addObjectIdsToForm, removeObjectFromForm } = useIdoitUpFormHelpers(toRef(props, 'form'))
+
+const removeObjectMutation = new MutationHandler(
+  useTicketExternalReferencesIdoitUpObjectRemoveMutation(),
+)
+
+const removeObject = async ({ id }: { id: string }) => {
+  const revertCacheUpdate = removeObjectListCacheUpdate(id)
+
+  if (props.screenType === TicketSidebarScreenType.TicketCreate) return removeObjectFromForm(id)
+
+  return removeObjectMutation
+    .send({
+      idoitUpObjectId: id,
+      ticketId: props.ticketId!,
+    })
+    .catch(() => revertCacheUpdate)
+}
+
+const addObjectMutation = new MutationHandler(
+  useTicketExternalReferencesIdoitUpObjectAddMutation({
+    update: modifyObjectItemAddCache,
+  }),
+)
+
+const addObjects = async (formData: FormDataRecords) => {
+  skipNextObjectUpdate.value = true
+
+  return addObjectMutation
+    .send({
+      idoitUpObjectIds: formData.objectIds,
+      ticketId: props.ticketId,
+    })
+    .then((result) => {
+      if (props.screenType === TicketSidebarScreenType.TicketCreate)
+        addObjectIdsToForm(result?.ticketExternalReferencesIdoitUpObjectAdd?.idoitUpObjects)
+    })
+    .finally(() => {
+      skipNextObjectUpdate.value = false
+    })
+}
+
+const openFlyout = () =>
+  open({
+    objectIds: props.objectIds,
+    ticketId: props.ticketId,
+    onSubmit: addObjects,
+    icon: props.sidebarPlugin.icon,
+  })
+
+const actions = computed((): MenuItem[] =>
+  props.objectIds?.length && !error.value
+    ? [
+        {
+          key: 'link-idoit-up-object',
+          label: __('Link objects'),
+          show: () => props.isTicketEditable,
+          onClick: openFlyout,
+          icon: 'link-45deg',
+        },
+      ]
+    : [],
+)
+
+if (props.ticketId) {
+  watch(
+    () => props.objectIds,
+    (newValue) => {
+      if (
+        isEqual(
+          newValue,
+          objectList.value.map((obj) => obj.idoitUpObjectId),
+        ) ||
+        skipNextObjectUpdate.value
+      ) {
+        skipNextObjectUpdate.value = false
+        return
+      }
+
+      objectListQuery.refetch()
+    },
+  )
+}
+</script>
+
+<template>
+  <TicketSidebarContent
+    v-model="persistentStates.scrollPosition"
+    :title="sidebarPlugin.title"
+    :icon="sidebarPlugin.icon"
+    :actions="actions"
+  >
+    <CommonButton
+      v-if="!objectIds?.length"
+      size="medium"
+      variant="primary"
+      class="block ltr:w-full rtl:w-full"
+      @click="openFlyout"
+    >
+      {{ $t('Link objects') }}
+    </CommonButton>
+
+    <CommonLoader v-if="objectIds?.length" :loading="isLoading" :error="error">
+      <template #skeleton>
+        <TicketSidebarIdoitUpContentSkeleton />
+      </template>
+
+      <div class="space-y-6" tabindex="-1">
+        <div
+          v-for="object in objectList"
+          :key="object.idoitUpObjectId"
+          class="group space-y-2"
+          role="group"
+        >
+          <ExternalReferenceLink
+            :id="object.idoitUpObjectId"
+            :title="object.title"
+            :link="object.link!"
+            :is-editable="isTicketEditable"
+            :tooltip="$t('Unlink object')"
+            @remove="removeObject"
+          />
+
+          <ExternalReferenceContent v-if="config.es_enabled" :label="$t('ID')">
+            <CommonLink
+              v-tooltip.supportive="$t('Search tickets linked to this i-doit up object')"
+              link="#"
+              size="medium"
+              @click.prevent="searchLinkedTickets(object.idoitUpObjectId)"
+            >
+              {{ object.idoitUpObjectId }}
+            </CommonLink>
+          </ExternalReferenceContent>
+          <ExternalReferenceContent v-else :label="$t('ID')" :values="[object.idoitUpObjectId]" />
+
+          <ExternalReferenceContent :label="$t('Status')" :values="[object.status]" />
+          <ExternalReferenceContent :label="$t('Type')" :values="[object.type]" />
+        </div>
+      </div>
+    </CommonLoader>
+  </TicketSidebarContent>
+</template>

@@ -1198,6 +1198,8 @@ export type AiAssistantAnalyticsMetaFragment = { __typename: 'AIAnalyticsMetadat
 
 export type IdoitObjectAttributesFragment = { __typename: 'TicketExternalReferencesIdoitObject', idoitObjectId: number, link: string | null | undefined, title: string, type: string, status: string };
 
+export type IdoitUpObjectAttributesFragment = { __typename: 'TicketExternalReferencesIdoitUpObject', idoitUpObjectId: string, link: string | null | undefined, title: string, type: string, status: string };
+
 export type TicketAiAssistanceEnqueueKnowledgeBaseAnswerMutationVariables = Exact<{
   ticketId: string | number;
 }>;
@@ -1286,6 +1288,22 @@ export type TicketExternalReferencesIdoitObjectRemoveMutationVariables = Exact<{
 
 export type TicketExternalReferencesIdoitObjectRemoveMutation = { ticketExternalReferencesIdoitObjectRemove: { __typename: 'TicketExternalReferencesIdoitObjectRemovePayload', success: boolean | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
+export type TicketExternalReferencesIdoitUpObjectAddMutationVariables = Exact<{
+  idoitUpObjectIds: Array<string> | string;
+  ticketId?: string | number | null | undefined;
+}>;
+
+
+export type TicketExternalReferencesIdoitUpObjectAddMutation = { ticketExternalReferencesIdoitUpObjectAdd: { __typename: 'TicketExternalReferencesIdoitUpObjectAddPayload', idoitUpObjects: Array<{ __typename: 'TicketExternalReferencesIdoitUpObject', idoitUpObjectId: string, link: string | null | undefined, title: string, type: string, status: string }> | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
+export type TicketExternalReferencesIdoitUpObjectRemoveMutationVariables = Exact<{
+  ticketId: string | number;
+  idoitUpObjectId: string;
+}>;
+
+
+export type TicketExternalReferencesIdoitUpObjectRemoveMutation = { ticketExternalReferencesIdoitUpObjectRemove: { __typename: 'TicketExternalReferencesIdoitUpObjectRemovePayload', success: boolean | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+
 export type TicketExternalReferencesIssueTrackerItemAddMutationVariables = Exact<{
   issueTrackerLink: string;
   issueTrackerType: Types.EnumTicketExternalReferencesIssueTrackerType;
@@ -1310,6 +1328,13 @@ export type AutocompleteSearchIdoitObjectTypesQueryVariables = Exact<{
 
 
 export type AutocompleteSearchIdoitObjectTypesQuery = { autocompleteSearchIdoitObjectTypes: Array<{ __typename: 'AutocompleteSearchEntry', value: string, label: string }> };
+
+export type AutocompleteSearchIdoitUpObjectTypesQueryVariables = Exact<{
+  input: Types.AutocompleteSearchInput;
+}>;
+
+
+export type AutocompleteSearchIdoitUpObjectTypesQuery = { autocompleteSearchIdoitUpObjectTypes: Array<{ __typename: 'AutocompleteSearchEntry', value: string, label: string }> };
 
 export type ChecklistTemplatesQueryVariables = Exact<{
   onlyActive?: boolean | null | undefined;
@@ -1364,6 +1389,23 @@ export type TicketExternalReferencesIdoitObjectSearchQueryVariables = Exact<{
 
 
 export type TicketExternalReferencesIdoitObjectSearchQuery = { ticketExternalReferencesIdoitObjectSearch: Array<{ __typename: 'TicketExternalReferencesIdoitObject', idoitObjectId: number, link: string | null | undefined, title: string, type: string, status: string }> };
+
+export type TicketExternalReferencesIdoitUpObjectListQueryVariables = Exact<{
+  ticketId?: string | number | null | undefined;
+  idoitUpObjectIds?: Array<string> | string | null | undefined;
+}>;
+
+
+export type TicketExternalReferencesIdoitUpObjectListQuery = { ticketExternalReferencesIdoitUpObjectList: Array<{ __typename: 'TicketExternalReferencesIdoitUpObject', idoitUpObjectId: string, link: string | null | undefined, title: string, type: string, status: string }> };
+
+export type TicketExternalReferencesIdoitUpObjectSearchQueryVariables = Exact<{
+  idoitUpTypeId?: string | null | undefined;
+  limit: number;
+  query?: string | null | undefined;
+}>;
+
+
+export type TicketExternalReferencesIdoitUpObjectSearchQuery = { ticketExternalReferencesIdoitUpObjectSearch: Array<{ __typename: 'TicketExternalReferencesIdoitUpObject', idoitUpObjectId: string, link: string | null | undefined, title: string, type: string, status: string }> };
 
 export type TicketExternalReferencesIssueTrackerItemListQueryVariables = Exact<{
   issueTrackerType: Types.EnumTicketExternalReferencesIssueTrackerType;

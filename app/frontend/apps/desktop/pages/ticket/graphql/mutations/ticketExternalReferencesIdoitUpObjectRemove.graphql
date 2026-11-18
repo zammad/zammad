@@ -1,0 +1,8 @@
+mutation ticketExternalReferencesIdoitUpObjectRemove ($ticketId: ID!, $idoitUpObjectId: String!){
+  ticketExternalReferencesIdoitUpObjectRemove(ticketId: $ticketId, idoitUpObjectId: $idoitUpObjectId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

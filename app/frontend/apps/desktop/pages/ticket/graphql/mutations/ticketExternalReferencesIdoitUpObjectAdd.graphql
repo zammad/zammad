@@ -1,0 +1,10 @@
+mutation ticketExternalReferencesIdoitUpObjectAdd ($idoitUpObjectIds: [String!]!, $ticketId: ID) {
+    ticketExternalReferencesIdoitUpObjectAdd(idoitUpObjectIds: $idoitUpObjectIds, ticketId: $ticketId) {
+      idoitUpObjects {
+       ...IdoitUpObjectAttributes
+      }
+      errors {
+        ...errors
+      }
+    }
+}

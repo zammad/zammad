@@ -10,6 +10,7 @@ export default function register(config: InMemoryCacheConfig): InMemoryCacheConf
     'autocompleteSearchAgent',
     'autocompleteSearchGeneric',
     'autocompleteSearchIdoitObjectTypes',
+    'autocompleteSearchIdoitUpObjectTypes',
     'autocompleteSearchKnowledgeBaseAnswer',
     'autocompleteSearchKnowledgeBaseCategoryIcon',
     'autocompleteSearchObjectAttributeExternalDataSource',

@@ -1,0 +1,7 @@
+fragment IdoitUpObjectAttributes on TicketExternalReferencesIdoitUpObject {
+  idoitUpObjectId
+  link
+  title
+  type
+  status
+}

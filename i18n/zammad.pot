@@ -7915,6 +7915,10 @@ msgstr ""
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/IdoitUpFlyout.vue:60
+msgid "Error fetching i-doit up information. Please contact your administrator."
+msgstr ""
+
 #: lib/secure_mailing/smime/incoming.rb:110
 msgid "Error while verifying signature, please contact your administrator."
 msgstr ""
@@ -8338,6 +8342,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:121
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/IdoitUpFlyout.vue:121
 msgid "Filter"
 msgstr ""
 
@@ -9532,6 +9537,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
 #: app/assets/javascripts/app/views/integration/idoit_up_object_result.jst.eco:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:220
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/TicketSidebarIdoitUpContent.vue:220
 msgid "ID"
 msgstr ""
 
@@ -11034,6 +11040,8 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:166
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:152
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/IdoitUpFlyout.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/TicketSidebarIdoitUpContent.vue:152
 msgid "Link objects"
 msgstr ""
 
@@ -12324,6 +12332,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:180
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:20
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/IdoitUpFlyout/IdoitUpObjectList.vue:20
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:163
 #: db/seeds/object_manager_attributes.rb:1744
 #: public/assets/form/form.js:24
@@ -13031,6 +13040,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:161
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/IdoitUpFlyout/IdoitUpObjectList.vue:38
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:347
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue:57
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:318
@@ -13538,6 +13548,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:345
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/TicketSidebarIdoitUp.vue:54
 #: db/seeds/permissions.rb:293
 msgid "Objects"
 msgstr ""
@@ -16616,6 +16627,10 @@ msgstr ""
 msgid "Search tickets linked to this i-doit object"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/TicketSidebarIdoitUpContent.vue:222
+msgid "Search tickets linked to this i-doit up object"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/KnowledgeBaseSearchBar.vue:16
 msgid "Search within %s…"
 msgstr ""
@@ -16636,6 +16651,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:122
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/IdoitUpFlyout.vue:122
 #: app/frontend/apps/mobile/components/CommonInputSearch/CommonInputSearch.vue:27
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:63
 msgid "Search…"
@@ -18019,6 +18035,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:71
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:236
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/IdoitUpFlyout/IdoitUpObjectList.vue:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/TicketSidebarIdoitUpContent.vue:232
 msgid "Status"
 msgstr ""
 
@@ -22073,6 +22091,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:108
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:237
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/IdoitUpFlyout.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/TicketSidebarIdoitUpContent.vue:233
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr ""
@@ -22201,6 +22221,7 @@ msgid "Unlink knowledge base answer"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:216
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/TicketSidebarIdoitUpContent.vue:216
 msgid "Unlink object"
 msgstr ""
 
@@ -24727,6 +24748,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/idoit_up_object_selector.coffee:5
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit_up.coffee:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/idoit_up.ts:11
 msgid "i-doit up"
 msgstr ""
 
@@ -24744,6 +24766,14 @@ msgstr ""
 #: app/graphql/gql/queries/ticket/external_references/idoit_up_object_list.rb:13
 #: app/graphql/gql/queries/ticket/external_references/idoit_up_object_search.rb:15
 msgid "i-doit up integration is not enabled"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/IdoitUpFlyout/IdoitUpObjectList.vue:33
+msgid "i-doit up objects"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoitUp/IdoitUpFlyout.vue:161
+msgid "i-doit up: Link objects"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:161

@@ -1,0 +1,9 @@
+
+query ticketExternalReferencesIdoitUpObjectList ($ticketId: ID, $idoitUpObjectIds: [String!]) {
+  ticketExternalReferencesIdoitUpObjectList(input: {
+    ticketId: $ticketId,
+    idoitUpObjectIds: $idoitUpObjectIds
+  }) {
+    ...IdoitUpObjectAttributes
+  }
+}
