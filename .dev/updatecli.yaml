@@ -86,6 +86,17 @@ targets:
       file: contrib/packager.io/after.sh
       matchpattern: 'SYFT_SHA256=.*'
       replacepattern: 'SYFT_SHA256={{ source `syft-sha256` }}'
+  docker-syft-version:
+    name: docker-syft-version
+    kind: file
+    sourceid: syft
+    # {{ if .gitlab.enabled }}
+    scmid: zammad
+    # {{ end }}
+    spec:
+      file: Dockerfile
+      matchpattern: 'ARG SYFT_VERSION=.*'
+      replacepattern: 'ARG SYFT_VERSION={{ source `syft` }}'
 
 # {{ if .gitlab.enabled }}
 scms:

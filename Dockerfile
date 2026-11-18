@@ -3,6 +3,7 @@
 
 ARG RUBY_VERSION=4.0.10
 ARG NODE_VERSION=24
+ARG SYFT_VERSION=1.56.0
 
 FROM docker.io/library/ruby:$RUBY_VERSION-slim-trixie AS base
 
@@ -35,6 +36,9 @@ ENV RAILS_ENV="production" \
 FROM node:${NODE_VERSION}-trixie-slim AS node
 RUN npm -g install corepack && corepack enable pnpm && \
     rm /usr/local/bin/yarn /usr/local/bin/yarnpkg
+
+# Throw-away stage to get the syft binary for the SBOM
+FROM docker.io/anchore/syft:v${SYFT_VERSION} AS syft
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
@@ -110,17 +114,17 @@ RUN if compgen -G "packages/*/*.zpm" > /dev/null; then \
 RUN touch db/schema.rb && \
     ZAMMAD_SAFE_MODE=1 DATABASE_URL=postgresql://zammad:/zammad bundle exec rake assets:precompile
 
-# Image scans cannot see the JS dependencies, they only exist compiled into the assets. The SBOM
-#   generator of the image attestation picks up this file instead.
-RUN pnpm sbom --prod --lockfile-only --sbom-format cyclonedx --sbom-type application > pnpm-lock.cdx.json
+# The JS dependencies only exist compiled into the assets, the SBOM stage merges their SBOM.
+#   It is generated while node_modules still exists, which provides the licenses.
+RUN pnpm sbom --prod --sbom-format cyclonedx --sbom-type application > /tmp/pnpm-lock.cdx.json
 
 RUN script/build/cleanup.sh
 
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 
-# Final stage for app image
-FROM base
+# App image, the final stage only adds its SBOM
+FROM base AS app
 
 # Ensure latest patches are applied.
 RUN apt-get update -qq && \
@@ -175,3 +179,18 @@ ENTRYPOINT ["/opt/zammad/bin/docker-entrypoint"]
 
 # Set labels to help portainer.io admins to access rails console.
 LABEL io.portainer.commands.rails-console="bundle exec rails c"
+
+# Throw-away stage to scan the app image, so neither syft nor its input ship.
+FROM app AS sbom
+USER root
+RUN --mount=from=syft,source=/syft,target=/tmp/syft \
+    --mount=from=build,source=/tmp/pnpm-lock.cdx.json,target=/opt/zammad/pnpm-lock.cdx.json \
+    /tmp/syft scan dir:/ \
+      --profile installation \
+      --source-name zammad \
+      --source-version "$(cat VERSION)" \
+      --output cyclonedx-json=/sbom.cdx.json
+
+# Final stage
+FROM app
+COPY --from=sbom /sbom.cdx.json /opt/zammad/sbom.cdx.json
