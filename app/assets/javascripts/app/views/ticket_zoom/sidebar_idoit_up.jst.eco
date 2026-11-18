@@ -1,0 +1,6 @@
+<form class="js-search flex horizontal">
+  <div class="controls controls--select js-typeSelect"></div>
+  <input type="text" name="title" value="" autocomplete="off" placeholder="<%- @Ti('Search') %>" class="form-control js-searchField"/>
+</form>
+<div class="js-result"></div>
+<div class="js-objectList" style="margin-top: 12px;"></div>

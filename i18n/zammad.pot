@@ -1532,6 +1532,14 @@ msgstr ""
 msgid "Add your video server address here so it can be included in the Content Security Policy exceptions. Currently supported solutions are MediaCMS and PeerTube."
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/idoit_up.jst.eco:16
+msgid "Add-on URL"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/idoit_up.jst.eco:19
+msgid "Add-on secret"
+msgstr ""
+
 #: app/controllers/first_steps_controller.rb:105
 msgid "Additional Channels"
 msgstr ""
@@ -3126,6 +3134,7 @@ msgid "CC"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:112
+#: app/assets/javascripts/app/controllers/_integration/idoit_up.coffee:111
 msgid "CMDB to document complex relations of your network components."
 msgstr ""
 
@@ -3458,6 +3467,7 @@ msgid "Change Customer"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:17
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit_up.coffee:20
 msgid "Change Objects"
 msgstr ""
 
@@ -4393,6 +4403,7 @@ msgid "Content can only be rearranged while its sorting mode is manual."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:42
+#: app/assets/javascripts/app/controllers/idoit_up_object_selector.coffee:48
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:90
 msgid "Content could not be loaded."
 msgstr ""
@@ -9519,11 +9530,13 @@ msgid "How to use it"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
+#: app/assets/javascripts/app/views/integration/idoit_up_object_result.jst.eco:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:220
 msgid "ID"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:6
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit_up_objects.jst.eco:7
 msgid "ID:"
 msgstr ""
 
@@ -11138,6 +11151,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:104
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:76
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit_up.coffee:207
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:34
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:61
 msgid "Loading failed."
@@ -12285,6 +12299,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:7
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:10
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:9
+#: app/assets/javascripts/app/views/integration/idoit_up.jst.eco:11
+#: app/assets/javascripts/app/views/integration/idoit_up_object_result.jst.eco:9
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:19
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:19
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:11
@@ -12650,6 +12666,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:31
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:17
+#: app/assets/javascripts/app/views/integration/idoit_up_object_result.jst.eco:28
+#: app/assets/javascripts/app/views/integration/idoit_up_sidebar_result.jst.eco:14
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:54
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:56
 #: app/frontend/shared/form/i18n/locales.ts:65
@@ -12956,6 +12974,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/user.ts:8
 msgid "No members found"
+msgstr ""
+
+#: app/assets/javascripts/app/views/integration/idoit_up_sidebar_result.jst.eco:2
+msgid "No objects found"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/organization.ts:9
@@ -14204,6 +14226,11 @@ msgstr ""
 msgid "Packages Token"
 msgstr ""
 
+#: app/assets/javascripts/app/views/integration/idoit_up_object_result.jst.eco:27
+#: app/assets/javascripts/app/views/integration/idoit_up_sidebar_result.jst.eco:13
+msgid "Page"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/table_pager.jst.eco:3
 msgid "Page %s"
 msgstr ""
@@ -14814,6 +14841,8 @@ msgid "Preview shared draft"
 msgstr ""
 
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:11
+#: app/assets/javascripts/app/views/integration/idoit_up_object_result.jst.eco:26
+#: app/assets/javascripts/app/views/integration/idoit_up_sidebar_result.jst.eco:12
 #: app/frontend/shared/form/i18n/locales.ts:69
 msgid "Previous"
 msgstr ""
@@ -16132,6 +16161,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:54
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:18
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:24
+#: app/assets/javascripts/app/views/integration/idoit_up.jst.eco:22
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:31
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco:2
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:145
@@ -16189,6 +16219,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/github.jst.eco:21
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:24
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:30
+#: app/assets/javascripts/app/views/integration/idoit_up.jst.eco:28
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:47
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:152
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:142
@@ -16265,6 +16296,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
+#: app/assets/javascripts/app/controllers/_integration/idoit_up.coffee:92
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1237
 msgid "Saving failed."
 msgstr ""
@@ -16373,7 +16405,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:32
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:208
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
+#: app/assets/javascripts/app/views/integration/idoit_up_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit_up.jst.eco:3
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
 #: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:644
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
@@ -17233,6 +17267,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/github.jst.eco:2
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:2
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:2
+#: app/assets/javascripts/app/views/integration/idoit_up.jst.eco:3
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:15
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:12
 #: app/frontend/apps/desktop/pages/chat/components/ChatNoTopics.vue:38
@@ -17979,6 +18014,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:24
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
+#: app/assets/javascripts/app/views/integration/idoit_up_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:71
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
@@ -18000,6 +18036,7 @@ msgid "Status import"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:16
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit_up_objects.jst.eco:13
 msgid "Status:"
 msgstr ""
 
@@ -19435,6 +19472,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:342
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:149
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit_up.coffee:267
 #: app/assets/javascripts/app/controllers/user.coffee:244
 msgid "The object could not be updated."
 msgstr ""
@@ -20785,6 +20823,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:6
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:6
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:6
+#: app/assets/javascripts/app/controllers/_integration/idoit_up.coffee:6
 msgid "This service allows you to connect %s with %s."
 msgstr ""
 
@@ -21907,6 +21946,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:10
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:31
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:5
+#: app/assets/javascripts/app/views/integration/idoit_up.jst.eco:6
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:13
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:14
 #: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco:3
@@ -22006,6 +22046,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:240
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit_up.coffee:104
 #: app/assets/javascripts/app/controllers/translation.coffee:288
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
 #: app/assets/javascripts/app/models/ai_agent.coffee:7
@@ -22029,6 +22070,7 @@ msgid "Type"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:17
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit_up_objects.jst.eco:14
 msgid "Type:"
 msgstr ""
 
@@ -22897,6 +22939,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/github.jst.eco:8
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:8
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:11
+#: app/assets/javascripts/app/views/integration/idoit_up.jst.eco:12
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:20
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:20
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:109
@@ -24674,6 +24717,11 @@ msgstr ""
 msgid "i-doit integration is not enabled"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/idoit_up_object_selector.coffee:5
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit_up.coffee:16
+msgid "i-doit up"
+msgstr ""
+
 #: db/seeds/settings.rb:5438
 msgid "i-doit up config"
 msgstr ""
@@ -25172,7 +25220,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/customer_chat/chat_list.jst.eco:3
 #: app/assets/javascripts/app/views/customer_chat/user_list.jst.eco:3
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:3
+#: app/assets/javascripts/app/views/integration/idoit_up_object_result.jst.eco:3
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:27
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit_up_objects.jst.eco:2
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:7
 #: db/seeds/settings.rb:2455
 msgid "none"

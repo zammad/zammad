@@ -1,0 +1,16 @@
+<% if _.isEmpty(@items): %>
+  <div class="text-muted" style="margin-top: 12px;"><%- @T('No objects found') %></div>
+<% else: %>
+  <div class="js-dropdown" style="margin-top: 4px; max-height: 240px; overflow-y: auto; border: 1px solid rgba(0,0,0,0.1); border-radius: 3px;">
+    <% for item in @items: %>
+      <div class="js-object u-clickable" data-object-id="<%= item.id %>" title="<%= item.title %>" style="padding: 6px 8px;">
+        <%= item.title %> <span class="text-muted">[<%= item.type_title %>]</span>
+      </div>
+    <% end %>
+  </div>
+  <div class="flex horizontal" style="justify-content: space-between; align-items: center; margin-top: 8px;">
+    <button class="btn btn--small js-prevPage" <% if @currentPage <= 0: %>disabled<% end %>><%- @T('Previous') %></button>
+    <span class="text-muted"><%- @T('Page') %> <%= @currentPage + 1 %></span>
+    <button class="btn btn--small js-nextPage" <% if @items.length < @pageSize: %>disabled<% end %>><%- @T('Next') %></button>
+  </div>
+<% end %>
