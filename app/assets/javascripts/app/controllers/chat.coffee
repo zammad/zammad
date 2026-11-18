@@ -506,8 +506,8 @@ class ChatWindow extends App.Controller
         tags: params.tags
     )
 
-    if !_.isEmpty(params.name)
-      @metaName.text(params.name)
+    @name = if _.isEmpty(params.name) then @chat.displayName() else params.name
+    @metaName.text(@name)
 
   render: ->
     @html App.view('customer_chat/chat_window')(
@@ -565,7 +565,7 @@ class ChatWindow extends App.Controller
     )
 
     configureAttributesOutbound = [
-      { name: 'name', display: __('Name'), tag: 'input', null: true, },
+      { name: 'name', display: __('Name'), tag: 'input', maxlength: 250, null: true, },
       { name: 'tags', display: __('Tags'), tag: 'tag', null: true, },
     ]
     new App.ControllerForm(
