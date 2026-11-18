@@ -205,6 +205,11 @@ returns
     preferences['Content-Disposition'] == 'inline'
   end
 
+  # @return [String] the type the file was stored with, without its parameters, empty where it has none
+  def mime_type
+    preferences.values_at('Content-Type', 'Mime-Type').filter_map { it.to_s.split(';').first.to_s.strip.downcase.presence }.first.to_s
+  end
+
   private
 
   def generate_previews
