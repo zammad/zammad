@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-03 09:12+0000\n"
+"PO-Revision-Date: 2026-11-14 12:12+0000\n"
 "Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
-"zammad-development/de/>\n"
+"zammad-stable/de/>\n"
 "Language: de-de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.10\n"
+"X-Generator: Weblate 2026.11.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -769,10 +769,8 @@ msgid "'%s' is not a valid IP address or CIDR range."
 msgstr "'%s' ist keine gültige IP-Adresse oder CIDR-Bereich."
 
 #: app/models/setting/validation/backend_class.rb:19
-#, fuzzy
-#| msgid "'%s' is not a valid IP address or CIDR range."
 msgid "'%s' is not a valid backend for this setting."
-msgstr "'%s' ist keine gültige IP-Adresse oder CIDR-Bereich."
+msgstr "'%s' ist kein gültiges Backend für diese Einstellung."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -1252,7 +1250,7 @@ msgstr "KI-Schreibassistent-Werkzeuge"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
 msgid "AM/PM"
-msgstr ""
+msgstr "AM/PM"
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: db/seeds/permissions.rb:281
@@ -3421,13 +3419,11 @@ msgstr "Zurück zu den Suchergebnissen"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:123
 msgid "Back to the calendar"
-msgstr ""
+msgstr "Zurück zum Kalender"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:94
-#, fuzzy
-#| msgid "Close the time picker"
 msgid "Back to the time picker"
-msgstr "Zeitauswahl schließen"
+msgstr "Zurück zur Zeitauswahl"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:99
 msgid "Background color"
@@ -3780,10 +3776,8 @@ msgstr "Kalender"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:197
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:215
-#, fuzzy
-#| msgid "Calendar"
 msgid "Calendar week"
-msgstr "Kalender"
+msgstr "Kalenderwoche"
 
 #: app/assets/javascripts/app/controllers/calendar.coffee:3
 #: db/seeds/permissions.rb:65
@@ -5106,10 +5100,8 @@ msgid "Content could not be loaded."
 msgstr "Inhalt konnte nicht geladen werden."
 
 #: app/models/store.rb:162
-#, fuzzy
-#| msgid "Content could not be loaded."
 msgid "Content is not a resizable image."
-msgstr "Inhalt konnte nicht geladen werden."
+msgstr "Der Inhalt ist kein Bild, dessen Größe angepasst werden kann."
 
 #: app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue:13
 msgid "Content loader"
@@ -5862,10 +5854,8 @@ msgid "Custom instructions"
 msgstr "Benutzerdefinierte Anweisungen"
 
 #: app/models/core_workflow.rb:91
-#, fuzzy
-#| msgid "The locale '%s' is not active."
 msgid "Custom module '%s' is not available."
-msgstr "Die Sprache '%s' ist nicht aktiv."
+msgstr "Benutzerdefiniertes Modul '%s' ist nicht verfügbar."
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
@@ -7488,10 +7478,8 @@ msgid "Delete existing data of your system."
 msgstr "Löschen Sie die vorhandenen Daten Ihres Systems."
 
 #: db/seeds/schedulers.rb:97
-#, fuzzy
-#| msgid "Selected conditions"
 msgid "Delete expired MCP confirmations."
-msgstr "Ausgewählte Bedingungen"
+msgstr "Abgelaufene MCP-Bestätigungen löschen."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:118
 msgid "Delete immediately"
@@ -8793,6 +8781,8 @@ msgid ""
 "Enable the MCP server, so that AI clients can use Zammad with personal "
 "access tokens."
 msgstr ""
+"Aktivieren Sie den MCP-Server, damit KI-Clients Zammad mit persönlichen "
+"Zugangs-Token nutzen können."
 
 #: db/seeds/settings.rb:6604
 msgid "Enable the activity stream on the dashboard."
@@ -10617,10 +10607,8 @@ msgid "Growth/Enterprise API (api.deepl.com)"
 msgstr "Growth/Enterprise API (api.deepl.com)"
 
 #: app/assets/javascripts/app/models/webhook.coffee:15
-#, fuzzy
-#| msgid "HMAC SHA1 Signature Token"
 msgid "HMAC signature token"
-msgstr "HMAC SHA1 Signatur-Token"
+msgstr "HMAC Signature Token"
 
 #: db/seeds/settings.rb:5848
 msgid "HTML Email CSS Font"
@@ -11310,7 +11298,7 @@ msgstr "Bildaktionen"
 
 #: app/models/store.rb:169
 msgid "Image exceeds the maximum resizable pixel count."
-msgstr ""
+msgstr "Bild überschreitet die maximale Pixelanzahl für die Skalierung."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:29
@@ -12989,7 +12977,7 @@ msgstr "MAC-Adresse (eindeutige Kennung des Berichts)"
 #: app/assets/javascripts/app/views/api/access.jst.eco:42
 #: db/seeds/settings.rb:6929
 msgid "MCP server"
-msgstr ""
+msgstr "MCP-Server"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:113
 msgid "Machine-translated, some formatting may be lost."
@@ -14468,10 +14456,8 @@ msgid "Next answer: %s"
 msgstr "Nächste Antwort: %s"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:145
-#, fuzzy
-#| msgid "Next page"
 msgid "Next decade"
-msgstr "Nächste Seite"
+msgstr "Nächstes Jahrzehnt"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/CommonImageViewer.vue:76
 msgid "Next image"
@@ -14701,6 +14687,8 @@ msgstr "Keine Einträge in den ausgewählten Ordnern gefunden."
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:84
 msgid "No events can be shown because the calendar file does not contain any."
 msgstr ""
+"Es können keine Ereignisse angezeigt werden, da die Kalenderdatei keine "
+"enthält."
 
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:142
@@ -15257,10 +15245,8 @@ msgid "OAuth2 token is expired!"
 msgstr "OAuth2 Token ist abgelaufen!"
 
 #: app/controllers/application_controller/authenticates.rb:77
-#, fuzzy
-#| msgid "OAuth2 token is expired!"
 msgid "OAuth2 token is revoked!"
-msgstr "OAuth2 Token ist abgelaufen!"
+msgstr "OAuth2 Token ist widerrufen!"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:399
 msgid "OCR Model"
@@ -15487,10 +15473,8 @@ msgstr ""
 "installiert werden."
 
 #: app/controllers/long_polling_controller.rb:92
-#, fuzzy
-#| msgid "Enables user authentication via %s."
 msgid "Only session based authentication is supported!"
-msgstr "Aktiviert die Benutzerauthentifizierung über %s."
+msgstr "Nur eine sitzungsbasierte Authentifizierung wird unterstützt!"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
@@ -15505,7 +15489,7 @@ msgstr ""
 
 #: app/controllers/settings_controller.rb:32
 msgid "Only the product logo can be updated with an image."
-msgstr ""
+msgstr "Nur das Produktlogo kann durch ein Bild aktualisiert werden."
 
 #: db/seeds/settings.rb:33
 msgid "Only used internally to propagate current web app version to clients."
@@ -16755,10 +16739,8 @@ msgid "Previous answer: %s"
 msgstr "Vorherige Antwort: %s"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useCalendarPanel.ts:134
-#, fuzzy
-#| msgid "Previous page"
 msgid "Previous decade"
-msgstr "Vorige Seite"
+msgstr "Vorheriges Jahrzehnt"
 
 #: app/frontend/apps/desktop/components/CommonImageViewer/CommonImageViewer.vue:64
 msgid "Previous image"
@@ -16849,10 +16831,8 @@ msgid "Process ticket escalations."
 msgstr "Ticket-Eskalationen verarbeiten."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:69
-#, fuzzy
-#| msgid "Download processing log"
 msgid "Processing log"
-msgstr "Verarbeitungsprotokoll herunterladen"
+msgstr "Verarbeitungs-Protokoll"
 
 #: db/seeds/settings.rb:106
 msgid "Product Name"
@@ -17151,10 +17131,8 @@ msgid "Raw"
 msgstr "Rohdaten"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/UnprocessableEmailWarning.vue:60
-#, fuzzy
-#| msgid "email"
 msgid "Raw email"
-msgstr "E-Mail"
+msgstr "Rohformat E-Mail"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
 msgid "Reacted with %s to message %s from %s"
@@ -18775,10 +18753,8 @@ msgstr ""
 "enthalten."
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:93
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "Seconds"
-msgstr "Gespeicherte Bedingungen"
+msgstr "Sekunden"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:67
 msgid "Secret"
@@ -20926,6 +20902,7 @@ msgstr "Die Knowledge Base konnte nicht erzeugt werden."
 #: app/assets/javascripts/app/views/api/access.jst.eco:45
 msgid "The MCP server works only while token access is enabled."
 msgstr ""
+"Der MCP-Server funktioniert nur, solange der Token-Zugriff aktiviert ist."
 
 #: app/services/service/avatar/image_validate.rb:20
 msgid "The MIME type of the image is invalid."
@@ -20997,6 +20974,8 @@ msgstr "Der PGP-Signaturschlüssel ist widerrufen worden."
 msgid ""
 "The SSO environment variables and headers contain different user logins."
 msgstr ""
+"Die SSO-Umgebungsvariablen und -Header enthalten unterschiedliche "
+"Anmeldungen von Benutzern."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
@@ -21136,18 +21115,15 @@ msgstr ""
 "Zielsprache vorliegen. %l"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:292
-#, fuzzy
-#| msgid ""
-#| "The article language detection is disabled. Enable it to avoid "
-#| "translating articles that are already in the target language. %l"
 msgid ""
 "The article language detection is disabled. To avoid translating articles "
 "that are already in the target language, ask an administrator with access to "
 "the ticket settings to enable it."
 msgstr ""
-"Die Erkennung der Artikelsprache ist deaktiviert. Aktivieren Sie diese "
-"Funktion, um zu vermeiden, dass Artikel übersetzt werden, die bereits in der "
-"Zielsprache vorliegen. %l"
+"Die Spracherkennung für Artikel ist deaktiviert. Um die Übersetzung für "
+"Artikel zu vermeiden, die bereits in der Zielsprache vorliegen, bitten Sie "
+"einen Administrator mit Zugriff auf die Ticket-Einstellungen, diese Funktion "
+"zu aktivieren."
 
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
 msgid ""
@@ -21643,12 +21619,12 @@ msgstr "Der Eintrag konnte nicht erstellt werden."
 msgid ""
 "The entry was created, but it is hidden by the current search or filter."
 msgstr ""
+"Der Eintrag wurde erstellt, wird jedoch durch die aktuelle Suche oder den "
+"aktuellen Filter ausgeblendet."
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:83
-#, fuzzy
-#| msgid "The entry could not be created."
 msgid "The entry was not a valid date and has been cleared."
-msgstr "Der Eintrag konnte nicht erstellt werden."
+msgstr "Der Eintrag enthielt kein gültiges Datum und wurde gelöscht."
 
 #: lib/sessions/event.rb:61
 msgid "The event could not be processed."
@@ -22338,12 +22314,16 @@ msgstr "Die Antwort konnte nicht verarbeitet werden."
 #: lib/ai/provider/anthropic.rb:13
 msgid "The response was cut off because it reached the maximum output length."
 msgstr ""
+"Die Antwort wurde abgeschnitten, da sie die maximale Ausgabelänge erreicht "
+"hatte."
 
 #: lib/ai/provider/anthropic.rb:14
 msgid ""
 "The response was cut off because the request and the response together "
 "exceeded the context window of the model."
 msgstr ""
+"Die Antwort wurde abgeschnitten, da die Anfrage und die Antwort zusammen das "
+"Kontextfenster des Modells überschritten haben."
 
 #: app/controllers/ticket_articles_controller.rb:271
 msgid "The retried attachment download failed."
@@ -22401,10 +22381,10 @@ msgid "The scheduler run was started."
 msgstr "Die Automatisierung wurde gestartet."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:330
-#, fuzzy
-#| msgid "The content could not be copied to the clipboard."
 msgid "The search index could not be updated yet, the list may be outdated."
-msgstr "Der Inhalt konnte nicht in die Zwischenablage kopiert werden."
+msgstr ""
+"Die Aktualisierung des Suchindexes konnte noch nicht durchgeführt werden; "
+"die Liste ist möglicherweise nicht mehr auf dem neuesten Stand."
 
 #: app/frontend/shared/form/i18n/locales.ts:525
 msgid "The selected date is invalid."
@@ -22772,7 +22752,7 @@ msgstr "Der Wert des Parameters 'payload->class_name' ist ungültig."
 
 #: app/models/setting/validation/backend_class.rb:14
 msgid "The value of this setting has an invalid format."
-msgstr ""
+msgstr "Der Wert dieser Einstellung weist ein ungültiges Format auf."
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 msgid "The vector index could not be updated."
@@ -25574,31 +25554,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Updated ticket article (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
-#| "%> reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
-#| "'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
-#| "</div>\n"
-#| "<br>\n"
-#| "<% if @objects[:article] %>\n"
-#| "  <div>\n"
-#| "    <blockquote type=\"cite\">\n"
-#| "    #{article.body_as_html}\n"
-#| "    </blockquote>\n"
-#| "  </div>\n"
-#| "<% end %>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/"
-#| "#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in "
-#| "#{config.product_name}</a>\n"
-#| "</div>\n"
 msgid ""
 "Updated ticket article (#{ticket.title})\n"
 "\n"
@@ -25629,9 +25584,10 @@ msgstr ""
 "<div>Hallo #{recipient.fullname},</div>\n"
 "<br>\n"
 "<div>\n"
-"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
-"reagierte mit <%= @objects[:article].preferences.dig('whatsapp', 'reaction', "
-"'emoji') %> auf die Nachricht von #{article.created_by.fullname}:\n"
+"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+"%> reagierte mit <%= h @objects[:article].preferences.dig('whatsapp', "
+"'reaction', 'emoji') %> auf die Nachricht von #{article.created_by.fullname}"
+":\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
@@ -25643,9 +25599,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
-"#{article.id}\" target=\"zammad_app\">In #{config.product_name} anzeigen</"
-"a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
+"{article.id}\" target=\"zammad_app\">In #{config.product_name} anzeigen</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17
@@ -25836,6 +25791,8 @@ msgid ""
 "Used to sign each request with HMAC-SHA1 (X-Hub-Signature header) and HMAC-"
 "SHA256 (X-Hub-Signature-256 header)."
 msgstr ""
+"Wird verwendet, um jede Anfrage mit HMAC-SHA1 (\"X-Hub-Signature\"-Header) "
+"und HMAC-SHA256 (\"X-Hub-Signature-256\"-Header) zu signieren."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:554
 msgid "Used when composing a Ticket article"

@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-03 09:12+0000\n"
+"PO-Revision-Date: 2026-11-16 22:12+0000\n"
 "Last-Translator: sigurbjartur <github@sigurbjartur.com>\n"
 "Language-Team: Icelandic <https://translations.zammad.org/projects/zammad/"
-"zammad-development/is/>\n"
+"zammad-stable/is/>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 2026.10\n"
+"X-Generator: Weblate 2026.11.1\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -765,10 +765,8 @@ msgid "'%s' is not a valid IP address or CIDR range."
 msgstr "'%s' er ekki valið IP vistfang eða netnúmer (e. CIDR range)."
 
 #: app/models/setting/validation/backend_class.rb:19
-#, fuzzy
-#| msgid "'%s' is not a valid IP address or CIDR range."
 msgid "'%s' is not a valid backend for this setting."
-msgstr "'%s' er ekki valið IP vistfang eða netnúmer (e. CIDR range)."
+msgstr "'%s' er ekki gildur bakendi fyrir þessa stillingu."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -1115,38 +1113,38 @@ msgstr "Gervigreindarþekkingarbrunnssvar úr beiðni"
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "AI Knowledge Base Services"
-msgstr "Eyða þekkingarbrunni"
+msgstr "AI Knowledge Base Services"
 
 #: db/seeds/permissions.rb:239
 #, fuzzy
 #| msgid "Test SMS provider"
 msgid "AI Provider"
-msgstr "Prófa SMS þjónustuveitu"
+msgstr "AI Provider"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:26
 #: lib/excel_sheet/ai/analytics/with_usage.rb:26
 #, fuzzy
 #| msgid "Image Service"
 msgid "AI Service Name"
-msgstr "Myndaþjónusta"
+msgstr "AI Service Name"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket_summary.coffee:145
 #, fuzzy
 #| msgid "See more"
 msgid "AI Summary"
-msgstr "Sjá meira"
+msgstr "AI Summary"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:82
 #, fuzzy
 #| msgid "Shared organization"
 msgid "AI Writing Assistant Tools"
-msgstr "Samnýtt stofnun"
+msgstr "AI Writing Assistant Tools"
 
 #: app/assets/javascripts/app/controllers/text_tools_modal.coffee:24
 #, fuzzy
 #| msgid "Shared organization"
 msgid "AI Writing Assistant: %s"
-msgstr "Samnýtt stofnun"
+msgstr "AI Writing Assistant: %s"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:2
 #: app/assets/javascripts/app/views/widget/online_notification_item.jst.eco:3
@@ -1159,7 +1157,7 @@ msgstr "Samnýtt stofnun"
 #, fuzzy
 #| msgid "Agent"
 msgid "AI agent"
-msgstr "Þjónustufulltrúi"
+msgstr "AI agent"
 
 #: app/services/service/ai/agent/run.rb:24
 msgid "AI agent result content does not match expected result structure."
@@ -1169,7 +1167,7 @@ msgstr "Innihald niðurstöðu gervigreindarþjarks stemmir ekki við væntingar
 #, fuzzy
 #| msgid "Agents"
 msgid "AI agent used in"
-msgstr "Þjónustufulltrúar"
+msgstr "AI agent used in"
 
 #: app/assets/javascripts/app/models/ai_agent.coffee
 msgid ""
@@ -1191,36 +1189,36 @@ msgstr "Verkfæri fyrir textaaðstoð með gervigreind er ógilt."
 #, fuzzy
 #| msgid "draft"
 msgid "AI draft"
-msgstr "drög"
+msgstr "AI draft"
 
 #: lib/excel_sheet/ai/analytics/errors.rb:4
 msgid "AI error log"
-msgstr "Villuannáll gervigreindar."
+msgstr "Villuannáll gervigreindar"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/ai.coffee:6
 #: app/models/audit_log/object_type_labels.rb:6 db/seeds/settings.rb:6777
 #, fuzzy
 #| msgid "Test SMS provider"
 msgid "AI provider"
-msgstr "Prófa SMS þjónustuveitu"
+msgstr "AI provider"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:205
 #, fuzzy
 #| msgid "Ticket updated successfully."
 msgid "AI provider configuration disabled successfully."
-msgstr "Breyting beiðnar heppnaðist."
+msgstr "AI provider configuration disabled successfully."
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:203
 #, fuzzy
 #| msgid "Ticket updated successfully."
 msgid "AI provider configuration enabled successfully."
-msgstr "Breyting beiðnar heppnaðist."
+msgstr "AI provider configuration enabled successfully."
 
 #: app/models/setting/validation/ai_provider.rb:13
 #, fuzzy
 #| msgid "Test SMS provider"
 msgid "AI provider is missing"
-msgstr "Prófa SMS þjónustuveitu"
+msgstr "AI provider is missing"
 
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:8
 #: app/controllers/ticket/related_knowledge_base_answers_controller.rb:14
@@ -1240,7 +1238,7 @@ msgstr "Prófa SMS þjónustuveitu"
 #, fuzzy
 #| msgid "No filter was configured."
 msgid "AI provider is not configured."
-msgstr "Engin sía uppsett."
+msgstr "AI provider is not configured."
 
 #: app/services/service/ai/feature.rb:17
 msgid "AI service result is missing expected keys"
@@ -1250,7 +1248,7 @@ msgstr "Niðurstöðu gervigreindarþjónustu skortir nauðsynlega lykla"
 #, fuzzy
 #| msgid "Ticket State"
 msgid "AI summary"
-msgstr "Staða Beiðnar"
+msgstr "AI summary"
 
 #: lib/excel_sheet/ai/analytics/with_usage.rb:4
 msgid "AI usage and feedback log"
@@ -1260,14 +1258,14 @@ msgstr ""
 #, fuzzy
 #| msgid "Shared organization"
 msgid "AI writing assistant"
-msgstr "Samnýtt stofnun"
+msgstr "AI writing assistant"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:74
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:68
 #, fuzzy
 #| msgid "Shared organization"
 msgid "AI writing assistant tools"
-msgstr "Samnýtt stofnun"
+msgstr "AI writing assistant tools"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:94
 msgid "AM/PM"
@@ -1302,10 +1300,8 @@ msgstr "API villa."
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:22
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:14
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
-#, fuzzy
-#| msgid "API Key"
 msgid "API key"
-msgstr "API Lykill"
+msgstr "API lykill"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:12
 msgid "API plan"
@@ -1431,8 +1427,6 @@ msgstr "Aðgangur hefur ekki verið staðfestur"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:112
-#, fuzzy
-#| msgid "Account Time"
 msgid "Account time"
 msgstr "Skrá tíma"
 
@@ -1451,16 +1445,12 @@ msgstr "Gjaldfærður tími"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:132
 #: app/frontend/shared/entities/ticket/attributes.ts:14
 #: app/frontend/shared/entities/ticket/composables/useTicketTimeAccountingForm.ts:47
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Accounted time"
-msgstr "Gjaldfærður tími"
+msgstr "Skráður tími"
 
 #: app/frontend/apps/desktop/components/Search/plugins/ticket.ts:47
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Accounted time - %s"
-msgstr "Gjaldfærður tími"
+msgstr "Gjaldfærður tími - %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:79
 msgid "Accounted time unit"
@@ -1509,20 +1499,16 @@ msgid "Action"
 msgstr "Aðgerð"
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:79
-#, fuzzy
-#| msgid "Action execution"
 msgid "Action definition"
-msgstr "Aðgerð framkvæmd"
+msgstr "Skilgreining aðgerðar"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Action execution"
 msgstr "Aðgerð framkvæmd"
 
 #: app/frontend/apps/desktop/components/CommonActionMenu/CommonActionMenu.vue:132
-#, fuzzy
-#| msgid "Action execution"
 msgid "Action menu button"
-msgstr "Aðgerð framkvæmd"
+msgstr "Aðgerðavalmyndarhnappur"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:12
 msgid "Action menu button for authenticator app"
@@ -1613,10 +1599,8 @@ msgstr "Virkir þjónustufulltrúar"
 #: app/assets/javascripts/app/controllers/text_module.coffee:21
 #: app/assets/javascripts/app/controllers/trigger.coffee:18
 #: app/assets/javascripts/app/controllers/webhook.coffee:19
-#, fuzzy
-#| msgid "Active"
 msgid "Active only"
-msgstr "Virkt"
+msgstr "Aðeins virkt"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:16
 msgid "Activity"
@@ -1688,7 +1672,7 @@ msgstr "Bæta við"
 #, fuzzy
 #| msgid "Apply Draft"
 msgid "Add AI draft"
-msgstr "Vista drög"
+msgstr "Add AI draft"
 
 #: app/assets/javascripts/app/views/channel_account/list.jst.eco:131
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:7
@@ -1698,20 +1682,16 @@ msgid "Add Account"
 msgstr "Bæta við reikningi"
 
 #: app/assets/javascripts/app/views/generic/object_attribute_options_context.jst.eco:62
-#, fuzzy
-#| msgid "Add link"
 msgid "Add All"
-msgstr "Bæta hlekk við"
+msgstr "Bæta öllu við"
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:7
 msgid "Add Bot"
 msgstr "Bæta við þjark"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:259
-#, fuzzy
-#| msgid "Add link"
 msgid "Add CC"
-msgstr "Bæta hlekk við"
+msgstr "Bæta CC við"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:82
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:88
@@ -1787,10 +1767,8 @@ msgstr "Bæta öllum gildum við"
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddAnswerCard.vue:23
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:89
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:674
-#, fuzzy
-#| msgid "Edit Answer"
 msgid "Add answer"
-msgstr "Breyta svari"
+msgstr "Bæta svari við"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:194
 msgid "Add attachment option to upload."
@@ -1804,17 +1782,13 @@ msgstr "Bæta punktalista við"
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAddCategoryCard.vue:19
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:188
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:657
-#, fuzzy
-#| msgid "Category"
 msgid "Add category"
-msgstr "Flokkur"
+msgstr "Bæta flokki við"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:85
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:67
-#, fuzzy
-#| msgid "Checklist Template"
 msgid "Add checklist template"
-msgstr "Sniðmát gátlista"
+msgstr "Bæta sniðmáti gátlista við"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:48
 msgid "Add comment"
@@ -1835,10 +1809,8 @@ msgid "Add empty checklist"
 msgstr "Bæta tómum gátlista við"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/FieldFilterSelectorInput.vue:556
-#, fuzzy
-#| msgid "Filter"
 msgid "Add filter"
-msgstr "Sía"
+msgstr "Bæta síu við"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:11
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:36
@@ -1893,20 +1865,16 @@ msgid "Add reply"
 msgstr "Bæta svari við"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:77
-#, fuzzy
-#| msgid "Schedulers"
 msgid "Add schedule"
-msgstr "Verkstjórar"
+msgstr "Bæta verkstjóra við"
 
 #: app/frontend/shared/form/i18n/locales.ts:77
 msgid "Add selected values"
 msgstr "Bæta völdum gildum við"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:102
-#, fuzzy
-#| msgid "Add subclause"
 msgid "Add sub-category"
-msgstr "Bæta undirhóp við"
+msgstr "Bæta undirflokki við"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:35
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:21
@@ -1923,16 +1891,12 @@ msgid "Add this class to a button on your page that should open the chat."
 msgstr "Bættu þessum klasa við hnapp sem á að opna spjallið."
 
 #: app/models/ai/agent/type/ticket_tagger.rb:169
-#, fuzzy
-#| msgid "Update existing records"
 msgid "Add to existing tags"
-msgstr "Uppfæra núverandi færslur"
+msgstr "Bæta við núverandi merki"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:158
-#, fuzzy
-#| msgid "Add ordered list"
 msgid "Add unordered list"
-msgstr "Bæta röðuðum lista við"
+msgstr "Bæta lista við"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerVisibilityScheduleFlyout.vue:112
 msgid "Add visibility schedule"
@@ -1955,10 +1919,8 @@ msgstr "Viðbótarrásir"
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/TopBarHeaderFull.vue:84
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderCompact.vue:65
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderFull.vue:82
-#, fuzzy
-#| msgid "Additional information"
 msgid "Additional actions"
-msgstr "Viðbótarupplýsingar"
+msgstr "Viðbótaraðgerðir"
 
 #: db/seeds/settings.rb:3501
 msgid "Additional follow-up detection"
@@ -1999,20 +1961,16 @@ msgid "Admin Consent"
 msgstr "Samþykki kerfisstjóra"
 
 #: app/assets/javascripts/app/controllers/documentation_link.coffee:2
-#, fuzzy
-#| msgid "Administration"
 msgid "Admin Documentation"
-msgstr "Kerfisumsjón"
+msgstr "Kerfisumsjónarhandbók"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee:23
 msgid "Admin Password Login"
 msgstr "Innskráning með lykilorði kerfisstjóra"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/admin-documentation.ts:7
-#, fuzzy
-#| msgid "Administration"
 msgid "Admin documentation"
-msgstr "Kerfisumsjón"
+msgstr "Kerfisumsjónarhandbók"
 
 #: db/seeds/permissions.rb:5 db/seeds/settings.rb:1215
 msgid "Admin interface"
@@ -2086,10 +2044,8 @@ msgid "Advance to next ticket from overview"
 msgstr "Fara fram að næstu beiðni frá yfirliti"
 
 #: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:243
-#, fuzzy
-#| msgid "Attach files"
 msgid "Advanced filters"
-msgstr "Hengja skrár við"
+msgstr "Flóknar síur"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:18
 #: app/assets/javascripts/app/controllers/trigger.coffee:19
@@ -2186,16 +2142,12 @@ msgid "Alarm"
 msgstr "Áminning"
 
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:409
-#, fuzzy
-#| msgid "%s of my tickets escalated"
 msgid "All %s result(s) selected"
-msgstr "%s beiðnanna minna með hækkaðan forgang"
+msgstr "Allar %s niðurstöður valdar"
 
 #: app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue:71
-#, fuzzy
-#| msgid "%s of my tickets escalated"
 msgid "All %s ticket(s) selected"
-msgstr "%s beiðnanna minna með hækkaðan forgang"
+msgstr "Allar %s beiðnir valdar"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:8
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:30
@@ -2203,10 +2155,8 @@ msgid "All Tickets"
 msgstr "Allar beiðnir"
 
 #: app/assets/javascripts/app/views/settings/dashboard_views.jst.eco:9
-#, fuzzy
-#| msgid "All tickets"
 msgid "All activities"
-msgstr "Allar beiðnir"
+msgstr "Allar athafnir"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:131
 msgid ""
@@ -2239,16 +2189,12 @@ msgstr ""
 "að láta þessa eyðingu ganga til baka."
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:132
-#, fuzzy
-#| msgid "All tickets"
 msgid "All articles"
-msgstr "Allar beiðnir"
+msgstr "Allar efnisgreinar"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:78
-#, fuzzy
-#| msgid "Create a translation"
 msgid "All articles translated to %s"
-msgstr "Stofna þýðingu"
+msgstr "Allar efnirgreinar þýddar yfir á %s"
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:51
 msgid "All categories will be considered for categorizing tickets."
@@ -2294,10 +2240,9 @@ msgstr ""
 "Allar tveggja-þátta auðkenningar hafa verið fjarlægðar af þessum notanda."
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:62
-#, fuzzy
-#| msgid "All categories will be considered for categorizing tickets."
 msgid "All values will be considered for extracted text from tickets."
-msgstr "Allir flokkar koma til greina við flokkun beiðna."
+msgstr ""
+"Öll gildi koma til greina fyrir texta sem hefur verið dreginn út úr beiðnum."
 
 #: app/assets/javascripts/app/controllers/_manage/dashboard.coffee:136
 msgid ""
@@ -2332,10 +2277,8 @@ msgid "Allow future dates toggle value is required."
 msgstr "Nauðsynlegt er að leyfa framtíðardagsetningar."
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:61
-#, fuzzy
-#| msgid "Multiple selection field"
 msgid "Allow multiple selections"
-msgstr "Fjölvalsreitur"
+msgstr "Leyfa fjölval"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:326
 msgid "Allow past"
@@ -2396,10 +2339,8 @@ msgid "Alternative Translations"
 msgstr ""
 
 #: db/seeds/settings.rb:354
-#, fuzzy
-#| msgid "Fully Qualified Domain Name"
 msgid "Alternative fully qualified domain name"
-msgstr "Fullgilt lénsnafn"
+msgstr "Fullgilt lénsnafn til vara"
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:16
 msgid "Alternative name"
@@ -2437,10 +2378,8 @@ msgid "An error occurred during the operation."
 msgstr "Villa kom upp við framkvæmd aðgerðar."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:253
-#, fuzzy
-#| msgid "An error occured during the operation."
 msgid "An error occurred while fetching the website preview."
-msgstr "Villa kom upp við framkvæmd aðgerðar."
+msgstr "Villa kom upp við að sækja forskoðun vefsíðunnar."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:1016
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:5
@@ -2450,10 +2389,8 @@ msgstr "Villa kom upp: %s"
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:79
 #: lib/validations/link_self_reference_validator.rb:4
-#, fuzzy
-#| msgid "A ticket cannot be merged into itself."
 msgid "An object cannot be linked to itself."
-msgstr "Ekki er hægt að sameina beiðni sjálfri sér."
+msgstr "Ekki er hægt að tengja beiðni sjálfri sér."
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:60
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee:26
@@ -2541,34 +2478,26 @@ msgstr "Svar"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerCard.vue:143
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseAnswer.vue:234
-#, fuzzy
-#| msgid "Answers: %s"
 msgid "Answer actions"
-msgstr "Svör: %s"
+msgstr "Svaraðgerðir"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseCategoryCard.vue:202
-#, fuzzy
-#| msgid "Answers: %s"
 msgid "Answer count: %s"
-msgstr "Svör: %s"
+msgstr "Fjöldi svara: %s"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/KnowledgeBaseAnswerStepper.vue:51
-#, fuzzy
-#| msgid "Integrations"
 msgid "Answer navigation"
-msgstr "Samþættingar"
+msgstr "Flakk um svör"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/KnowledgeBaseAnswerList.vue:307
 #, fuzzy
 #| msgid "Add ordered list"
 msgid "Answer order list"
-msgstr "Bæta röðuðum lista við"
+msgstr "Answer order list"
 
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:90
-#, fuzzy
-#| msgid "App Secret"
 msgid "Answer title"
-msgstr "Leyndarmál forrits"
+msgstr "Fyrirsögn svars"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:3
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseContentTabs/KnowledgeBaseContentTabs.vue:30
@@ -2681,8 +2610,6 @@ msgid "Apply current defaults to all agents"
 msgstr "Afrita sjálfgefin gildi á alla þjónustufulltrúa"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:134
-#, fuzzy
-#| msgid "Apply Draft"
 msgid "Apply draft"
 msgstr "Vista drög"
 
@@ -2691,22 +2618,16 @@ msgid "Apply filter…"
 msgstr "Virkja síu…"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:161
-#, fuzzy
-#| msgid "Apply Shared Draft"
 msgid "Apply shared draft"
 msgstr "Vista deild drög"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/ApplyTemplate.vue:37
-#, fuzzy
-#| msgid "Apply Template"
 msgid "Apply template"
 msgstr "Fella að sniðmáti"
 
 #: app/assets/javascripts/app/controllers/text_tools_modal.coffee:4
-#, fuzzy
-#| msgid "Test SMS provider"
 msgid "Approve"
-msgstr "Prófa SMS þjónustuveitu"
+msgstr "Samþykkja"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:162
 #: app/assets/javascripts/app/controllers/report.coffee:221
@@ -2740,10 +2661,8 @@ msgid "Archive emails"
 msgstr "Safnvista tölvupósta"
 
 #: app/frontend/apps/desktop/entities/knowledge-base/form/answerVisibilityOptions.ts:33
-#, fuzzy
-#| msgid "Previous"
 msgid "Archive this answer"
-msgstr "Fyrri"
+msgstr "Færa þetta svar í skjalasafn"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:725
 #: app/assets/javascripts/app/controllers/_channel/email_archive.coffee:44
@@ -2788,24 +2707,20 @@ msgstr ""
 "munu glatast"
 
 #: app/assets/javascripts/app/controllers/job.coffee:63
-#, fuzzy
-#| msgid "Are you sure you want to delete this object?"
 msgid ""
 "Are you sure you want to run this scheduler now? It will process all "
 "matching objects."
 msgstr ""
 "Ertu viss um að þú viljir keyra þennan verkstjóra núna? Hann mun afgreiða "
-"alla samstæða hluti."
+"alla hluti sem uppfylla skilyrðin."
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:719
 msgid "Are you sure you want to set \"%s\" as default?"
 msgstr "Ertu viss um að þú viljir setja \"%s\" sem sjálfgefið?"
 
 #: app/assets/javascripts/app/controllers/_ai/embedding_stop_confirm.coffee:8
-#, fuzzy
-#| msgid "Are you sure you want to set \"%s\" as default?"
 msgid "Are you sure you want to stop semantic search?"
-msgstr "Ertu viss um að þú viljir setja \"%s\" sem sjálfgefið?"
+msgstr "Ertu viss um að þú viljir stöðva merkingarleit?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:735
 msgid "Are you sure you want to unset \"%s\" as default?"
@@ -2894,10 +2809,8 @@ msgid "Are you sure? Your recent searches will be lost."
 msgstr "Ertu viss? Nýlegar leitir þínar munu glatast."
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearch.vue:120
-#, fuzzy
-#| msgid "Are you sure? You have changes that will get lost."
 msgid "Are you sure? Your recently closed items will get lost."
-msgstr "Ertu viss? Þú hefur gert breytingar sem munu glatast."
+msgstr "Ertu viss? Nýlega lokuðu atriðin þín munu týnast."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:54
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:11
@@ -2925,10 +2838,8 @@ msgid "Article Language Detection"
 msgstr "Tungumálagreining efnisgreinar"
 
 #: db/seeds/settings.rb:6290
-#, fuzzy
-#| msgid "Original Formatting"
 msgid "Article Translation"
-msgstr "Upprunalega forsnið"
+msgstr "Þýðing efnisgreinar"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:278
 msgid "Article actions"
@@ -2954,10 +2865,8 @@ msgid "Article#"
 msgstr "Efnisgrein#"
 
 #: app/models/ai/agent/type/ticket_text_extractor.rb:125
-#, fuzzy
-#| msgid "Article actions"
 msgid "Article(s) to analyze"
-msgstr "Efnisgreinaaðgerðir"
+msgstr "Efnisgrein(ar) til að greina"
 
 #: db/seeds/object_manager_attributes.rb:2239
 msgid "Assign Follow-Ups"
@@ -2978,16 +2887,12 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkBottomDrawer.vue:216
 #: app/frontend/apps/desktop/components/Ticket/DragAndDropBulk/DragAndDropBulkConfirmation.vue:68
-#, fuzzy
-#| msgid "assign tickets"
 msgid "Assign tickets"
-msgstr "úthluta miða"
+msgstr "Úthluta beiðni"
 
 #: db/seeds/object_manager_attributes.rb:1837
-#, fuzzy
-#| msgid "Assign Users based on users domain."
 msgid "Assign users based on user domain."
-msgstr "Úthluta notendum út frá léni."
+msgstr "Úthluta notendum út frá léni notanda."
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:21
 msgid "Assigned"
@@ -2999,10 +2904,8 @@ msgid "Assignee"
 msgstr "Úthluta á"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:96
-#, fuzzy
-#| msgid "Assigned"
 msgid "Assignees"
-msgstr "Úthlutað"
+msgstr "Úthlutunaraðilar"
 
 #: db/seeds/object_manager_attributes.rb:2137
 msgid "Assignment Timeout"
@@ -3010,10 +2913,8 @@ msgstr "Tímamörk verkefnis"
 
 #: app/assets/javascripts/app/models/_application_model.coffee:168
 #: app/assets/javascripts/app/models/group.coffee:8
-#, fuzzy
-#| msgid "Assignment Timeout"
 msgid "Assignment timeout"
-msgstr "Tímamörk verkefnis"
+msgstr "Tímamörk úthlutunar"
 
 #: app/assets/javascripts/app/models/group.coffee:8
 #: db/seeds/object_manager_attributes.rb:2142
@@ -3031,10 +2932,8 @@ msgstr ""
 "tölvupóstfang) fyrir notanda krafist."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:44
-#, fuzzy
-#| msgid "Time zone is required."
 msgid "At least one locale is required."
-msgstr "Tímabeltis er krafist."
+msgstr "Að minnsta kosti eins staðar er krafist."
 
 #: app/models/postmaster_filter.rb:30
 msgid "At least one match rule is required, but none was provided."
@@ -3053,10 +2952,8 @@ msgid "Attach another file"
 msgstr "Hengja aðra skrá við"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
-#, fuzzy
-#| msgid "Attached Files"
 msgid "Attach file"
-msgstr "Viðhengdar skrár"
+msgstr "Viðhengd skrá"
 
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:184
 msgid "Attach files"
@@ -3184,10 +3081,8 @@ msgid "August"
 msgstr "Ágúst"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:172
-#, fuzzy
-#| msgid "Authentication"
 msgid "Authenticate"
-msgstr "Auðkenning"
+msgstr "Auðkenna"
 
 #: app/assets/javascripts/app/models/webhook.coffee:11
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:4
@@ -3227,16 +3122,12 @@ msgstr "Auðkenning gegnum %s"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
 #: db/seeds/settings.rb:6448
-#, fuzzy
-#| msgid "Authentication"
 msgid "Authenticator App"
-msgstr "Auðkenning"
+msgstr "Auðkenningarforrit"
 
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:9
-#, fuzzy
-#| msgid "Authentication"
 msgid "Authenticator app"
-msgstr "Auðkenning"
+msgstr "Auðkenningarforrit"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:249
 msgid "Authenticator app QR code"
@@ -3274,10 +3165,8 @@ msgid "Auto Assignment"
 msgstr "Sjálfvirk úthlutun"
 
 #: db/seeds/settings.rb:2708
-#, fuzzy
-#| msgid "Auto Assignment"
 msgid "Auto Assignment Ignored Users"
-msgstr "Sjálfvirk úthlutun"
+msgstr "Notendur sem sjálfvirk úthlutun hundsar"
 
 #: db/seeds/settings.rb:2691
 #, fuzzy
@@ -6310,7 +6199,7 @@ msgstr "Dagur/ar"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:2
 msgid "Days"
-msgstr "Dagar"
+msgstr "dögum"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/report.coffee:221
@@ -9136,7 +9025,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:6
 #: app/controllers/integration/smime_controller.rb:124
 msgid "Encryption"
-msgstr "Dulkóðun"
+msgstr "Dulritun"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
 #: app/frontend/shared/composables/useArticleSecurity.ts:145
@@ -9742,7 +9631,7 @@ msgstr "Hækkun forgangs þann"
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:47
 #: db/seeds/permissions.rb:167 db/seeds/settings.rb:1510
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco:9
 #, fuzzy
@@ -10043,10 +9932,8 @@ msgstr "Síðasta efnisgrein"
 #: app/assets/javascripts/app/models/user.coffee:18
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
 #: db/seeds/object_manager_attributes.rb:817
-#, fuzzy
-#| msgid "Firstname"
 msgid "First name"
-msgstr "Fornafn"
+msgstr "Eiginnafn"
 
 #: app/assets/javascripts/app/models/ticket.coffee:24
 #: app/frontend/shared/entities/ticket/attributes.ts:70
@@ -11316,7 +11203,7 @@ msgstr "Hvernig nota ég"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:222
 msgid "ID"
-msgstr ""
+msgstr "Auðkenni"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:6
 msgid "ID:"
@@ -11966,7 +11853,7 @@ msgstr ""
 #, fuzzy
 #| msgid "It is not possible to delete your current account."
 msgid "Inserting image not possible due to source restrictions"
-msgstr "Það er ekki hægt að eyða núverandi reikningi þínum."
+msgstr "Inserting image not possible due to source restrictions"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:638
 msgid "Inserts a horizontal rule"
@@ -12015,16 +11902,10 @@ msgid "Installed packages"
 msgstr "Setja inn pakka"
 
 #: app/controllers/packages_controller.rb:58
-#, fuzzy
-#| msgid ""
-#| "After installing, updating, or uninstalling packages the following "
-#| "commands need to be executed on the server:"
 msgid ""
 "Installing, updating or uninstalling packages is not possible in container "
 "environments."
-msgstr ""
-"Eftir að pakkar hafa verið settir inn, uppfærðir eða fjarlægðir þarf að gefa "
-"eftirfarandi skipanir á þjóninum:"
+msgstr "Ekki er hægt að setja inn, uppfæra eða taka út pakka í gámaumhverfum."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:34
 #, fuzzy
@@ -12067,10 +11948,8 @@ msgid "Internal Knowledge Base feed:"
 msgstr "Innanhúss þekkingarbrunnsferill:"
 
 #: app/models/object_manager/attribute.rb:714
-#, fuzzy
-#| msgid "The article could not be deleted."
 msgid "Internal attributes cannot be deleted"
-msgstr "Ekki tókst að eyða efnisgreininni."
+msgstr "Ekki er hægt að eyða innri eiginleikum"
 
 #: app/frontend/shared/errors/useErrorHandler.ts:33
 #, fuzzy
@@ -12173,10 +12052,8 @@ msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr ""
 
 #: app/services/service/knowledge_base/create_answer_from_ai_result.rb:39
-#, fuzzy
-#| msgid "Delete Knowledge Base"
 msgid "Invalid knowledge base locale."
-msgstr "Eyða þekkingarbrunni"
+msgstr "Ógild staðfærsla á þekkingarbrunni."
 
 #: app/controllers/tickets_controller.rb:197
 msgid "Invalid link structure"
@@ -12489,19 +12366,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee:4
 msgid "Keyboard Shortcuts"
-msgstr "Flýtivísanir"
+msgstr "Flýtilyklar"
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:4
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
 msgid "Keyboard Shortcuts Enabled"
-msgstr "Flýtivísanir"
+msgstr "Flýtilyklar virkir"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
 msgid "Keyboard shortcuts"
-msgstr "Flýtivísanir"
+msgstr "Flýtilyklar"
 
 #: app/assets/javascripts/app/models/text_module.coffee:7
 msgid "Keywords"
@@ -12525,10 +12398,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:26
 #: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/knowledge-base-answer.ts:45
 #: app/models/online_notification/push_payload.rb:35
-#, fuzzy
-#| msgid "The Knowledge Base could not be created."
 msgid "Knowledge Base Answer \"|%s|\" has been created"
-msgstr "Ekki tókst að stofna þekkingarbrunn."
+msgstr "Þekkingarbrunnssvar \"|%s|\" hefur verið búið til"
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:89
 #, fuzzy
@@ -12543,10 +12414,8 @@ msgid "Knowledge Base Answer Suggestions"
 msgstr "Þekkingarbrunnur"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:28
-#, fuzzy
-#| msgid "The Knowledge Base could not be created."
 msgid "Knowledge Base Answer could not be created"
-msgstr "Ekki tókst að stofna þekkingarbrunn."
+msgstr "Ekki tókst að stofna þekkingarbrunnssvar"
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:5
 #, fuzzy
@@ -12613,22 +12482,16 @@ msgid "Knowledge base answer"
 msgstr "Eyða þekkingarbrunni"
 
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts:128
-#, fuzzy
-#| msgid "Update successful!"
 msgid "Knowledge base answer deleted successfully."
-msgstr "Uppfærsla tókst!"
+msgstr "Þekkingarbrunnssvari hefur verið eytt."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScreenBehavior/KnowledgeBaseAnswerScreenBehavior.vue:71
-#, fuzzy
-#| msgid "Ticket screen behavior updated successfully"
 msgid "Knowledge base answer screen behavior updated successfully."
-msgstr "Uppfærsla á skjáhegðun beiðnar heppnaðist"
+msgstr "Uppfærsla á skjáhegðun þekkingarbrunnssvars heppnaðist."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerEdit/KnowledgeBaseAnswerEditContent.vue:503
-#, fuzzy
-#| msgid "Update successful!"
 msgid "Knowledge base answer updated successfully."
-msgstr "Uppfærsla tókst!"
+msgstr "Þekkingarbrunnssvar hefur verið uppfært."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/routes.ts:125
 msgid ""
@@ -12686,7 +12549,7 @@ msgstr "Þekkingarbrunnur"
 #, fuzzy
 #| msgid "Knowledge Base"
 msgid "Knowledge base vector search is not available."
-msgstr "Þekkingarbrunnur"
+msgstr "Knowledge base vector search is not available."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:8
@@ -12846,10 +12709,8 @@ msgstr "Síðast keyrt"
 #: app/assets/javascripts/app/models/user.coffee:19
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
 #: db/seeds/object_manager_attributes.rb:870
-#, fuzzy
-#| msgid "Lastname"
 msgid "Last name"
-msgstr "Eftirnafn"
+msgstr "Kenninafn"
 
 #: app/frontend/shared/entities/ticket/attributes.ts:127
 #, fuzzy
@@ -13187,7 +13048,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:215
 msgid "List of shortcuts"
-msgstr "Listi yfir flýtivísanir"
+msgstr "Listi yfir flýtilykla"
 
 #: app/models/system_report/plugin/channel.rb:4
 msgid ""
@@ -13422,7 +13283,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/manage.coffee:20
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:85
 msgid "Manage"
-msgstr "Umsjón"
+msgstr "Sýsla um"
 
 #: db/seeds/permissions.rb:258
 #, fuzzy
@@ -13434,7 +13295,7 @@ msgstr "Sýsla um gervigreindarstillingar kerfisins."
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Manage AI features which operate on your knowledge base content."
-msgstr "Eyða þekkingarbrunni"
+msgstr "Manage AI features which operate on your knowledge base content."
 
 #: db/seeds/permissions.rb:264
 #, fuzzy
@@ -13924,10 +13785,8 @@ msgstr "Maí"
 
 #: app/frontend/apps/desktop/components/User/UserInfo.vue:80
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogMaybeBadge.vue:13
-#, fuzzy
-#| msgid "maybe:"
 msgid "Maybe"
-msgstr "ef til vill:"
+msgstr "Ef til vill"
 
 #: app/frontend/apps/desktop/components/BetaUi/BetaUiFeedbackConsentDialog.vue:106
 msgid "Maybe later"
@@ -13940,10 +13799,8 @@ msgid "Me"
 msgstr "Hamur"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:51
-#, fuzzy
-#| msgid "Media download was successful."
 msgid "Media download error"
-msgstr "Niðurhal miðils heppnaðist."
+msgstr "Niðurhal miðils misheppnaðist"
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleRetryMediaDownload.ts:31
 #, fuzzy
@@ -14664,10 +14521,8 @@ msgid "New Group"
 msgstr "Nýr hópur"
 
 #: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:5
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
 msgid "New Keyboard Shortcuts"
-msgstr "Flýtivísanir"
+msgstr "Nýjir flýtilyklar"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:30
 msgid "New Macro"
@@ -14890,10 +14745,8 @@ msgstr "Ný beiðni"
 #: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:220
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
-#, fuzzy
-#| msgid "New user?"
 msgid "New user"
-msgstr "Nýr notandi?"
+msgstr "Nýr notandi"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:231
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:144
@@ -15105,10 +14958,8 @@ msgid "No certificate found."
 msgstr "Ekkert skilríki finnst."
 
 #: app/assets/javascripts/app/views/generic/audit_log_diff.jst.eco:3
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "No changes."
-msgstr "Hunsa breytingar"
+msgstr "Engar breytingar."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:440
@@ -15150,10 +15001,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:103
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:61
-#, fuzzy
-#| msgid "Not Assigned"
 msgid "No customer assigned yet."
-msgstr "Ekki úthlutað"
+msgstr "Enn enginn viðskiptavinur skráður."
 
 #: app/models/group.rb:41
 msgid "No double colons (::) allowed, reserved delimiter"
@@ -15227,10 +15076,8 @@ msgid "No items available"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBaseBrowse.vue:600
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "No knowledge base content is available yet."
-msgstr "Þekkingarbrunnur"
+msgstr "Ekkert þekkingarbrunnsefni í boði."
 
 #: app/services/service/knowledge_base/create_answer_from_ai_result.rb:38
 #: app/services/service/ticket/ai_assistance/create_knowledge_base_answer.rb:58
@@ -15303,10 +15150,8 @@ msgid "No related article found to process the status message on."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge.vue:113
-#, fuzzy
-#| msgid "Delete Knowledge Base"
 msgid "No related knowledge base answer links."
-msgstr "Eyða þekkingarbrunni"
+msgstr "Engir skyldir þekkingarbrunnssvarahlekkir."
 
 #: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:171
 #, fuzzy
@@ -15374,10 +15219,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:44
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:103
-#, fuzzy
-#| msgid "Options"
 msgid "No suggestions."
-msgstr "Valmöguleikar"
+msgstr "Engar uppástungur."
 
 #: app/models/ai/agent/type/ticket_categorizer.rb:28
 #: app/models/ai/agent/type/ticket_text_extractor.rb:38
@@ -15387,10 +15230,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleTranslation.ts:25
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "No supported target language is available."
-msgstr "Þekkingarbrunnur"
+msgstr "Ekkert stutt marktungumál er tiltækt."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
@@ -15478,10 +15319,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:108
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:131
-#, fuzzy
-#| msgid "Delete Knowledge Base"
 msgid "None of the existing knowledge base answers fit your ticket?"
-msgstr "Eyða þekkingarbrunni"
+msgstr "Áttu engin núverandi þekkingarbrunnssvör við beiðnina þína?"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/linked_tickets.coffee:52
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
@@ -15899,7 +15738,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/ai_provider/ollama.coffee:3
 msgid "Ollama"
-msgstr ""
+msgstr "Ollama"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:500
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:41
@@ -16011,10 +15850,8 @@ msgid ""
 msgstr ""
 
 #: app/controllers/long_polling_controller.rb:92
-#, fuzzy
-#| msgid "Enables user authentication via GitHub."
 msgid "Only session based authentication is supported!"
-msgstr "Virkjar notendaauðkenningu í með GitHub."
+msgstr "Einungis hægt að nota auðkenningu byggða á setu!"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
@@ -16488,10 +16325,8 @@ msgid "Out of office settings could not be saved."
 msgstr "Ekki tókst að vista fjarverustillingar."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:144
-#, fuzzy
-#| msgid "Notification settings have been saved successfully."
 msgid "Out of office settings have been saved successfully"
-msgstr "Tilkynningastillingar hafa verið vistaðar."
+msgstr "Stillingar fyrir fjarverutilkynningar hafa verið vistaðar"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:99
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:24
@@ -16756,7 +16591,7 @@ msgstr "Foreldri"
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:53
 #: db/seeds/object_manager_attributes.rb:1480 db/seeds/permissions.rb:486
 msgid "Password"
-msgstr "Lykilorð"
+msgstr "Aðgangsorð"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:3
 #: app/assets/javascripts/app/views/profile/password.jst.eco:3
@@ -17746,10 +17581,8 @@ msgid "Push notifications need a secure connection. Open this app via HTTPS."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:102
-#, fuzzy
-#| msgid "When notification is being sent."
 msgid "Push notifications on this device"
-msgstr "Þegar verið er að senda tilkynningu."
+msgstr "Tilkynningar í þetta tæki"
 
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:51
 msgid ""
@@ -18383,10 +18216,8 @@ msgid "Renew access token"
 msgstr "Persónulegir aðgangstókar"
 
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseFeedFlyout/KnowledgeBaseFeedFlyout.vue:109
-#, fuzzy
-#| msgid "Delete this access token"
 msgid "Renewing the access token failed."
-msgstr "Eyða þessum aðgangstóka"
+msgstr "Ekki tókst að endurnýja aðgangstókann."
 
 #: app/models/report.rb:52
 msgid "Reopened"
@@ -19025,10 +18856,8 @@ msgid "SSL verification"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:20
-#, fuzzy
-#| msgid "Signature verification failed!"
 msgid "SSL verification disabled"
-msgstr "Ekki tókst að staðfesta undirritun!"
+msgstr "SSL staðfesting óvirk"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:419
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
@@ -19321,10 +19150,8 @@ msgid "Search URL is missing."
 msgstr ""
 
 #: lib/external_data_source/errors.rb:46
-#, fuzzy
-#| msgid "Search"
 msgid "Search URL is unsafe."
-msgstr "Leita"
+msgstr "Leitarslóð er óörugg."
 
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailViewContent.vue:175
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationRelatedTickets/OrganizationTicketList.vue:94
@@ -19588,10 +19415,8 @@ msgstr "Leita…"
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:160
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiSuggested.vue:108
-#, fuzzy
-#| msgid "Search for users"
 msgid "Searching for related answers…"
-msgstr "Leita að notendum"
+msgstr "Leita að skyldum svörum…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax.coffee:16
 #: app/assets/javascripts/app/controllers/_ui_element/autocompletion_ajax_customer_organization.coffee:18
@@ -19736,10 +19561,8 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:129
-#, fuzzy
-#| msgid "Security key verification failed."
 msgid "Security token verification failed"
-msgstr "Staðfesting öryggislykils misheppnaðist."
+msgstr "Staðfesting öryggistóka misheppnaðist"
 
 #: app/frontend/shared/stores/authentication.ts:205
 msgid ""
@@ -20253,16 +20076,12 @@ msgid "Set security keys as default"
 msgstr "Endurheimta sjálfgildi"
 
 #: db/seeds/settings.rb:6011
-#, fuzzy
-#| msgid ""
-#| "Set timeframe in seconds. If it's set to 0 you can delete notes without "
-#| "time limits"
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
 "limits."
 msgstr ""
 "Settu tímamörk í sekúndum. If þau eru sett á 0 er hægt að eyða athugasemdum "
-"án tímamarka"
+"án tímamarka."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:29
 #, fuzzy
@@ -21459,10 +21278,10 @@ msgid "Subscription settings"
 msgstr "Áskriftarstillingar"
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:85
-#, fuzzy
-#| msgid "Delete Knowledge Base"
 msgid "Suggest matching knowledge base answers in the ticket sidebar."
-msgstr "Eyða þekkingarbrunni"
+msgstr ""
+"Stingdu upp á viðeigandi svörum úr þekkingarbrunninum á hliðarstiku "
+"beiðnarinnar."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:737
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:36
@@ -21509,10 +21328,8 @@ msgstr "Myndaþjónusta"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_ticket_summary.jst.eco:53
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSummary/TicketSidebarSummaryContent.vue:144
-#, fuzzy
-#| msgid "The new ticket number could not be generated."
 msgid "Summary is being generated…"
-msgstr "Ekki var hægt að stofna nýtt beiðnarnúmer."
+msgstr "Er að gera yfirlit…"
 
 #: app/assets/javascripts/app/models/user.coffee:348
 msgid "Summer holiday"
@@ -21549,7 +21366,7 @@ msgstr ""
 #, fuzzy
 #| msgid "%s switched to |%s|!"
 msgid "Switch here"
-msgstr "%s skipti yfir á |%s|!"
+msgstr "Switch here"
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:14
 msgid "Switch to new layout"
@@ -22415,10 +22232,8 @@ msgstr ""
 #: app/graphql/gql/queries/ticket/checklist.rb:11
 #: app/graphql/gql/subscriptions/checklist/template_updates.rb:12
 #: app/graphql/gql/subscriptions/ticket/checklist_updates.rb:13
-#, fuzzy
-#| msgid "This feature is not enabled."
 msgid "The checklist feature is not active"
-msgstr "Þessi virkni er óvirk."
+msgstr "Gátlistar eru óvirkir"
 
 #: app/models/group.rb:111
 msgid "The chosen parent group is part of a circular reference."
@@ -22444,10 +22259,8 @@ msgstr ""
 "síðunni."
 
 #: app/services/service/content_translation/base.rb:20
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "The configured translation service is not available."
-msgstr "Þekkingarbrunnur"
+msgstr "Uppsetta þýðingaþjónustan er ekki tiltæk."
 
 #: app/frontend/apps/mobile/composables/useConnection.ts:18
 msgid "The connection to the server was lost."
@@ -22471,10 +22284,8 @@ msgid "The content could not be copied to the clipboard."
 msgstr "Ekki heppnaðist að senda tölvupóst til notandans."
 
 #: app/services/service/content_translation/backend/base.rb:34
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "The content is too large for the translation service."
-msgstr "Þekkingarbrunnur"
+msgstr "Innihaldið er og stórt fyrir þýðingaþjónustuna."
 
 #: app/models/ai/agent/type/custom_ai_agent.rb:57
 msgid ""
@@ -22877,10 +22688,8 @@ msgid "The minutes overlay"
 msgstr "Opna athugasemdabox"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:776
-#, fuzzy
-#| msgid "The avatar could not be fetched."
 msgid "The model list could not be fetched: %s"
-msgstr "Ekki heppnaðist að sækja passamyndina."
+msgstr "Ekki tókst að sækja lista yfir módel: %s"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDatePanel.vue:213
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDatePanel.vue:230
@@ -23657,10 +23466,8 @@ msgstr ""
 
 #: app/services/service/content_translation/backend/deepl.rb:134
 #: app/services/service/content_translation/backend/libre_translate.rb:117
-#, fuzzy
-#| msgid "AI provider is not supported"
 msgid "The translation service does not support the target language %s."
-msgstr "Gervigreindarveita er ekki studd"
+msgstr "Þýðingaþjónustan styður ekki marktungumálið %s."
 
 #: app/services/service/content_translation/backend/base.rb:16
 #, fuzzy
@@ -24043,10 +23850,8 @@ msgid "This browser cannot register for push notifications."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:29
-#, fuzzy
-#| msgid "AI provider is not supported"
 msgid "This browser does not support push notifications."
-msgstr "Gervigreindarveita er ekki studd"
+msgstr "Vafrinn styður ekki tilkynningar."
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco:11
 msgid "This category including sub-categories feed:"
@@ -24336,16 +24141,12 @@ msgid "This item expands to show more options"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseAnswer.ts:91
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "This knowledge base answer is not available."
-msgstr "Þekkingarbrunnur"
+msgstr "Þetta svar úr þekkingarbrunninum er ekki tiltækt."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseCategorySubcategories.ts:64
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "This knowledge base category is not available."
-msgstr "Þekkingarbrunnur"
+msgstr "Þessi flokkur í þekkingarbrunninum er ekki tiltækur."
 
 #: app/frontend/apps/desktop/pages/knowledge-base/composables/useKnowledgeBaseLocaleGuard.ts:31
 #: app/frontend/apps/desktop/pages/knowledge-base/views/KnowledgeBase.vue:18
@@ -24449,16 +24250,12 @@ msgstr ""
 
 #: app/controllers/ai/provider_connections_controller.rb:38
 #: app/services/service/ai/provider_connection/resolve_embedding_metadata.rb:37
-#, fuzzy
-#| msgid "AI provider is not supported"
 msgid "This provider does not support embeddings."
-msgstr "Gervigreindarveita er ekki studd"
+msgstr "Þessi þjónustuveita styður ekki innfellingar."
 
 #: app/services/service/ai/provider_connection/list_models.rb:51
-#, fuzzy
-#| msgid "AI provider is not supported"
 msgid "This provider does not support model listing."
-msgstr "Gervigreindarveita er ekki studd"
+msgstr "Þessi þjónustuveita styður ekki lista yfir módel."
 
 #: app/services/service/execute_locked_block.rb:43
 msgid ""
@@ -25634,10 +25431,8 @@ msgid "Total display of the number of objects in a grouping."
 msgstr ""
 
 #: app/models/ai/agent/type/ticket_tagger.rb:170
-#, fuzzy
-#| msgid "Ticket could not be created."
 msgid "Total shouldn't exceed"
-msgstr "Ekki tókst að stofna beiðni."
+msgstr "Heild ætti ekki að fara yfir"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:12
 msgid "Total: %s"
@@ -25711,10 +25506,8 @@ msgid "Translation Source"
 msgstr "Þýðingar"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:277
-#, fuzzy
-#| msgid "Bulk action failed"
 msgid "Translation in progress…"
-msgstr "Fjöldaaðgerð misheppnaðist"
+msgstr "Þýðing í vinnslu…"
 
 #: app/models/setting/validation/content_translation_service_config.rb:10
 #, fuzzy
@@ -25947,10 +25740,8 @@ msgid "Two-factor authentication"
 msgstr "Auðkenning"
 
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/twoFactorSetup.ts:12
-#, fuzzy
-#| msgid "Two-factor authentication method could not be initiated."
 msgid "Two-factor authentication configuration is required"
-msgstr "Ekki tókst að vekja tveggja þátta auðkenningarhátt."
+msgstr "Uppsetningar á tveggja-þátta auðkenningu er krafist"
 
 #: app/controllers/application_controller/authenticates.rb:59
 msgid "Two-factor authentication is not supported with HTTP BasicAuth."
@@ -26052,7 +25843,7 @@ msgstr "Dagsetning og tími"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:51
 msgid "URL"
-msgstr "Slóð"
+msgstr "URL"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:696
 msgid "URL (AJAX endpoint)"
@@ -26516,21 +26307,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Another ticket was merged into ticket (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "Another ticket was merged into ticket (#{ticket.title}) by "
-#| "\"<b>#{current_user.longname}</b>\".\n"
-#| "</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}"
-#| "\" target=\"zammad_app\">View this in #{config.product_name}</a>\n"
-#| "</div>\n"
 msgid ""
 "Updated ticket article (#{ticket.title})\n"
 "\n"
@@ -26556,18 +26332,28 @@ msgid ""
 "a>\n"
 "</div>\n"
 msgstr ""
-"Önnur beiðni var sameinuð beiðni (#{ticket.title})\n"
+"Efnisgrein var uppfærð (#{ticket.title})\n"
 "\n"
 "<div>Hi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Önnur beiðni var sameinuð beiðni (#{ticket.title}) af "
-"\"<b>#{current_user.longname}</b>\".\n"
+"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+"%> brást við skeyti frá #{article.created_by.fullname} með <%= h "
+"@objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %>:\n"
 "</div>\n"
 "<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"    <blockquote type=\"cite\">\n"
+"    #{article.body_as_html}\n"
+"    </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">Skoðaðu í #{config.product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
+"{article.id}\" target=\"zammad_app\">Skoðaðu nánar í #{config.product_name}</"
+"a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17
@@ -26640,10 +26426,8 @@ msgstr "Hleð upp"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFile/FieldFileListSkeleton.vue:22
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:127
-#, fuzzy
-#| msgid "Media download was successful."
 msgid "Uploading file: %s"
-msgstr "Niðurhal miðils heppnaðist."
+msgstr "Upphala skrá: %s"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/features/image-handler/ImageUploadInsideOtherEditor.vue:32
 msgid "Uploading…"
@@ -27126,10 +26910,8 @@ msgid "Vector DB indexed embedding configuration"
 msgstr ""
 
 #: db/seeds/settings.rb:7008
-#, fuzzy
-#| msgid "Access to the knowledge base interface."
 msgid "Vector DB knowledge base chunking strategy"
-msgstr "Aðgangur á þekkingarbrunnsviðmóti."
+msgstr "Aðferð við skiptingu gagna í þekkingargrunni fyrir vigurgagnagrunn"
 
 #: db/seeds/settings.rb:6996
 #, fuzzy
@@ -27690,10 +27472,8 @@ msgid "Workflows"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:112
-#, fuzzy
-#| msgid "Feedback"
 msgid "Would you like to give us feedback on the BETA UI?"
-msgstr "Endurgjöf"
+msgstr "Viltu skilja eftir endurgjöf um BETA viðmótið?"
 
 #: app/assets/javascripts/app/controllers/_ai/text_tool.coffee:30
 #: db/seeds/permissions.rb:251 db/seeds/settings.rb:6845
@@ -29179,10 +28959,8 @@ msgstr ""
 #: app/graphql/gql/queries/autocomplete_search/idoit_object_types.rb:13
 #: app/graphql/gql/queries/ticket/external_references/idoit_object_list.rb:13
 #: app/graphql/gql/queries/ticket/external_references/idoit_object_search.rb:15
-#, fuzzy
-#| msgid "This setting is not enabled."
 msgid "i-doit integration is not enabled"
-msgstr "Þessi stilling er ekki virk."
+msgstr "i-doit samþætting er ekki virk"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:163
 #, fuzzy
@@ -29822,10 +29600,8 @@ msgid "or sign in using"
 msgstr "eða skráðu inn með"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:106
-#, fuzzy
-#| msgid "Are you sure to remove this article?"
 msgid "or use the reply actions on articles."
-msgstr "Ertu viss um að þú viljir fjarlægja þessa efnisgrein?"
+msgstr "eða notaðu svarmöguleikana."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:25
 msgid "order,sort,overview,ticket,sorting"
@@ -30117,10 +29893,8 @@ msgid "switch back to user"
 msgstr ""
 
 #: app/assets/javascripts/app/models/audit_log.coffee:7
-#, fuzzy
-#| msgid "%s switched to |%s|!"
 msgid "switch to user"
-msgstr "%s skipti yfir á |%s|!"
+msgstr "skiptir yfir í notanda"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:279
 #, fuzzy

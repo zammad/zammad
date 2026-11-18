@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-09 09:12+0000\n"
+"PO-Revision-Date: 2026-11-16 03:23+0000\n"
 "Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
-"zammad-development/fr/>\n"
+"zammad-stable/fr/>\n"
 "Language: fr-fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -769,10 +769,8 @@ msgid "'%s' is not a valid IP address or CIDR range."
 msgstr "'%s' n'est pas une adresse IP ou une plage CIDR valide."
 
 #: app/models/setting/validation/backend_class.rb:19
-#, fuzzy
-#| msgid "'%s' is not a valid IP address or CIDR range."
 msgid "'%s' is not a valid backend for this setting."
-msgstr "'%s' n'est pas une adresse IP ou une plage CIDR valide."
+msgstr "\"%s\" n’est pas un moteur valide pour ce paramètre."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -5117,10 +5115,8 @@ msgid "Content could not be loaded."
 msgstr "Le contenu n'a pas pu être chargé."
 
 #: app/models/store.rb:162
-#, fuzzy
-#| msgid "Content could not be loaded."
 msgid "Content is not a resizable image."
-msgstr "Le contenu n'a pas pu être chargé."
+msgstr "Le contenu n’est pas une image redimensionnable."
 
 #: app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue:13
 msgid "Content loader"
@@ -5877,10 +5873,8 @@ msgid "Custom instructions"
 msgstr "Instructions personnalisées"
 
 #: app/models/core_workflow.rb:91
-#, fuzzy
-#| msgid "The locale '%s' is not active."
 msgid "Custom module '%s' is not available."
-msgstr "La langue '%s' n'est pas active."
+msgstr "Le module personnalisé \"%s\" n’est pas disponible."
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
@@ -11314,6 +11308,7 @@ msgstr "Actions sur l'image"
 #: app/models/store.rb:169
 msgid "Image exceeds the maximum resizable pixel count."
 msgstr ""
+"L’image dépasse le nombre maximal de pixels pouvant être redimensionnés."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:29
@@ -15271,10 +15266,8 @@ msgid "OAuth2 token is expired!"
 msgstr "Le token OAuth2 a expiré !"
 
 #: app/controllers/application_controller/authenticates.rb:77
-#, fuzzy
-#| msgid "OAuth2 token is expired!"
 msgid "OAuth2 token is revoked!"
-msgstr "Le token OAuth2 a expiré !"
+msgstr "Le token OAuth2 a été révoqué !"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:399
 msgid "OCR Model"
@@ -15502,10 +15495,8 @@ msgstr ""
 "vérifiées."
 
 #: app/controllers/long_polling_controller.rb:92
-#, fuzzy
-#| msgid "Enables user authentication via %s."
 msgid "Only session based authentication is supported!"
-msgstr "Active l'authentification utilisateur via %s."
+msgstr "Seule l'authentification basée sur les sessions est prise en charge !"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
@@ -15520,7 +15511,7 @@ msgstr ""
 
 #: app/controllers/settings_controller.rb:32
 msgid "Only the product logo can be updated with an image."
-msgstr ""
+msgstr "Seul le logo du produit peut être mis à jour avec une image."
 
 #: db/seeds/settings.rb:33
 msgid "Only used internally to propagate current web app version to clients."
@@ -20999,6 +20990,8 @@ msgstr "La clé de signature PGP a été révoquée."
 msgid ""
 "The SSO environment variables and headers contain different user logins."
 msgstr ""
+"Les variables d’environnement et les entêtes SSO contiennent des "
+"identifiants utilisateur différents."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
@@ -21139,17 +21132,14 @@ msgstr ""
 "éviter de traduire les articles déjà rédigés dans la langue cible. %l"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:292
-#, fuzzy
-#| msgid ""
-#| "The article language detection is disabled. Enable it to avoid "
-#| "translating articles that are already in the target language. %l"
 msgid ""
 "The article language detection is disabled. To avoid translating articles "
 "that are already in the target language, ask an administrator with access to "
 "the ticket settings to enable it."
 msgstr ""
-"La détection de la langue des articles est désactivée. Activez-la pour "
-"éviter de traduire les articles déjà rédigés dans la langue cible. %l"
+"La détection de la langue des articles est désactivée. Pour éviter de "
+"traduire des articles qui sont déjà dans la langue cible, demandez à un "
+"administrateur ayant accès aux paramètres des tickets de l'activer."
 
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
 msgid ""
@@ -22336,12 +22326,15 @@ msgstr "La réponse n'a pas pu être traitée."
 #: lib/ai/provider/anthropic.rb:13
 msgid "The response was cut off because it reached the maximum output length."
 msgstr ""
+"La réponse a été tronquée car elle a atteint la longueur de sortie maximale."
 
 #: lib/ai/provider/anthropic.rb:14
 msgid ""
 "The response was cut off because the request and the response together "
 "exceeded the context window of the model."
 msgstr ""
+"La réponse a été tronquée car la requête et la réponse, combinées, "
+"dépassaient la fenêtre contextuelle du modèle."
 
 #: app/controllers/ticket_articles_controller.rb:271
 msgid "The retried attachment download failed."
@@ -22768,7 +22761,7 @@ msgstr "La valeur du paramètre 'payload->class_name' est invalide."
 
 #: app/models/setting/validation/backend_class.rb:14
 msgid "The value of this setting has an invalid format."
-msgstr ""
+msgstr "La valeur de ce paramètre a un format non valide."
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 msgid "The vector index could not be updated."
@@ -25559,31 +25552,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Updated ticket article (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
-#| "%> reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
-#| "'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
-#| "</div>\n"
-#| "<br>\n"
-#| "<% if @objects[:article] %>\n"
-#| "  <div>\n"
-#| "    <blockquote type=\"cite\">\n"
-#| "    #{article.body_as_html}\n"
-#| "    </blockquote>\n"
-#| "  </div>\n"
-#| "<% end %>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/"
-#| "#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in "
-#| "#{config.product_name}</a>\n"
-#| "</div>\n"
 msgid ""
 "Updated ticket article (#{ticket.title})\n"
 "\n"
@@ -25614,9 +25582,9 @@ msgstr ""
 "<div>Bonjour #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
-"a réagi avec <%= @objects[:article].preferences.dig('whatsapp', 'reaction', "
-"'emoji') %> au message de #{article.created_by.fullname}:\n"
+"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+"%> a réagi avec <%= h @objects[:article].preferences.dig('whatsapp', "
+"'reaction', 'emoji') %> au message de #{article.created_by.fullname}:\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
@@ -25628,8 +25596,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
-"#{article.id}\" target=\"zammad_app\">Voir dans #{config.product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
+"{article.id}\" target=\"zammad_app\">Voir dans #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17

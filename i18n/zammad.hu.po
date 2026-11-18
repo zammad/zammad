@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-11 11:21+0000\n"
+"PO-Revision-Date: 2026-11-14 12:12+0000\n"
 "Last-Translator: Balázs Úr <balazs@urbalazs.hu>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -771,10 +771,8 @@ msgid "'%s' is not a valid IP address or CIDR range."
 msgstr "A(z) „%s” nem érvényes IP-cím vagy CIDR-tartomány."
 
 #: app/models/setting/validation/backend_class.rb:19
-#, fuzzy
-#| msgid "'%s' is not a valid IP address or CIDR range."
 msgid "'%s' is not a valid backend for this setting."
-msgstr "A(z) „%s” nem érvényes IP-cím vagy CIDR-tartomány."
+msgstr "A(z) „%s” nem érvényes háttérprogram ennél a beállításnál."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -5099,10 +5097,8 @@ msgid "Content could not be loaded."
 msgstr "A tartalmat nem sikerült betölteni."
 
 #: app/models/store.rb:162
-#, fuzzy
-#| msgid "Content could not be loaded."
 msgid "Content is not a resizable image."
-msgstr "A tartalmat nem sikerült betölteni."
+msgstr "A tartalom nem átméretezhető kép."
 
 #: app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue:13
 msgid "Content loader"
@@ -5178,14 +5174,14 @@ msgstr "Munkamenet folytatása"
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:139
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:171
 msgid "Continue to desktop"
-msgstr "Folytatás asztali gépen"
+msgstr "Folytatás asztali nézeten"
 
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee:73
 #: app/assets/javascripts/app/views/login.jst.eco:125
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/continue-to-mobile.ts:14
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:317
 msgid "Continue to mobile"
-msgstr "Folytatás mobilon"
+msgstr "Folytatás mobil nézeten"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:4
 msgid "Contributing Translations"
@@ -5857,10 +5853,8 @@ msgid "Custom instructions"
 msgstr "Egyéni utasítások"
 
 #: app/models/core_workflow.rb:91
-#, fuzzy
-#| msgid "The locale '%s' is not active."
 msgid "Custom module '%s' is not available."
-msgstr "A(z) „%s” területi beállítás nem aktív."
+msgstr "A(z) „%s” egyéni modul nem érhető el."
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
@@ -7515,10 +7509,8 @@ msgid "Delete existing data of your system."
 msgstr "A rendszer meglévő adatainak törlése."
 
 #: db/seeds/schedulers.rb:97
-#, fuzzy
-#| msgid "Selected conditions"
 msgid "Delete expired MCP confirmations."
-msgstr "Kiválasztott feltételek"
+msgstr "Lejárt MCP-megerősítések törlése."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:118
 msgid "Delete immediately"
@@ -8816,6 +8808,8 @@ msgid ""
 "Enable the MCP server, so that AI clients can use Zammad with personal "
 "access tokens."
 msgstr ""
+"Az MCP-kiszolgáló engedélyezése, hogy az MI-ügyfelek személyes hozzáférési "
+"tokenekkel használhassák a Zammadot."
 
 #: db/seeds/settings.rb:6604
 msgid "Enable the activity stream on the dashboard."
@@ -10624,10 +10618,8 @@ msgid "Growth/Enterprise API (api.deepl.com)"
 msgstr "Növekedési vagy vállalati API (api.deepl.com)"
 
 #: app/assets/javascripts/app/models/webhook.coffee:15
-#, fuzzy
-#| msgid "HMAC SHA1 Signature Token"
 msgid "HMAC signature token"
-msgstr "HMAC SHA1 aláírási token"
+msgstr "HMAC aláírási token"
 
 #: db/seeds/settings.rb:5848
 msgid "HTML Email CSS Font"
@@ -11313,7 +11305,7 @@ msgstr "Képműveletek"
 
 #: app/models/store.rb:169
 msgid "Image exceeds the maximum resizable pixel count."
-msgstr ""
+msgstr "A kép túllépi a legnagyobb átméretezhető képpontszámot."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:29
@@ -12987,7 +12979,7 @@ msgstr "MAC-cím (a jelentés egyedi azonosítója)"
 #: app/assets/javascripts/app/views/api/access.jst.eco:42
 #: db/seeds/settings.rb:6929
 msgid "MCP server"
-msgstr ""
+msgstr "MCP-kiszolgáló"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:113
 msgid "Machine-translated, some formatting may be lost."
@@ -15249,10 +15241,8 @@ msgid "OAuth2 token is expired!"
 msgstr "Az OAuth2-token lejárt!"
 
 #: app/controllers/application_controller/authenticates.rb:77
-#, fuzzy
-#| msgid "OAuth2 token is expired!"
 msgid "OAuth2 token is revoked!"
-msgstr "Az OAuth2-token lejárt!"
+msgstr "Az OAuth2-token vissza lett vonva!"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:399
 msgid "OCR Model"
@@ -15477,10 +15467,8 @@ msgstr ""
 "szabad telepíteni."
 
 #: app/controllers/long_polling_controller.rb:92
-#, fuzzy
-#| msgid "Enables user authentication via %s."
 msgid "Only session based authentication is supported!"
-msgstr "Engedélyezi a felhasználó-hitelesítést %s használatával."
+msgstr "Csak munkamenet-alapú hitelesítés támogatott!"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
@@ -15495,7 +15483,7 @@ msgstr ""
 
 #: app/controllers/settings_controller.rb:32
 msgid "Only the product logo can be updated with an image."
-msgstr ""
+msgstr "Csak a terméklogó frissíthető egy képpel."
 
 #: db/seeds/settings.rb:33
 msgid "Only used internally to propagate current web app version to clients."
@@ -17053,7 +17041,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:102
 msgid "Push notifications on this device"
-msgstr "Ezen az eszközön lévő leküldéses értesítések"
+msgstr "Leküldéses értesítések ezen az eszközön"
 
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:51
 msgid ""
@@ -20878,6 +20866,8 @@ msgstr "A tudásbázist nem sikerült létrehozni."
 #: app/assets/javascripts/app/views/api/access.jst.eco:45
 msgid "The MCP server works only while token access is enabled."
 msgstr ""
+"Az MCP-kiszolgáló csak addig működik, amíg a tokenes hozzáférés engedélyezve "
+"van."
 
 #: app/services/service/avatar/image_validate.rb:20
 msgid "The MIME type of the image is invalid."
@@ -20948,6 +20938,8 @@ msgstr "A PGP aláírási kulcs vissza lett vonva."
 msgid ""
 "The SSO environment variables and headers contain different user logins."
 msgstr ""
+"Az SSO környezeti változói és a fejlécek különböző felhasználói "
+"bejelentkezéseket tartalmaznak."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
@@ -21084,17 +21076,15 @@ msgstr ""
 "elkerülje a már célnyelven lévő bejegyzések fordítását. %l"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:292
-#, fuzzy
-#| msgid ""
-#| "The article language detection is disabled. Enable it to avoid "
-#| "translating articles that are already in the target language. %l"
 msgid ""
 "The article language detection is disabled. To avoid translating articles "
 "that are already in the target language, ask an administrator with access to "
 "the ticket settings to enable it."
 msgstr ""
-"A bejegyzés nyelvének felismerése le van tiltva. Engedélyezze, hogy "
-"elkerülje a már célnyelven lévő bejegyzések fordítását. %l"
+"A bejegyzés nyelvének felismerése le van tiltva. Annak elkerülése érdekében, "
+"hogy olyan bejegyzéseket fordítson le, amelyek már a célnyelven vannak, "
+"kérjen meg egy, a jegybeállításokhoz hozzáféréssel rendelkező "
+"adminisztrátort, hogy engedélyezze azt."
 
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
 msgid ""
@@ -22244,13 +22234,15 @@ msgstr "A választ nem sikerült feldolgozni."
 
 #: lib/ai/provider/anthropic.rb:13
 msgid "The response was cut off because it reached the maximum output length."
-msgstr ""
+msgstr "A válasz le lett vágva, mert elérte a legnagyobb kimeneti hosszúságot."
 
 #: lib/ai/provider/anthropic.rb:14
 msgid ""
 "The response was cut off because the request and the response together "
 "exceeded the context window of the model."
 msgstr ""
+"A válasz le lett vágva, mert a kérés és a válasz együtt túllépte a modell "
+"környezetablakát."
 
 #: app/controllers/ticket_articles_controller.rb:271
 msgid "The retried attachment download failed."
@@ -22672,7 +22664,7 @@ msgstr "A „payload->class_name” paraméter értéke érvénytelen."
 
 #: app/models/setting/validation/backend_class.rb:14
 msgid "The value of this setting has an invalid format."
-msgstr ""
+msgstr "A beállítás értéke érvénytelen formátummal rendelkezik."
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 msgid "The vector index could not be updated."
@@ -25436,31 +25428,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Updated ticket article (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
-#| "%> reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
-#| "'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
-#| "</div>\n"
-#| "<br>\n"
-#| "<% if @objects[:article] %>\n"
-#| "  <div>\n"
-#| "    <blockquote type=\"cite\">\n"
-#| "    #{article.body_as_html}\n"
-#| "    </blockquote>\n"
-#| "  </div>\n"
-#| "<% end %>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/"
-#| "#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in "
-#| "#{config.product_name}</a>\n"
-#| "</div>\n"
 msgid ""
 "Updated ticket article (#{ticket.title})\n"
 "\n"
@@ -25491,8 +25458,8 @@ msgstr ""
 "<div>Kedves #{recipient.firstname}!</div>\n"
 "<br>\n"
 "<div>\n"
-"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
-"ezzel reagált: <%= @objects[:article].preferences.dig('whatsapp', "
+"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+"%> ezzel reagált: <%= h @objects[:article].preferences.dig('whatsapp', "
 "'reaction', 'emoji') %> az ő üzentére: #{article.created_by.fullname}:\n"
 "</div>\n"
 "<br>\n"
@@ -25505,8 +25472,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
-"#{article.id}\" target=\"zammad_app\">Nézze meg itt: #{config.product_name}</"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
+"{article.id}\" target=\"zammad_app\">Nézze meg itt: #{config.product_name}</"
 "a>\n"
 "</div>\n"
 
@@ -25693,6 +25660,8 @@ msgid ""
 "Used to sign each request with HMAC-SHA1 (X-Hub-Signature header) and HMAC-"
 "SHA256 (X-Hub-Signature-256 header)."
 msgstr ""
+"Az egyes kérések HMAC-SHA1 (X-Hub-Signature fejléc) és HMAC-SHA256 (X-Hub-"
+"Signature-256 fejléc) használatával való aláírásához használva."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:554
 msgid "Used when composing a Ticket article"

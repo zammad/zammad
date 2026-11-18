@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-10 22:12+0000\n"
-"Last-Translator: Murat Duman <mduman@metu.edu.tr>\n"
+"PO-Revision-Date: 2026-11-18 09:49+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/tr/>\n"
 "Language: tr\n"
@@ -772,10 +772,8 @@ msgid "'%s' is not a valid IP address or CIDR range."
 msgstr "'%s' geçerli bir IP adresi veya CIDR aralığı değil."
 
 #: app/models/setting/validation/backend_class.rb:19
-#, fuzzy
-#| msgid "'%s' is not a valid IP address or CIDR range."
 msgid "'%s' is not a valid backend for this setting."
-msgstr "'%s' geçerli bir IP adresi veya CIDR aralığı değil."
+msgstr "'%s', bu ayar için geçerli bir arka uç değildir."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -5086,10 +5084,8 @@ msgid "Content could not be loaded."
 msgstr "İçerik yüklenemedi."
 
 #: app/models/store.rb:162
-#, fuzzy
-#| msgid "Content could not be loaded."
 msgid "Content is not a resizable image."
-msgstr "İçerik yüklenemedi."
+msgstr "İçerik, boyutlandırılabilir bir resim değildir."
 
 #: app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue:13
 msgid "Content loader"
@@ -5831,10 +5827,8 @@ msgid "Custom instructions"
 msgstr "Özel talimatlar"
 
 #: app/models/core_workflow.rb:91
-#, fuzzy
-#| msgid "The locale '%s' is not active."
 msgid "Custom module '%s' is not available."
-msgstr "'%s' dil ayarı etkin değil."
+msgstr "'%s' adlı özel modül kullanılamıyor."
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
@@ -7919,7 +7913,8 @@ msgstr "%s için planlanan değişikliği gerçekten silmek istiyor musunuz?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr ""
 "Bu yazının görünürlüğünü gerçekten \"herkese açık\" olarak ayarlamak istiyor "
-"musunuz ?"
+"musunuz (Herkese açık yaptığınızda sadece talebi oluşturan kullanıcı ve grup "
+"üyeleri yazdığınız cevabı görebilecektir.)?"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:65
 msgid "Do you want to continue?"
@@ -11222,7 +11217,7 @@ msgstr "Görüntü işlemleri"
 
 #: app/models/store.rb:169
 msgid "Image exceeds the maximum resizable pixel count."
-msgstr ""
+msgstr "Görüntü, yeniden boyutlandırılabilen maksimum piksel sayısını aşıyor."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:29
@@ -15152,10 +15147,8 @@ msgid "OAuth2 token is expired!"
 msgstr "OAuth2 belirtecinin süresi doldu!"
 
 #: app/controllers/application_controller/authenticates.rb:77
-#, fuzzy
-#| msgid "OAuth2 token is expired!"
 msgid "OAuth2 token is revoked!"
-msgstr "OAuth2 belirtecinin süresi doldu!"
+msgstr "OAuth2 Belirteçi geri alındı!"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:399
 msgid "OCR Model"
@@ -15378,10 +15371,8 @@ msgstr ""
 "yüklenmelidir."
 
 #: app/controllers/long_polling_controller.rb:92
-#, fuzzy
-#| msgid "Enables user authentication via %s."
 msgid "Only session based authentication is supported!"
-msgstr "Kullanıcı kimlik doğrulamasını %s aracılığıyla etkinleştirir."
+msgstr "Yalnızca oturum tabanlı kimlik doğrulama desteklenmektedir!"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
@@ -15395,7 +15386,7 @@ msgstr ""
 
 #: app/controllers/settings_controller.rb:32
 msgid "Only the product logo can be updated with an image."
-msgstr ""
+msgstr "Yalnızca ürün logosu bir resimle güncellenebilir."
 
 #: db/seeds/settings.rb:33
 msgid "Only used internally to propagate current web app version to clients."
@@ -20829,6 +20820,8 @@ msgstr "PGP imza anahtarı iptal edildi."
 msgid ""
 "The SSO environment variables and headers contain different user logins."
 msgstr ""
+"SSO ortam değişkenleri ve başlıklarında farklı kullanıcı giriş bilgileri "
+"bulunmaktadır."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
@@ -20964,17 +20957,14 @@ msgstr ""
 "yazıların çevrilmesini önlemek için bu özelliği etkinleştirin. %l"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:292
-#, fuzzy
-#| msgid ""
-#| "The article language detection is disabled. Enable it to avoid "
-#| "translating articles that are already in the target language. %l"
 msgid ""
 "The article language detection is disabled. To avoid translating articles "
 "that are already in the target language, ask an administrator with access to "
 "the ticket settings to enable it."
 msgstr ""
 "Yazı dil algılama özelliği devre dışıdır. Hedef dilde zaten mevcut olan "
-"yazıların çevrilmesini önlemek için bu özelliği etkinleştirin. %l"
+"yazıların çevrilmesini önlemek için, destek talebi ayarlarına erişimi olan "
+"bir yöneticiden bu özelliği etkinleştirmesini isteyin."
 
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
 msgid ""
@@ -22111,13 +22101,15 @@ msgstr "Yanıt işlenemedi."
 
 #: lib/ai/provider/anthropic.rb:13
 msgid "The response was cut off because it reached the maximum output length."
-msgstr ""
+msgstr "Yanıt, maksimum çıktı uzunluğuna ulaştığı için kesildi."
 
 #: lib/ai/provider/anthropic.rb:14
 msgid ""
 "The response was cut off because the request and the response together "
 "exceeded the context window of the model."
 msgstr ""
+"İstek ve yanıtın toplam boyutu, modelin bağlam penceresini aştığı için yanıt "
+"kesildi."
 
 #: app/controllers/ticket_articles_controller.rb:271
 msgid "The retried attachment download failed."
@@ -22532,7 +22524,7 @@ msgstr "'payload->class_name' parametresinin değeri geçersiz."
 
 #: app/models/setting/validation/backend_class.rb:14
 msgid "The value of this setting has an invalid format."
-msgstr ""
+msgstr "Bu ayarın değeri geçersiz bir biçime sahiptir."
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 msgid "The vector index could not be updated."
@@ -25282,31 +25274,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Updated ticket article (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
-#| "%> reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
-#| "'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
-#| "</div>\n"
-#| "<br>\n"
-#| "<% if @objects[:article] %>\n"
-#| "  <div>\n"
-#| "    <blockquote type=\"cite\">\n"
-#| "    #{article.body_as_html}\n"
-#| "    </blockquote>\n"
-#| "  </div>\n"
-#| "<% end %>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/"
-#| "#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in "
-#| "#{config.product_name}</a>\n"
-#| "</div>\n"
 msgid ""
 "Updated ticket article (#{ticket.title})\n"
 "\n"
@@ -25332,13 +25299,13 @@ msgid ""
 "a>\n"
 "</div>\n"
 msgstr ""
-"Güncellenen destek talebi içeriği (#{ticket.title})\n"
+"Güncellenen destek talebi (#{ticket.title})\n"
 "\n"
 "<div>Merhaba #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %>, "
-"#{article.created_by.fullname} tarafından gönderilen mesaja <%= "
+"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %>"
+", #{article.created_by.fullname} tarafından gönderilen mesaja <%= h "
 "@objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> "
 "emojisiyle tepki verdi:\n"
 "</div>\n"
@@ -25352,8 +25319,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
-"#{article.id}\" target=\"zammad_app\">Bunu #{config.product_name} üzerinden "
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
+"{article.id}\" target=\"zammad_app\">Bunu #{config.product_name} üzerinden "
 "görüntüle</a>\n"
 "</div>\n"
 
@@ -28281,7 +28248,7 @@ msgstr "dakika(lar)"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:120
 msgid "minutes"
-msgstr "dakikalar"
+msgstr "dakika"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldFilterSelector/operators/within-last-relative.ts:12
 msgid "month(s)"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-10 22:12+0000\n"
+"PO-Revision-Date: 2026-11-14 12:12+0000\n"
 "Last-Translator: Igor Costa <igor_sfx@yahoo.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
@@ -768,10 +768,8 @@ msgid "'%s' is not a valid IP address or CIDR range."
 msgstr "'%s' não é um endereço IP ou intervalo CIDR válido."
 
 #: app/models/setting/validation/backend_class.rb:19
-#, fuzzy
-#| msgid "'%s' is not a valid IP address or CIDR range."
 msgid "'%s' is not a valid backend for this setting."
-msgstr "'%s' não é um endereço IP ou intervalo CIDR válido."
+msgstr "'%s' não é um backend válido para esta configuração."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -5072,10 +5070,8 @@ msgid "Content could not be loaded."
 msgstr "O conteúdo não pôde ser carregado."
 
 #: app/models/store.rb:162
-#, fuzzy
-#| msgid "Content could not be loaded."
 msgid "Content is not a resizable image."
-msgstr "O conteúdo não pôde ser carregado."
+msgstr "O conteúdo não é uma imagem redimensionável."
 
 #: app/frontend/apps/desktop/components/CommonSkeleton/CommonSkeleton.vue:13
 msgid "Content loader"
@@ -5822,10 +5818,8 @@ msgid "Custom instructions"
 msgstr "Instruções personalizadas"
 
 #: app/models/core_workflow.rb:91
-#, fuzzy
-#| msgid "The locale '%s' is not active."
 msgid "Custom module '%s' is not available."
-msgstr "A localidade '%s' não está ativa."
+msgstr "O módulo personalizado '%s' não está disponível."
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
@@ -11201,6 +11195,7 @@ msgstr "Ações da imagem"
 #: app/models/store.rb:169
 msgid "Image exceeds the maximum resizable pixel count."
 msgstr ""
+"A imagem excede a quantidade máxima de pixels que pode ser redimensionada."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:29
@@ -15126,10 +15121,8 @@ msgid "OAuth2 token is expired!"
 msgstr "O token OAuth2 expirou!"
 
 #: app/controllers/application_controller/authenticates.rb:77
-#, fuzzy
-#| msgid "OAuth2 token is expired!"
 msgid "OAuth2 token is revoked!"
-msgstr "O token OAuth2 expirou!"
+msgstr "O token OAuth2 foi revogado!"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:399
 msgid "OCR Model"
@@ -15354,10 +15347,8 @@ msgstr ""
 "instalados."
 
 #: app/controllers/long_polling_controller.rb:92
-#, fuzzy
-#| msgid "Enables user authentication via %s."
 msgid "Only session based authentication is supported!"
-msgstr "Habilita a autenticação do usuário via %s."
+msgstr "Apenas a autenticação baseada em sessão é suportada!"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
@@ -15372,7 +15363,7 @@ msgstr ""
 
 #: app/controllers/settings_controller.rb:32
 msgid "Only the product logo can be updated with an image."
-msgstr ""
+msgstr "Apenas o logotipo do produto pode ser atualizado com uma imagem."
 
 #: db/seeds/settings.rb:33
 msgid "Only used internally to propagate current web app version to clients."
@@ -20805,6 +20796,8 @@ msgstr "A chave de assinatura PGP foi revogada."
 msgid ""
 "The SSO environment variables and headers contain different user logins."
 msgstr ""
+"As variáveis de ambiente e os cabeçalhos de SSO contêm logins de usuário "
+"diferentes."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
@@ -20941,17 +20934,14 @@ msgstr ""
 "artigos que já estão no idioma de destino. %l"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:292
-#, fuzzy
-#| msgid ""
-#| "The article language detection is disabled. Enable it to avoid "
-#| "translating articles that are already in the target language. %l"
 msgid ""
 "The article language detection is disabled. To avoid translating articles "
 "that are already in the target language, ask an administrator with access to "
 "the ticket settings to enable it."
 msgstr ""
-"A detecção de idioma do artigo está desativada. Ative-a para evitar traduzir "
-"artigos que já estão no idioma de destino. %l"
+"A detecção de idioma do artigo está desativada. Para evitar traduzir artigos "
+"que já estão no idioma de destino, peça a um administrador com acesso às "
+"configurações de ticket que a ative."
 
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
 msgid ""
@@ -22110,13 +22100,15 @@ msgstr "Não foi possível processar a resposta."
 
 #: lib/ai/provider/anthropic.rb:13
 msgid "The response was cut off because it reached the maximum output length."
-msgstr ""
+msgstr "A resposta foi cortada porque atingiu o tamanho máximo de saída."
 
 #: lib/ai/provider/anthropic.rb:14
 msgid ""
 "The response was cut off because the request and the response together "
 "exceeded the context window of the model."
 msgstr ""
+"A resposta foi cortada porque a requisição e a resposta juntas excederam a "
+"janela de contexto do modelo."
 
 #: app/controllers/ticket_articles_controller.rb:271
 msgid "The retried attachment download failed."
@@ -22532,7 +22524,7 @@ msgstr "O valor do parâmetro 'payload->class_name' é inválido."
 
 #: app/models/setting/validation/backend_class.rb:14
 msgid "The value of this setting has an invalid format."
-msgstr ""
+msgstr "O valor desta configuração tem um formato inválido."
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 msgid "The vector index could not be updated."
@@ -25297,31 +25289,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Updated ticket article (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
-#| "%> reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
-#| "'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
-#| "</div>\n"
-#| "<br>\n"
-#| "<% if @objects[:article] %>\n"
-#| "  <div>\n"
-#| "    <blockquote type=\"cite\">\n"
-#| "    #{article.body_as_html}\n"
-#| "    </blockquote>\n"
-#| "  </div>\n"
-#| "<% end %>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/"
-#| "#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in "
-#| "#{config.product_name}</a>\n"
-#| "</div>\n"
 msgid ""
 "Updated ticket article (#{ticket.title})\n"
 "\n"
@@ -25352,9 +25319,9 @@ msgstr ""
 "<div>Olá #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
-"reagiu com um <%= @objects[:article].preferences.dig('whatsapp', 'reaction', "
-"'emoji') %> à mensagem de #{article.created_by.fullname}:\n"
+"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+"%> reagiu com um <%= h @objects[:article].preferences.dig('whatsapp', "
+"'reaction', 'emoji') %> à mensagem de #{article.created_by.fullname}:\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
@@ -25366,9 +25333,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
-"#{article.id}\" target=\"zammad_app\">Ver isto no #{config.product_name}</"
-"a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
+"{article.id}\" target=\"zammad_app\">Ver isto no #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17

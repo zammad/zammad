@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-11 11:21+0000\n"
+"PO-Revision-Date: 2026-11-16 22:12+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/sr_Cyrl/>\n"
@@ -765,7 +765,7 @@ msgstr "’'%s’ је неважећа IP адреса или CIDR опсег."
 
 #: app/models/setting/validation/backend_class.rb:19
 msgid "'%s' is not a valid backend for this setting."
-msgstr "’%s’ је неважећи позадински модул за ово подешавање."
+msgstr "'%s’ је неважећи позадински модул за ово подешавање."
 
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
@@ -14373,8 +14373,8 @@ msgid ""
 "No checklist template available, please create a new one or activate an "
 "existing one at \"Manage > Checklists\""
 msgstr ""
-"Нема доступних шаблона, молимо додајте нови или активирајте постојећи у "
-"„Управљање > Спискови задатака”"
+"Нема доступних шаблона, молимо додајте нови или активирајте постојећи у „"
+"Управљање > Спискови задатака”"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
@@ -14431,8 +14431,7 @@ msgstr "У одабраним фолдер(има) нису пронађене �
 
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:84
 msgid "No events can be shown because the calendar file does not contain any."
-msgstr ""
-"Није могуће приказати термине јер датотека календара не садржи ниједан."
+msgstr "Није могуће приказати термине јер датотека календара не садржи ниједан."
 
 #: app/assets/javascripts/app/views/ticket_zoom/knowledge_base_ai_draft_modal.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketRelatedKnowledge/TicketKnowledgeBaseAiDraftFlyout.vue:142
@@ -15199,10 +15198,8 @@ msgstr ""
 "Треба инсталирати пакете само из познатих, поузданих и проверених извора."
 
 #: app/controllers/long_polling_controller.rb:92
-#, fuzzy
-#| msgid "Enables user authentication via %s."
 msgid "Only session based authentication is supported!"
-msgstr "Укључује аутентификацију корисника преко %s."
+msgstr "Подржана је само аутентификација на основу сесија!"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
@@ -15216,7 +15213,7 @@ msgstr ""
 
 #: app/controllers/settings_controller.rb:32
 msgid "Only the product logo can be updated with an image."
-msgstr ""
+msgstr "Само логотип производа је могуће освежити сличицом."
 
 #: db/seeds/settings.rb:33
 msgid "Only used internally to propagate current web app version to clients."
@@ -17046,7 +17043,7 @@ msgstr "Повезани тикети"
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:1
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:143
 msgid "Related knowledge"
-msgstr "Повезано знање"
+msgstr "Сродно знање"
 
 #: app/controllers/ticket/knowledge_base_answers_controller.rb:50
 msgid ""
@@ -17065,7 +17062,7 @@ msgstr "Генерисање повезаног чланка базе знања
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:134
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:180
 msgid "Related tickets"
-msgstr "Повезани тикети"
+msgstr "Сродни тикети"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue:70
 msgid "Relax, your system is being set up…"
@@ -20611,7 +20608,7 @@ msgstr "PGP кључ потписа је опозван."
 #: app/controllers/sessions_controller.rb:57
 msgid ""
 "The SSO environment variables and headers contain different user logins."
-msgstr ""
+msgstr "SSO променљиве окружења и заглавља садрже различите корисничке налоге."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:159
 msgid "The Telegram bot could not be saved."
@@ -20748,17 +20745,14 @@ msgstr ""
 "чланака на вашем језику. %l"
 
 #: app/assets/javascripts/app/controllers/_integration/content_translation.coffee:292
-#, fuzzy
-#| msgid ""
-#| "The article language detection is disabled. Enable it to avoid "
-#| "translating articles that are already in the target language. %l"
 msgid ""
 "The article language detection is disabled. To avoid translating articles "
 "that are already in the target language, ask an administrator with access to "
 "the ticket settings to enable it."
 msgstr ""
-"Откривање језика чланка је искључено. Укључите га да бисте спречили превод "
-"чланака на вашем језику. %l"
+"Откривање језика чланка је искључено. Да бисте избегли превод чланака који "
+"су већ на циљном језику, замолите администратора са приступом подешавањима "
+"тикета да га укључе."
 
 #: app/services/service/knowledge_base/answer/update/validator/concurrent_attachment_change.rb:33
 msgid ""
@@ -21896,13 +21890,15 @@ msgstr "Није било могуће обрадити одговор."
 
 #: lib/ai/provider/anthropic.rb:13
 msgid "The response was cut off because it reached the maximum output length."
-msgstr ""
+msgstr "Одговор је одсечен јер је прекорачио максималну дужину садржаја."
 
 #: lib/ai/provider/anthropic.rb:14
 msgid ""
 "The response was cut off because the request and the response together "
 "exceeded the context window of the model."
 msgstr ""
+"Одговор је одсечен јер захтев и одговор заједно прекорачују величину "
+"контекстног прозора модела."
 
 #: app/controllers/ticket_articles_controller.rb:271
 msgid "The retried attachment download failed."
@@ -22307,7 +22303,7 @@ msgstr "Вредност параметра ’payload->class_name’ није �
 
 #: app/models/setting/validation/backend_class.rb:14
 msgid "The value of this setting has an invalid format."
-msgstr ""
+msgstr "Вредност овог подешавања је у неисправном формату."
 
 #: app/assets/javascripts/app/controllers/_ai/knowledge_base_features.coffee:137
 msgid "The vector index could not be updated."
@@ -25025,31 +25021,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Updated ticket article (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
-#| "%> reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
-#| "'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
-#| "</div>\n"
-#| "<br>\n"
-#| "<% if @objects[:article] %>\n"
-#| "  <div>\n"
-#| "    <blockquote type=\"cite\">\n"
-#| "    #{article.body_as_html}\n"
-#| "    </blockquote>\n"
-#| "  </div>\n"
-#| "<% end %>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/"
-#| "#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in "
-#| "#{config.product_name}</a>\n"
-#| "</div>\n"
 msgid ""
 "Updated ticket article (#{ticket.title})\n"
 "\n"
@@ -25080,8 +25051,8 @@ msgstr ""
 "<div>Здраво #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
-"је реаговао(ла) са <%= @objects[:article].preferences.dig('whatsapp', "
+"<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') "
+"%> је реаговао(ла) са <%= h @objects[:article].preferences.dig('whatsapp', "
 "'reaction', 'emoji') %> на поруку од #{article.created_by.fullname}:\n"
 "</div>\n"
 "<br>\n"
@@ -25094,8 +25065,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
-"#{article.id}\" target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#"
+"{article.id}\" target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_generic_index.coffee:17
