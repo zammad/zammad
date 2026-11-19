@@ -53,7 +53,7 @@ module Ticket::Article::AddsMetadataGeneral
 
     # in case origin_by is different than created_by, set sender to Customer
     # Customer in context of this conversation, not as a permission
-    return if origin_by == created_by_id
+    return if origin_by_id == created_by_id
 
     self.sender = Ticket::Article::Sender.lookup(name: 'Customer')
   end
