@@ -6034,7 +6034,7 @@ msgstr "País"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:8
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:79
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:72
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:252
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
@@ -16104,7 +16104,7 @@ msgstr ""
 msgid "New ticket: %s"
 msgstr "Nou tiquet"
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:60
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:220
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
 #, fuzzy
@@ -28973,7 +28973,7 @@ msgstr "Descarta els canvis"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
 #: app/assets/javascripts/app/controllers/signup.coffee:102
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:77
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:48
 #, fuzzy
 #| msgid "%s Object(s) are created."

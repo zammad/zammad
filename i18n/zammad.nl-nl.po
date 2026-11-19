@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-10 22:12+0000\n"
+"PO-Revision-Date: 2026-11-19 22:12+0000\n"
 "Last-Translator: WKobes <github@wouterkobes.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
 "stable/nl/>\n"
@@ -5693,7 +5693,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:8
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:79
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:72
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:252
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
@@ -7934,7 +7934,7 @@ msgstr "Afdeling"
 #: app/assets/javascripts/app/views/translation/index.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyoutEvent.vue:56
 msgid "Description"
-msgstr "Omschrijving"
+msgstr "Beschrijving"
 
 #: app/assets/javascripts/app/models/public_link.coffee:8
 msgid "Description (shown as title tag for screen readers)"
@@ -8340,7 +8340,7 @@ msgstr "Niet sychroniseren"
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:139
 msgid "Done"
-msgstr "Klaar"
+msgstr "Voltooid"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee:4
 #: app/assets/javascripts/app/views/system_report.jst.eco:20
@@ -15039,7 +15039,7 @@ msgstr ""
 msgid "New ticket: %s"
 msgstr "Nieuw ticket: %s"
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:60
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:220
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
 msgid "New user"
@@ -17458,7 +17458,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/system_report.jst.eco:20
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:16
 msgid "Preview"
-msgstr "Voorbeeld"
+msgstr "Voorbeeldweergave"
 
 #: app/frontend/apps/desktop/components/CommonFileList/CommonFileListItem.vue:65
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:88
@@ -27033,7 +27033,7 @@ msgstr "Niet-opgeslagen wijzigingen"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
 #: app/assets/javascripts/app/controllers/signup.coffee:102
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:77
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:48
 msgid "User could not be created."
 msgstr "Gebruiker kon niet aangemaakt worden."
