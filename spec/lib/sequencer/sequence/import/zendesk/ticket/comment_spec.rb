@@ -136,6 +136,33 @@ RSpec.describe Sequencer::Sequence::Import::Zendesk::Ticket::Comment, db_strateg
       end
     end
 
+    context 'when an inline image URL is not a valid URI' do
+      let(:inline_image_url) { "https://#{hostname}/attachments/token%22\n%20%20%20%20/abc123/?name=ok.png" }
+
+      before do
+        allow(Rails.logger).to receive(:warn)
+      end
+
+      it 'imports the article without the inline image' do
+        expect { process(process_payload) }.to change(Ticket::Article, :count).by(1)
+      end
+
+      it 'keeps the malformed URL and the inline image out of the article', :aggregate_failures do
+        process(process_payload)
+
+        article = Ticket::Article.last
+
+        expect(article.body).not_to include('/attachments/token%22')
+        expect(article.attachments.size).to eq 1
+      end
+
+      it 'logs a warning with the ticket and the source comment' do
+        process(process_payload)
+        expect(Rails.logger).to have_received(:warn)
+          .with("Skipping inline image, its URL is not a valid URI (ticket_id: #{ticket.id}, message_id: 31964468581).")
+      end
+    end
+
     context 'when attachment request has an error' do
       before do
         allow_any_instance_of(Sequencer::Unit::Import::Zendesk::Ticket::Comment::Attachment::Request).to receive(:sleep)
