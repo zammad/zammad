@@ -1,0 +1,19 @@
+Efnisgrein var uppfærð (#{ticket.title})
+
+<div>Hi #{recipient.firstname},</div>
+<br>
+<div>
+<%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> brást við skeyti frá #{article.created_by.fullname} með <%= h @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %>:
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Skoðaðu nánar í #{config.product_name}</a>
+</div>

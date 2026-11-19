@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Tiketti##{ticket.number}>: Eskaloitu #{ticket.escalation_at}_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|#{config.ticket_hook}#{ticket.number}>: Eskaloitu #{ticket.escalation_at}_
 Tiketti (#{ticket.title}) asiakkaalta "#{ticket.customer.longname}" on eskaloitu "#{ticket.escalation_at}"!
 
 <% if @objects[:article] %>

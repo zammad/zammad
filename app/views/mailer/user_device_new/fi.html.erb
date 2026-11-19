@@ -1,0 +1,19 @@
+#{config.product_name} Sisäänkirjautuminen uudelta laitteelta
+
+<div>Hei #{user.firstname}.</div>
+<br>
+<div>Näyttää siltä, että kirjauduit tilillesi <b>uudella laitteella</b> osoitteessa "#{user_device.created_at}":</div>
+<br>
+<div>
+Laitteesi: #{user_device.name}<br>
+Sijaintisi (suhteellinen): #{user_device.location}<br>
+IP-osoitteesi: #{user_device.ip}<br>
+</div>
+<br>
+<div>Laitteesi on lisätty tunnettujen laitteiden luetteloosi, jota voit tarkastella täällä:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Jos tämä et ollut sinä, poista laite, vaihda tilisi salasana ja ota yhteyttä järjestelmänvalvojaasi. Joku on saattanut päästä luvattomasti tiliisi.</div>
+<br>
+<div>#{config.product_name}-tiimisi</div>
