@@ -24,3 +24,5 @@ for PURL in pkg:gem/rspec-rails pkg:npm/vitest; do
     exit 1
   fi
 done
+
+echo "The SBOM ${SBOM} was validated successfully."
