@@ -20,9 +20,9 @@ class Sequencer::Unit::Import::Common::Ticket::Article::InlineImages < Sequencer
     end
   end
 
-  def self.inline_data(image_url)
+  def self.inline_data(image_url, log_context: {})
     clean_image_url = image_url.gsub(%r{^cid:}, '')
-    return if !%r{^(http|https)://.+?$}.match?(clean_image_url)
+    return if !http_url?(clean_image_url, log_context)
 
     @cache ||= {}
     return @cache[clean_image_url] if @cache[clean_image_url]
@@ -53,6 +53,17 @@ class Sequencer::Unit::Import::Common::Ticket::Article::InlineImages < Sequencer
     nil
   end
 
+  def self.http_url?(url, log_context)
+    uri = URI.parse(url)
+    uri.is_a?(URI::HTTP) && uri.host.present?
+  rescue URI::InvalidURIError
+    # The URL is left out of the message, as it may contain an access token.
+    context = log_context.compact.map { |key, value| "#{key}: #{value}" }.join(', ')
+    logger.warn "Skipping inline image, its URL is not a valid URI (#{context})."
+    false
+  end
+  private_class_method :http_url?
+
   private
 
   def contains_inline_image?(string)
@@ -67,7 +78,7 @@ class Sequencer::Unit::Import::Common::Ticket::Article::InlineImages < Sequencer
     body_html.css('img').each do |node|
       next if !contains_inline_image?(node['src'])
 
-      node.attributes['src'].value = self.class.inline_data(node['src'])
+      node.attributes['src'].value = self.class.inline_data(node['src'], log_context: mapped.slice(:ticket_id, :message_id))
     end
 
     body_html.to_html
