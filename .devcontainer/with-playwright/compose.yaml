@@ -9,7 +9,7 @@ include: [../default/compose.yaml]
 # checkout (package.json), see spec/support/playwright/browser.rb.
 services:
   playwright:
-    image: mcr.microsoft.com/playwright:v1.64.1-noble
+    image: mcr.microsoft.com/playwright:v1.65.1-noble
     network_mode: service:devcontainer
     depends_on:
       - devcontainer
@@ -18,5 +18,5 @@ services:
     user: pwuser
     working_dir: /home/pwuser
     # --unsafe lets the server accept the Chromium args the driver passes.
-    command: npx --yes playwright@1.64.1 run-server --host 0.0.0.0 --port 4444 --unsafe
+    command: npx --yes playwright@1.65.1 run-server --host 0.0.0.0 --port 4444 --unsafe
     restart: unless-stopped

@@ -576,7 +576,7 @@ GEM
     pg (1.7.0-arm64-darwin)
     pg (1.7.0-x86_64-darwin)
     pg (1.7.0-x86_64-linux)
-    playwright-ruby-client (1.64.0)
+    playwright-ruby-client (1.65.0)
       base64
       concurrent-ruby (>= 1.1.6)
       mime-types (>= 3.0)
