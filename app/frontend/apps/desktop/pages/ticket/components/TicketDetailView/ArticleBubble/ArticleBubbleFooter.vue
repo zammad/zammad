@@ -22,7 +22,7 @@ defineEmits<{
 <template>
   <footer
     v-if="articleAttachments.length > 0"
-    class="flex flex-col gap-1 bg-blue-300 p-3 dark:bg-stone-700"
+    class="flex flex-col gap-1 bg-blue-300 p-3 pb-6 dark:bg-stone-700"
   >
     <div class="flex flex-row">
       <CommonLabel prefix-icon="paperclip" size="small">
