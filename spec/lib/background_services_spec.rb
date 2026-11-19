@@ -43,6 +43,12 @@ RSpec.describe BackgroundServices do
   let(:instance) { described_class.new(config) }
   let(:config)   { [] }
 
+  # Process stubs are reset before :ensure_threads_exited kills leftover threads, so these
+  #   threads must not outlive their example and send real signals.
+  def stop_threads(name)
+    Thread.list.select { |thread| thread.name == name }.each { |thread| thread.kill.join }
+  end
+
   describe '.available_services' do
     it 'matches existing classes' do
       expect(described_class.available_services).to contain_exactly(
@@ -75,6 +81,17 @@ RSpec.describe BackgroundServices do
         instance.run
         expect(instance).to have_received(:run_service).with(forked).ordered
         expect(instance).to have_received(:run_service).with(threaded).ordered
+      end
+    end
+
+    context 'when the child process monitor reaped a child already' do
+      let(:reaped_pid) { Process.fork { exit! }.tap { |pid| Process.wait(pid) } } # rubocop:disable Rails/Exit
+
+      it 'still waits for the remaining children' do
+        allow(instance).to receive_messages(run_service: nil, monitor_child_processes: nil)
+        instance.child_pids = [reaped_pid]
+
+        expect { instance.run }.not_to raise_error
       end
     end
   end
@@ -181,6 +198,94 @@ RSpec.describe BackgroundServices do
     it 'starts a new thread' do
       thread = instance.send(:start_as_thread, SampleService)
       expect(thread).to be_alive
+    end
+  end
+
+  describe '#monitor_child_processes', ensure_threads_exited: true do
+    let(:running_pid)  { Process.fork { sleep } }
+    let(:died_pid)     { Process.fork { exit! } } # rubocop:disable Rails/Exit
+    let(:kill_tracker) { { called: false } }
+
+    before do
+      stub_const("#{described_class}::CHILD_PROCESS_MONITOR_INTERVAL", 0.1)
+
+      allow(Process).to receive(:kill).and_call_original
+      allow(Process).to receive(:kill).with('TERM', Process.pid) { kill_tracker[:called] = true }
+
+      # The died child is not the first one, so nothing has waited for it yet (zombie).
+      instance.child_pids = [running_pid, died_pid]
+      instance.send(:monitor_child_processes)
+
+      deadline = 3.seconds.from_now
+      sleep 0.05 until kill_tracker[:called] || Time.zone.now > deadline
+    end
+
+    after do
+      stop_threads('child process monitoring')
+      Process.kill('KILL', running_pid)
+      Process.wait(running_pid)
+    end
+
+    it 'terminates the background worker if a child process died' do
+      expect(Process).to have_received(:kill).with('TERM', Process.pid)
+    end
+  end
+
+  describe '#handle_signal', ensure_threads_exited: true do
+    let(:reaped_pid)  { 999_998 }
+    let(:running_pid) { 999_999 }
+    let(:calls)       { [] }
+
+    before do
+      stub_const("#{described_class}::SHUTDOWN_GRACE_PERIOD", 0)
+
+      allow(Process).to receive(:kill) do |signal, pid|
+        raise Errno::ESRCH if pid == reaped_pid
+
+        calls << [signal, pid]
+      end
+      allow(Process).to receive(:exit!) { |status| calls << ['exit!', status] }
+
+      # The child process monitor may have reaped an exited child already.
+      instance.child_pids = [reaped_pid, running_pid]
+      instance.send(:handle_signal, 'TERM')
+
+      deadline = 3.seconds.from_now
+      sleep 0.05 until calls.include?(['exit!', 1]) || Time.zone.now > deadline
+    end
+
+    after do
+      stop_threads('shutdown handler')
+      described_class.shutdown_requested = nil
+    end
+
+    it 'forces the termination of the remaining processes' do
+      expect(calls).to include(['KILL', running_pid], ['KILL', Process.pid], ['exit!', 1])
+    end
+  end
+
+  describe '#monitor_child_processes during a requested shutdown', ensure_threads_exited: true do
+    before do
+      stub_const("#{described_class}::CHILD_PROCESS_MONITOR_INTERVAL", 0.1)
+      allow(Process).to receive(:kill)
+
+      # The shutdown is requested while the monitor finds an exited child.
+      allow(instance).to receive(:child_process_exited?) do
+        described_class.shutdown_requested = true
+        true
+      end
+
+      instance.child_pids = [Process.pid]
+      instance.send(:monitor_child_processes).join(3)
+    end
+
+    after do
+      stop_threads('child process monitoring')
+      described_class.shutdown_requested = nil
+    end
+
+    it 'does not terminate the background worker once more' do
+      expect(Process).not_to have_received(:kill)
     end
   end
 
