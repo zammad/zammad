@@ -1545,14 +1545,15 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
   end
 
   describe 'GET /api/v1/users/search, checks usage of the ids parameter', authenticated_as: :agent do
-    let(:agent) { create(:agent) }
+    # A random name could contain "Nick" and make the agent match the search query.
+    let(:agent) { create(:agent, firstname: 'Search', lastname: 'Requester') }
 
     let!(:search_agents) { create_list(:agent, 3, firstname: 'Nick') }
 
     shared_examples 'ids requests' do
 
       before do
-        post '/api/v1/users/search', params: { query: 'Nick', ids: search_ids, sort_by: ['created_at'], order_by: ['ASC'] }, as: :json
+        post '/api/v1/users/search', params: { query: 'Nick', ids: search_ids, sort_by: ['id'], order_by: ['ASC'] }, as: :json
       end
 
       shared_examples 'result check' do
