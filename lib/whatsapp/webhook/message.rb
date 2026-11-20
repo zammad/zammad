@@ -3,6 +3,8 @@
 class Whatsapp::Webhook::Message
   include Mixin::RequiredSubPaths
 
+  AUTHORIZATION_PROVIDER = 'whatsapp'.freeze
+
   attr_reader :data, :channel, :user, :ticket, :article
 
   def initialize(data:, channel:)
@@ -39,7 +41,31 @@ class Whatsapp::Webhook::Message
   end
 
   def create_or_update_user
-    User.by_mobile(number: user_info[:mobile]) || create_user
+    user = user_by_bsuid || (phone.present? && User.by_mobile(number: "+#{phone}")) || create_user
+    link_bsuid(user:)
+
+    user
+  end
+
+  def user_by_bsuid
+    return if bsuid.blank?
+
+    Authorization.find_by(provider: AUTHORIZATION_PROVIDER, uid: bsuid)&.user
+  end
+
+  def link_bsuid(user:)
+    return if bsuid.blank? || !user.persisted?
+
+    authorization = Authorization.find_or_initialize_by(provider: AUTHORIZATION_PROVIDER, uid: bsuid)
+    authorization.update!(user_id: user.id, username: username.presence)
+  end
+
+  def display_identifier
+    @user.mobile.presence || username.presence || bsuid
+  end
+
+  def display_name
+    "#{profile_name} (#{display_identifier})"
   end
 
   def create_or_update_ticket
@@ -50,7 +76,7 @@ class Whatsapp::Webhook::Message
   end
 
   def create_ticket
-    title = Translation.translate(Setting.get('locale_default') || 'en-us', __('%s via WhatsApp'), "#{profile_name} (#{@user.mobile})")
+    title = Translation.translate(Setting.get('locale_default') || 'en-us', __('%s via WhatsApp'), display_name)
 
     Ticket.create!(
       group_id:    @channel.group_id,
@@ -109,7 +135,7 @@ class Whatsapp::Webhook::Message
       ticket_id:    @ticket.id,
       type_id:      Ticket::Article::Type.lookup(name: 'whatsapp message').id,
       sender_id:    Ticket::Article::Sender.lookup(name: 'Customer').id,
-      from:         "#{profile_name} (#{@user.mobile})",
+      from:         display_name,
       to:           "#{@channel.options[:name]} (#{@channel.options[:phone_number]})",
       message_id:   article_preferences[:message_id],
       internal:     false,
@@ -162,7 +188,7 @@ class Whatsapp::Webhook::Message
       type_id:      Ticket::Article::Type.lookup(name: 'whatsapp message').id,
       sender_id:    Ticket::Article::Sender.lookup(name: 'System').id,
       from:         "#{@channel.options[:name]} (#{@channel.options[:phone_number]})",
-      to:           "#{profile_name} (#{@user.mobile})",
+      to:           display_name,
       subject:      translated_welcome_message.truncate(100, omission: '…'),
       internal:     false,
       body:         translated_welcome_message,
@@ -190,8 +216,8 @@ class Whatsapp::Webhook::Message
     {
       firstname: firstname&.strip,
       lastname:  lastname&.strip,
-      mobile:    "+#{phone}",
-      login:     phone,
+      mobile:    phone.present? ? "+#{phone}" : nil,
+      login:     phone.presence || bsuid,
     }
   end
 
@@ -204,13 +230,27 @@ class Whatsapp::Webhook::Message
   end
 
   def phone
-    data[:entry].first[:changes].first[:value][:messages].first[:from]
+    message_data[:from]
+  end
+
+  def bsuid
+    message_data[:from_user_id] || data[:entry].first[:changes].first[:value][:contacts].first[:user_id]
+  end
+
+  def username
+    data[:entry].first[:changes].first[:value][:contacts].first[:profile][:username]
+  end
+
+  def message_data
+    data[:entry].first[:changes].first[:value][:messages].first
   end
 
   def ticket_preferences
     {
       from:               {
         phone_number: phone,
+        user_id:      bsuid,
+        username:     username,
         display_name: profile_name,
       },
       timestamp_incoming: @data[:entry].first[:changes].first[:value][:messages].first[:timestamp],
