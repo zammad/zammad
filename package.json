@@ -59,7 +59,7 @@
     "@graphql-codegen/visitor-plugin-common": "^8.0.2",
     "@pinia/testing": "^2.0.2",
     "@sa11y/vitest": "^8.3.1",
-    "@sinonjs/fake-timers": "^15.4.0",
+    "@sinonjs/fake-timers": "^15.5.0",
     "@tailwindcss/vite": "^4.3.5",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/user-event": "^14.6.12",
