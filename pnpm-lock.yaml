@@ -541,8 +541,8 @@ importers:
         specifier: 1.65.1
         version: 1.65.1
       postcss-html:
-        specifier: ^2.0.0
-        version: 2.0.0(postcss@8.5.32)
+        specifier: ^2.0.1
+        version: 2.0.1(postcss@8.5.32)
       stylelint:
         specifier: ^18.0.0
         version: 18.0.0
@@ -551,7 +551,7 @@ importers:
         version: 18.0.0(postcss@8.5.32)(stylelint@18.0.0)
       stylelint-config-recommended-vue:
         specifier: ^2.0.0
-        version: 2.0.0(postcss-html@2.0.0(postcss@8.5.32))(stylelint-config-html@2.0.0(postcss-html@2.0.0(postcss@8.5.32))(stylelint@18.0.0))(stylelint-config-recommended-scss@18.0.0(postcss@8.5.32)(stylelint@18.0.0))(stylelint-config-recommended@19.0.0(stylelint@18.0.0))(stylelint@18.0.0)
+        version: 2.0.0(postcss-html@2.0.1(postcss@8.5.32))(stylelint-config-html@2.0.0(postcss-html@2.0.1(postcss@8.5.32))(stylelint@18.0.0))(stylelint-config-recommended-scss@18.0.0(postcss@8.5.32)(stylelint@18.0.0))(stylelint-config-recommended@19.0.0(stylelint@18.0.0))(stylelint@18.0.0)
       stylelint-config-standard:
         specifier: ^41.0.0
         version: 41.0.0(stylelint@18.0.0)
@@ -5464,8 +5464,8 @@ packages:
     resolution: {integrity: sha512-/+5VFTchJDoVj3bhoqi6UeymcD00DAwb1nJwamzPvHEszJ4FpF6SNNbUbOS8yI56qHzdV8eK0qEfOSiodkTdxg==}
     engines: {node: '>= 0.4'}
 
-  postcss-html@2.0.0:
-    resolution: {integrity: sha512-f2Rvw5FCollEfVj3wfN7JdQb7n2rNIthW+epw2EByio7M6P7RH0BTj8a/ODHrUXd0cmO7ychb6YniymV93182Q==}
+  postcss-html@2.0.1:
+    resolution: {integrity: sha512-FqutI3u6D7j28ZgviEFjGCbId174THaVxFAMe/yd6Y/+BSQidYYh2nRCxFk8btwEV64f3TvfNz7ureGnkzqtmA==}
     engines: {node: ^22.12 || >=24}
     peerDependencies:
       postcss: ^8.5.0
@@ -5475,12 +5475,6 @@ packages:
 
   postcss-resolve-nested-selector@0.1.7:
     resolution: {integrity: sha512-lFcugRCQXWManq7nyZ0dDtir52wc7gKYJfWpSuz4GxvnGc7dtlpXcZYX4A0asatzTuqpQ3ngDdyD+QG/szeXWw==}
-
-  postcss-safe-parser@7.0.1:
-    resolution: {integrity: sha512-0AioNCJZ2DPYz5ABT6bddIqlhgwhpHZ/l65YAYo0BCIn0xiDpsnTHz0gnoTGk0OXZW0JRs+cDwL8u/teRdz+8A==}
-    engines: {node: '>=18.0'}
-    peerDependencies:
-      postcss: ^8.4.31
 
   postcss-safe-parser@7.1.0:
     resolution: {integrity: sha512-1WzZxRLaAFwEh6Do+zyGpjWV3nGJNxxhuh7Ubu/q1ICImMgZJnLwhoaEpRbG4pJppp2Y1ncL9ffA2f+LhrefQg==}
@@ -11938,20 +11932,16 @@ snapshots:
 
   possible-typed-array-names@1.1.0: {}
 
-  postcss-html@2.0.0(postcss@8.5.32):
+  postcss-html@2.0.1(postcss@8.5.32):
     dependencies:
       htmlparser2: 9.1.0
       js-tokens: 9.0.1
       postcss: 8.5.32
-      postcss-safe-parser: 7.0.1(postcss@8.5.32)
+      postcss-safe-parser: 7.1.0(postcss@8.5.32)
 
   postcss-media-query-parser@0.2.3: {}
 
   postcss-resolve-nested-selector@0.1.7: {}
-
-  postcss-safe-parser@7.0.1(postcss@8.5.32):
-    dependencies:
-      postcss: 8.5.32
 
   postcss-safe-parser@7.1.0(postcss@8.5.32):
     dependencies:
@@ -12498,9 +12488,9 @@ snapshots:
     dependencies:
       min-indent: 1.0.1
 
-  stylelint-config-html@2.0.0(postcss-html@2.0.0(postcss@8.5.32))(stylelint@18.0.0):
+  stylelint-config-html@2.0.0(postcss-html@2.0.1(postcss@8.5.32))(stylelint@18.0.0):
     dependencies:
-      postcss-html: 2.0.0(postcss@8.5.32)
+      postcss-html: 2.0.1(postcss@8.5.32)
       stylelint: 18.0.0
 
   stylelint-config-recommended-scss@18.0.0(postcss@8.5.32)(stylelint@18.0.0):
@@ -12512,12 +12502,12 @@ snapshots:
     optionalDependencies:
       postcss: 8.5.32
 
-  stylelint-config-recommended-vue@2.0.0(postcss-html@2.0.0(postcss@8.5.32))(stylelint-config-html@2.0.0(postcss-html@2.0.0(postcss@8.5.32))(stylelint@18.0.0))(stylelint-config-recommended-scss@18.0.0(postcss@8.5.32)(stylelint@18.0.0))(stylelint-config-recommended@19.0.0(stylelint@18.0.0))(stylelint@18.0.0):
+  stylelint-config-recommended-vue@2.0.0(postcss-html@2.0.1(postcss@8.5.32))(stylelint-config-html@2.0.0(postcss-html@2.0.1(postcss@8.5.32))(stylelint@18.0.0))(stylelint-config-recommended-scss@18.0.0(postcss@8.5.32)(stylelint@18.0.0))(stylelint-config-recommended@19.0.0(stylelint@18.0.0))(stylelint@18.0.0):
     dependencies:
-      postcss-html: 2.0.0(postcss@8.5.32)
+      postcss-html: 2.0.1(postcss@8.5.32)
       semver: 7.8.5
       stylelint: 18.0.0
-      stylelint-config-html: 2.0.0(postcss-html@2.0.0(postcss@8.5.32))(stylelint@18.0.0)
+      stylelint-config-html: 2.0.0(postcss-html@2.0.1(postcss@8.5.32))(stylelint@18.0.0)
       stylelint-config-recommended: 19.0.0(stylelint@18.0.0)
     optionalDependencies:
       stylelint-config-recommended-scss: 18.0.0(postcss@8.5.32)(stylelint@18.0.0)
