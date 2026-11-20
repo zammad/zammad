@@ -361,6 +361,15 @@ describe('accessibility (combobox + listbox wiring)', () => {
     expect(view.getByText('Loading…')).toBeInTheDocument()
   })
 
+  it('shows loading instead of "no results" while a search is running', () => {
+    const view = renderComponent(FieldEditorSuggestionList, {
+      props: { query: 'a', items: [], type: 'text', command: vi.fn(), ...baseProps, loading: true },
+    })
+
+    expect(view.getByText('Loading…')).toBeInTheDocument()
+    expect(view.queryByText('No results found')).not.toBeInTheDocument()
+  })
+
   it('uses the listboxId prop to scope option ids', () => {
     const view = renderComponent(FieldEditorSuggestionList, {
       props: {

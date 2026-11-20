@@ -1,11 +1,15 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, onTestFinished } from 'vitest'
 import { page, userEvent } from 'vitest/browser'
 
-import { mockKnowledgeBaseAnswerSuggestionContentTransformMutation } from '#shared/components/Form/fields/FieldEditor/graphql/mutations/knowledgeBase/suggestion/content/transform.mocks.ts'
+import {
+  mockKnowledgeBaseAnswerSuggestionContentTransformMutation,
+  mockKnowledgeBaseAnswerSuggestionContentTransformMutationError,
+} from '#shared/components/Form/fields/FieldEditor/graphql/mutations/knowledgeBase/suggestion/content/transform.mocks.ts'
 import { mockKnowledgeBaseAnswerSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/knowledgeBase/answerSuggestions.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import { findEditor, mountEditorWithAttachments, waitForLastSearch } from './browser-utils.ts'
 
@@ -131,6 +135,50 @@ describe('Testing "knowledge base" popup: "??" command', () => {
     expect(page.getByText('Zammad.png').query()).toBeNull()
   })
 
+  it('keeps the search when the picked answer cannot be loaded', async () => {
+    const unhandled: unknown[] = []
+    const collect = (event: PromiseRejectionEvent) => {
+      unhandled.push(event.reason)
+      event.preventDefault()
+    }
+
+    window.addEventListener('unhandledrejection', collect)
+    onTestFinished(() => window.removeEventListener('unhandledrejection', collect))
+
+    mockKnowledgeBaseAnswerSuggestionsQuery({
+      knowledgeBaseAnswerSuggestions: [
+        {
+          id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+          title: 'How to create a ticket?',
+          categoryTreeTranslation: [],
+        },
+      ],
+    })
+
+    const transform = mockKnowledgeBaseAnswerSuggestionContentTransformMutationError(
+      'The answer could not be loaded.',
+      { type: GraphQLErrorTypes.UnknownError },
+    )
+
+    await mountEditorWithAttachments({}, { permissions: ['ticket.agent'] })
+
+    const editor = await findEditor()
+
+    await userEvent.type(editor, '??How')
+
+    const popup = page.getByTestId('mention-knowledge-base')
+
+    await expect.element(popup).toMatchTextContent('How to create a ticket?')
+    await popup.getByText('How to create a ticket?').click()
+
+    await transform.waitForCalls()
+    // Long enough for the failed request to settle.
+    await new Promise((resolve) => setTimeout(resolve, 300))
+
+    expect(editor.element().textContent).toBe('??How')
+    expect(unhandled).toEqual([])
+  })
+
   it('opens no list for an agent with chat access but no ticket access', async () => {
     mockKnowledgeBaseAnswerSuggestionsQuery({ knowledgeBaseAnswerSuggestions: [] })
 
@@ -143,5 +191,90 @@ describe('Testing "knowledge base" popup: "??" command', () => {
     // Set as soon as a list opens, also while it loads.
     await expect.element(editor).not.toHaveAttribute('aria-haspopup')
     expect(page.getByTestId('mention-knowledge-base').query()).toBeNull()
+  })
+
+  describe('while a search is still running', () => {
+    const answers = {
+      knowledgeBaseAnswerSuggestions: [
+        {
+          id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+          title: 'How to create a ticket?',
+          categoryTreeTranslation: [],
+        },
+      ],
+    }
+
+    // Past the time the list itself takes a writer for still typing.
+    const waitUntilTypingIsOver = () => new Promise((resolve) => setTimeout(resolve, 500))
+
+    it('keeps "Loading…" until the search for the term typed last is back', async () => {
+      let deliver: (() => void) | undefined
+
+      mockKnowledgeBaseAnswerSuggestionsQuery(
+        () =>
+          new Promise((resolve) => {
+            deliver = () => resolve(answers)
+          }),
+      )
+
+      await mountEditorWithAttachments({}, { permissions: ['ticket.agent'] })
+
+      await userEvent.type(await findEditor(), '??How')
+
+      const popup = page.getByTestId('mention-knowledge-base')
+
+      await expect.poll(() => deliver).toBeDefined()
+      await waitUntilTypingIsOver()
+
+      await expect.element(popup).toMatchTextContent('Loading…')
+      expect(popup.element().textContent).not.toContain('No results found')
+
+      deliver?.()
+
+      await expect.element(popup).toMatchTextContent('How to create a ticket?')
+    })
+
+    it('shows "Loading…" alone for one more key after a search is back', async () => {
+      let deliver: (() => void) | undefined
+
+      const suggestions = mockKnowledgeBaseAnswerSuggestionsQuery(({ query }) =>
+        query === 'How'
+          ? answers
+          : new Promise((resolve) => {
+              deliver = () =>
+                resolve({
+                  knowledgeBaseAnswerSuggestions: [
+                    {
+                      id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 2),
+                      title: 'How to close a ticket?',
+                      categoryTreeTranslation: [],
+                    },
+                  ],
+                })
+            }),
+      )
+
+      await mountEditorWithAttachments({}, { permissions: ['ticket.agent'] })
+
+      await userEvent.type(await findEditor(), '??How')
+
+      const popup = page.getByTestId('mention-knowledge-base')
+
+      await expect.element(popup).toMatchTextContent('How to create a ticket?')
+
+      await userEvent.keyboard(' ')
+      await expect.poll(() => deliver).toBeDefined()
+      await waitUntilTypingIsOver()
+
+      await expect.element(popup).toMatchTextContent('Loading…')
+      expect(popup.element().textContent).not.toContain('How to create a ticket?')
+      expect(popup.element().textContent).not.toContain('No results found')
+
+      deliver?.()
+
+      await waitForLastSearch(suggestions, { query: 'How ' })
+      await expect.element(popup).toMatchTextContent('How to close a ticket?')
+      expect(popup.element().textContent).not.toContain('How to create a ticket?')
+    })
   })
 })

@@ -76,4 +76,31 @@ describe('Testing "user mention" popup: "@@" command', () => {
     await expect.element(link).toHaveAttribute('data-mention-user-id', '3')
     await expect.element(link).toHaveAttribute('href', 'http://example.zammad.com/#user/profile/3')
   })
+
+  it('opens with its placeholder, without "Loading…" before it', async () => {
+    await mountEditor({ groupId: '1' }, { permissions: ['ticket.agent'] })
+
+    const editor = await findEditor()
+
+    const seen: string[] = []
+    const observer = new MutationObserver(() => {
+      const text = document.querySelector('[data-test-id="mention-user"]')?.textContent
+
+      if (text) seen.push(text)
+    })
+
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true })
+    onTestFinished(() => observer.disconnect())
+
+    await userEvent.type(editor, '@@')
+
+    const popup = page.getByTestId('mention-user')
+
+    await expect.element(popup).toMatchTextContent('Start typing to search for users…')
+    // Past the debounce of the search for the empty term.
+    await new Promise((resolve) => setTimeout(resolve, 600))
+
+    await expect.element(popup).toMatchTextContent('Start typing to search for users…')
+    expect(seen.join(' ')).not.toContain('Loading…')
+  })
 })

@@ -70,8 +70,6 @@ const isRelatedItem = (item: PossibleItem): item is MentionKnowledgeBaseRelatedI
 
 // The section headers label groups of options and are no options themselves: the options keep
 //   their index in the flat item list, which the keyboard navigation and the active descendant use.
-// Decided on the items rather than the query: while the first search runs, the related answers are
-//   still the ones on display.
 const relatedSections = computed(() => {
   if (props.type !== 'knowledge-base' || !props.items.some(isRelatedItem)) return []
 

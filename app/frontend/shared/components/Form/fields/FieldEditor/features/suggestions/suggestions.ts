@@ -155,6 +155,8 @@ export default function buildMentionExtension<T>(
         .then((loaded) => {
           if (isStillWanted()) insert(loaded, !hasFocusMovedOn())
         })
+        // A failed request is already notified where the content is loaded, and leaves the search.
+        .catch(() => {})
         .finally(() => editor.off('transaction', trackRange))
     },
     render() {
@@ -162,7 +164,6 @@ export default function buildMentionExtension<T>(
       let listboxId: string | null = null
       let editor: Editor | null = null
       let itemCount = 0
-      let lastItems: SuggestionProps['items'] = []
       let lastProps: SuggestionProps | null = null
       let stopDefaultListWatch: WatchStopHandle | undefined
 
@@ -191,7 +192,6 @@ export default function buildMentionExtension<T>(
         listboxId = null
         editor = null
         itemCount = 0
-        lastItems = []
         lastProps = null
       }
 
@@ -204,7 +204,6 @@ export default function buildMentionExtension<T>(
         // The plugin has rendered or closed the list in the meantime.
         if (props !== lastProps || !component) return
 
-        lastItems = items
         itemCount = items.length
         component.updateProps({ loading: false, items })
         syncActiveDescendant()
@@ -216,14 +215,19 @@ export default function buildMentionExtension<T>(
         // Query updates are always a loading state. The initial open is only a
         // loading state for types that show a default list — otherwise it would
         // just flash before the placeholder of a query-driven type.
-        const loading =
-          type === Type.BeforeUpdate || (type === Type.BeforeStart && !!options.showsDefaultList)
+        // The plugin also updates once before it asks for the entries of a typed term, with none and
+        // marked as loading: no finished search. An empty term keeps its hint, it never shows "No
+        // results found".
+        const isAskingForEntries = !!props.loading && !!props.query
 
-        // Keep the last settled items visible while a new query loads, so the
-        // list doesn't flash empty (or "no results") between keystrokes. Only
-        // adopt the incoming items once the query has settled.
-        if (!loading) lastItems = props.items
-        const items = loading ? lastItems : props.items
+        const loading =
+          type === Type.BeforeUpdate ||
+          (type === Type.BeforeStart && !!options.showsDefaultList) ||
+          isAskingForEntries
+
+        // No entries while a query loads: those of the query before are not current, and the list
+        //   shows its loading indicator instead.
+        const items = loading ? [] : props.items
 
         if (!component) {
           if (type === Type.Update) return // onUpdate hook can run after onExit call
@@ -271,10 +275,10 @@ export default function buildMentionExtension<T>(
       }
 
       return {
-        onBeforeStart: renderFn(Type.BeforeStart), // loading = true
-        onStart: renderFn(Type.Start), // loading = false
-        onBeforeUpdate: renderFn(Type.BeforeUpdate), // loading = true
-        onUpdate: renderFn(Type.Update), // loading = false
+        onBeforeStart: renderFn(Type.BeforeStart),
+        onStart: renderFn(Type.Start),
+        onBeforeUpdate: renderFn(Type.BeforeUpdate),
+        onUpdate: renderFn(Type.Update),
 
         onKeyDown(props) {
           if (props.event.key === 'Escape') {
