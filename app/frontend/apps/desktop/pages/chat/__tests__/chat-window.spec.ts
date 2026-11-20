@@ -540,6 +540,65 @@ describe('Chat window', () => {
         await pushUpdate({ message: laterMessage })
 
         await waitFor(() => expect(thread.scrollTo).toHaveBeenCalledWith({ top: 1000 }))
+
+        // Also for a message that is not the first unread one.
+        vi.mocked(thread.scrollTo).mockClear()
+
+        await pushUpdate({ message: chatMessage(6, '<div>Hello?</div>', '2026-11-03T11:11:00Z') })
+
+        await waitFor(() => expect(thread.scrollTo).toHaveBeenCalledWith({ top: 1000 }))
+      })
+
+      // Less room for the thread, e.g. below a taller message input or in a smaller window. The
+      //   browser may move the thread itself, before the thread hears of its new size.
+      it('stays at the newest entry when the thread gets smaller', async () => {
+        // jsdom has no ResizeObserver: this one calls back when the test says so.
+        const resizeCallbacks = new Map<Element, () => void>()
+
+        vi.stubGlobal(
+          'ResizeObserver',
+          class {
+            constructor(private callback: () => void) {}
+
+            observe = (element: Element) => resizeCallbacks.set(element, this.callback)
+
+            unobserve = vi.fn()
+
+            disconnect = vi.fn()
+          },
+        )
+
+        const view = await openWindow([customerMessage])
+
+        await view.findByText('Hello')
+
+        const thread = view.getByRole('log')
+
+        let height = 300
+
+        Object.defineProperties(thread, {
+          scrollHeight: { value: 1000 },
+          clientHeight: { get: () => height },
+          scrollTop: { value: 700, writable: true },
+        })
+
+        const resize = resizeCallbacks.get(thread)!
+
+        resize()
+        vi.mocked(thread.scrollTo).mockClear()
+
+        height = 200
+        thread.scrollTop = 760
+        thread.dispatchEvent(new Event('scroll'))
+        resize()
+
+        expect(thread.scrollTo).toHaveBeenCalledWith({ top: 1000 })
+
+        vi.mocked(thread.scrollTo).mockClear()
+
+        await pushUpdate({ message: laterMessage })
+
+        await waitFor(() => expect(thread.scrollTo).toHaveBeenCalledWith({ top: 1000 }))
       })
 
       it('leaves an agent who scrolled up where they are', async () => {
@@ -614,17 +673,11 @@ describe('Chat window', () => {
           expect(scrollButton(view)).not.toBeInTheDocument()
         })
 
-        it("shows none for typing, a notice or the agent's own message", async () => {
+        it('shows it without a number as soon as the agent scrolled up', async () => {
           const { view } = await openScrolledUp()
 
-          await pushUpdate({ typing: true })
-          await pushUpdate({ notice: 'https://example.com/plans' })
-          await pushUpdate({
-            message: chatMessage(8, '<div>One moment.</div>', '2026-11-03T11:12:00Z', currentAgent),
-          })
-
-          expect(await view.findByText('One moment.')).toBeInTheDocument()
-          expect(scrollButton(view)).not.toBeInTheDocument()
+          expect(await view.findByRole('button', { name: 'Scroll to end' })).toBeInTheDocument()
+          expect(unreadBadge(view)).not.toBeInTheDocument()
         })
 
         it('goes to where the unread messages begin, leaves them unread, and then on to the end', async () => {
@@ -668,6 +721,51 @@ describe('Chat window', () => {
           expect(thread.scrollTo).toHaveBeenCalledWith({ top: 1000 })
         })
 
+        // A message the agent saw arrive at the end stays unread; they then scrolled up above it.
+        const openAboveSeenMessage = async () => {
+          const view = await openWindow([customerMessage])
+
+          await view.findByText('Hello')
+
+          const thread = scrollThreadTo(view, 700)
+
+          await pushUpdate({ message: laterMessage })
+
+          thread.scrollTop = 0
+
+          placeDivider(view, thread, 300)
+
+          return { view, thread }
+        }
+
+        // Without a number the button says "Scroll to end", also above unread messages.
+        it('goes to the end for a message the agent saw arrive and scrolled up from', async () => {
+          const { view, thread } = await openAboveSeenMessage()
+
+          const button = await view.findByRole('button', { name: 'Scroll to end' })
+
+          expect(unreadBadge(view)).not.toBeInTheDocument()
+
+          vi.mocked(thread.scrollTo).mockClear()
+
+          await view.events.click(button)
+
+          expect(thread.scrollTo).toHaveBeenCalledWith({ top: 1000 })
+        })
+
+        it("shows no number for a notice or the agent's own message", async () => {
+          const { view } = await openAboveSeenMessage()
+
+          await pushUpdate({ notice: 'https://example.com/plans' })
+          await pushUpdate({
+            message: chatMessage(8, '<div>One moment.</div>', '2026-11-03T11:12:00Z', currentAgent),
+          })
+
+          expect(await view.findByText('One moment.')).toBeInTheDocument()
+          expect(view.getByRole('button', { name: 'Scroll to end' })).toBeInTheDocument()
+          expect(unreadBadge(view)).not.toBeInTheDocument()
+        })
+
         it('goes to where the unread messages begin from the keyboard as well', async () => {
           const { view, thread } = await openScrolledUp()
 
@@ -704,8 +802,6 @@ describe('Chat window', () => {
         // Gone with the focus, the button would leave a keyboard agent at the start of the page.
         it('keeps the focus in the window when the button it had goes away', async () => {
           const { view, thread } = await openScrolledUp()
-
-          await pushUpdate({ message: laterMessage })
 
           await view.events.click(await view.findByRole('button', { name: 'Scroll to end' }))
 

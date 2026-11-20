@@ -1,7 +1,8 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, nextTick, ref, useTemplateRef, watch } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
+import { computed, nextTick, onActivated, onMounted, ref, useTemplateRef, watch } from 'vue'
 
 import CommonTranslateRenderer from '#shared/components/CommonTranslateRenderer/CommonTranslateRenderer.vue'
 
@@ -87,6 +88,8 @@ const isTypingFollowUp = computed(() => {
 
 const thread = useTemplateRef('thread')
 
+const content = useTemplateRef('content')
+
 // Like the old interface: a few pixels short of the end still count as the end.
 const END_TOLERANCE_PX = 10
 
@@ -122,10 +125,24 @@ const measureFirstUnread = () => {
   isFirstUnreadAhead.value = (firstUnreadOffset() ?? 0) > AT_TOP_TOLERANCE_PX
 }
 
+let lastScrollTop = 0
+
+// The sizes `remeasure` last saw, of the thread and of what it shows. A scroll event that finds
+//   others comes before `remeasure` hears of them: it is not the agent leaving the end.
+let knownSize = ''
+
+const sizeOf = (element: HTMLElement) =>
+  `${element.clientWidth}x${element.clientHeight}x${element.scrollHeight}`
+
 const onScroll = () => {
   const element = thread.value
 
-  if (!element) return
+  // Out of the document, where the kept-alive page waits, a thread has no size and would be at its end.
+  if (!element?.isConnected) return
+
+  if (isAtEnd.value && knownSize && sizeOf(element) !== knownSize) return
+
+  lastScrollTop = element.scrollTop
 
   isAtEnd.value =
     element.scrollHeight - element.scrollTop - element.clientHeight <= END_TOLERANCE_PX
@@ -135,21 +152,42 @@ const onScroll = () => {
   measureFirstUnread()
 }
 
-watch(() => [firstUnreadId.value, props.entries.length], measureFirstUnread, { flush: 'post' })
+const scrollToEnd = () => thread.value?.scrollTo({ top: thread.value.scrollHeight })
 
-// The newest entry is the one that counts, from the history the window opens with on, unless the
-//   agent scrolled away from it.
+// No scroll event comes when the thread or what it shows changes its size, e.g. while a reply makes
+//   the message input taller or once an image has loaded.
+const remeasure = () => {
+  if (thread.value) knownSize = sizeOf(thread.value)
+
+  if (isAtEnd.value) scrollToEnd()
+  else onScroll()
+}
+
+useResizeObserver([thread, content], remeasure)
+
 watch(
-  () => [props.entries.length, props.isCustomerTyping, props.endingNote?.text],
+  () => [firstUnreadId.value, props.entries.length, props.isCustomerTyping, props.endingNote?.text],
   async () => {
-    if (!isAtEnd.value) return
-
+    // A new entry sets itself up first, e.g. the sizes of its images.
     await nextTick()
 
-    thread.value?.scrollTo({ top: thread.value.scrollHeight })
+    remeasure()
   },
-  { flush: 'post', immediate: true },
+  { flush: 'post' },
 )
+
+// The newest entry is the one that counts, from the history the window opens with on. An embedded
+//   image in it has no size before the next tick.
+onMounted(() => nextTick(scrollToEnd))
+
+// The page comes back from outside the document, where the browser dropped the position.
+onActivated(() => {
+  const element = thread.value
+
+  if (!element) return
+
+  element.scrollTo({ top: isAtEnd.value ? element.scrollHeight : lastScrollTop })
+})
 
 // Typing, notices and the agent's own messages, also from another tab, are nothing to come back for.
 const customerMessageCount = computed(
@@ -171,21 +209,15 @@ const unreadCount = computed(() =>
 const toolbar = useTemplateRef('toolbar')
 
 // Gone with the focus, the button would leave a keyboard agent at the start of the page.
-watch(hasNewBelow, (isShown) => {
-  if (!isShown && toolbar.value?.$el?.contains?.(document.activeElement)) emit('leave')
+watch(isAtEnd, (isGone) => {
+  if (isGone && toolbar.value?.$el?.contains?.(document.activeElement)) emit('leave')
 })
 
 const jumpToNew = () => {
-  const element = thread.value
-
-  if (!element) return
-
   const offset = firstUnreadOffset()
 
   // Not `scrollIntoView`, which would move the row of windows as well.
-  if (offset !== undefined && offset > AT_TOP_TOLERANCE_PX)
-    element.scrollTo({ top: element.scrollTop + offset })
-  else element.scrollTo({ top: element.scrollHeight })
+  if (offset !== undefined) thread.value?.scrollTo({ top: thread.value.scrollTop + offset })
 }
 </script>
 
@@ -193,77 +225,83 @@ const jumpToNew = () => {
   <div class="relative flex min-h-0 grow flex-col">
     <div
       ref="thread"
-      class="flex min-h-0 grow flex-col gap-6 overflow-y-auto bg-blue-200 p-3 dark:bg-gray-700"
+      class="min-h-0 grow overflow-y-auto bg-blue-200 p-3 dark:bg-gray-700"
       role="log"
       @scroll.passive="onScroll"
     >
-      <!-- Like the old interface: the page heads the history, as the first notice. -->
-      <CommonLabel v-if="url" class="max-w-full self-center py-1" size="xs" role="note">
-        <CommonTranslateRenderer
-          v-if="isWebAddress(url)"
-          v-tooltip.truncate.supportive="url"
-          class="min-w-0 truncate"
-          as="span"
-          :source="__('Started from %s')"
-          :placeholders="[{ type: 'link', props: { ...pageLinkProps, link: url }, content: url }]"
-        />
-        <span v-else v-tooltip.truncate.supportive="url" class="min-w-0 truncate">
-          {{ $t('Started from %s', url) }}
-        </span>
-      </CommonLabel>
-
-      <template v-for="{ entry, showTime, isFollowUp } in items" :key="entry.id">
-        <div v-if="entry.id === firstUnreadId" ref="unread-divider" class="flex items-center gap-3">
-          <CommonDivider class="flex-1" variant="muted" aria-hidden="true" />
-          <CommonLabel class="shrink-0 text-muted!" size="small" role="note">
-            {{ $t('Unread messages') }}
-          </CommonLabel>
-          <CommonDivider class="flex-1" variant="muted" aria-hidden="true" />
-        </div>
-
-        <CommonLabel
-          v-if="entry.kind === 'notice'"
-          class="max-w-full self-center py-1 text-center"
-          size="xs"
-          role="note"
-        >
-          <CommonLink
-            v-if="isWebAddress(entry.text)"
-            v-tooltip.truncate.supportive="entry.text"
-            v-bind="pageLinkProps"
+      <div ref="content" class="flex flex-col gap-6">
+        <!-- Like the old interface: the page heads the history, as the first notice. -->
+        <CommonLabel v-if="url" class="max-w-full self-center py-1" size="xs" role="note">
+          <CommonTranslateRenderer
+            v-if="isWebAddress(url)"
+            v-tooltip.truncate.supportive="url"
             class="min-w-0 truncate"
-            :link="entry.text"
-          >
-            {{ entry.text }}
-          </CommonLink>
-          <template v-else>{{ $t(entry.text) }}</template>
+            as="span"
+            :source="__('Started from %s')"
+            :placeholders="[{ type: 'link', props: { ...pageLinkProps, link: url }, content: url }]"
+          />
+          <span v-else v-tooltip.truncate.supportive="url" class="min-w-0 truncate">
+            {{ $t('Started from %s', url) }}
+          </span>
         </CommonLabel>
 
-        <!-- Pulls a follow-up from the gap of 24px up to 8px below the message before. -->
-        <ChatMessageBubble
-          v-else
-          :class="{ '-mt-4': isFollowUp }"
-          :message="entry.message"
-          :show-time="showTime"
-        />
-      </template>
+        <template v-for="{ entry, showTime, isFollowUp } in items" :key="entry.id">
+          <div
+            v-if="entry.id === firstUnreadId"
+            ref="unread-divider"
+            class="flex items-center gap-3"
+          >
+            <CommonDivider class="flex-1" variant="muted" aria-hidden="true" />
+            <CommonLabel class="shrink-0 text-muted!" size="small" role="note">
+              {{ $t('Unread messages') }}
+            </CommonLabel>
+            <CommonDivider class="flex-1" variant="muted" aria-hidden="true" />
+          </div>
 
-      <ChatThreadEnding :note="endingNote" />
+          <CommonLabel
+            v-if="entry.kind === 'notice'"
+            class="max-w-full self-center py-1 text-center"
+            size="xs"
+            role="note"
+          >
+            <CommonLink
+              v-if="isWebAddress(entry.text)"
+              v-tooltip.truncate.supportive="entry.text"
+              v-bind="pageLinkProps"
+              class="min-w-0 truncate"
+              :link="entry.text"
+            >
+              {{ entry.text }}
+            </CommonLink>
+            <template v-else>{{ $t(entry.text) }}</template>
+          </CommonLabel>
 
-      <div
-        v-if="isCustomerTyping"
-        class="self-start rounded-2xl bg-blue-300 px-3 py-2 text-sm text-normal dark:bg-stone-700"
-        :class="{ '-mt-4': isTypingFollowUp }"
-        role="status"
-        :aria-label="$t('The customer is typing')"
-      >
-        <!-- One line of text high, like a one-line message of the customer. -->
-        <div class="flex h-lh items-center gap-1">
-          <span
-            v-for="dot in 3"
-            :key="dot"
-            class="size-1.5 animate-pulse rounded-full bg-current"
+          <!-- Pulls a follow-up from the gap of 24px up to 8px below the message before. -->
+          <ChatMessageBubble
+            v-else
+            :class="{ '-mt-4': isFollowUp }"
+            :message="entry.message"
+            :show-time="showTime"
           />
+        </template>
+
+        <ChatThreadEnding :note="endingNote" />
+
+        <div
+          v-if="isCustomerTyping"
+          class="self-start rounded-2xl bg-blue-300 px-3 py-2 text-sm text-normal dark:bg-stone-700"
+          :class="{ '-mt-4': isTypingFollowUp }"
+          role="status"
+          :aria-label="$t('The customer is typing')"
+        >
+          <!-- One line of text high, like a one-line message of the customer. -->
+          <div class="flex h-lh items-center gap-1">
+            <span
+              v-for="dot in 3"
+              :key="dot"
+              class="size-1.5 animate-pulse rounded-full bg-current"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -273,10 +311,10 @@ const jumpToNew = () => {
       ref="toolbar"
       class="absolute inset-x-1/2 bottom-3 ltr:-translate-x-1/2 rtl:translate-x-1/2"
       is-reaching-top
-      :is-reaching-bottom="!hasNewBelow"
+      :is-reaching-bottom="isAtEnd"
       :unread-count="unreadCount"
       @scroll-to-unread="jumpToNew"
-      @scroll-to-end="jumpToNew"
+      @scroll-to-end="scrollToEnd"
     />
   </div>
 </template>

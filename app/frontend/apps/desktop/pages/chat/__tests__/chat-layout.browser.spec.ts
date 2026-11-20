@@ -3,18 +3,27 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { page } from 'vitest/browser'
 import { config } from 'vitest-browser-vue'
-import { computed, defineComponent, h, KeepAlive, nextTick, ref } from 'vue'
+import { computed, defineComponent, h, KeepAlive, nextTick, ref, type VNode } from 'vue'
+import { RouterView, useRouter, type Router } from 'vue-router'
 
 import { mountComponent } from '#tests/browser/utils.ts'
+import { nullableMock } from '#tests/support/utils.ts'
 
+import type { ChatSessionUpdatesSubscription } from '#shared/graphql/types.ts'
 import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 
 import {
+  chatMessage,
   currentAgent,
   mockAgentState,
   mockChatSessions,
   runningSession,
 } from '#desktop/entities/chat/__tests__/mocks/chat-data.ts'
+import {
+  mockChatSessionQuery,
+  waitForChatSessionQueryCalls,
+} from '#desktop/entities/chat/graphql/queries/chatSession.mocks.ts'
+import { getChatSessionUpdatesSubscriptionHandler } from '#desktop/entities/chat/graphql/subscriptions/chatSessionUpdates.mocks.ts'
 
 import ChatWorkspace from '../components/ChatWorkspace.vue'
 
@@ -67,6 +76,24 @@ const isPageShown = ref(true)
 const KeptPage = defineComponent({
   setup() {
     return () => h(KeepAlive, null, () => (isPageShown.value ? h(Page) : h('p', 'Elsewhere')))
+  },
+})
+
+let router: Router
+
+// The same behind a route, as in the app, where the agent leaves the page by going to another one.
+// eslint-disable-next-line vue/one-component-per-file
+const RoutedPage = defineComponent({
+  setup() {
+    router = useRouter()
+
+    router.addRoute({ path: '/chat', component: Page })
+    router.addRoute({ path: '/elsewhere', component: { render: () => h('p', 'Elsewhere') } })
+
+    return () =>
+      h(RouterView, null, {
+        default: ({ Component }: { Component: VNode }) => h(KeepAlive, null, () => Component),
+      })
   },
 })
 
@@ -391,6 +418,270 @@ describe('Chat workspace layout', () => {
       sessionIds.value = sessionIds.value.filter((_, index) => index !== 1)
 
       await expect.poll(() => closing.isConnected, { timeout: 200 }).toBe(false)
+    })
+  })
+
+  describe('in a conversation longer than its window', () => {
+    beforeEach(() => page.viewport(1520, 1000))
+
+    const session = runningSession(1, currentAgent)
+
+    const history = Array.from({ length: 40 }, (_, index) =>
+      chatMessage(index + 1, `<div>Message ${index + 1}</div>`, '2026-11-03T11:00:00Z'),
+    )
+
+    const messageWhileAway = chatMessage(41, '<div>Anybody there?</div>', '2026-11-03T11:10:00Z')
+
+    const threads = () => page.getByRole('log').elements() as HTMLElement[]
+
+    const thread = () => threads()[0]
+
+    const distanceFromEnd = (element: HTMLElement) =>
+      element.scrollHeight - element.scrollTop - element.clientHeight
+
+    // The mock builder keeps one object per session, and the workspace alone asks for the state
+    //   after the conversation: a state without the messages would empty the history.
+    const mockConversations = (sessions = [session], messages = history) => {
+      const sessionsWithHistory = sessions.map((running) => ({ ...running, messages }))
+
+      mockAgentState({ runningSessions: sessionsWithHistory })
+      mockChatSessionQuery(({ sessionId }) => ({
+        chatSession: sessionsWithHistory.find((running) => running.id === sessionId),
+      }))
+    }
+
+    const visitPage = async () => {
+      await mountComponent(
+        RoutedPage,
+        {},
+        { config: { chat: true }, permissions: ['chat.agent'], userId: currentAgent.id },
+      )
+
+      await router.push('/chat')
+    }
+
+    const expectNewestEntries = async (count: number) => {
+      await expect.poll(() => page.getByText('Message 40').elements().length).toBe(count)
+
+      // The message input loads after the conversation and leaves the thread more room then. The
+      //   first load of it can take longer than the default wait on a slow machine.
+      await expect
+        .poll(() => page.getByRole('textbox', { name: 'Message' }).elements().length, {
+          timeout: 5000,
+        })
+        .toBe(count)
+      await expect.poll(() => Math.max(...threads().map(distanceFromEnd))).toBeLessThanOrEqual(1)
+    }
+
+    const openConversation = async (sessions = [session], messages = history) => {
+      mockConversations(sessions, messages)
+
+      sessionIds.value = sessions.map((running) => running.id)
+
+      await visitPage()
+      await expectNewestEntries(sessions.length)
+    }
+
+    // Like an agent, between two frames: within one, the thread could hear of its size before the
+    //   scroll event, which comes with the next frame.
+    const scrollUpTo = async (scrollTop: number, element = thread()) => {
+      await new Promise((resolve) => setTimeout(resolve))
+
+      element.scrollTop = scrollTop
+
+      await waitForAnimationFrame()
+    }
+
+    const leavePage = async () => {
+      await router.push('/elsewhere')
+      await nextTick()
+    }
+
+    const comeBack = async () => {
+      await router.push('/chat')
+      await nextTick()
+    }
+
+    const receiveUpdate = (update: Partial<ChatSessionUpdatesSubscription['chatSessionUpdates']>) =>
+      getChatSessionUpdatesSubscriptionHandler().trigger(
+        nullableMock<ChatSessionUpdatesSubscription>({
+          chatSessionUpdates: {
+            __typename: 'ChatSessionUpdatesPayload',
+            message: null,
+            typing: null,
+            notice: null,
+            leftBy: null,
+            closedBy: null,
+            ...update,
+          },
+        }),
+      )
+
+    const receiveMessage = (message: ReturnType<typeof chatMessage>) => receiveUpdate({ message })
+
+    const scrollButton = page.getByRole('button', { name: 'Scroll to end' })
+
+    const imageOf = (size: number) => {
+      const canvas = document.createElement('canvas')
+
+      canvas.width = size
+      canvas.height = size
+
+      return canvas.toDataURL()
+    }
+
+    // An embedded image has its size only after the thread is set up, which moves the end.
+    it('opens at the newest entry of a history that ends in an image', async () => {
+      const image = chatMessage(41, `<img src="${imageOf(200)}">`, '2026-11-03T11:05:00Z')
+
+      await openConversation([session], [...history, image])
+
+      await receiveMessage(chatMessage(42, '<div>See it?</div>', '2026-11-03T11:06:00Z'))
+
+      await expect.element(page.getByText('See it?')).toBeVisible()
+      await expect.poll(() => distanceFromEnd(thread())).toBeLessThanOrEqual(1)
+      await expect.poll(() => scrollButton.elements()).toHaveLength(0)
+    })
+
+    // Some browsers give an image its size only after the thread went to its end. The image gets
+    //   its address late here, so that every browser does.
+    it('stays at the newest entry when an image there gets its size late', async () => {
+      const image = chatMessage(41, '<img>', '2026-11-03T11:05:00Z')
+
+      await openConversation([session], [...history, image])
+
+      const element = thread().querySelector('img')!
+
+      element.src = imageOf(300)
+
+      await expect.poll(() => element.naturalHeight).toBe(300)
+      await expect.poll(() => distanceFromEnd(thread())).toBeLessThanOrEqual(1)
+      await expect.poll(() => scrollButton.elements()).toHaveLength(0)
+    })
+
+    // No scroll event tells the thread that it shows everything once its window grew.
+    it('takes the button to the end away once the whole conversation fits its window', async () => {
+      await openConversation()
+
+      await scrollUpTo(0)
+
+      await expect.element(scrollButton).toBeVisible()
+
+      await page.viewport(1520, 2400)
+
+      await expect.poll(() => scrollButton.elements()).toHaveLength(0)
+    })
+
+    // Nor when the typing indicator goes away, which was all that did not fit.
+    it('takes the button to the end away once the customer stops typing and the rest fits', async () => {
+      await openConversation()
+
+      const fittingHeight = 1000 + thread().scrollHeight - thread().clientHeight
+
+      await page.viewport(1520, fittingHeight + 10)
+
+      await receiveUpdate({ typing: true })
+
+      await expect
+        .element(page.getByRole('status', { name: 'The customer is typing' }))
+        .toBeVisible()
+
+      await scrollUpTo(0)
+
+      await expect.element(scrollButton).toBeVisible()
+
+      await expect.poll(() => scrollButton.elements(), { timeout: 5000 }).toHaveLength(0)
+    })
+
+    describe('when the agent comes back to the page', () => {
+      it('shows the newest message, also one that arrived while they were away', async () => {
+        await openConversation()
+
+        await leavePage()
+        await receiveMessage(messageWhileAway)
+        await comeBack()
+
+        await expect.element(page.getByText('Anybody there?')).toBeVisible()
+        await expect.poll(() => distanceFromEnd(thread())).toBeLessThanOrEqual(1)
+      })
+
+      it('shows the part they scrolled up to', async () => {
+        await openConversation()
+
+        await scrollUpTo(200)
+
+        await leavePage()
+        await comeBack()
+
+        await expect.poll(() => thread().scrollTop).toBe(200)
+      })
+
+      it('shows the button to a message that arrived below the part they scrolled up to', async () => {
+        await openConversation()
+
+        await scrollUpTo(200)
+
+        await leavePage()
+        await receiveMessage(messageWhileAway)
+        await comeBack()
+
+        await expect
+          .element(page.getByRole('button', { name: 'Scroll to unread item' }))
+          .toBeVisible()
+        await expect.poll(() => thread().scrollTop).toBe(200)
+      })
+
+      // No scroll event tells the thread where the unread messages begin when it comes back to its start.
+      it('counts the unread messages on the button for an agent who was at the start', async () => {
+        await openConversation()
+
+        await scrollUpTo(0)
+
+        await leavePage()
+        await receiveMessage(messageWhileAway)
+        await comeBack()
+
+        await expect
+          .element(page.getByRole('button', { name: 'Scroll to unread item' }))
+          .toBeVisible()
+        await expect
+          .element(page.getByRole('status', { name: 'Unread messages count' }))
+          .toHaveTextContent('1')
+      })
+
+      it('shows the part they scrolled up to in a conversation that opened while they were away', async () => {
+        mockConversations()
+
+        await visitPage()
+        await leavePage()
+
+        sessionIds.value = [session.id]
+
+        await waitForChatSessionQueryCalls()
+        await waitForAnimationFrame()
+
+        await comeBack()
+        await expectNewestEntries(1)
+
+        await scrollUpTo(200)
+
+        await leavePage()
+        await comeBack()
+
+        await expect.poll(() => thread().scrollTop).toBe(200)
+      })
+
+      it('shows each of two windows where the agent left it', async () => {
+        await openConversation([session, runningSession(2, currentAgent)])
+
+        await scrollUpTo(200, threads()[1])
+
+        await leavePage()
+        await comeBack()
+
+        await expect.poll(() => distanceFromEnd(threads()[0])).toBeLessThanOrEqual(1)
+        await expect.poll(() => threads()[1].scrollTop).toBe(200)
+      })
     })
   })
 })
