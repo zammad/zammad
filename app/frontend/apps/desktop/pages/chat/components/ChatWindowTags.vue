@@ -1,137 +1,31 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { getNode } from '@formkit/core'
-import { computed, nextTick, ref } from 'vue'
+import { computed } from 'vue'
 
-import {
-  NotificationTypes,
-  useNotifications,
-} from '#shared/components/CommonNotifications/index.ts'
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
-import { useTagAssignmentAddMutation } from '#shared/entities/tags/graphql/mutations/assignment/add.api.ts'
-import { useTagAssignmentRemoveMutation } from '#shared/entities/tags/graphql/mutations/assignment/remove.api.ts'
-import { getApolloClient } from '#shared/server/apollo/client.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import type { ChatConversationSession } from '#desktop/entities/chat/types.ts'
+import { useTagAssignment } from '#desktop/entities/tags/composables/useTagAssignment.ts'
 
 interface Props {
   session: Pick<ChatConversationSession, 'id' | 'internalId' | 'tags'>
 }
 
-interface TagEdit {
-  tag: string
-  add: boolean
-}
-
 const props = defineProps<Props>()
 
-const { notify } = useNotifications()
 const { isTouchDevice } = useTouchDevice()
 const { config } = useApplicationStore()
 
-const applyEdit = (tags: string[], { tag, add }: TagEdit) => {
-  if (!add) return tags.filter((name) => name !== tag)
-
-  return tags.includes(tag) ? tags : [...tags, tag]
-}
-
-const addMutation = new MutationHandler(useTagAssignmentAddMutation({}), {
-  errorNotificationMessage: __('The tag could not be added.'),
-})
-
-const removeMutation = new MutationHandler(useTagAssignmentRemoveMutation({}), {
-  errorNotificationMessage: __('The tag could not be removed.'),
-})
-
-const isNewTagVisible = ref(false)
-
-// Every open window has its own field.
-const newTagId = `chatSession${props.session.internalId}NewTag`
-
-const hideNewTag = () => {
-  isNewTagVisible.value = false
-}
-
-const showNewTag = async () => {
-  isNewTagVisible.value = true
-
-  await nextTick()
-
-  const activate = getNode(newTagId)?.context?.activate
-
-  if (typeof activate === 'function') activate()
-}
-
 const currentTags = computed(() => props.session.tags)
 
-// What the server stored, and the edits still on their way on top: an edit that fails drops out
-//   of them without undoing a later one.
-let storedTags: string[] = []
-let pendingEdits: TagEdit[] = []
-
-const showTags = () => {
-  const client = getApolloClient()
-  const tags = pendingEdits.reduce(applyEdit, storedTags)
-
-  client.cache.modify({
-    id: client.cache.identify({ __typename: 'ChatSession', id: props.session.id }),
-    fields: { tags: () => tags },
-  })
-}
-
-const sendEdit = async (edit: TagEdit) => {
-  const variables = { objectId: props.session.id, tag: edit.tag }
-
-  try {
-    if (edit.add) await addMutation.send(variables)
-    else await removeMutation.send(variables)
-
-    storedTags = applyEdit(storedTags, edit)
-
-    notify({
-      type: NotificationTypes.Success,
-      id: edit.add ? 'chat-session-tag-added' : 'chat-session-tag-removed',
-      message: edit.add ? __('Tag added successfully.') : __('Tag removed successfully.'),
-    })
-  } catch {
-    // The handler reports the failure itself.
-  }
-
-  pendingEdits = pendingEdits.filter((pending) => pending !== edit)
-
-  showTags()
-}
-
-// One at a time: the server takes them in the agent's order, and an earlier call superseded on the
-//   same mutation would fail without its notification.
-let lastEditSent = Promise.resolve()
-
-const editTags = (edit: TagEdit) => {
-  if (!pendingEdits.length) storedTags = currentTags.value
-
-  pendingEdits = [...pendingEdits, edit]
-
-  showTags()
-
-  lastEditSent = lastEditSent.then(() => sendEdit(edit))
-}
-
-const addTag = (value: unknown) => {
-  const tag = value as string
-
-  if (!tag || currentTags.value.includes(tag)) return
-
-  editTags({ tag, add: true })
-}
-
-const removeTag = (tag: string) => {
-  editTags({ tag, add: false })
-}
+const { addTag, removeTag, newTagId, isNewTagVisible, showNewTag, hideNewTag } = useTagAssignment({
+  entity: () => ({ __typename: 'ChatSession', id: props.session.id }),
+  tags: () => currentTags.value,
+})
 </script>
 
 <template>

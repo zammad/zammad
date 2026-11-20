@@ -139,7 +139,7 @@ describe('KnowledgeBaseAnswerTags', () => {
       const { notify } = useNotifications()
 
       expect(notify).toHaveBeenCalledWith({
-        id: 'knowledge-base-answer-tag-removed',
+        id: 'tag-removed',
         message: 'Tag removed successfully.',
         type: NotificationTypes.Success,
       })
@@ -171,7 +171,7 @@ describe('KnowledgeBaseAnswerTags', () => {
       const { notify } = useNotifications()
 
       expect(notify).toHaveBeenCalledWith({
-        id: 'knowledge-base-answer-tag-added',
+        id: 'tag-added',
         message: 'Tag added successfully.',
         type: NotificationTypes.Success,
       })

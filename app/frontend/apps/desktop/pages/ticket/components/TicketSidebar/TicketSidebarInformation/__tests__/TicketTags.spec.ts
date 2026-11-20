@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { gql } from '@apollo/client'
 import { within } from '@testing-library/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
+import { waitFor } from '#tests/support/vitest-wrapper.ts'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
@@ -22,6 +24,7 @@ import {
 } from '#shared/entities/tags/graphql/queries/autocompleteTags.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { type AutocompleteSearchEntry } from '#shared/graphql/types.ts'
+import { getApolloClient } from '#shared/server/apollo/client.ts'
 
 import TicketTags, { type Props } from '../TicketSidebarInformationContent/TicketTags.vue'
 
@@ -148,8 +151,8 @@ describe('TicketTags', () => {
     const { notify } = useNotifications()
 
     expect(notify).toHaveBeenCalledWith({
-      id: 'ticket-tag-added-successfully',
-      message: 'Ticket tag added successfully.',
+      id: 'tag-added',
+      message: 'Tag added successfully.',
       type: NotificationTypes.Success,
     })
   })
@@ -237,8 +240,8 @@ describe('TicketTags', () => {
     const { notify } = useNotifications()
 
     expect(notify).toHaveBeenCalledWith({
-      id: 'ticket-tag-removed-successfully',
-      message: 'Ticket tag removed successfully.',
+      id: 'tag-removed',
+      message: 'Tag removed successfully.',
       type: NotificationTypes.Success,
     })
   })
@@ -257,5 +260,51 @@ describe('TicketTags', () => {
     expect(view.getByRole('link', { name: 'tag 6' })).toBeInTheDocument()
 
     expect(view.queryByRole('button', { name: 'Show more' })).not.toBeInTheDocument()
+  })
+
+  it('puts a removed tag back when the server keeps it', async () => {
+    const fragment = gql`
+      fragment TestTicketTags on Ticket {
+        id
+        tags
+      }
+    `
+    const { cache } = getApolloClient()
+
+    cache.writeFragment({
+      fragment,
+      data: { __typename: 'Ticket', id: testTicket.id, tags: testTags },
+    })
+
+    const readTags = () =>
+      cache.readFragment<{ tags: string[] }>({ id: cache.identify(testTicket), fragment })?.tags
+
+    let failRemoval!: (error: Error) => void
+
+    mockTagAssignmentRemoveMutation(
+      () =>
+        new Promise((_resolve, reject) => {
+          failRemoval = reject
+        }),
+    )
+
+    const view = renderTicketTags()
+
+    await view.events.click(view.getAllByRole('button', { name: 'Remove this tag' })[0])
+    await waitForTagAssignmentRemoveMutationCalls()
+
+    expect(readTags()).toEqual(['tag 2', 'tag 3'])
+
+    failRemoval(new Error('Not authorized'))
+
+    await waitFor(() =>
+      expect(useNotifications().notify).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: NotificationTypes.Error,
+          message: 'The tag could not be removed.',
+        }),
+      ),
+    )
+    expect(readTags()).toEqual(testTags)
   })
 })

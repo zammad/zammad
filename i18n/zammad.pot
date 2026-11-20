@@ -1502,9 +1502,9 @@ msgstr ""
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:170
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:172
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:196
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:68
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:117
 msgid "Add tag"
 msgstr ""
 
@@ -13057,9 +13057,9 @@ msgstr ""
 msgid "No supported target language is available."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:163
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:61
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:79
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:110
 msgid "No tags added yet."
 msgstr ""
 
@@ -15537,9 +15537,9 @@ msgstr ""
 msgid "Remove this scheduled visibility change"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:151
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:153
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:171
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:49
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:92
 msgid "Remove this tag"
 msgstr ""
 
@@ -18364,8 +18364,7 @@ msgstr ""
 msgid "Tag \"%s\" already exists."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:99
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:100
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
 msgid "Tag added successfully."
 msgstr ""
 
@@ -18373,8 +18372,7 @@ msgstr ""
 msgid "Tag assignment mode"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:99
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:124
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
 msgid "Tag removed successfully."
 msgstr ""
 
@@ -18393,8 +18391,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:138
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:134
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:36
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
@@ -19965,13 +19963,11 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:44
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:57
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:63
 msgid "The tag could not be added."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:48
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:61
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:67
 msgid "The tag could not be removed."
 msgstr ""
 
@@ -21196,22 +21192,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:131
 msgid "Ticket selector contains expert conditions. If you turn off the expert mode, it can lead to data loss in your condition attributes."
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:108
-msgid "Ticket tag added successfully."
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:68
-msgid "Ticket tag could not be added."
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:114
-msgid "Ticket tag could not be removed."
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:133
-msgid "Ticket tag removed successfully."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:35

@@ -182,7 +182,7 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
     content_sidebar.get_by_role('button', name: 'Add tag', exact: true).click
     search_for_option('Add tag', 'editor-scenario') { page.keyboard.press('Enter') }
 
-    expect(notification('Ticket tag added successfully')).to be_visible
+    expect(notification('Tag added successfully')).to be_visible
     expect(ticket.reload.tag_list).to include('editor-scenario')
 
     page.get_by_role('button', name: 'Update', exact: true).click

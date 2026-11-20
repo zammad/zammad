@@ -121,7 +121,7 @@ RSpec.describe 'Desktop > Ticket > Edit', app: :desktop_view, authenticated_as: 
       click_on 'Add tag'
       find_autocomplete('Add tag').open.input_element.fill_in(with: 'test_tag').send_keys(:tab)
       wait_for_gql('shared/entities/tags/graphql/mutations/assignment/add.graphql', number: 1)
-      expect(page).to have_text('Ticket tag added successfully')
+      expect(page).to have_text('Tag added successfully')
       expect(ticket.tag_list).to include('test_tag')
 
       #

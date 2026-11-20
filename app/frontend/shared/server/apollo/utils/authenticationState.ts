@@ -28,6 +28,8 @@ export const setAuthenticationInvalidated = (value: boolean): void => {
 
 export const authenticationInvalidated = (): boolean => invalidated
 
+export const authenticationGeneration = (): number => generation
+
 // Remembers on the operation which authentication it is being sent with.
 export const rememberAuthenticationGeneration = (operation: Operation): void => {
   operation.setContext({ [OPERATION_CONTEXT_KEY]: generation })
