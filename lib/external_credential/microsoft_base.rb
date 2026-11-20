@@ -122,7 +122,11 @@ class ExternalCredential::MicrosoftBase < ExternalCredential::Base::ChannelXoaut
         return "#{Setting.get('http_type')}://#{Setting.get('fqdn')}/#channels/#{provider_name}/error/user_mismatch/channel/#{existing_channel.id}"
       end
 
-      channel_options[:inbound][:options][:shared_mailbox] = shared_mailbox if shared_mailbox.present?
+      if shared_mailbox.present?
+        channel_options[:inbound][:options][:shared_mailbox]  = shared_mailbox
+        channel_options[:outbound][:options][:shared_mailbox] = shared_mailbox
+      end
+
       channel_options[:inbound][:options][:folder]         = existing_channel.options[:inbound][:options][:folder]
       channel_options[:inbound][:options][:keep_on_server] = existing_channel.options[:inbound][:options][:keep_on_server]
 
