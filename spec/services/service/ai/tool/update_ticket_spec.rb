@@ -198,7 +198,61 @@ RSpec.describe Service::AI::Tool::UpdateTicket, :aggregate_failures do
 
   it 'refuses a call that names no field, and an argument it does not know' do
     expect(error_text(call({}))).to include('Name at least one field to change.')
-    expect(error_text(call({ 'title' => 'New title' }))).to include("unknown argument 'title'")
+    expect(error_text(call({ 'subject' => 'New title' }))).to include("unknown argument 'subject'")
+  end
+
+  describe 'the title' do
+    let(:ticket) { create(:ticket, group:, title: 'Printer on fire', state: Ticket::State.lookup(name: 'open')) }
+
+    it 'renames the ticket, and names the old and the new title as the ticket\'s texts' do
+      result = call({ 'title' => 'Printer fixed' })
+
+      expect(result[:isError]).to be(false)
+      expect(ticket.reload).to have_attributes(title: 'Printer fixed', updated_by: agent)
+      expect(result[:structuredContent]['changes']).to eq([{ 'argument' => 'title', 'label' => 'Title', 'from' => 'Printer on fire', 'to' => 'Printer fixed' }])
+      expect(result.dig(:content, 0, :text)).to include(
+        'title: changed, the texts below',
+        %(<text source="ticket" field="title" version="before">\n│ Printer on fire\n</text>),
+        %(<text source="ticket" field="title" version="after">\n│ Printer fixed\n</text>),
+      )
+    end
+
+    it 'renames the ticket together with another field' do
+      result = call({ 'title' => 'Printer fixed', 'state' => 'closed' })
+
+      expect(ticket.reload).to have_attributes(title: 'Printer fixed', state: Ticket::State.lookup(name: 'closed'))
+      expect(result[:structuredContent]['changes'].pluck('argument')).to contain_exactly('title', 'state')
+    end
+
+    it 'takes a title with a line break as the ticket saves it, in one line' do
+      result = call({ 'title' => "Printer\nfixed" })
+
+      expect(ticket.reload.title).to eq('Printer fixed')
+      expect(result[:structuredContent]).not_to have_key('not_applied')
+    end
+
+    it 'keeps the title of a change Zammad refuses' do
+      expect(error_text(call({ 'title' => 'Printer fixed', 'state' => 'pending reminder' }))).to include('missing_value', 'This change needs pending_time')
+      expect(ticket.reload.title).to eq('Printer on fire')
+    end
+
+    it 'refuses an empty title and one that is too long, and changes nothing' do
+      expect(error_text(call({ 'title' => ' ', 'state' => 'closed' }))).to include('invalid_value', 'title cannot be empty.')
+      expect(error_text(call({ 'title' => 'x' * 201 }))).to include('title: the value has 201 characters; at most 200 fit.')
+      expect(ticket.reload).to have_attributes(title: 'Printer on fire', state: Ticket::State.lookup(name: 'open'))
+    end
+
+    it 'is no custom field' do
+      expect(error_text(call({ 'fields' => { 'title' => 'Printer fixed' } }))).to include('title is no field you may set on this ticket.')
+      expect(ticket.reload.title).to eq('Printer on fire')
+    end
+
+    it 'is not renamed by a user who may only read the ticket' do
+      agent.group_names_access_map = { 'Support' => 'read' }
+
+      expect(error_text(call({ 'title' => 'Printer fixed' }))).to include('read_only')
+      expect(ticket.reload.title).to eq('Printer on fire')
+    end
   end
 
   it 'says without its details where the user may no longer read the ticket' do
@@ -260,6 +314,20 @@ RSpec.describe Service::AI::Tool::UpdateTicket, :aggregate_failures do
       call({ 'fields' => { 'reviewer' => 'rita@example.com' } })
 
       expect(ticket.reload.reviewer).to eq(reviewer.id)
+    end
+
+    it 'renames a ticket whose required field is still empty, as the ticket view does, but asks for the field with another change' do
+      create(:object_manager_attribute_text, name: 'contract', display: 'Contract', screens: { 'edit' => { 'ticket.agent' => { 'shown' => true, 'required' => true } } })
+      ObjectManager::Attribute.migration_execute
+
+      result = call({ 'title' => 'Printer fixed' })
+
+      expect(result[:isError]).to be(false)
+      expect(ticket.reload.title).to eq('Printer fixed')
+      expect(result[:structuredContent]['changes']).to contain_exactly(include('argument' => 'title', 'to' => 'Printer fixed'))
+
+      expect(error_text(call({ 'title' => 'Printer on fire', 'state' => 'closed' }))).to include('missing_value', 'This change needs fields.contract')
+      expect(ticket.reload.title).to eq('Printer fixed')
     end
 
     it 'counts a required yes or no field set to no as given, as the save does' do

@@ -153,7 +153,8 @@ class Service::AI::Tool::GetTicketFields < Service::AI::Tool
 
   def update_line(scope)
     "The fields update_ticket can set#{" #{scope.join(' and ')}" if scope.any?}: state, priority, group, owner and " \
-      'pending_time as arguments of their own, custom fields in its fields object, by the names listed.'
+      'pending_time as arguments of their own, custom fields in its fields object, by the names listed. It takes the ' \
+      'title as an argument of its own as well, which no form lists.'
   end
 
   def create_line(scope)

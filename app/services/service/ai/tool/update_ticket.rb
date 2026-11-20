@@ -1,14 +1,15 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-# Changes a ticket's state, priority, group, owner, pending time and custom fields as the REST API and GraphQL do: as the
+# Changes a ticket's title, state, priority, group, owner, pending time and custom fields as the REST API and GraphQL do: as the
 #   user, through the update service the UI uses, so that Core Workflow checks the change on save and the ticket's
-#   validators run as for the form. Values are given by name and matched against what the user may choose; only when
-#   Zammad refuses the change does the tool ask Core Workflow what the ticket allows or needs, to name it.
+#   validators run as for the form; a rename alone is saved as the ticket view saves it. Values are given by name and
+#   matched against what the user may choose; only when Zammad refuses the change does the tool ask Core Workflow what
+#   the ticket allows or needs, to name it.
 class Service::AI::Tool::UpdateTicket < Service::AI::Tool
   include Service::AI::Tool::Concerns::ConfirmationArgument
 
   # The ticket's own fields that are arguments of their own; custom fields go into the fields object.
-  ARGUMENTS = %w[state priority group owner pending_time].freeze
+  ARGUMENTS = %w[title state priority group owner pending_time].freeze
 
   Invalid = Service::AI::Tool::Fields::EntityAttribute::Invalid
 
@@ -58,14 +59,15 @@ class Service::AI::Tool::UpdateTicket < Service::AI::Tool
   }.freeze
 
   # rubocop:disable Zammad/DetectTranslatableString
-  description 'Change a ticket\'s state, priority, group, owner, pending time or custom fields, as the ticket form in ' \
-              'Zammad does. Give values by name, as get_ticket shows them: state "closed", owner "me", an agent\'s ' \
+  description 'Change a ticket\'s title, state, priority, group, owner, pending time or custom fields, as the ticket ' \
+              'form in Zammad does. Give values by name, as get_ticket shows them: state "closed", owner "me", an agent\'s ' \
               'email or "nobody", group "2nd Level", a custom field\'s option by its label in fields. No lookup is ' \
               'needed first: a name that fits no value or several names the valid ones or the candidates. A person ' \
               'or a group is taken by the whole name, a person also by email or ID: a part of the name names the ' \
               'candidate instead, for the user to confirm. A pending state needs pending_time. To reply and change ' \
               'the state, call create_article first, then this tool.'
   title 'Update ticket'
+  parameter :title, type: :string, description: 'The new title of the ticket.'
   parameter :state, type: :string, description: 'The state, such as "open", "closed" or "pending reminder".'
   parameter :priority, type: :string, description: 'The priority, such as "3 high".'
   parameter :group, type: :string, description: 'The group to move the ticket to, its levels joined by " › " or its last level.'
@@ -136,12 +138,20 @@ class Service::AI::Tool::UpdateTicket < Service::AI::Tool
   # @return [Boolean] whether the change was saved
   def save(data, skip)
     ActiveRecord::Base.transaction(requires_new: true) do
-      # The service adds the screen to the data it gets; the tool keeps its own to explain a refusal.
-      Service::Ticket::Update.with_current_user(current_user).execute(ticket:, ticket_data: data.dup, skip_validators: skip)
+      write(data, skip)
       raise ActiveRecord::Rollback if continuing? && !answered?
 
       true
     end.present?
+  end
+
+  # A rename alone skips the checks of the other fields, as in the ticket view: a field made required after the ticket
+  #   was created would block it otherwise (https://github.com/zammad/zammad/issues/4417).
+  def write(data, skip)
+    return Service::Ticket::ForcedUpdate.with_current_user(current_user).execute(ticket, data) if data.keys == [:title]
+
+    # The service adds the screen to the data it gets; the tool keeps its own to explain a refusal.
+    Service::Ticket::Update.with_current_user(current_user).execute(ticket:, ticket_data: data.dup, skip_validators: skip)
   end
 
   def continuing?
@@ -192,13 +202,26 @@ class Service::AI::Tool::UpdateTicket < Service::AI::Tool
 
   # The fields the user may set on the ticket, by the argument that sets them; Core Workflow decides on save.
   def form_fields
-    @form_fields ||= Service::AI::Tool::Fields::TicketFields.settable(ticket:, user: current_user, rules: false)
+    @form_fields ||= { 'title' => title_field }.merge(Service::AI::Tool::Fields::TicketFields.settable(ticket:, user: current_user, rules: false))
+  end
+
+  # The title is changed in the ticket's header, outside the edit screen, so Core Workflow does not list it.
+  def title_field
+    attribute = ObjectManager::Attribute.get(object: 'Ticket', name: 'title')
+
+    type      = Service::EntityAttribute::Type.for(attribute, user: current_user, record: ticket)
+
+    Service::EntityAttribute::Metadata::Entry.new(attribute:, type:, shown: true, required: true, allowed: nil) # rubocop:disable Zammad/ForbidCallingServiceDirectly
   end
 
   # What the update service takes: the records of the ticket's own fields, the stored values of custom fields.
   def ticket_data(answers = {})
     (requested + answers.to_a).to_h do |argument, value|
       field = form_fields[argument] || unknown_field(argument)
+      # As the ticket saves a title, so that the receipt does not name it as saved otherwise.
+      value = value.gsub(%r{\s}, ' ') if argument == 'title'
+      # The database takes an empty title, the desktop view does not.
+      raise Invalid.new('invalid_value', "#{argument} cannot be empty.") if field.required && value.blank?
 
       [field.type.data_key.to_sym, Service::AI::Tool::Fields::EntityAttribute.resolve(field.type, value)]
     end
