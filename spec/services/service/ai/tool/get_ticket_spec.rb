@@ -553,6 +553,21 @@ RSpec.describe Service::AI::Tool::GetTicket, :aggregate_failures do
       expect(Service::AI::Tool::Runtime::Router.offered_tools(user: agent, surface: :mcp, token:)).to include(described_class)
     end
 
+    it 'names how to name the ticket with an unknown argument that was meant to' do
+      result = call({ id: ticket.id })
+
+      expect(result[:isError]).to be(true)
+      expect(result.dig(:content, 0, :text)).to include("unknown argument 'id'; #{Service::AI::Tool::Locator::Ticket::NO_NAME}")
+    end
+
+    it 'names only the unknown argument where the ticket is named' do
+      result = call({ ticket_id: ticket.id, colour: 'red' })
+
+      expect(result[:isError]).to be(true)
+      expect(result.dig(:content, 0, :text)).to include("unknown argument 'colour'")
+      expect(result.dig(:content, 0, :text)).not_to include(Service::AI::Tool::Locator::Ticket::NO_NAME)
+    end
+
     it 'returns a hash that fits its output schema in both layers, references and messages included' do
       parent    = create(:ticket, group:, title: 'Calendar outage')
       published = create(:knowledge_base_answer, :published)

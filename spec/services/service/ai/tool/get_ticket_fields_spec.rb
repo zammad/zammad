@@ -42,7 +42,7 @@ RSpec.describe Service::AI::Tool::GetTicketFields, :aggregate_failures do
     expect(field(result, 'state')['values']).to include('open', 'closed', 'pending reminder', 'pending close')
     expect(field(result, 'group')).to include('value' => 'Support', 'values' => ['2nd Level', 'Support'])
     expect(field(result, 'owner')).to include('value' => 'nobody', 'values' => ['nobody', 'Nina Agent (nina@example.com)'], 'required' => false)
-    expect(result.dig(:content, 0, :text)).to include('state (State, required): open · values: ')
+    expect(result.dig(:content, 0, :text)).to include('state (State, required): open · values: ', 'It takes the title as an argument of its own as well')
   end
 
   context 'without a ticket' do

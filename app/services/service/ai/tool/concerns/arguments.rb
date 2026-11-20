@@ -33,7 +33,8 @@ module Service::AI::Tool::Concerns::Arguments
                 unknown.map { |name| "unknown argument '#{name}'" } +
                 arguments.slice(*tool_parameters.keys).filter_map { |name, value| value_error(name, value) }
 
-      errors.presence || naming_errors(arguments, surface)
+      # Named together, as an unknown argument is often meant to name the object, such as id for ticket_id.
+      errors + naming_errors(arguments, surface)
     end
 
     def parameter_default(spec, surface)
