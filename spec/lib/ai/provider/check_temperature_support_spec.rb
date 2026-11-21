@@ -58,6 +58,52 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
     end
   end
 
+  # Without param and code the message is the only hint, so it must not turn any bad request into a
+  # temperature rejection: that would hide a broken config behind a silently disabled temperature.
+  shared_examples 'a temperature check not fooled by other errors' do
+    it 'detects a rejected temperature with only a type and a message' do
+      stub_response(failed_response(400, {
+        error: { type: 'invalid_request_error', message: 'Invalid Temperature: only 1 is allowed' },
+      }.to_json))
+
+      expect(provider.check_temperature_support!(config)).to be(false)
+    end
+
+    it 'raises for a bad request that does not mention the temperature' do
+      stub_response(failed_response(400, {
+        error: { type: 'invalid_request_error', message: 'invalid model: k9 does not exist' },
+      }.to_json))
+
+      expect { provider.check_temperature_support!(config) }
+        .to raise_error(AI::Provider::CheckTemperatureSupportError)
+    end
+
+    it 'raises when another parameter is named as the problem' do
+      stub_response(failed_response(400, {
+        error: { type: 'invalid_request_error', param: 'model', message: 'model is invalid, temperature is fine' },
+      }.to_json))
+
+      expect { provider.check_temperature_support!(config) }
+        .to raise_error(AI::Provider::CheckTemperatureSupportError)
+    end
+
+    it 'raises for another error type that happens to mention the temperature' do
+      stub_response(failed_response(500, {
+        error: { type: 'server_error', message: 'temperature sensor offline' },
+      }.to_json))
+
+      expect { provider.check_temperature_support!(config) }
+        .to raise_error(AI::Provider::CheckTemperatureSupportError)
+    end
+
+    it 'raises when the error is not an object' do
+      stub_response(failed_response(400, { error: 'temperature' }.to_json))
+
+      expect { provider.check_temperature_support!(config) }
+        .to raise_error(AI::Provider::CheckTemperatureSupportError)
+    end
+  end
+
   shared_examples 'a temperature check skipping known models' do
     it 'leaves the temperature out for a model known to reject it', :aggregate_failures do
       stub_response(UserAgent::Result.new(success: true, code: 200, data: {}))
@@ -74,6 +120,7 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
 
     include_examples 'a config validating temperature check'
     include_examples 'a temperature check skipping known models'
+    include_examples 'a temperature check not fooled by other errors'
   end
 
   context 'with Azure' do
@@ -81,6 +128,7 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
     let(:config)   { { token: 'sk-123', url_completions: 'https://example.com/openai/deployments/test/chat/completions' } }
 
     include_examples 'a config validating temperature check'
+    include_examples 'a temperature check not fooled by other errors'
   end
 
   context 'with a custom OpenAI compatible provider' do
@@ -90,6 +138,7 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
 
     include_examples 'a config validating temperature check'
     include_examples 'a temperature check skipping known models'
+    include_examples 'a temperature check not fooled by other errors'
 
     # Kimi only accepts a temperature of 1 and answers with a bare message: no param, no code.
     it 'detects a rejected temperature without the param/code fields' do
