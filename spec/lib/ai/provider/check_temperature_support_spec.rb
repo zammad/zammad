@@ -151,6 +151,22 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
 
       expect(provider.check_temperature_support!(config)).to be(false)
     end
+
+    # The probe result is stored as model_temperature_support (see Service::AI::ProviderConnection),
+    # which is what keeps the temperature out of the requests that follow.
+    it 'leaves the temperature out of chat requests once the probe detected the rejection', :aggregate_failures do
+      stub_response(failed_response(400, {
+        error: { type: 'invalid_request_error', message: 'invalid temperature: only 1 is allowed for this model' },
+      }.to_json))
+
+      detected = provider.check_temperature_support!(config.merge(model: 'k3.1-pro'))
+
+      stub_response(UserAgent::Result.new(success: true, code: 200, data: { 'choices' => [{ 'message' => { 'content' => 'Hi' } }] }))
+      chat_config = config.merge(model: 'k3.1-pro', model_temperature_support: detected)
+
+      expect(provider.new(config: chat_config).chat(prompt_system: 'sys', prompt_user: 'usr', prompt_image: nil)).to eq('Hi')
+      expect(UserAgent).to have_received(:post).with(anything, hash_excluding(:temperature), anything).at_least(:once)
+    end
   end
 
   context 'with Anthropic' do
