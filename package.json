@@ -45,7 +45,7 @@
   },
   "packageManager": "pnpm@12.21.0",
   "devDependencies": {
-    "@colbymchenry/codegraph": "^1.6.2",
+    "@colbymchenry/codegraph": "^1.6.3",
     "@faker-js/faker": "^10.6.0",
     "@graphql-codegen/add": "^8.0.0",
     "@graphql-codegen/cli": "^8.0.0",
