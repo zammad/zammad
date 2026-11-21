@@ -133,7 +133,13 @@ class AI::Provider
       error = data.is_a?(Hash) ? data['error'] : nil
       return false if !error.is_a?(Hash)
 
-      error.values_at('type', 'param', 'code') == %w[invalid_request_error temperature unsupported_value]
+      type, param, code = error.values_at('type', 'param', 'code')
+      return true if [type, param, code] == %w[invalid_request_error temperature unsupported_value]
+
+      # Some compatible endpoints (e.g. Kimi) reject the temperature with a type and a message only,
+      # naming the parameter in the text. Without param and code nothing else tells the rejection of
+      # the temperature apart from any other bad request, so the message has to mention it.
+      type == 'invalid_request_error' && param.blank? && code.blank? && error['message'].to_s.match?(%r{\btemperature\b}i)
     rescue JSON::ParserError
       false
     end
