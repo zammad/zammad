@@ -90,6 +90,18 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
 
     include_examples 'a config validating temperature check'
     include_examples 'a temperature check skipping known models'
+
+    # Kimi only accepts a temperature of 1 and answers with a bare message: no param, no code.
+    it 'detects a rejected temperature without the param/code fields' do
+      stub_response(failed_response(400, {
+        error: {
+          type:    'invalid_request_error',
+          message: 'invalid temperature: only 1 is allowed for this model',
+        },
+      }.to_json))
+
+      expect(provider.check_temperature_support!(config)).to be(false)
+    end
   end
 
   context 'with Anthropic' do
