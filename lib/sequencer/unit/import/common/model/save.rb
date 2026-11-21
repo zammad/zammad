@@ -18,6 +18,7 @@ class Sequencer::Unit::Import::Common::Model::Save < Sequencer::Unit::Base
 
   def save!
     BulkImportInfo.enable
+    instance.disable_name_guessing = true if instance.is_a?(User)
     instance.save!
   rescue => e
     handle_failure(e)
