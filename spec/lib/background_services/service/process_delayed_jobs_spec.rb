@@ -53,6 +53,33 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, :aggregate_failu
     end
   end
 
+  describe 'maximum run time of jobs' do
+    around do |example|
+      original_max_run_time = Delayed::Worker.max_run_time
+      example.run
+    ensure
+      Delayed::Worker.max_run_time = original_max_run_time
+    end
+
+    before do
+      allow(BackgroundServices).to receive(:shutdown_requested).and_return(true)
+    end
+
+    it 'applies the configured maximum when the worker starts' do
+      # As seen by a worker thread while another one is in the middle of its reset.
+      Delayed::Worker.max_run_time = 4.hours
+
+      described_class.new(manager:).run
+      expect(Delayed::Worker.max_run_time).to eq(Delayed::Worker::ZAMMAD_MAX_RUN_TIME)
+    end
+
+    it 'lets an import job run for its own maximum' do
+      AsyncImportJob.perform_later(create(:import_job))
+      described_class.new(manager:).run
+      expect(Delayed::Job.last.max_run_time).to eq(7.days)
+    end
+  end
+
   describe '#process_results' do
     before do
       allow(instance).to receive(:process_empty).and_call_original
