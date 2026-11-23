@@ -42,12 +42,14 @@ export const mountApp = async () => {
   initializeAppName('desktop')
   initializeApolloClient(app)
 
+  // The initial navigation starts with the router, and route redirects may use stores.
+  initializeStore(app)
+
   const router = initializeRouter(app)
 
   // Remember the initialized router.
   setCurrentRouter(router)
 
-  initializeStore(app)
   initializeDesktopIcons()
   initializeForm(app)
   initializeFormFields()

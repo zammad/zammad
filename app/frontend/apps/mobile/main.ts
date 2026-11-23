@@ -42,12 +42,14 @@ export default async function mountApp(): Promise<void> {
 
   initializeApolloClient(app)
 
+  // The initial navigation starts with the router, and route redirects may use stores.
+  initializeStore(app)
+
   const router = initializeRouter(app)
 
   // Remember the initialized router.
   setCurrentRouter(router)
 
-  initializeStore(app)
   initializeMobileIcons()
   initializeForm(app)
   initializeFormFields()
