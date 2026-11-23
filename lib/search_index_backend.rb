@@ -889,7 +889,7 @@ refreshes all indexes to make previous request data visible in future requests
 helper method for making HTTP calls
 
 @param url [String] url
-@option params [Hash] :data is a payload hash
+@option params [Hash, String] :data is a payload hash, or a String to send as it is (line based bulk format)
 @option params [Symbol] :method is a HTTP method
 @option params [Symbol] :request_type selects the timeout profile; use `:reindex` for long-running reindex operations and `:inline` for index writes inside request paths
 
@@ -898,7 +898,7 @@ helper method for making HTTP calls
 =end
   def self.make_request(url, data: {}, method: :get, request_type: :default)
     Rails.logger.debug { "# curl -X #{method} \"#{url}\" " }
-    Rails.logger.debug { "-d '#{data.to_json}'" } if data.present?
+    Rails.logger.debug { "-d '#{data.is_a?(String) ? data : data.to_json}'" } if data.present?
 
     read_timeout, total_timeout = timeouts_for(request_type)
 
@@ -913,6 +913,12 @@ helper method for making HTTP calls
       password:          Setting.get('es_password'),
       verify_ssl:        Setting.get('es_ssl_verify'),
     }
+
+    if data.is_a?(String)
+      options[:send_as_raw_body]        = data
+      options[:do_not_follow_redirects] = true
+      data = {}
+    end
 
     response = UserAgent.send(method, url, data, options)
 

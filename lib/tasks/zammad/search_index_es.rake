@@ -1,5 +1,7 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+require 'io/console'
+
 namespace :zammad do
   namespace :searchindex do
     desc 'Drop all search indexes'
@@ -36,13 +38,27 @@ namespace :zammad do
     desc 'Reload all indexable data'
     task :reload, [:worker] => %i[zammad:searchindex:version_supported] do |_task, args|
       puts 'Reloading data... '
-      Models.indexable.each do |model_class|
-        puts "  - #{model_class}... "
-        time_spent = Benchmark.realtime do
-          model_class.search_index_reload(worker: args[:worker].to_i)
+
+      started_at = Time.current
+      progress   = {}
+      status     = ''
+      # A progress line which is wider than the terminal cannot be overwritten.
+      width      = $stdout.tty? ? IO.console&.winsize&.last : nil
+
+      # The models are loaded in turns, see SearchIndexBackend::Reload.
+      SearchIndexBackend::Reload.new(Models.indexable, worker: args[:worker].to_i).perform do |records|
+        if records.finished?
+          progress.delete(records.model)
+          # Add whitespace at the end to overwrite text from progress indicator line.
+          puts "\r#{"  - #{records.model}: #{records.count} done after #{(Time.current - started_at).to_i} seconds.".ljust(status.length)}"
+        else
+          progress[records.model] = "#{records.model} #{records.count}/#{records.total}"
         end
-        # Add whitespace at the end to overwrite text from progress indicator line.
-        puts "\r    done in #{time_spent.to_i} seconds.#{' ' * 20}"
+
+        previous_length = status.length
+        status          = progress.any? ? "    #{progress.values.join(', ')}" : ''
+        status          = status.truncate(width - 1, omission: '…') if width
+        print "\r#{status.ljust(previous_length)}\r"
       end
     end
 
