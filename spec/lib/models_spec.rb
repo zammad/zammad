@@ -4,6 +4,23 @@ require 'rails_helper'
 
 RSpec.describe Models do
 
+  describe '.all' do
+    around do |example|
+      all = described_class.instance_variable_get(:@all)
+      described_class.instance_variable_set(:@all, nil)
+      example.run
+    ensure
+      described_class.instance_variable_set(:@all, all)
+    end
+
+    it 'lists models without creating records', :aggregate_failures do
+      allow(Ticket).to receive(:new).and_call_original
+
+      expect(described_class.all).to include(Ticket)
+      expect(Ticket).not_to have_received(:new)
+    end
+  end
+
   describe '.merge' do
 
     context 'when ExternalSync references are present' do
