@@ -20,6 +20,7 @@ export const TicketArticleUpdatesDocument = gql`
       ...ticketArticleAttributes
     }
     removeArticleId
+    refetchArticles
   }
 }
     ${TicketArticleAttributesFragmentDoc}`;

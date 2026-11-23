@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { noop } from 'lodash-es'
-import { computed, type ComputedRef, nextTick, type Ref } from 'vue'
+import { computed, type ComputedRef, nextTick, type Ref, ref, watch } from 'vue'
 
 import { useTicketArticlesQuery } from '#shared/entities/ticket/graphql/queries/ticket/articles.api.ts'
 import { TicketArticleUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.api.ts'
@@ -23,6 +23,7 @@ export interface AddArticleCallbackArgs {
   result: Ref<TicketArticlesQuery | undefined>
   allArticleLoaded: ComputedRef<boolean>
   refetchArticlesQuery: (pageSize: Maybe<number>) => void
+  refetchLoadedArticles: () => void
 }
 
 export const useArticleDataHandler = (
@@ -115,6 +116,32 @@ export const useArticleDataHandler = (
     })
   }
 
+  // Older articles loaded on demand widen the trailing page, even when fewer came back than asked.
+  const requestedPageSize = ref(options.pageSize)
+  watch(ticketId, () => {
+    requestedPageSize.value = options.pageSize
+  })
+
+  const loadPreviousArticles = async (pageSize: number) => {
+    const requestedTicketId = ticketId.value
+    const result = await articlesQuery.fetchMore({
+      variables: {
+        pageSize,
+        loadFirstArticles: false,
+        beforeCursor: articleResult.value?.articles.pageInfo.startCursor,
+      },
+    })
+    if (!result.error && requestedTicketId === ticketId.value) requestedPageSize.value += pageSize
+
+    return result
+  }
+
+  // A plain refetch would shrink the list to the first page and drop what was loaded on demand.
+  const refetchLoadedArticles = () =>
+    articlesQuery.refetch({
+      pageSize: Math.max(requestedPageSize.value, articleResult.value?.articles.edges.length ?? 0),
+    })
+
   const isLoadingArticles = articlesQuery.loadingWithoutCachedResult()
 
   const adjustPageInfoAfterDeletion = (nextEndCursorEdge?: Maybe<string>) => {
@@ -142,6 +169,12 @@ export const useArticleDataHandler = (
     updateQuery(_, { previousData, subscriptionData }) {
       const updates = subscriptionData.data.ticketArticleUpdates
       const previousArticles = previousData?.articles as TicketArticlesQuery['articles']
+
+      if (updates.refetchArticles) {
+        refetchLoadedArticles()
+
+        return previousData as TicketArticlesQuery
+      }
 
       if (!previousArticles || updates.updateArticle) return previousData as TicketArticlesQuery
 
@@ -197,6 +230,7 @@ export const useArticleDataHandler = (
           result: articleResult,
           allArticleLoaded,
           refetchArticlesQuery,
+          refetchLoadedArticles,
         })
       }
 
@@ -210,6 +244,7 @@ export const useArticleDataHandler = (
     allArticleLoaded,
     isLoadingArticles,
     loadedArticleSelections,
+    loadPreviousArticles,
     refetchArticlesQuery,
   }
 }

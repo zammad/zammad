@@ -73,6 +73,7 @@ const renderRenderTicketSidebarSummary = (ticket: Partial<TicketById> = defaultT
             },
           })),
           articlesQuery: { watchOnResult: vi.fn() },
+          loadPreviousArticles: vi.fn(),
         },
       ],
       [

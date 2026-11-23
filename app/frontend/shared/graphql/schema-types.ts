@@ -5721,6 +5721,8 @@ export type TicketArticleUpdatesPayload = {
   __typename?: 'TicketArticleUpdatesPayload';
   /** A new article needs to be added to the list */
   addArticle?: Maybe<TicketArticle>;
+  /** The list of articles changed as a whole and needs to be loaded again */
+  refetchArticles?: Maybe<Scalars['Boolean']['output']>;
   /** An article must be removed from the list */
   removeArticleId?: Maybe<Scalars['ID']['output']>;
   /** An existing article was changed */

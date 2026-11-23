@@ -31086,6 +31086,18 @@
               "deprecationReason": null
             },
             {
+              "name": "refetchArticles",
+              "description": "The list of articles changed as a whole and needs to be loaded again",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "removeArticleId",
               "description": "An article must be removed from the list",
               "args": [],

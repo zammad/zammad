@@ -32,6 +32,7 @@ export const mockDetailViewSetup = (data?: {
       articles: [createDummyArticle(data?.article)], // :TODO create different data sets
     })) as unknown as ComputedRef<TicketArticlesQuery>,
     articlesQuery: handler,
+    loadPreviousArticles: vi.fn(),
   })
 
   return { article }
