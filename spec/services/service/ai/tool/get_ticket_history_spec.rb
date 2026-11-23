@@ -314,7 +314,9 @@ RSpec.describe Service::AI::Tool::GetTicketHistory, :aggregate_failures do
       other  = create(:ticket, group:)
       cursor = Service::AI::Tool::Runtime::Cursor.encode(offset: other.id, scope: { ticket: other.id })
 
-      [cursor, 'not a cursor', Service::AI::Tool::Runtime::Cursor.encode(offset: 0, scope: { ticket: ticket.id }).succ].each do |given|
+      largest = Service::AI::Tool::Runtime::Cursor.encode(offset: Service::AI::Tool::Runtime::Cursor::MAX_OFFSET, scope: { ticket: ticket.id })
+
+      [cursor, 'not a cursor', Service::AI::Tool::Runtime::Cursor.encode(offset: 0, scope: { ticket: ticket.id }).succ, largest].each do |given|
         expect(perform({ 'cursor' => given }).content).to include(error: 'invalid_arguments')
       end
     end

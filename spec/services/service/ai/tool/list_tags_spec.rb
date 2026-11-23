@@ -44,4 +44,12 @@ RSpec.describe Service::AI::Tool::ListTags, :aggregate_failures do
     expect(second).to eq('tags' => ['Billing-Q4'], 'total' => 4)
     expect(call({ query: 'bill', limit: 3, cursor: first['next_cursor'] })[:content].first[:text]).to include('cursor is no next_cursor')
   end
+
+  it 'answers a cursor built by hand with the largest offset as the end of the list, and refuses a larger one' do
+    cursor = JSON.parse(Base64.urlsafe_decode64(call({ limit: 3 })[:structuredContent]['next_cursor']))
+    forged = ->(offset) { Base64.urlsafe_encode64(cursor.merge('offset' => offset).to_json, padding: false) }
+
+    expect(call({ limit: 3, cursor: forged.call(Service::AI::Tool::Runtime::Cursor::MAX_OFFSET) })[:structuredContent]).to eq('tags' => [], 'total' => 4)
+    expect(call({ limit: 3, cursor: forged.call(2**64) })[:content].first[:text]).to include('cursor is no next_cursor')
+  end
 end

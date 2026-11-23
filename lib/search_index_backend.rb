@@ -8,6 +8,9 @@ class SearchIndexBackend
   SUPPORTED_ES_VERSION_MINIMUM   = '8.15.0'.freeze
   SUPPORTED_ES_VERSION_LESS_THAN = '10'.freeze
 
+  # How far a search may page by default: Elasticsearch refuses a page that ends beyond an index's window.
+  MAX_RESULT_WINDOW = 1_000_000
+
   STORE_NAMES           = %w[preferences data].freeze
   STORE_NAMES_PER_MODEL = {
     CoreWorkflow     => %w[condition_selected condition_saved perform],
@@ -1094,7 +1097,7 @@ helper method for making HTTP calls and raising error if response was not succes
   def self.default_model_settings
     {
       'index.mapping.total_fields.limit'    => 2000,
-      'index.max_result_window'             => 1_000_000,
+      'index.max_result_window'             => MAX_RESULT_WINDOW,
       'analysis.analyzer.default.type'      => 'custom',
       'analysis.analyzer.default.tokenizer' => 'standard',
       'analysis.analyzer.default.filter'    => ['lowercase'],
@@ -1105,6 +1108,11 @@ helper method for making HTTP calls and raising error if response was not succes
     settings = default_model_settings
     settings['analysis.analyzer.default.filter'] |= ['asciifolding'] if Setting.get('es_asciifolding')
     settings.merge(Setting.get('es_model_settings')[model.name] || {})
+  end
+
+  # @return [Integer] how far a search of the model's index may page, as configured for it
+  def self.max_result_window(model)
+    model_settings(model)['index.max_result_window'].to_i
   end
 
   def self.all_settings

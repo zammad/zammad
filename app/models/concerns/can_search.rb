@@ -216,13 +216,18 @@ returns
       # try search index backend
       # we only search in elastic search when we have a query present or if search_by_index is explicitly set to true
       # else we try to use the database result, since it is more up to date
-      object_ids, object_count = if SearchIndexBackend.enabled? && include?(HasSearchIndexBackend) && (params[:query]&.delete('*').present? || params[:search_by_index].present?)
+      object_ids, object_count = if search_by_index?(params)
                                    search_es(params)
                                  else
                                    search_sql(params)
                                  end
 
       search_result(params, object_ids, object_count)
+    end
+
+    # Whether a search with these params runs on the search index, rather than on the database.
+    def search_by_index?(params)
+      SearchIndexBackend.enabled? && include?(HasSearchIndexBackend) && (params[:query]&.delete('*').present? || params[:search_by_index].present?)
     end
 
     def search_result(params, object_ids, object_count)

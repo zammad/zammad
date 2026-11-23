@@ -12,6 +12,7 @@ class Service::MCPServer::HandleRequest < Service::Base
   # rubocop:disable Zammad/DetectTranslatableString
   NOT_AN_OBJECT      = 'A message has to be one JSON object.'.freeze
   REQUEST_ID_INVALID = 'A request needs an id that is a string or an integer.'.freeze
+  ARGUMENTS_INVALID  = 'A tool call takes its params and its arguments as JSON objects.'.freeze
   # rubocop:enable Zammad/DetectTranslatableString
 
   attr_reader :request, :user, :token
@@ -27,10 +28,7 @@ class Service::MCPServer::HandleRequest < Service::Base
 
   # @return [Array] the Rack response: status, headers and body
   def execute
-    refusal = message_refusal
-    return refused(refusal) if refusal
-
-    transport.handle_request(rack_request)
+    message_refusal || transport.handle_request(rack_request)
   end
 
   private
@@ -40,17 +38,31 @@ class Service::MCPServer::HandleRequest < Service::Base
   #   left to the gem, which answers it as the transport asks.
   def message_refusal
     message = JSON.parse(request.raw_post)
-    return NOT_AN_OBJECT if !message.is_a?(Hash)
+    return refused(NOT_AN_OBJECT) if !message.is_a?(Hash)
     return if !message['method'].is_a?(String) || message['method'].start_with?('notifications/')
+    return refused(REQUEST_ID_INVALID) if !message['id'].is_a?(String) && !message['id'].is_a?(Integer)
 
-    REQUEST_ID_INVALID if !message['id'].is_a?(String) && !message['id'].is_a?(Integer)
+    invalid_params(message['id'], ARGUMENTS_INVALID) if message['method'] == 'tools/call' && !arguments_object?(message['params'])
   rescue JSON::ParserError
     nil
   end
 
+  # The gem reads a tool call's arguments as a hash and fails on any other value, as an internal error.
+  def arguments_object?(params)
+    params.is_a?(Hash) && (params['arguments'].nil? || params['arguments'].is_a?(Hash))
+  end
+
   # A JSON-RPC error without an id, as the transport allows for an answer that belongs to no request.
   def refused(text)
-    body = { jsonrpc: '2.0', error: { code: JsonRpcHandler::ErrorCode::INVALID_REQUEST, message: text } }
+    error_response(code: JsonRpcHandler::ErrorCode::INVALID_REQUEST, message: text)
+  end
+
+  def invalid_params(id, text)
+    error_response(id:, code: JsonRpcHandler::ErrorCode::INVALID_PARAMS, message: text)
+  end
+
+  def error_response(code:, message:, id: nil)
+    body = { jsonrpc: '2.0', id:, error: { code:, message: } }.compact
 
     [400, { 'content-type' => 'application/json' }, [body.to_json]]
   end

@@ -126,8 +126,25 @@ class Service::AI::Tool::SearchTickets < Service::AI::Tool
     @filters ||= Filters.new(user: current_user, arguments:)
   end
 
+  # A cursor can be built by hand: a page beyond the index's result window fails the search.
   def offset
-    cursor_offset
+    value = cursor_offset
+    value if value && fits?(value)
+  end
+
+  def result_window
+    return @result_window if defined?(@result_window)
+
+    @result_window = Service::AI::Tool::Search::ResultWindow.of(::Ticket, query:)
+  end
+
+  def fits?(page_offset)
+    Service::AI::Tool::Search::ResultWindow.fits?(result_window, offset: page_offset, limit:)
+  end
+
+  # Only a page the search can still read gets a cursor.
+  def note_next_cursor(page_offset)
+    @next_cursor = next_cursor_at(page_offset) if fits?(page_offset)
   end
 
   # The ticket the conversation is about, where it is one.
@@ -175,13 +192,17 @@ class Service::AI::Tool::SearchTickets < Service::AI::Tool
         end
 
         matches << readable[id]
-        @next_cursor = next_cursor_at(search_offset + index + 1) if matches.size == limit
+        note_next_cursor(search_offset + index + 1) if matches.size == limit
         break if matches.size > limit
       end
 
       break if matches.size > limit || ids.size <= limit
 
       search_offset += ids.size
+      next if fits?(search_offset)
+
+      @window_reached = true
+      break
     end
 
     matches
@@ -220,8 +241,13 @@ class Service::AI::Tool::SearchTickets < Service::AI::Tool
     @page ||= found.first(limit)
   end
 
+  # A search the result window stops may have more matches, though none showed within the window.
   def more?
-    found.size > limit
+    found.size > limit || window_reached?
+  end
+
+  def window_reached?
+    @window_reached.present?
   end
 
   def first_articles
@@ -235,10 +261,14 @@ class Service::AI::Tool::SearchTickets < Service::AI::Tool
   def text
     # A name with a line break would otherwise start a line of its own.
     header = AI::PromptText.xml_text(["Tickets#{" matching \"#{query}\"" if query}", *content[:filters]].join(' · ').squish)
-    return "#{header}: #{only_conversation_ticket_text}" if content[:tickets].empty? && conversation_ticket_match
-    return "#{header}: none." if content[:tickets].empty?
+    # A page the result window left empty does not end the matches.
+    if content[:tickets].empty? && !content[:has_more]
+      return "#{header}: #{only_conversation_ticket_text}" if conversation_ticket_match
 
-    more = content[:has_more] ? "More follow: call again with the same arguments and cursor \"#{content[:next_cursor]}\"." : 'No more follow.' # rubocop:disable Zammad/DetectTranslatableString
+      return "#{header}: none."
+    end
+
+    more = Service::AI::Tool::Search::ResultWindow.more_text(has_more: content[:has_more], next_cursor: content[:next_cursor])
 
     ["#{header}:", conversation_ticket_text, *rows.map(&:text), more, Service::AI::Tool::Output::Ticket::LISTED_NOTE].compact.join("\n\n")
   end
