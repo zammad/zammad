@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Chat Handling', type: :system do
-  let(:agent_chat_switch_selector) { '#navigation .js-chatMenuItem .js-switch' }
-  let(:chat_url)                   { "/assets/chat/#{chat_url_type}.html?port=#{WS_PORT}" }
-  let(:chat_url_type)              { 'znuny' }
+  let(:agent_chat_switch_selector)    { '#navigation .js-chatMenuItem .js-switch' }
+  let(:agent_chat_switch_on_selector) { "#{agent_chat_switch_selector} input:checked" }
+  let(:chat_url)                      { "/assets/chat/#{chat_url_type}.html?port=#{WS_PORT}" }
+  let(:chat_url_type)                 { 'znuny' }
 
   def authenticate
     Setting.set('chat', true)
@@ -30,11 +31,22 @@ RSpec.describe 'Chat Handling', type: :system do
   end
 
   def enable_agent_chat
+    switch_agent_chat_on
+    click 'a[href="#customer_chat"]'
+  end
+
+  # The navigation menu is rendered anew while the app starts, e.g. when the chat
+  #   status arrives. A click whose switch is replaced between mouse down and up
+  #   gets lost, so it is repeated until the switch is on.
+  def switch_agent_chat_on
     wait_for_chat_topics_loaded
 
-    click agent_chat_switch_selector
+    wait.until do
+      click agent_chat_switch_selector if page.has_no_css?(agent_chat_switch_on_selector, visible: :all, wait: 0)
+      page.has_css?(agent_chat_switch_on_selector, visible: :all, wait: 2)
+    end
+
     wait_for_agent_chat_active
-    click 'a[href="#customer_chat"]'
   end
 
   # The widget asks for the agent availability right on load and removes itself
@@ -107,9 +119,7 @@ RSpec.describe 'Chat Handling', type: :system do
 
   shared_examples 'chat button is hidden after idle timeout' do
     it 'check that button is hidden after idle timeout', authenticated_as: :authenticate do
-      wait_for_chat_topics_loaded
-      click agent_chat_switch_selector
-      wait_for_agent_chat_active
+      switch_agent_chat_on
 
       using_session :customer do
         visit chat_url
@@ -567,9 +577,7 @@ RSpec.describe 'Chat Handling', type: :system do
   describe "Chat can't be closed after timeout #2471", authenticated_as: :authenticate do
     shared_examples 'test issue #2471' do
       it 'is able to close to the dialog after a idleTimeout happened' do
-        wait_for_chat_topics_loaded
-        click agent_chat_switch_selector
-        wait_for_agent_chat_active
+        switch_agent_chat_on
         using_session :customer do
 
           visit chat_url
