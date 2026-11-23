@@ -10,6 +10,7 @@ module Gql::Subscriptions
     field :add_article, Gql::Types::Ticket::ArticleType, description: 'A new article needs to be added to the list'
     field :update_article, Gql::Types::Ticket::ArticleType, description: 'An existing article was changed'
     field :remove_article_id, GraphQL::Types::ID, description: 'An article must be removed from the list'
+    field :refetch_articles, Boolean, description: 'The list of articles changed as a whole and needs to be loaded again'
 
     class << self
       # Helper methods for triggering with custom payload.
@@ -26,6 +27,10 @@ module Gql::Subscriptions
         trigger_for_ticket(article, { article_id: Gql::ZammadSchema.id_from_object(article), event: :destroy })
       end
 
+      def trigger_after_merge(target_ticket)
+        trigger({ event: :merge }, arguments: { ticket_id: Gql::ZammadSchema.id_from_object(target_ticket) })
+      end
+
       def trigger_for_ticket(article, payload)
         trigger(payload, arguments: { ticket_id: Gql::ZammadSchema.id_from_object(article.ticket) })
       end
@@ -36,6 +41,8 @@ module Gql::Subscriptions
     def update(ticket:)
       event = object[:event]
       article = object[:article]
+
+      return { refetch_articles: true } if event == :merge
 
       # Always send remove events.
       if event == :destroy

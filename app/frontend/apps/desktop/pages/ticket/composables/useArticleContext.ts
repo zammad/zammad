@@ -2,12 +2,14 @@
 
 import { type ComputedRef, inject, type InjectionKey } from 'vue'
 
+import type { useArticleDataHandler } from '#shared/entities/ticket-article/composables/useArticleDataHandler.ts'
 import type { TicketArticlesQuery, TicketArticlesQueryVariables } from '#shared/graphql/types.ts'
 import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 export type ArticleContext = {
   articles: ComputedRef<TicketArticlesQuery | undefined>
   articlesQuery: QueryHandler<TicketArticlesQuery, TicketArticlesQueryVariables>
+  loadPreviousArticles: ReturnType<typeof useArticleDataHandler>['loadPreviousArticles']
 }
 
 export const ARTICLES_INFORMATION_KEY = Symbol(

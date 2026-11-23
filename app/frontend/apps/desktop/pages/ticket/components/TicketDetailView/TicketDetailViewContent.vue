@@ -52,7 +52,6 @@ import { useTicketArticleTranslation } from '#shared/entities/ticket-article/com
 import UserError from '#shared/errors/UserError.ts'
 import { EnumFormUpdaterId, EnumTaskbarApp, EnumUserErrorException } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { GraphQLErrorTypes, type GraphQLHandlerError } from '#shared/types/error.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
@@ -108,18 +107,23 @@ const { articleCount, addUnreadArticle, unreadArticleIds, clearUnreadArticles } 
   cleanupDependency: isReachingBottom,
 })
 
-const onAddArticleCallback = ({ articlesQuery, updates }: AddArticleCallbackArgs) => {
+const onAddArticleCallback = ({ refetchLoadedArticles, updates }: AddArticleCallbackArgs) => {
   // When we are at the end user is aware of the new article
   if (!isReachingBottom.value) addUnreadArticle(updates?.addArticle?.id as string)
 
-  return (articlesQuery as QueryHandler).refetch()
+  refetchLoadedArticles()
 }
 
-const { articleResult, articlesQuery, isLoadingArticles, loadedArticleSelections } =
-  useArticleDataHandler(ticketId, {
-    pageSize: 20,
-    onAddArticleCallback,
-  })
+const {
+  articleResult,
+  articlesQuery,
+  isLoadingArticles,
+  loadedArticleSelections,
+  loadPreviousArticles,
+} = useArticleDataHandler(ticketId, {
+  pageSize: 20,
+  onAddArticleCallback,
+})
 
 // The translations of this tab's articles live as long as the tab does.
 const articleTranslation = useTicketArticleTranslation(ticketId, {
@@ -129,6 +133,7 @@ const articleTranslation = useTicketArticleTranslation(ticketId, {
 provide(ARTICLES_INFORMATION_KEY, {
   articles: computed(() => articleResult.value),
   articlesQuery,
+  loadPreviousArticles,
 })
 
 const {

@@ -64,14 +64,7 @@ const articleElements = useTemplateRef<HTMLElement[]>('article-elements')
 
 const { topHeaderHeight } = useActiveArticle(rows, articleElements, () => props.scrollContainer)
 
-const loadPrevious = () =>
-  context.articlesQuery.fetchMore({
-    variables: {
-      pageSize: PAGE_SIZE,
-      loadFirstArticles: false,
-      beforeCursor: context.articles.value?.articles.pageInfo.startCursor,
-    },
-  })
+const loadPrevious = () => context.loadPreviousArticles(PAGE_SIZE)
 
 const isFetchingMore = context.articlesQuery.loading()
 

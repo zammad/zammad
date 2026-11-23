@@ -18,6 +18,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ArticleUpdates, type: :graphql do
             subject
           }
           removeArticleId
+          refetchArticles
         }
       }
     QUERY
@@ -29,7 +30,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ArticleUpdates, type: :graphql do
 
   shared_examples 'check subscription handling with permission' do |is_customer:|
     it 'subscribes' do
-      expect(gql.result.data).to eq({ 'addArticle' => nil, 'updateArticle' => nil, 'removeArticleId' => nil })
+      expect(gql.result.data).to eq({ 'addArticle' => nil, 'updateArticle' => nil, 'removeArticleId' => nil, 'refetchArticles' => nil })
     end
 
     context 'when a new article is created', :aggregate_failures do
@@ -43,6 +44,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ArticleUpdates, type: :graphql do
           'addArticle'      => { 'subject' => 'subscription test' },
           'updateArticle'   => nil,
           'removeArticleId' => nil,
+          'refetchArticles' => nil,
         }
       end
       let(:internal_add_message) do
@@ -50,6 +52,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ArticleUpdates, type: :graphql do
           'addArticle'      => { 'subject' => 'subscription test internal' },
           'updateArticle'   => nil,
           'removeArticleId' => nil,
+          'refetchArticles' => nil,
         }
       end
 
@@ -87,6 +90,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ArticleUpdates, type: :graphql do
           'addArticle'      => nil,
           'updateArticle'   => { 'subject' => 'subscription test internal' },
           'removeArticleId' => nil,
+          'refetchArticles' => nil,
         }
       end
       let(:internal_remove_message) do
@@ -94,6 +98,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ArticleUpdates, type: :graphql do
           'addArticle'      => nil,
           'updateArticle'   => nil,
           'removeArticleId' => gql.id(Ticket::Article.last),
+          'refetchArticles' => nil,
         }
       end
       let(:public_add_message) do
@@ -101,6 +106,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ArticleUpdates, type: :graphql do
           'addArticle'      => { 'subject' => 'subscription test public' },
           'updateArticle'   => nil,
           'removeArticleId' => nil,
+          'refetchArticles' => nil,
         }
       end
       let(:public_update_message) do
@@ -108,6 +114,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ArticleUpdates, type: :graphql do
           'addArticle'      => nil,
           'updateArticle'   => { 'subject' => 'subscription test public' },
           'removeArticleId' => nil,
+          'refetchArticles' => nil,
         }
       end
 
@@ -143,12 +150,39 @@ RSpec.describe Gql::Subscriptions::Ticket::ArticleUpdates, type: :graphql do
           'addArticle'      => nil,
           'updateArticle'   => nil,
           'removeArticleId' => gql.id(article),
+          'refetchArticles' => nil,
         }
       end
 
       it 'receives article remove push message' do
         expect(mock_channel.mock_broadcasted_messages).to eq(
           [ { result: { 'data' => { 'ticketArticleUpdates' => remove_message } }, more: true } ]
+        )
+      end
+    end
+
+    context 'when another ticket is merged into the ticket' do
+      let(:source_ticket) { create(:ticket, group: ticket.group, customer: ticket.customer) }
+      let(:refetch_message) do
+        {
+          'addArticle'      => nil,
+          'updateArticle'   => nil,
+          'removeArticleId' => nil,
+          'refetchArticles' => true,
+        }
+      end
+
+      before do
+        # The auto reply to the new target ticket would be broadcast as well.
+        Trigger.destroy_all
+        create_list(:ticket_article, 3, ticket: source_ticket)
+        mock_channel.mock_broadcasted_messages.clear
+        source_ticket.merge_to(ticket_id: ticket.id, user_id: 1)
+      end
+
+      it 'receives a single refetch push message' do
+        expect(mock_channel.mock_broadcasted_messages).to eq(
+          [ { result: { 'data' => { 'ticketArticleUpdates' => refetch_message } }, more: true } ]
         )
       end
     end
