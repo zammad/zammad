@@ -495,17 +495,21 @@ describe('ChatComposer in the browser', () => {
   })
 
   describe('text modules', () => {
-    const mockTextModules = () =>
-      mockTextModuleSuggestionsQuery({
-        textModuleSuggestions: [
-          {
-            id: convertToGraphQLId('TextModule', '1'),
-            name: 'faq - Frequently asked questions',
-            keywords: null,
-            renderedContent:
-              '<p>Hello, <strong>Chat Agent</strong> here.</p><p>See our <a href="https://example.com/faq">FAQ</a>.</p>',
-          },
-        ],
+    const mockTextModules = (held?: Promise<void>) =>
+      mockTextModuleSuggestionsQuery(async () => {
+        await held
+
+        return {
+          textModuleSuggestions: [
+            {
+              id: convertToGraphQLId('TextModule', '1'),
+              name: 'faq - Frequently asked questions',
+              keywords: null,
+              renderedContent:
+                '<p>Hello, <strong>Chat Agent</strong> here.</p><p>See our <a href="https://example.com/faq">FAQ</a>.</p>',
+            },
+          ],
+        }
       })
 
     it('inserts the text module picked with Enter instead of sending, and sends it afterwards', async () => {
@@ -539,13 +543,23 @@ describe('ChatComposer in the browser', () => {
     })
 
     it('sends nothing on an Enter that comes before the text modules are there', async () => {
-      mockTextModules()
+      // Holds the list back, so it is still loading when the Enter arrives.
+      let deliver: () => void = () => {}
+      mockTextModules(
+        new Promise((resolve) => {
+          deliver = resolve
+        }),
+      )
 
       const { send, field } = await mountComposer(['ticket.agent'])
 
       await userEvent.click(field)
-      // In one go: the list is still loading when the Enter arrives.
       await userEvent.keyboard('::faq{Enter}')
+
+      await expect.element(field).toHaveAttribute('data-suggestions-loading')
+      expect(send).not.toHaveBeenCalled()
+
+      deliver()
 
       await expect
         .element(page.getByTestId('mention-text'))
