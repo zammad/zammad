@@ -48,8 +48,7 @@ returns
         table_name = model_class.table_name # handle models where not table exists, pending migrations
         next if tables.exclude?(table_name)
 
-        model_object = model_class.new
-        next if !model_object.respond_to? :attributes
+        next if !model_class.method_defined? :attributes
 
         all[model_class] = {}
         all[model_class][:attributes] = model_class.attribute_names
