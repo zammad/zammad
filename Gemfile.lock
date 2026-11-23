@@ -345,7 +345,7 @@ GEM
     graphql-fragment_cache (1.22.3)
       graphql (>= 2.1.4)
     hana (1.3.7)
-    hashdiff (1.2.2)
+    hashdiff (1.3.0)
     hashie (5.2.0)
       logger
     hiredis-client (0.30.1)
@@ -903,7 +903,7 @@ GEM
       activesupport
       faraday (~> 2.0)
       faraday-follow_redirects
-    webmock (3.34.0)
+    webmock (3.38.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
