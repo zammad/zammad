@@ -1622,7 +1622,7 @@ msgstr "¡Acción masiva ejecutada!"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:19
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:101
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "Actions"
 msgstr "Acciones"
@@ -2052,9 +2052,9 @@ msgstr "Categoría"
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:68
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:86
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:117
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:64
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:114
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add tag"
@@ -3462,25 +3462,25 @@ msgstr "Autenticación"
 msgid "Authentication Token"
 msgstr "Autenticación"
 
-#: lib/email_helper/probe.rb:290
+#: lib/email_helper/probe.rb:304
 #, fuzzy
 #| msgid "Authentication failed, invalid credentials!"
 msgid "Authentication failed due to incorrect credentials."
 msgstr "¡La autenticación falló, las credenciales son inválidas!"
 
-#: lib/email_helper/probe.rb:288
+#: lib/email_helper/probe.rb:302
 #, fuzzy
 #| msgid "Authentication failed, username incorrect!"
 msgid "Authentication failed due to incorrect username."
 msgstr "¡La autenticación falló, el nombre de usuario es incorrecto!"
 
-#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:286
+#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:300
 #, fuzzy
 #| msgid "Authentication failed!"
 msgid "Authentication failed."
 msgstr "¡La autenticación falló!"
 
-#: lib/email_helper/probe.rb:291
+#: lib/email_helper/probe.rb:305
 msgid "Authentication not possible (not offered by the service)"
 msgstr "La autenticación no es posible (no ofrecido por el servicio)"
 
@@ -4776,7 +4776,7 @@ msgstr "Consultar canales."
 msgid "Check item"
 msgstr "Checkmk"
 
-#: lib/search_index_backend.rb:495
+#: lib/search_index_backend.rb:497
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 "Compruebe la respuesta y la carga útil para obtener información detallada:"
@@ -5742,7 +5742,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:547
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:544
 msgid "Continue"
 msgstr "Continuar"
 
@@ -8483,14 +8483,14 @@ msgstr "Descripción"
 msgid "Description (shown as title tag for screen readers)"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:77
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:78
 #, fuzzy
 #| msgid "set optional"
 msgid "Deselect all entries"
 msgstr "establecer opcional"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 #, fuzzy
 #| msgid "Delete Avatar?"
 msgid "Deselect this entry"
@@ -9384,7 +9384,7 @@ msgstr "Tamaño total de la carga útil de Elasticsearch"
 msgid "Elasticsearch index does not exist"
 msgstr "Índice de punto final de Elasticsearch"
 
-#: lib/search_index_backend.rb:491
+#: lib/search_index_backend.rb:493
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -10682,7 +10682,7 @@ msgstr "Búsqueda extendida"
 msgid "External data source field"
 msgstr "Interna"
 
-#: lib/search_index_backend.rb:837
+#: lib/search_index_backend.rb:849
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Extraer información de archivos adjuntos de zammad de matrices"
 
@@ -10909,7 +10909,7 @@ msgstr "sistema de archivos"
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:42
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:121
 msgid "Filter"
 msgstr "Filtro"
 
@@ -12871,7 +12871,7 @@ msgstr "Credenciales incompletas"
 msgid "Incomplete credentials"
 msgstr "Credenciales incompletas"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:507
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:512
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete ticket checklist"
@@ -16767,9 +16767,9 @@ msgstr ""
 msgid "No supported target language is available."
 msgstr "La página ya no está disponible"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:61
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:110
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:57
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:107
 #, fuzzy
 #| msgid "No template created yet."
 msgid "No tags added yet."
@@ -16807,7 +16807,7 @@ msgstr "No hay traducción disponible para esta configuración regional"
 msgid "No translation service is configured."
 msgstr "¡No hay ninguna aplicación de Twitter configurada!"
 
-#: app/models/ticket.rb:434
+#: app/models/ticket.rb:438
 msgid "No triggers active"
 msgstr "No hay desencadenantes activos"
 
@@ -16859,7 +16859,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "¡Sin x-zammad-session-user-id, sin remitente establecido!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:510
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:515
 #, fuzzy
 #| msgid "Could not find source ticket!"
 msgid "No, just close the ticket"
@@ -19864,9 +19864,9 @@ msgstr ""
 msgid "Remove this scheduled visibility change"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:49
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:67
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:92
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:45
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:64
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:89
 #, fuzzy
 #| msgid "Remove"
 msgid "Remove this tag"
@@ -21423,7 +21423,7 @@ msgid "Select all %s results"
 msgstr "establecer opcional"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:77
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:78
 #, fuzzy
 #| msgid "set optional"
 msgid "Select all entries"
@@ -21480,7 +21480,7 @@ msgid "Select this avatar"
 msgstr "¿Eliminar avatar?"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 #, fuzzy
 #| msgid "Delete Avatar?"
 msgid "Select this entry"
@@ -23398,7 +23398,7 @@ msgstr "Etiqueta"
 msgid "Tag \"%s\" already exists."
 msgstr "¡Esta entrada ya existe!"
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:106
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Tag added successfully."
@@ -23410,7 +23410,7 @@ msgstr "La ejecución de la prueba fue exitosa."
 msgid "Tag assignment mode"
 msgstr "Tiempo de espera de asignación"
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:106
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Tag removed successfully."
@@ -23433,8 +23433,8 @@ msgstr "creado"
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:36
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:48
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:32
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:45
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
@@ -24298,7 +24298,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:296
+#: lib/email_helper/probe.rb:310
 #, fuzzy
 #| msgid "Connection refused"
 msgid "The connection was refused."
@@ -24627,7 +24627,7 @@ msgstr "No se configuró el ajuste 'ticket_number'."
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:292
+#: lib/email_helper/probe.rb:306
 #, fuzzy
 #| msgid "The object could not be updated."
 msgid "The hostname could not be found."
@@ -24691,7 +24691,7 @@ msgstr ""
 "La instalación de paquetes tiene implicaciones de seguridad, porque se "
 "ejecutará código arbitrario en el contexto de la aplicación Zammad."
 
-#: lib/search_index_backend.rb:493
+#: lib/search_index_backend.rb:495
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -25246,7 +25246,7 @@ msgstr "Falta el parámetro requerido 'id'."
 msgid "The required parameter 'id' is missing."
 msgstr "Falta el parámetro requerido 'id'."
 
-#: lib/search_index_backend.rb:760
+#: lib/search_index_backend.rb:772
 #, fuzzy
 #| msgid "The required parameter 'area' is missing."
 msgid "The required parameter 'key' is missing."
@@ -25326,7 +25326,7 @@ msgstr "Falta el parámetro requerido 'consumer_key'."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Falta el parámetro requerido 'current_user_id'."
 
-#: lib/search_index_backend.rb:761
+#: lib/search_index_backend.rb:773
 #, fuzzy
 #| msgid "The required parameter 'area' is missing."
 msgid "The required parameter 'value' is missing."
@@ -25600,13 +25600,13 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:63
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:37
 #, fuzzy
 #| msgid "User could not be created."
 msgid "The tag could not be added."
 msgstr "No se pudo crear el usuario."
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:67
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:41
 #, fuzzy
 #| msgid "User could not be created."
 msgid "The tag could not be removed."
@@ -26005,7 +26005,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:294
+#: lib/email_helper/probe.rb:308
 #, fuzzy
 #| msgid "No route to host!"
 msgid "There is no route to this host."
@@ -26470,7 +26470,7 @@ msgstr ""
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr ""
 
-#: lib/email_helper/probe.rb:295
+#: lib/email_helper/probe.rb:309
 #, fuzzy
 #| msgid "The object could not be created."
 msgid "This host cannot be reached."
@@ -27349,7 +27349,7 @@ msgid "Ticket update failed."
 msgstr "Actualización de entradas"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:590
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:595
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:221
 #, fuzzy
 #| msgid "The test run was successful."
@@ -28291,8 +28291,8 @@ msgstr "La ejecución de la prueba fue exitosa."
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:239
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:237
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr "Tipo"
@@ -30137,7 +30137,7 @@ msgid "Yes, add attachments now"
 msgstr "Agregar la opción de archivo adjunto para cargar."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:509
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:514
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -30616,7 +30616,7 @@ msgstr "Tienes que permitir el acceso a tu webcam."
 msgid "You have unchecked items in the checklist."
 msgstr "Seleccione al menos una carpeta."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:504
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:509
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""
@@ -32223,7 +32223,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:10
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:23
 #: app/assets/javascripts/app/models/public_link.coffee:10
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:55
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22

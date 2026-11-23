@@ -1534,7 +1534,7 @@ msgstr "Åtgärdsmenyknapp för säkerhetsnycklar"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:19
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:101
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "Actions"
 msgstr "Åtgärder"
@@ -1896,9 +1896,9 @@ msgstr "Lägg till underkategori"
 msgid "Add subclause"
 msgstr "Lägg till subclause"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:68
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:86
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:117
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:64
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:114
 msgid "Add tag"
 msgstr "Lägg till tagg"
 
@@ -3147,19 +3147,19 @@ msgstr "Autentisering"
 msgid "Authentication Token"
 msgstr "Autentiseringstoken"
 
-#: lib/email_helper/probe.rb:290
+#: lib/email_helper/probe.rb:304
 msgid "Authentication failed due to incorrect credentials."
 msgstr "Autentisering misslyckades på grund av felaktiga användaruppgifter."
 
-#: lib/email_helper/probe.rb:288
+#: lib/email_helper/probe.rb:302
 msgid "Authentication failed due to incorrect username."
 msgstr "Autentiseringen misslyckades på grund av ett felaktigt användarnamn."
 
-#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:286
+#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:300
 msgid "Authentication failed."
 msgstr "Autentiseringen misslyckades."
 
-#: lib/email_helper/probe.rb:291
+#: lib/email_helper/probe.rb:305
 msgid "Authentication not possible (not offered by the service)"
 msgstr "Autentisering är inte möjlig (erbjuds inte av tjänsten)"
 
@@ -4296,7 +4296,7 @@ msgstr "Kontrollera kanaler."
 msgid "Check item"
 msgstr "Markera post"
 
-#: lib/search_index_backend.rb:495
+#: lib/search_index_backend.rb:497
 msgid "Check the response and payload for detailed information:"
 msgstr "Kontrollera svar och nyttolast för detaljerad information:"
 
@@ -5199,7 +5199,7 @@ msgstr "Kontextfönstrets storlek"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:547
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:544
 msgid "Continue"
 msgstr "Fortsätt"
 
@@ -7633,12 +7633,12 @@ msgstr "Beskrivning"
 msgid "Description (shown as title tag for screen readers)"
 msgstr "Beskrivning (visas som titeletikett för skärmläsare)"
 
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:77
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:78
 msgid "Deselect all entries"
 msgstr "Avmarkera samtliga poster"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 msgid "Deselect this entry"
 msgstr "Avmarkera denna post"
 
@@ -8395,7 +8395,7 @@ msgstr "Elasticsearch Total Payload Storlek"
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch Index existerar inte"
 
-#: lib/search_index_backend.rb:491
+#: lib/search_index_backend.rb:493
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9588,7 +9588,7 @@ msgstr "Utökad sökning"
 msgid "External data source field"
 msgstr "Externt datakällfält"
 
-#: lib/search_index_backend.rb:837
+#: lib/search_index_backend.rb:849
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Extrahera zammad bilageinformation från fält"
 
@@ -9782,7 +9782,7 @@ msgstr "Filsystem"
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:42
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:121
 msgid "Filter"
 msgstr "Filter"
 
@@ -11558,7 +11558,7 @@ msgstr "Checklistan i ärendet är ofullständig"
 msgid "Incomplete credentials"
 msgstr "Ofullständiga användaruppgifter"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:507
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:512
 msgid "Incomplete ticket checklist"
 msgstr "Checklistan i ärendet är ofullständig"
 
@@ -14905,9 +14905,9 @@ msgstr ""
 msgid "No supported target language is available."
 msgstr "Inget målsspråk som stöds är tillgängligt."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:61
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:110
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:57
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:107
 msgid "No tags added yet."
 msgstr "Inga taggar har lagts till ännu."
 
@@ -14937,7 +14937,7 @@ msgstr "Ingen översättning är tillgänglig för den här språkinställningen
 msgid "No translation service is configured."
 msgstr "Ingen översättningstjänst är konfigurerad."
 
-#: app/models/ticket.rb:434
+#: app/models/ticket.rb:438
 msgid "No triggers active"
 msgstr "Inga triggers aktiva"
 
@@ -14983,7 +14983,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Inget x-zammad-session-user-id, ingen avsändare angiven!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:510
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:515
 msgid "No, just close the ticket"
 msgstr "Nej, stäng bara ärendet"
 
@@ -17563,9 +17563,9 @@ msgstr "Ta bort valda värden"
 msgid "Remove this scheduled visibility change"
 msgstr "Ta bort denna schemalagda synlighetsändring"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:49
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:67
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:92
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:45
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:64
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:89
 msgid "Remove this tag"
 msgstr "Ta bort denna tagg"
 
@@ -18930,7 +18930,7 @@ msgid "Select all %s results"
 msgstr "Välj alla %s resultat"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:77
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:78
 msgid "Select all entries"
 msgstr "Markera samtliga poster"
 
@@ -18977,7 +18977,7 @@ msgid "Select this avatar"
 msgstr "Välj denna avatar"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 msgid "Select this entry"
 msgstr "Markera denna post"
 
@@ -20618,7 +20618,7 @@ msgstr "Tagg"
 msgid "Tag \"%s\" already exists."
 msgstr "Etikett \"%s\" finns redan."
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:106
 msgid "Tag added successfully."
 msgstr "Taggen lades till."
 
@@ -20626,7 +20626,7 @@ msgstr "Taggen lades till."
 msgid "Tag assignment mode"
 msgstr "Taggtilldelningsläge"
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:106
 msgid "Tag removed successfully."
 msgstr "Taggen togs bort."
 
@@ -20645,8 +20645,8 @@ msgstr "%s taggades"
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:36
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:48
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:32
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:45
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
@@ -21443,7 +21443,7 @@ msgstr "Anslutningen till servern förlorades."
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:296
+#: lib/email_helper/probe.rb:310
 msgid "The connection was refused."
 msgstr "Anslutningen nekades."
 
@@ -21740,7 +21740,7 @@ msgstr "Den angivna två-faktorsmetoden är inte konfigurerad ännu."
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:292
+#: lib/email_helper/probe.rb:306
 msgid "The hostname could not be found."
 msgstr "Värdnamnet kunde inte hittas."
 
@@ -21796,7 +21796,7 @@ msgstr ""
 "Installationen av paket medför säkerhetsproblem, eftersom godtycklig kod "
 "kommer att exekveras i samband med Zammad-applikationen."
 
-#: lib/search_index_backend.rb:493
+#: lib/search_index_backend.rb:495
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -22265,7 +22265,7 @@ msgstr "Den obligatoriska parametern 'group_id' saknas."
 msgid "The required parameter 'id' is missing."
 msgstr "Den obligatoriska parametern 'id' saknas."
 
-#: lib/search_index_backend.rb:760
+#: lib/search_index_backend.rb:772
 msgid "The required parameter 'key' is missing."
 msgstr "Obligatorisk parameter 'key' saknas."
 
@@ -22325,7 +22325,7 @@ msgstr "Den nödvändiga parametern 'ticket_number' saknas."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Obligatorisk parameter 'user_id' saknas."
 
-#: lib/search_index_backend.rb:761
+#: lib/search_index_backend.rb:773
 msgid "The required parameter 'value' is missing."
 msgstr "Obligatorisk parameter 'value' saknas."
 
@@ -22589,11 +22589,11 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Systemet konfigurerades framgångsrikt. Du omdirigeras."
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:63
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:37
 msgid "The tag could not be added."
 msgstr "Taggen kunde inte läggas till."
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:67
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:41
 msgid "The tag could not be removed."
 msgstr "Taggen kunde inte tas bort."
 
@@ -22919,7 +22919,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:294
+#: lib/email_helper/probe.rb:308
 msgid "There is no route to this host."
 msgstr "Det finns ingen väg till denna värd."
 
@@ -23335,7 +23335,7 @@ msgid "This group's children would exceed the allowed nesting depth."
 msgstr ""
 "Den här gruppens undergrupper skulle överskrida det tillåtna kapslingsdjupet."
 
-#: lib/email_helper/probe.rb:295
+#: lib/email_helper/probe.rb:309
 msgid "This host cannot be reached."
 msgstr "Värden kan inte nås."
 
@@ -24195,7 +24195,7 @@ msgid "Ticket update failed."
 msgstr "Uppdatering av ärende misslyckades."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:590
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:595
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:221
 msgid "Ticket updated successfully."
 msgstr "Ärendet uppdaterades."
@@ -25038,8 +25038,8 @@ msgstr "Två-faktorsmetoden har konfigurerats."
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:239
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:237
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr "Typ"
@@ -26723,7 +26723,7 @@ msgid "Yes, add attachments now"
 msgstr "Ja, lägg till bifogade filer nu"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:509
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:514
 msgid "Yes, open the checklist"
 msgstr "Ja, öppna checklistan"
 
@@ -27167,7 +27167,7 @@ msgstr "Du måste tillåta åtkomst till din webbkamera."
 msgid "You have unchecked items in the checklist."
 msgstr "Du har omarkerade poster i checklistan."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:504
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:509
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -28616,7 +28616,6 @@ msgstr "ny,beta,skrivbordsvy,skrivbords-UI"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:10
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:23
 #: app/assets/javascripts/app/models/public_link.coffee:10
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:55
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22

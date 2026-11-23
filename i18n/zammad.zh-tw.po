@@ -1618,7 +1618,7 @@ msgstr "安全金鑰動作選單按鈕"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:19
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:101
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "Actions"
 msgstr "操作"
@@ -2000,9 +2000,9 @@ msgstr "新增子句"
 msgid "Add subclause"
 msgstr "新增子句"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:68
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:86
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:117
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:64
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:114
 msgid "Add tag"
 msgstr "新增標籤"
 
@@ -3250,19 +3250,19 @@ msgstr "身份驗證"
 msgid "Authentication Token"
 msgstr "驗證 Token"
 
-#: lib/email_helper/probe.rb:290
+#: lib/email_helper/probe.rb:304
 msgid "Authentication failed due to incorrect credentials."
 msgstr "身份驗證失敗，憑證錯誤。"
 
-#: lib/email_helper/probe.rb:288
+#: lib/email_helper/probe.rb:302
 msgid "Authentication failed due to incorrect username."
 msgstr "身份驗證失敗，使用者名稱不正確。"
 
-#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:286
+#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:300
 msgid "Authentication failed."
 msgstr "驗證失敗。"
 
-#: lib/email_helper/probe.rb:291
+#: lib/email_helper/probe.rb:305
 msgid "Authentication not possible (not offered by the service)"
 msgstr "無法驗證（該服務不提供）"
 
@@ -4426,7 +4426,7 @@ msgstr "確認頻道。"
 msgid "Check item"
 msgstr "檢查項目"
 
-#: lib/search_index_backend.rb:495
+#: lib/search_index_backend.rb:497
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 
@@ -5311,7 +5311,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:547
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:544
 msgid "Continue"
 msgstr "繼續"
 
@@ -7583,12 +7583,12 @@ msgstr "描述"
 msgid "Description (shown as title tag for screen readers)"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:77
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:78
 msgid "Deselect all entries"
 msgstr "取消選擇所有條目"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 msgid "Deselect this entry"
 msgstr "取消選擇此條目"
 
@@ -8365,7 +8365,7 @@ msgstr ""
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch index 不存在"
 
-#: lib/search_index_backend.rb:491
+#: lib/search_index_backend.rb:493
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9509,7 +9509,7 @@ msgstr "擴展搜尋"
 msgid "External data source field"
 msgstr "外部資料來源欄位"
 
-#: lib/search_index_backend.rb:837
+#: lib/search_index_backend.rb:849
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 
@@ -9705,7 +9705,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:42
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:121
 msgid "Filter"
 msgstr "過濾器"
 
@@ -11462,7 +11462,7 @@ msgstr "不完整的確認清單項目"
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:507
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:512
 msgid "Incomplete ticket checklist"
 msgstr "工單的確認清單不完整"
 
@@ -14911,9 +14911,9 @@ msgstr ""
 msgid "No supported target language is available."
 msgstr "知識庫啟用"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:61
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:110
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:57
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:107
 msgid "No tags added yet."
 msgstr "還沒有新增標籤。"
 
@@ -14947,7 +14947,7 @@ msgstr "尚無此本地語系環境的翻譯"
 msgid "No translation service is configured."
 msgstr "無篩選器設定。"
 
-#: app/models/ticket.rb:434
+#: app/models/ticket.rb:438
 msgid "No triggers active"
 msgstr ""
 
@@ -14995,7 +14995,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:510
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:515
 msgid "No, just close the ticket"
 msgstr "不，只需要關閉工單"
 
@@ -17601,9 +17601,9 @@ msgstr "移除選擇的值"
 msgid "Remove this scheduled visibility change"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:49
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:67
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:92
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:45
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:64
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:89
 msgid "Remove this tag"
 msgstr "移除此標籤"
 
@@ -19035,7 +19035,7 @@ msgid "Select all %s results"
 msgstr "選擇所有條目"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:77
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:78
 msgid "Select all entries"
 msgstr "選擇所有條目"
 
@@ -19084,7 +19084,7 @@ msgid "Select this avatar"
 msgstr "選擇這個頭像"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 msgid "Select this entry"
 msgstr "選擇此條目"
 
@@ -20853,7 +20853,7 @@ msgstr "標籤"
 msgid "Tag \"%s\" already exists."
 msgstr "Tag \"%s\" 已經存在。"
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:106
 #, fuzzy
 #| msgid "Ticket tag added successfully."
 msgid "Tag added successfully."
@@ -20865,7 +20865,7 @@ msgstr "工單標籤已成功新增。"
 msgid "Tag assignment mode"
 msgstr "指派逾時"
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:106
 #, fuzzy
 #| msgid "Ticket tag removed successfully."
 msgid "Tag removed successfully."
@@ -20888,8 +20888,8 @@ msgstr "建立於"
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:36
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:48
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:32
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:45
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
@@ -21700,7 +21700,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:296
+#: lib/email_helper/probe.rb:310
 msgid "The connection was refused."
 msgstr ""
 
@@ -21988,7 +21988,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:292
+#: lib/email_helper/probe.rb:306
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The hostname could not be found."
@@ -22048,7 +22048,7 @@ msgid ""
 msgstr ""
 "安裝套件會帶來安全隱憂，因為任意程式碼將在 Zammad 應用程式的上下文中執行。"
 
-#: lib/search_index_backend.rb:493
+#: lib/search_index_backend.rb:495
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -22548,7 +22548,7 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:760
+#: lib/search_index_backend.rb:772
 msgid "The required parameter 'key' is missing."
 msgstr ""
 
@@ -22608,7 +22608,7 @@ msgstr ""
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:761
+#: lib/search_index_backend.rb:773
 msgid "The required parameter 'value' is missing."
 msgstr ""
 
@@ -22867,13 +22867,13 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:63
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:37
 #, fuzzy
 #| msgid "Ticket tag could not be added."
 msgid "The tag could not be added."
 msgstr "工單標籤新增失敗。"
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:67
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:41
 #, fuzzy
 #| msgid "Ticket tag could not be removed."
 msgid "The tag could not be removed."
@@ -23236,7 +23236,7 @@ msgstr "無法回溯此删除操作。如果確定要進行，請在輸入欄中
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:294
+#: lib/email_helper/probe.rb:308
 msgid "There is no route to this host."
 msgstr "沒有到該主機的路由。"
 
@@ -23641,7 +23641,7 @@ msgstr "此群組未配置用於對外通訊的電子郵件地址。"
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr "該組或其子組超出了允許的巢狀深度。"
 
-#: lib/email_helper/probe.rb:295
+#: lib/email_helper/probe.rb:309
 msgid "This host cannot be reached."
 msgstr "無法連線到此主機。"
 
@@ -24493,7 +24493,7 @@ msgid "Ticket update failed."
 msgstr "工單更新失敗。"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:590
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:595
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:221
 msgid "Ticket updated successfully."
 msgstr "工單已成功更新。"
@@ -25398,8 +25398,8 @@ msgstr "兩步驟驗證方法已配置成功。"
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:239
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:237
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr "類型"
@@ -27214,7 +27214,7 @@ msgid "Yes, add attachments now"
 msgstr "是的，請新增附件"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:509
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:514
 msgid "Yes, open the checklist"
 msgstr "是的，打開清單"
 
@@ -27648,7 +27648,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:504
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:509
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid ""
@@ -29169,7 +29169,6 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:10
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:23
 #: app/assets/javascripts/app/models/public_link.coffee:10
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:55
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22

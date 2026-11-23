@@ -1673,7 +1673,7 @@ msgstr "보안 키용 작업 메뉴 버튼"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:19
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:100
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:101
 #: app/frontend/apps/desktop/components/CommonTable/TableHeader.vue:399
 msgid "Actions"
 msgstr "활동들"
@@ -2059,9 +2059,9 @@ msgstr "하위 조항 추가"
 msgid "Add subclause"
 msgstr "하위 조항 추가"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:68
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:86
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:117
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:64
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:114
 msgid "Add tag"
 msgstr "태그 추가"
 
@@ -3348,19 +3348,19 @@ msgstr "인증"
 msgid "Authentication Token"
 msgstr "인증 토큰"
 
-#: lib/email_helper/probe.rb:290
+#: lib/email_helper/probe.rb:304
 msgid "Authentication failed due to incorrect credentials."
 msgstr "잘못된 자격 증명으로 인해 인증에 실패했습니다."
 
-#: lib/email_helper/probe.rb:288
+#: lib/email_helper/probe.rb:302
 msgid "Authentication failed due to incorrect username."
 msgstr "잘못된 사용자 이름으로 인해 인증에 실패했습니다."
 
-#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:286
+#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:300
 msgid "Authentication failed."
 msgstr "인증에 실패했습니다."
 
-#: lib/email_helper/probe.rb:291
+#: lib/email_helper/probe.rb:305
 msgid "Authentication not possible (not offered by the service)"
 msgstr "인증이 불가능합니다 (서비스에서 제공하지 않음)"
 
@@ -4555,7 +4555,7 @@ msgstr "채널 검수하기."
 msgid "Check item"
 msgstr "체크섬"
 
-#: lib/search_index_backend.rb:495
+#: lib/search_index_backend.rb:497
 msgid "Check the response and payload for detailed information:"
 msgstr "자세한 정보는 응답 및 페이로드를 확인하세요:"
 
@@ -5481,7 +5481,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:547
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:544
 msgid "Continue"
 msgstr "계속"
 
@@ -7921,12 +7921,12 @@ msgstr "상세"
 msgid "Description (shown as title tag for screen readers)"
 msgstr "설명(스크린 리더 제목 태그로 표시)"
 
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:77
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:78
 msgid "Deselect all entries"
 msgstr "모든 항목 선택 해제"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 msgid "Deselect this entry"
 msgstr "이 항목 선택 해제"
 
@@ -8737,7 +8737,7 @@ msgstr "Elasticsearch 총 페이로드 크기"
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch 인덱스가 존재하지 않습니다"
 
-#: lib/search_index_backend.rb:491
+#: lib/search_index_backend.rb:493
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9929,7 +9929,7 @@ msgstr "확장 검색"
 msgid "External data source field"
 msgstr "외부 데이터 소스 필드"
 
-#: lib/search_index_backend.rb:837
+#: lib/search_index_backend.rb:849
 msgid "Extract zammad-attachment information from arrays"
 msgstr "배열에서 zammad 첨부 정보를 추출"
 
@@ -10134,7 +10134,7 @@ msgstr "파일 시스템"
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:42
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:121
 msgid "Filter"
 msgstr "필터"
 
@@ -11949,7 +11949,7 @@ msgstr "미완료 체크리스트 항목"
 msgid "Incomplete credentials"
 msgstr "자격 증명이 완전하지 않습니다"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:507
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:512
 #, fuzzy
 #| msgid "Incomplete Ticket Checklist"
 msgid "Incomplete ticket checklist"
@@ -15486,9 +15486,9 @@ msgstr ""
 msgid "No supported target language is available."
 msgstr "심플 스토리지 서비스를 사용할 수 없습니다."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:61
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:110
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:57
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:107
 msgid "No tags added yet."
 msgstr "아직 태그가 추가되지 않았습니다."
 
@@ -15522,7 +15522,7 @@ msgstr "이 로케일에 대한 번역을 사용할 수 없음"
 msgid "No translation service is configured."
 msgstr "필터가 구성되지 않았습니다."
 
-#: app/models/ticket.rb:434
+#: app/models/ticket.rb:438
 msgid "No triggers active"
 msgstr "활성 트리거 없음"
 
@@ -15572,7 +15572,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "x-zammad-session-user-id가 없고 발신자가 설정되지 않았습니다!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:510
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:515
 msgid "No, just close the ticket"
 msgstr "아니요, 티켓만 닫기"
 
@@ -18267,9 +18267,9 @@ msgstr "선택한 값 제거"
 msgid "Remove this scheduled visibility change"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:49
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:67
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:92
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:45
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:64
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:89
 msgid "Remove this tag"
 msgstr "이 태그 제거"
 
@@ -19708,7 +19708,7 @@ msgid "Select all %s results"
 msgstr "모든 항목 선택"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/BulkCheckbox.vue:61
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:77
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:78
 msgid "Select all entries"
 msgstr "모든 항목 선택"
 
@@ -19761,7 +19761,7 @@ msgid "Select this avatar"
 msgstr "이 아바타 선택"
 
 #: app/frontend/apps/desktop/components/CommonTable/CellContent/CellCheckbox.vue:45
-#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:132
+#: app/frontend/apps/desktop/components/CommonTable/CommonSimpleTable.vue:133
 msgid "Select this entry"
 msgstr "이 항목 선택"
 
@@ -21512,7 +21512,7 @@ msgstr "꼬리표"
 msgid "Tag \"%s\" already exists."
 msgstr "태그 \"%s\"이(가) 이미 존재합니다."
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:106
 #, fuzzy
 #| msgid "Ticket tag added successfully."
 msgid "Tag added successfully."
@@ -21524,7 +21524,7 @@ msgstr "티켓 태그가 성공적으로 추가되었습니다."
 msgid "Tag assignment mode"
 msgstr "지정 시간 초과"
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:106
 #, fuzzy
 #| msgid "Ticket tag removed successfully."
 msgid "Tag removed successfully."
@@ -21547,8 +21547,8 @@ msgstr "%s 생성됨"
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:36
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:48
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:32
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:45
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
@@ -22325,7 +22325,7 @@ msgstr "서버에 대한 연결이 끊어졌습니다."
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:296
+#: lib/email_helper/probe.rb:310
 msgid "The connection was refused."
 msgstr "연결이 거부되었습니다."
 
@@ -22619,7 +22619,7 @@ msgstr "지정된 이중 인증 방법이 아직 구성되지 않았습니다."
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:292
+#: lib/email_helper/probe.rb:306
 msgid "The hostname could not be found."
 msgstr "호스트 이름을 찾을 수 없습니다."
 
@@ -22672,7 +22672,7 @@ msgstr ""
 "패키지 설치에는 보안 영향이 따릅니다. Zammad 애플리케이션 컨텍스트에서 임의"
 "의 코드가 실행되기 때문입니다."
 
-#: lib/search_index_backend.rb:493
+#: lib/search_index_backend.rb:495
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -23149,7 +23149,7 @@ msgstr "필수 매개변수 'group_id'이(가) 없습니다."
 msgid "The required parameter 'id' is missing."
 msgstr "필수 매개변수 'id'이(가) 없습니다."
 
-#: lib/search_index_backend.rb:760
+#: lib/search_index_backend.rb:772
 msgid "The required parameter 'key' is missing."
 msgstr "필수 매개변수 'key'이(가) 없습니다."
 
@@ -23211,7 +23211,7 @@ msgstr "필수 매개변수 'ticket_number'이(가) 없습니다."
 msgid "The required parameter 'user_id' is missing."
 msgstr "필수 매개변수 'user_id'이(가) 없습니다."
 
-#: lib/search_index_backend.rb:761
+#: lib/search_index_backend.rb:773
 msgid "The required parameter 'value' is missing."
 msgstr "필수 매개변수 'value'이(가) 없습니다."
 
@@ -23470,13 +23470,13 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "시스템이 성공적으로 구성되었습니다. 리디렉션 중입니다."
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:63
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:37
 #, fuzzy
 #| msgid "Ticket tag could not be added."
 msgid "The tag could not be added."
 msgstr "티켓 태그를 추가할 수 없습니다."
 
-#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:67
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:41
 #, fuzzy
 #| msgid "Ticket tag could not be removed."
 msgid "The tag could not be removed."
@@ -23824,7 +23824,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:294
+#: lib/email_helper/probe.rb:308
 msgid "There is no route to this host."
 msgstr "이 호스트에 대한 경로가 없습니다."
 
@@ -24234,7 +24234,7 @@ msgstr "이 그룹에는 발신 통신을 위한 이메일 주소가 구성되�
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr "이 그룹 또는 그 하위 그룹이 허용된 중첩 깊이를 초과합니다."
 
-#: lib/email_helper/probe.rb:295
+#: lib/email_helper/probe.rb:309
 msgid "This host cannot be reached."
 msgstr "이 호스트에 연결할 수 없습니다."
 
@@ -25095,7 +25095,7 @@ msgid "Ticket update failed."
 msgstr "티켓 업데이트 실패."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:590
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:595
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:221
 msgid "Ticket updated successfully."
 msgstr "티켓이 성공적으로 업데이트되었습니다."
@@ -25977,8 +25977,8 @@ msgstr "이중 인증 방법이 성공적으로 구성되었습니다."
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:239
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:237
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr "유형"
@@ -27763,7 +27763,7 @@ msgid "Yes, add attachments now"
 msgstr "예, 지금 첨부 파일 추가"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:509
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:514
 msgid "Yes, open the checklist"
 msgstr "예, 체크리스트 열기"
 
@@ -28214,7 +28214,7 @@ msgstr "웹캠 액세스를 허용해야 합니다."
 msgid "You have unchecked items in the checklist."
 msgstr "체크리스트에 선택 해제된 항목이 있습니다."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:504
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:509
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -29691,7 +29691,6 @@ msgstr "새로운,베타,데스크톱 뷰,데스크톱 UI"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:10
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:23
 #: app/assets/javascripts/app/models/public_link.coffee:10
-#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:55
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
