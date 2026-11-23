@@ -5,9 +5,9 @@ import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { AutoCompleteProps } from '../FieldAutocomplete/types.ts'
 
 export interface FieldTagsProps {
-  canCreate?: boolean
+  canCreate?: boolean | null
   sorting?: 'label' | 'value'
-  exclude?: string[]
+  exclude?: string[] | null
   onDeactivate?: () => void
 }
 
