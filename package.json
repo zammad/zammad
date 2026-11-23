@@ -61,7 +61,7 @@
     "@sa11y/vitest": "^8.3.1",
     "@sinonjs/fake-timers": "^15.5.0",
     "@tailwindcss/vite": "^4.3.5",
-    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/jest-dom": "^8.0.0",
     "@testing-library/user-event": "^14.6.13",
     "@testing-library/vue": "^8.1.0",
     "@tiptap/extension-document": "3.34.0",
