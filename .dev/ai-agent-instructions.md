@@ -126,9 +126,9 @@ You MUST read the relevant file(s) below before responding when working on that 
 
 - `.dev/agent_docs/graphql_patterns.md` — How to add/modify GraphQL types,
   mutations, queries, and subscriptions
-- `.dev/agent_docs/frontend_patterns.md` — Vue component conventions,
-  composables, GraphQL operation calls, routing, the form system, and UI
-  principles
+- `.dev/agent_docs/frontend_patterns.md` — Vue component and script
+  conventions, composables, GraphQL operation calls, routing, the form system,
+  and UI principles
 - `.dev/agent_docs/frontend_addon_layer.md` — How an addon extends the Vue
   frontend via the build-time weave (Vapor-safe, multi-addon)
 - `.dev/agent_docs/legacy_model_patterns.md` — Concerns needed by new models
@@ -139,14 +139,14 @@ You MUST read the relevant file(s) below before responding when working on that 
   coverage between a service and the query, mutation or subscription that
   calls it
 - `.dev/agent_docs/ruby_patterns.md` — Conventions for every Ruby class or
-  module in `app/` and `lib/`: instance state and readers, acronyms in constant
-  names, text from outside, timeouts around a caller's block
+  module in `app/` and `lib/`: instance state and readers, behaviour per type,
+  acronyms in constant names, text from outside, timeouts around a caller's block
 - `.dev/agent_docs/service_patterns.md` — Service object conventions and structure
 - `.dev/agent_docs/knowledge_base_patterns.md` — Knowledge base rules for the
   new stack (Vue/GraphQL/services) only: the single active knowledge base and
   the deliberate exceptions to it
 - `.dev/agent_docs/database_migrations.md` — How to write migrations and work
-  with seeds
+  with seeds; where a new relation or column belongs
 - `.dev/agent_docs/code_analysis.md` — The fallow hooks that audit a branch on
   their own and what to do when one blocks; when to run fallow yourself: finding
   an existing helper before writing one, tracing an "unused" export before

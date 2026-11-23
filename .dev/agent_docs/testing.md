@@ -22,6 +22,13 @@ Add `CI_SKIP_DB_RESET=1` to skip database reset between runs.
 Add `CI_SKIP_ASSETS_PRECOMPILE=1` to skip asset compilation —
 but omit it when frontend files have changed.
 
+### The suite resets its database
+
+Unless `CI_SKIP_DB_RESET` is set, a run truncates and seeds its database
+before the first example. `DATABASE_URL` replaces the database of every
+environment, so a run with the URL of a development database would erase
+it: the run aborts when the database name does not contain `test`.
+
 ### HTTP streams
 
 - WebMock hands `Net::HTTP` a stubbed response — and a real one it lets through to
@@ -183,6 +190,29 @@ Tests use **Testing Library** (on top of Vue Test Utils).
 GraphQL requests are mocked via the auto mocker. Activate it by
 importing `#tests/graphql/builders/mocks.ts` or by importing a
 `.mocks.ts` file next to a GraphQL operation.
+
+### What to assert
+
+Find and assert elements the way a user perceives them: role, accessible
+name, label, text, state (`toBeDisabled`, `aria-expanded`). No assertions
+on CSS classes — `toHaveClass` and `toHaveClasses` are reported by eslint.
+Where the class is the behaviour under test, disable the rule for that
+line and give the reason.
+
+### Pitfalls of the unit project
+
+- **A loading state is over before the first assertion.** After
+  `visitView`, a mocked GraphQL response has already arrived. To assert a
+  loader or skeleton, hold the response back: pass `mockGraphQLResult` a
+  function that returns a promise, and resolve it after the assertion.
+- **`requestAnimationFrame` is a `setTimeout(0)`** (`tests/vitest.setup.ts`).
+  With fake timers a frame waits on the fake clock and is lost when
+  `vi.useRealTimers()` runs first. Advance the timers, switch back, then
+  `await nextTick()`.
+- **Stale module cache.** A spec that cannot find a prop, an element or a
+  module that is there — typically after a rebase, or after a change to a
+  type that a component's `defineProps` imports — may run old compiled
+  code. Remove `node_modules/.vitest-cache` (repository root) and run again.
 
 ### Browser specs (Vitest browser mode)
 

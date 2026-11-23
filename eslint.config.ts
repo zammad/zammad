@@ -139,6 +139,18 @@ export default defineConfigWithVueTs(
       'vue/v-slot-style': ['error', 'shorthand'],
       'vue/custom-event-name-casing': ['error', 'kebab-case', { ignores: ['/^update:/'] }],
       'vue/attribute-hyphenation': 'error',
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'vue',
+              importNames: ['reactive'],
+              message: 'Declare reactive state with ref(), also for objects, maps and sets.',
+            },
+          ],
+        },
+      ],
     },
   },
 
@@ -261,6 +273,14 @@ export default defineConfigWithVueTs(
     rules: {
       'zammad/zammad-tailwind-ltr': 'off',
       'zammad/zammad-detect-translatable-string': 'off',
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'MemberExpression[property.name=/^toHaveClass(es)?$/]',
+          message:
+            'Assert what the user perceives (role, accessible name, text, state) instead of CSS classes.',
+        },
+      ],
     },
   },
 

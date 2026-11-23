@@ -1,0 +1,928 @@
+{
+  "app/frontend/apps/desktop/components/CollapseButton/__tests__/CollapseButton.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonBreadcrumb/__tests__/CommonBreadcrumb.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 5
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonButton/__tests__/CommonButton.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonButtonGroup/__tests__/CommonButtonGroup.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonConfirmationDialog/__tests__/CommonConfirmationDialog.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonDivider/__tests__/CommonDivider.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 6
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonFileList/__tests__/CommonFileList.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonFileList/__tests__/CommonFileListItem.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 7
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonIndicator/__test__/CommonIndicator.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonInlineEdit/__test__/CommonInlineEdit.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonPopover/__test__/CommonPopover.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonSectionCollapse/__tests__/CommonSectionCollapse.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonSectionContainer/__tests__/CommonSectionContainer.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 6
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonSelect/__tests__/CommonSelect.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonSkeleton/__test__/CommonSkeleton.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonTable/CellContent/__tests__/CellCheckbox.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonTable/__tests__/CommonAdvancedTable.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonTable/__tests__/CommonSimpleTable.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonTabs/CommonTabGroup/__tests__/CommonTab.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 5
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonTabs/CommonTabGroup/__tests__/CommonTabGroup.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 5
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonTicketEscalationIndicator/__tests__/CommonTicketEscalationIndicator.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonTicketEscalationIndicator/__tests__/CommonTicketEscalationIndicatorItem.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonTicketPriorityIndicator/__tests__/CommonTicketPriorityIndicator.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/components/CommonTicketStateIndicator/__tests__/CommonTicketStateIndicator.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/__tests__/FieldAutoComplete.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldDate/__tests__/FieldDate.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldEditor/__tests__/FieldEditorSuggestionList.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 12
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldFile/__tests__/FieldFileList.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/__tests__/FieldGroupPermissions.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/__tests__/FieldImageUpload.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/FieldKnowledgeBaseCategoryIconWrapper.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBaseCategoryIcon/__tests__/FieldKnowledgeBaseCategoryIcon.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldKnowledgeBasePermissions/__tests__/FieldKnowledgeBasePermissions.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldNotifications/__tests__/FieldNotifications.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldPermissions/__tests__/FieldPermissions.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldRadioList/__tests__/FieldRadioList.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldRating/__tests__/FieldRating.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 8
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldSelect/__tests__/FieldSelect.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldToggleList/__tests__/FieldToggleList.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/__tests__/FieldTreeSelect.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseCategoryIcon/__tests__/KnowledgeBaseCategoryIcon.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Organization/__tests__/OrganizationPopoverWithTrigger.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/PageNavigation/__tests__/PageNavigation.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/__tests__/QuickSearchResultList.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/Search/QuickSearch/__tests__/QuickSearch.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/SplitButton/__tests__/SplitButton.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/components/ThemeSwitch/__tests__/ThemeSwitch.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/Ticket/TicketBulkEditFlyout/TicketBulkEditFlyout.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/__tests__/TicketSimpleTable.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/Ticket/__tests__/TicketPopoverWithTrigger.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/components/User/__tests__/UserPopoverWithTrigger.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/UserTaskbarTabs/__tests__/KnowledgeBaseAnswerCreate.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/UserTaskbarTabs/__tests__/UserTaskbarTabs.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 9
+    }
+  },
+  "app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/__tests__/MenuContainer.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/__tests__/LeftSidebarFooterMenu.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/desktop/components/layout/__tests__/LayoutContent.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/components/layout/__tests__/LayoutSidebar.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 8
+    }
+  },
+  "app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/authentication/views/Login.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/chat/__tests__/chat-navigation.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/chat/__tests__/chat-toolbar.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 6
+    }
+  },
+  "app/frontend/apps/desktop/pages/chat/__tests__/chat-window.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 7
+    }
+  },
+  "app/frontend/apps/desktop/pages/chat/components/__tests__/ChatCountBadge.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/cti/__tests__/caller-log-navigation.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/cti/components/__tests__/CallerLogTable.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 10
+    }
+  },
+  "app/frontend/apps/desktop/pages/dashboard/views/Playground.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-answer-create.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-answer-edit.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-category-navigation.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-delete-answer.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-delete-category.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/__tests__/knowledge-base-sorting.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/__tests__/KnowledgeBaseAnswerScheduledVisibility.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/__tests__/KnowledgeBaseAnswerTags.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerScheduledVisibilityItem/__tests__/KnowledgeBaseAnswerScheduledVisibilityItem.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseAnswerCard.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseBrowse/__tests__/KnowledgeBaseCategoryCard.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/__tests__/KnowledgeBaseSearchResults.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseSearch/__tests__/KnowledgeBaseSearchResultsSkeleton.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/KnowledgeBaseAnswerHeaderDetails.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/KnowledgeBaseBreadcrumb.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 6
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/TopBarHeaderFull.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 5
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseTopBarHeader/__tests__/TopBarHeaderShell.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 8
+    }
+  },
+  "app/frontend/apps/desktop/pages/knowledge-base/components/__tests__/KnowledgeBaseIconStatus.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 6
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-avatar.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 12
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-devices.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-linked-accounts.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-notifications.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-overviews.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-token-access.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-two-factor-auth.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-two-factor-auth/personal-setting-two-factor-auth-recovery-codes.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/__tests__/personal-setting-two-factor-auth/personal-setting-two-factor-auth-security-keys.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/search/composables/useSearchAdvancedFilters.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/__tests__/ticket-create/ticket-create.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-edit.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 12
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-live-users.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 5
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-navigation-tabs-switching.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view-ticket-summary.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/__tests__/ticket-detail-view/ticket-detail-view.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubble.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleActionList.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 5
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/__tests__/ArticleBubbleBody.spec.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    },
+    "no-restricted-syntax": {
+      "count": 8
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/TicketDetailTopBar.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 9
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/__tests__/HighlightMenu.spec.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    },
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/__tests__/TopBarHeaderCompact.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/__tests__/TopBarHeaderFull.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/TicketDetailBottomBar.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 10
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/__tests__/TicketLiveUsers.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 8
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/useActiveArticle.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/useUnreadArticle.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/__tests__/ChecklistItems.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 8
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/__tests__/TicketSidebarChecklist.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/__tests__/TicketSidebarCustomer.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/__tests__/TicketAccountedTime.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/components/__tests__/TicketSharedDraftFlyout.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/desktop/pages/ticket/composables/usePersistentStates.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/components/CommonButton/__tests__/CommonButton.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/mobile/components/CommonButtonGroup/__tests__/CommonButtonGroup.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/components/CommonConfirmation/__tests__/CommonConfirmation.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/components/CommonFilePreview/__tests__/CommonFilePreview.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 7
+    }
+  },
+  "app/frontend/apps/mobile/components/CommonSectionMenu/__tests__/CommonSectionMenuLink.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/mobile/components/CommonTicketEscalationIndicator/__tests__/CommonTicketEscalationIndicator.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/mobile/components/CommonTicketPriorityIndicator/__tests__/CommonTicketPriorityIndicator.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/mobile/components/CommonTicketStateIndicator/__tests__/CommonTicketStateIndicator.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 8
+    }
+  },
+  "app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/__tests__/FieldAutoComplete.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/mobile/components/Form/fields/FieldEditor/__tests__/FieldEditorSuggestionList.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 12
+    }
+  },
+  "app/frontend/apps/mobile/components/Form/fields/FieldSelect/__tests__/FieldSelect.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 5
+    }
+  },
+  "app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/__tests__/FieldTreeSelect.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 5
+    }
+  },
+  "app/frontend/apps/mobile/components/Ticket/__tests__/TicketItem.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/apps/mobile/components/layout/__tests__/LayoutBottomNavigation.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/components/layout/__tests__/LayoutHeader.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/pages/account/__tests__/push-notifications.spec.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/pages/search/views/SearchOverview.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/pages/ticket/__tests__/ticket-detail-view.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 5
+    }
+  },
+  "app/frontend/apps/mobile/pages/ticket/__tests__/ticket-information-update.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/pages/ticket/__tests__/tickets-view.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/__tests__/ArticleBubble.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/__tests__/ArticleList.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/__tests__/TicketDetailViewTitle.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 4
+    }
+  },
+  "app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/__tests__/TicketViewerItem.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/components/CommonAlert/__tests__/CommonAlert.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 3
+    }
+  },
+  "app/frontend/shared/components/CommonAvatar/__tests__/CommonAvatar.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 16
+    }
+  },
+  "app/frontend/shared/components/CommonBadge/__tests__/CommonBadge.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 5
+    }
+  },
+  "app/frontend/shared/components/CommonIcon/__tests__/CommonIcon.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/shared/components/CommonLabel/__tests__/CommonLabel.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/shared/components/CommonLink/__tests__/CommonLink.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/components/CommonProgressBar/__tests__/CommonProgressBar.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 10
+    }
+  },
+  "app/frontend/shared/components/CommonTranslateRenderer/__tests__/CommonTranslateRenderer.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/shared/components/CommonUserAvatar/__tests__/CommonUserAvatar.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 7
+    }
+  },
+  "app/frontend/shared/components/DynamicInitializer/manage.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/components/Form/Form.vue": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/components/Form/__tests__/FormGroup.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/components/Form/__tests__/FormLayout.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/components/Form/__tests__/apps/desktop/form-updater.desktop.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/shared/components/Form/__tests__/apps/mobile/form-updater.mobile.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/shared/components/Form/fields/FieldEditor/__tests__/editor-basic.browser.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/components/Form/fields/FieldEditor/__tests__/editor-footer.browser.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/shared/components/Form/fields/FieldEditor/__tests__/editor-reduced.browser.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/shared/components/Form/fields/FieldEditor/extensions/__tests__/VideoEmbed.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/components/Form/fields/FieldRadio/__tests__/FieldRadio.spec.ts": {
+    "no-restricted-syntax": {
+      "count": 2
+    }
+  },
+  "app/frontend/shared/components/Form/useMultiStepForm.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/composables/authentication/useLoginTwoFactor.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/composables/useMetaTitle.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/composables/usePagination.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/form/core/createI18nPlugin.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  },
+  "app/frontend/shared/i18n/index.ts": {
+    "no-restricted-imports": {
+      "count": 1
+    }
+  }
+}

@@ -30,6 +30,35 @@ The folder name, Vue file name, and component name must match
 Related composables, types (`types.ts`), and sub-components live
 inside the same folder.
 
+The default slot of the desktop `CommonLoader` takes exactly one root
+element. It renders inside a `<Transition>`, which shows only the first
+element in the app. Vitest stubs transitions and renders every sibling, so
+a spec passes while the app drops content.
+
+## Script Conventions
+
+- Declare reactive state with `ref()`, also for objects, arrays, maps and
+  sets (`ref(new Map())`). `reactive()` is not used in new code (enforced
+  by eslint).
+- Composables, helpers and stores use named exports and `const` arrow
+  functions: `export const useExample = () => { … }`. Modules a registry
+  loads through `import.meta.glob` (form fields, routes, plugins) keep the
+  default export the registry reads.
+- When the callers of a shared builder or composable differ in switches
+  that are exact inverses of each other (`withTags: true, withVisibility:
+  false` and the reverse), take one option that names the variant
+  (`edit: boolean`). Separate booleans allow combinations that do not exist.
+
+## Form System
+
+Ticket create and edit have the hardest cases of dirty state, reset and
+core workflow solved. Before adding behaviour to
+`shared/components/Form/` or to the form updater
+(`app/models/form_updater/`), read how they handle the same situation
+(`shared/entities/ticket/composables/useTicketEdit.ts`). Before concluding
+that the form is at fault, make the form updater mock of the spec send what
+the backend sends, `initialValue` included.
+
 ## Auto-Generated Files — Never Edit
 
 - `shared/graphql/types.ts`
@@ -81,6 +110,13 @@ const userQuery = new QueryHandler(
 - Icon-only buttons need `v-tooltip` supplying the accessible name.
 - Hover/focus-only visible actions need to display on touch fallback
 - Responsive grids should adapt to their container
+- A fixed header above scrolling content: put the header and the content
+  next to each other in a flex column of fixed height and give the content
+  `overflow-y-auto`. No `position: sticky` on the header and no measuring
+  of its height.
+- An accessibility fix covers the desktop and the mobile app. Check the
+  counterpart of the component in the other app, and leave it alone only
+  when it does not have the problem.
 - Translatable strings: use complete, meaningful source strings,
   sentence case for English source strings, and check for existing
   near-duplicate strings before adding new ones.

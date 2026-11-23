@@ -58,6 +58,16 @@ Do not add an `attr_accessor` just to write internal state: inside the class
 a writer has to be called as `self.name = …` (a bare `name = …` is a local
 variable), and the codebase assigns internal state with `@name =`.
 
+## Behaviour per type
+
+Knowledge that differs per type (per channel, per object, per provider) goes
+into one small class per type in a directory of its own, not into a hash or a
+`case` in a generic file. The base class includes `Mixin::RequiredSubPaths` and
+finds the types through `descendants` (`AI::Agent::Type.available_types`,
+`Authorization::Provider`), so that a new type — also one of an addon — is a
+new file and no list has to change. Keep the classes in the layer that uses the
+knowledge: routes of the interface do not belong on a model.
+
 ## Acronyms in constant names
 
 An acronym in a file or constant name (`frames_sse.rb` → `FramesSSE`) goes into

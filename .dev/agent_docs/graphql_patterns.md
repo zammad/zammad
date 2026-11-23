@@ -78,6 +78,13 @@ operation document. `app/frontend/build/vueApolloV5Plugin.js` generates its
 composables in the native vue-apollo v5 shape: one options object that
 carries the variables (`useUserQuery({ variables, enabled })`).
 
+The generator boots Rails and needs the migrated development database.
+Against another one — a `DATABASE_URL` naming a database that does not
+exist, for example — the command still succeeds, but enums built from the
+loaded models (`EnumTaskbarEntity`) lose values. Run it without such a
+`DATABASE_URL`, and check that
+`git diff app/frontend/shared/graphql/schema-types.ts` shows only your change.
+
 Besides the document (`UserDocument`) and a result type
 (`UserQueryCompositionFunctionResult`), the file exports per operation type:
 

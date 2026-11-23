@@ -49,7 +49,7 @@ if [[ ${#FRONTEND_ALL_FILES[@]} -gt 0 ]]; then
   # Generated files (e.g. the GraphQL types) are excluded by the lint configs, so
   #   a changeset consisting only of those must not be treated as an error.
   { pnpm lint:js:oxlint:cmd --no-error-on-unmatched-pattern --fix "${FRONTEND_ALL_FILES[@]}" && \
-    pnpm lint:js:eslint:cmd --fix "${FRONTEND_ALL_FILES[@]}" && \
+    pnpm lint:js:eslint:cmd --fix --prune-suppressions "${FRONTEND_ALL_FILES[@]}" && \
     { pnpm format:cmd "${FRONTEND_ALL_FILES[@]}"; _fmt_rc=$?; (( _fmt_rc == 0 || _fmt_rc == 2 )); }; } >&2 || EXIT_CODE=2
 fi
 

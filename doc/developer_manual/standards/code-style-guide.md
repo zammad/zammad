@@ -52,6 +52,22 @@ pnpm lint:md:fix
 coffeelint --rules ./.dev/coffeelint/rules/* app/
 ```
 
+### ESLint rules with a baseline
+
+A rule that existing code still breaks is enabled together with a baseline: `eslint-suppressions.json` holds, per
+file, how many violations of that rule are accepted. A new violation fails, also in a listed file. Fixing one never
+fails; `pnpm lint:js:fix` and the agent hooks remove the entries that are no longer needed. Do not add entries by
+hand: fix the code, or disable the rule for the one line with a comment that gives the reason.
+
+An editor reads the baseline only when its ESLint integration is told to. The devcontainer sets this for VS Code;
+elsewhere add `"eslint.options": { "applySuppressions": true }` to the settings.
+
+To add such a rule, enable it in `eslint.config.ts` and record its baseline:
+
+```screen
+pnpm lint:js:eslint:cmd app/frontend/ .eslint-plugin-zammad/ --suppress-rule <rule>
+```
+
 ### Wording
 
 - Use common technical terms (allowlist, origin, etc.) for non user facing words/variable names.

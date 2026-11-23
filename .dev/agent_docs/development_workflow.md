@@ -160,6 +160,11 @@ story's MR carries the issue context; individual commits within it only
 need to describe their own change. Keep it short and conventional, e.g.
 `Add validation for empty subject on ticket form.`
 
+After a squash or a rebase, check that
+`git diff --stat origin/develop...HEAD` lists only files of the change. A
+stale copy of a file reverts what `develop` fixed in the meantime, and no
+conflict shows it.
+
 ### 9. Merge Request
 
 **Standalone mode:** Use the `/zammad-create-mr` skill to push the branch and
@@ -188,4 +193,7 @@ after the MR is merged to `develop`.
 
 - Never push directly to `develop` or `stable`.
 - Never reference private issue numbers in public commits.
+- The commit message and the MR title of a fix for a security vulnerability
+  describe the change in general terms and do not name the vulnerability,
+  for the same reason as in code comments.
 - Never run the full test suite — always target specific files.

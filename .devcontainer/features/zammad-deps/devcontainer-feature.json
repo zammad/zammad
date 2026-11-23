@@ -27,7 +27,10 @@
         "timonwong.shellcheck",
         "vitest.explorer",
         "vue.volar"
-      ]
+      ],
+      "settings": {
+        "eslint.options": { "applySuppressions": true }
+      }
     }
   },
   "privileged": true,

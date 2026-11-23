@@ -35,6 +35,22 @@ Conventions:
 New or updated settings must be added in both the migration and the seeds.
 See existing examples in `db/seeds/settings.rb` for the correct structure.
 
+`pnpm generate-setting-types` writes `app/frontend/shared/types/config.ts`
+from the settings in the development database, not from the seeds. Run the
+migration on the development database before regenerating, otherwise the
+commit hook and the CI — which builds its database from the seeds —
+disagree about the file.
+
+## Data Modelling
+
+- Store a relation between two records when the record is written, passed
+  down from the code that knows it. Do not derive it afterwards from
+  timestamps or the order of ids: that only holds while nothing runs in
+  parallel.
+- A column that one feature needs does not go into a table everything
+  writes to (`histories`, `tickets`, `users`). Keep it in a table of the
+  feature.
+
 ## Seeds
 
 Seeds live in `db/seeds/` and use idempotent methods like
