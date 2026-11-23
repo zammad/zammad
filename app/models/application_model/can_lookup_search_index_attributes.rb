@@ -66,6 +66,13 @@ returns
     search_index_sanitize_store_attributes(attributes)
   end
 
+  # Entry point for building a search index document, use search_index_attribute_lookup for referenced records.
+  def search_index_attribute_lookup_with_refresh(include_references: true)
+    ApplicationModel::CanLookupSearchIndexAttributes::RequestCache.refresh
+
+    search_index_attribute_lookup(include_references:)
+  end
+
 =begin
 
 This function returns the relational search index value based on the attribute name.

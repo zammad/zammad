@@ -106,7 +106,7 @@ returns
   def search_index_update_associations
     return if !SearchIndexBackend.enabled?
 
-    new_search_index_value = search_index_attribute_lookup(include_references: false)
+    new_search_index_value = search_index_attribute_lookup_with_refresh(include_references: false)
     return if new_search_index_value.blank?
 
     search_index_indexable.each_with_object([]) do |index_class, result|
@@ -147,7 +147,7 @@ returns
 
   def search_index_update_backend
     # fill up with search data
-    attributes = search_index_attribute_lookup
+    attributes = search_index_attribute_lookup_with_refresh
     return true if !attributes
 
     # update backend
@@ -177,7 +177,7 @@ returns
     return true if !SearchIndexBackend.enabled?
     return false if !search_index_inline_supported?
 
-    attributes = search_index_attribute_lookup(include_references: search_index_inline_include_references?)
+    attributes = search_index_attribute_lookup_with_refresh(include_references: search_index_inline_include_references?)
     return true if !attributes
 
     SearchIndexBackend.update_inline(self.class.to_s, search_index_inline_attributes(attributes))
@@ -222,7 +222,7 @@ returns
   end
 
   # methods defined here are going to extend the class, not the instance of it
-  class_methods do # rubocop:disable Metrics/BlockLength
+  class_methods do
 
 =begin
 
@@ -252,38 +252,13 @@ reload search index with full data
 =end
 
     def search_index_reload(silent: false, worker: 0)
-      tolerance       = 10
-      tolerance_count = 0
-      query           = reorder(created_at: :desc)
-      total           = query.count
-      record_count    = 0
-      offset          = 0
-      batch_size      = 200
+      printed = 0
 
-      while query.offset(offset).limit(batch_size).any?
-        records = query.offset(offset).limit(batch_size)
+      SearchIndexBackend::Reload.new([self], worker:).perform do |records|
+        next if silent || records.count == printed
 
-        Parallel.map(records, { in_processes: worker }) do |record|
-          next if record.ignore_search_indexing?(:destroy)
-
-          begin
-            record.search_index_update_backend
-          rescue => e
-            logger.error "Unable to send #{record.class}.find(#{record.id}).search_index_update_backend backend: #{e.inspect}"
-            tolerance_count += 1
-            sleep 15
-            raise "Unable to send #{record.class}.find(#{record.id}).search_index_update_backend backend: #{e.inspect}" if tolerance_count == tolerance
-          end
-        end
-
-        offset += batch_size
-
-        next if silent
-
-        record_count += records.count
-        if (record_count % batch_size).zero? || record_count == total
-          print "\r    #{record_count}/#{total}" # rubocop:disable Rails/Output
-        end
+        printed = records.count
+        print "\r    #{printed}/#{records.total}" # rubocop:disable Rails/Output
       end
     end
   end
