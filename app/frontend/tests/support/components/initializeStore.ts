@@ -9,7 +9,9 @@ import type { Store } from 'pinia'
 
 let storeInitialized = false
 let pinia: TestingPinia
-const stores = new Set<Store>()
+// Keyed by id: a store disposed in a test and created again replaces its old instance, which must
+//   not be disposed a second time.
+const stores = new Map<string, Store>()
 
 export const initializeStore = () => {
   if (storeInitialized) return pinia
@@ -17,7 +19,7 @@ export const initializeStore = () => {
   pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false })
   // plugins.push({ install: pinia.install })
   pinia.use((context) => {
-    stores.add(context.store)
+    stores.set(context.store.$id, context.store)
   })
   storeInitialized = true
   const app = useApplicationStore()

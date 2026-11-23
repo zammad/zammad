@@ -1032,7 +1032,7 @@ const schema: FormSchemaNode[] = [
   },
 ]
 
-const flyout = useFlyout({
+const { open: openFlyout } = useFlyout({
   name: 'playground',
   component: () =>
     new Promise((resolve) => {
@@ -1078,7 +1078,7 @@ const flyout = useFlyout({
     }),
 })
 
-const dialog = useDialog({
+const { open: openDialog } = useDialog({
   name: 'playground',
   component: () =>
     new Promise((resolve) => {
@@ -2159,8 +2159,8 @@ const { openFeedbackDialog } = useFeedbackDialog()
       <div class="w-1/2">
         <h2 class="mt-8 mb-2">Flyout and Dialog</h2>
         <div class="mb-6 flex gap-4">
-          <CommonButton variant="tertiary" @click="dialog.open()">Show Dialog </CommonButton>
-          <CommonButton variant="primary" @click="flyout.open()"> Open Flyout </CommonButton>
+          <CommonButton variant="tertiary" @click="openDialog()">Show Dialog </CommonButton>
+          <CommonButton variant="primary" @click="openFlyout()"> Open Flyout </CommonButton>
         </div>
 
         <h2 class="mb-2">Confirmation</h2>

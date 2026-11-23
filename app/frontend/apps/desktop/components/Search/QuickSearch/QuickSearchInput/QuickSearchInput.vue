@@ -32,7 +32,7 @@ const resetInput = () => {
 }
 
 const goToSearchView = () => {
-  router.push({ name: 'Search', params: { searchTerm: searchValue.value } })
+  router.push({ name: 'Search', params: { searchTerm: searchValue.value || null } })
   resetInput()
 }
 

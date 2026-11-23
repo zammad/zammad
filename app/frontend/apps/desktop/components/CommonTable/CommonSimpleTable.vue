@@ -52,7 +52,8 @@ const { getCellContentComponent } = useCellContent()
 const checkedRows = defineModel<Array<TableItem>>('checkedRows', {
   required: false,
   // is not reactive by default and making it reactive causes other issues.
-  default: (props) => (props.items as Array<TableItem>).filter((item) => item.checked),
+  default: (props: Record<string, unknown>) =>
+    (props.items as Array<TableItem>).filter((item) => item.checked),
 })
 
 const { hasCheckboxId, allCheckboxRowsSelected, selectAllRowCheckboxes, handleCheckboxUpdate } =

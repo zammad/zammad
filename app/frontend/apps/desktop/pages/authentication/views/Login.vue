@@ -115,7 +115,7 @@ const passwordResetLink = computed(() => {
   return {
     name: 'PasswordReset',
     params: {
-      login: values.value.login as Maybe<string>,
+      login: (values.value.login as Maybe<string>) || null,
     },
   }
 })

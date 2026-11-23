@@ -115,7 +115,7 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
   <QuickSearchResultListSkeleton :loading="isLoadingSearchResults">
     <CommonLink
       class="group/link mb-4 block"
-      :link="{ name: 'Search', params: { searchTerm: search } }"
+      :link="{ name: 'Search', params: { searchTerm: search || null } }"
       @click="resetQuickSearchInputField"
       @keydown.enter="$event.target.click()"
     >
@@ -153,7 +153,7 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
             class="group/link my-1.5 ms-auto"
             :link="{
               name: 'Search',
-              params: { searchTerm: search },
+              params: { searchTerm: search || null },
               query: { entity: searchResult.name },
             }"
             @click="resetQuickSearchInputField"

@@ -13,6 +13,9 @@ minimumReleaseAgeExclude:
 overrides:
   '@sa11y/vitest>vitest': ^5.1.1
   'lightningcss': ^1.33.0
+  # 1.43.0 handles mouse selection itself and puts a click behind a trailing space before it, so
+  #   the next character replaces the space.
+  'prosemirror-view': ~1.42.9
 permissions:
   '@apollo/client':
     skills: false
