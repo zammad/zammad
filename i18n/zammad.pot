@@ -7966,7 +7966,7 @@ msgstr ""
 msgid "External data source field"
 msgstr ""
 
-#: lib/search_index_backend.rb:843
+#: lib/search_index_backend.rb:849
 msgid "Extract zammad-attachment information from arrays"
 msgstr ""
 
@@ -19349,7 +19349,7 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:766
+#: lib/search_index_backend.rb:772
 msgid "The required parameter 'key' is missing."
 msgstr ""
 
@@ -19409,7 +19409,7 @@ msgstr ""
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:767
+#: lib/search_index_backend.rb:773
 msgid "The required parameter 'value' is missing."
 msgstr ""
 
