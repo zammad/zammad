@@ -4561,7 +4561,7 @@ msgstr "Verifică canelele de comunicare."
 msgid "Check item"
 msgstr "Bifează element"
 
-#: lib/search_index_backend.rb:495
+#: lib/search_index_backend.rb:497
 msgid "Check the response and payload for detailed information:"
 msgstr "Verifică răspunsul și payload-ul pentru informații suplimentare:"
 
@@ -8922,7 +8922,7 @@ msgstr "Dimensiunea totală a payload-ului Elasticsearch"
 msgid "Elasticsearch index does not exist"
 msgstr "Index Endpoint Elasticsearch"
 
-#: lib/search_index_backend.rb:491
+#: lib/search_index_backend.rb:493
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -10169,7 +10169,7 @@ msgstr "Căutare extinsă"
 msgid "External data source field"
 msgstr "Câmp sursă de date externă"
 
-#: lib/search_index_backend.rb:837
+#: lib/search_index_backend.rb:843
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Extrage informațiile de tip zammad-attachment din matrici"
 
@@ -12258,7 +12258,7 @@ msgstr "Creează client nou"
 msgid "Incomplete credentials"
 msgstr "Date de autentificare incomplete"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:499
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:504
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Incomplete ticket checklist"
@@ -15994,7 +15994,7 @@ msgstr "Nu este disponibilă nici o traducere pentru această localizare"
 msgid "No translation service is configured."
 msgstr "Nici filtru configurat."
 
-#: app/models/ticket.rb:434
+#: app/models/ticket.rb:438
 msgid "No triggers active"
 msgstr "Nici un declanșator(trigger) activ"
 
@@ -16033,7 +16033,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Niciun x-zammad-session-user-id și niciun expeditor setat!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:502
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:507
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -23387,7 +23387,7 @@ msgstr ""
 "Instalarea pachetelor are implicații de securitate, deoarece codul arbitrar "
 "va fi executat în contextul aplicației Zammad."
 
-#: lib/search_index_backend.rb:493
+#: lib/search_index_backend.rb:495
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -23877,7 +23877,7 @@ msgstr "Lipsește parametrul necesar 'group_id'."
 msgid "The required parameter 'id' is missing."
 msgstr "Lipsește parametrul necesar 'id'."
 
-#: lib/search_index_backend.rb:760
+#: lib/search_index_backend.rb:766
 msgid "The required parameter 'key' is missing."
 msgstr "Lipsește parametrul necesar 'key'."
 
@@ -23941,7 +23941,7 @@ msgstr "Lipsește parametrul necesar 'ticket_number'."
 msgid "The required parameter 'user_id' is missing."
 msgstr "Lipsește parametrul necesar 'user_id'."
 
-#: lib/search_index_backend.rb:761
+#: lib/search_index_backend.rb:767
 msgid "The required parameter 'value' is missing."
 msgstr "Lipsește parametrul necesar 'value'."
 
@@ -25874,7 +25874,7 @@ msgid "Ticket update failed."
 msgstr "Actualizare tichet"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:582
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:587
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr "Tichet actualizat cu succes."
@@ -28601,7 +28601,7 @@ msgid "Yes, add attachments now"
 msgstr "Adăugați opțiunea de atașament pentru upload."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:501
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:506
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -29033,7 +29033,7 @@ msgstr "Trebuie să permiți accesul la camera ta web."
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:496
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:501
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid ""

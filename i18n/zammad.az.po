@@ -4386,7 +4386,7 @@ msgstr "Kanalları yoxla."
 msgid "Check item"
 msgstr "Checkmk"
 
-#: lib/search_index_backend.rb:495
+#: lib/search_index_backend.rb:497
 msgid "Check the response and payload for detailed information:"
 msgstr ""
 
@@ -8741,7 +8741,7 @@ msgstr "Elasticsearch Total Payload Size"
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch Endpoint Index"
 
-#: lib/search_index_backend.rb:491
+#: lib/search_index_backend.rb:493
 #, fuzzy
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
@@ -9982,7 +9982,7 @@ msgstr "Ətraflı axtarış"
 msgid "External data source field"
 msgstr "Xarici mənbələrdən məlumat sahəsi"
 
-#: lib/search_index_backend.rb:837
+#: lib/search_index_backend.rb:843
 #, fuzzy
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Zammad əlavələrindən məlumatların çıxarılması"
@@ -12111,7 +12111,7 @@ msgstr "Natamam hesab məlumatları"
 msgid "Incomplete credentials"
 msgstr "Natamam hesab məlumatları"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:499
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:504
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete ticket checklist"
@@ -15866,7 +15866,7 @@ msgstr "Bu dil üçün tərcümə mövcud deyil"
 msgid "No translation service is configured."
 msgstr "Filtr konfiqurasiya edilməyib."
 
-#: app/models/ticket.rb:434
+#: app/models/ticket.rb:438
 #, fuzzy
 msgid "No triggers active"
 msgstr "Tətikləyicilər aktiv deyil"
@@ -15906,7 +15906,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:502
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:507
 #, fuzzy
 #| msgid "Closed Tickets"
 msgid "No, just close the ticket"
@@ -22974,7 +22974,7 @@ msgid ""
 "arbitrary code will be executed in the context of the Zammad application."
 msgstr ""
 
-#: lib/search_index_backend.rb:493
+#: lib/search_index_backend.rb:495
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -23429,7 +23429,7 @@ msgstr ""
 msgid "The required parameter 'id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:760
+#: lib/search_index_backend.rb:766
 msgid "The required parameter 'key' is missing."
 msgstr ""
 
@@ -23493,7 +23493,7 @@ msgstr ""
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
-#: lib/search_index_backend.rb:761
+#: lib/search_index_backend.rb:767
 msgid "The required parameter 'value' is missing."
 msgstr ""
 
@@ -25257,7 +25257,7 @@ msgid "Ticket update failed."
 msgstr "2. Biletin yenilənməsi"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:582
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:587
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr ""
@@ -27765,7 +27765,7 @@ msgid "Yes, add attachments now"
 msgstr "Yalnız %s qoşmasına icazə verilir"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:501
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:506
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Yes, open the checklist"
@@ -28156,7 +28156,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr "Xahiş edirik ən azı bir qovluq seçin."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:496
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:501
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""

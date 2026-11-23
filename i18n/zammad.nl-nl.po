@@ -4484,7 +4484,7 @@ msgstr "Controleer kanalen."
 msgid "Check item"
 msgstr "Item afvinken"
 
-#: lib/search_index_backend.rb:495
+#: lib/search_index_backend.rb:497
 msgid "Check the response and payload for detailed information:"
 msgstr "Check de response en payload voor meer gedetailleerde informatie:"
 
@@ -8735,7 +8735,7 @@ msgstr "Elasticsearch Total Payload Size"
 msgid "Elasticsearch index does not exist"
 msgstr "Elasticsearch Endpoint Index"
 
-#: lib/search_index_backend.rb:491
+#: lib/search_index_backend.rb:493
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
@@ -9968,7 +9968,7 @@ msgstr "Uitgebreid zoeken"
 msgid "External data source field"
 msgstr "Extern gegevensbronveld"
 
-#: lib/search_index_backend.rb:837
+#: lib/search_index_backend.rb:843
 msgid "Extract zammad-attachment information from arrays"
 msgstr "Extraheer zammad-bijlage-informatie uit arrays"
 
@@ -12012,7 +12012,7 @@ msgstr "Onvoltooide checklist-items"
 msgid "Incomplete credentials"
 msgstr "Onvolledige credentials"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:499
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:504
 #, fuzzy
 #| msgid "Incomplete Ticket Checklist"
 msgid "Incomplete ticket checklist"
@@ -15564,7 +15564,7 @@ msgstr "Geen vertaling voor dit land beschikbaar"
 msgid "No translation service is configured."
 msgstr "Er is geen filter ingesteld."
 
-#: app/models/ticket.rb:434
+#: app/models/ticket.rb:438
 msgid "No triggers active"
 msgstr "Geen triggers actief"
 
@@ -15601,7 +15601,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Geen x-zammad-session-user-id, geen afzender ingesteld!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:502
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:507
 msgid "No, just close the ticket"
 msgstr "Nee, sluit het ticket"
 
@@ -22793,7 +22793,7 @@ msgstr ""
 "De installatie van pakketten wordt geleverd met beveiligingsimplicaties, "
 "omdat code wordt uitgevoerd in de context van de Zammad applicatie."
 
-#: lib/search_index_backend.rb:493
+#: lib/search_index_backend.rb:495
 msgid ""
 "The installed attachment plugin could not handle the request payload. Ensure "
 "that the correct attachment plugin is installed (ingest-attachment)."
@@ -23267,7 +23267,7 @@ msgstr "De vereiste parameter 'group_id' ontbreekt."
 msgid "The required parameter 'id' is missing."
 msgstr "De vereiste parameter 'id' ontbreekt."
 
-#: lib/search_index_backend.rb:760
+#: lib/search_index_backend.rb:766
 msgid "The required parameter 'key' is missing."
 msgstr "De vereiste parameter 'key' ontbreekt."
 
@@ -23331,7 +23331,7 @@ msgstr "De vereiste parameter 'ticket_number' ontbreekt."
 msgid "The required parameter 'user_id' is missing."
 msgstr "De vereiste parameter 'user_id' ontbreekt."
 
-#: lib/search_index_backend.rb:761
+#: lib/search_index_backend.rb:767
 msgid "The required parameter 'value' is missing."
 msgstr "De vereiste parameter 'value' ontbreekt."
 
@@ -25232,7 +25232,7 @@ msgid "Ticket update failed."
 msgstr "Ticket update mislukt."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:582
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:587
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:219
 msgid "Ticket updated successfully."
 msgstr "Ticket succesvol geüpdatet."
@@ -27958,7 +27958,7 @@ msgid "Yes, add attachments now"
 msgstr "Ja, voeg bijlagen toe"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:501
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:506
 msgid "Yes, open the checklist"
 msgstr "Ja, open de checklist"
 
@@ -28394,7 +28394,7 @@ msgstr "Je moet toegang tot de webcam toestaan."
 msgid "You have unchecked items in the checklist."
 msgstr "Er zijn niet-afgevinkte items in de checklist."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:496
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:501
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
