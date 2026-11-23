@@ -2,53 +2,46 @@
 
 ## Upcoming releases
 
-### The organization `shared` attribute will become a sharing mode
+### The organization `shared` attribute will be replaced by a sharing mode
 
-**Who is affected?** API clients, imports and integrations that read or write the `shared` attribute of
-organizations, create organizations without setting it, or create conditions on it.
+**Who is affected?** API clients, imports, integrations and third-party packages that read or write the
+`shared` attribute of organizations, create organizations without setting it, or create conditions on
+it.
 
 The "Shared organization" setting is a boolean today: `true` lets every customer of the organization see
 and update the tickets of all other members, and `false` limits customers to their own tickets. Starting
-with Zammad 7.4, it will be replaced with a sharing mode offering four modes, "No", "Per role",
+with Zammad 7.4, it will be replaced with a sharing mode offering four modes, "None", "Per role",
 "Per member" and "Everyone", so that wider ticket visibility can be granted to selected roles or
 customers only. For the attribute this means:
 
-- `shared` will change in place from a boolean to the sharing mode. The REST and GraphQL API will return
-  the sharing mode only, never `true` or `false`, because "Per role" and "Per member" have no truthful
-  boolean value. The selected roles or members will also be stored and returned through the API.
-- Writing `true` or `false` through the REST API or a CSV import of organizations will keep working for a
-  transition period: `true` will be stored as "Everyone" and `false` as "No". This compatibility is
-  deprecated and will be removed in Zammad 7.5. The GraphQL API and all other ways of writing the
-  attribute will accept the sharing mode only.
-- Organizations created without `shared` will default to "No" instead of today's `true`, so their
-  customers will no longer see each other's tickets.
-- The sharing mode and its selections will be readable and writable only by users with the
+- The sharing mode will be stored in a new attribute `sharing_mode` with the values `none`, `per_role`,
+  `per_member` and `everyone`, and the selected roles or members will be stored and returned through the
+  API with it. The `shared` database column and the `shared` field of the GraphQL API will be removed.
+- The REST API will keep `shared` beside `sharing_mode`, as a boolean derived from the mode. Reads will
+  return `false` for "None" and `true` for every other mode, so `true` will no longer mean that every
+  member sees the tickets of all other members: under "Per role" and "Per member" only the selected ones
+  will.
+- Writing `false` to `shared` through the REST API will set the mode to "None", and writing `true` will
+  set it to "Everyone", also for an organization set to "Per role" or "Per member", whose selected roles
+  or members will then be discarded. When a request carries both attributes, `sharing_mode` will decide
+  and `shared` will be ignored. The CSV import of organizations will accept a `shared` column by the same
+  rule.
+- Organizations created without `shared` and `sharing_mode` will default to "None" instead of today's
+  `true`, so their customers will no longer see each other's tickets.
+- `sharing_mode`, its selections and `shared` will be readable and writable only by users with the
   `admin.organization` permission, in every interface and through the API. Agents without that
   permission, who receive the flag in API responses today, and customers will no longer receive them.
 
-Existing organizations will be migrated automatically (`true` becomes "Everyone", `false` stays "No"), and
-so will stored conditions on "Organization › Shared organization" in overviews, triggers, SLAs, scheduler
-jobs, core workflows and report profiles. Conditions created through the API afterwards will have to use
-the new modes.
+Existing organizations will be migrated automatically (`true` becomes "Everyone", `false` becomes
+"None"), and so will stored conditions on "Organization › Shared organization" in overviews, triggers,
+SLAs, scheduler jobs, core workflows, report profiles and settings, together with core workflow actions
+on it. Conditions created through the API afterwards will have to use `sharing_mode`.
 
-⚠️ Before updating to Zammad 7.4, prepare such clients to read the sharing mode instead of a boolean,
-switch GraphQL clients to send it, set it explicitly when creating organizations whose customers should
-see each other's tickets, and run clients and imports with an account that has the `admin.organization`
-permission.
-
-**Related issue:** [#6364](https://github.com/zammad/zammad/issues/6364)
-
-### The REST API and the CSV import will stop accepting `true` and `false` for the organization `shared` attribute
-
-**Who is affected?** REST API clients, integrations and CSV imports of organizations that still write
-`true` or `false` to the `shared` attribute.
-
-When `shared` becomes a sharing mode in Zammad 7.4, the REST API and the CSV import of organizations will
-still map a written `true` to "Everyone" and `false` to "No", as a deprecated compatibility for clients
-and CSV files built against the former boolean. Zammad 7.5 will remove that compatibility, and such
-requests and CSV rows will no longer be accepted.
-
-⚠️ Switch such clients and CSV files to the sharing mode before updating to Zammad 7.5.
+⚠️ Before updating to Zammad 7.4, set `shared` explicitly when creating organizations whose customers
+should see each other's tickets, and run clients and imports with an account that has the
+`admin.organization` permission. With the update, switch GraphQL clients and code that reads the database
+column to `sharing_mode`, and make sure REST clients no longer write `shared: true` back to organizations
+that use "Per role" or "Per member".
 
 **Related issue:** [#6364](https://github.com/zammad/zammad/issues/6364)
 
