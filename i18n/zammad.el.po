@@ -461,7 +461,7 @@ msgstr "%s (επιλογή)"
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:97
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:112
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:287
-#: app/frontend/shared/composables/useSelectOptions.ts:128
+#: app/frontend/shared/composables/useSelectOptions.ts:131
 msgid "%s (unknown)"
 msgstr "%s (άγνωστο)"
 
@@ -1442,7 +1442,7 @@ msgid "API error."
 msgstr "Σφάλμα API."
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:20
-#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:12
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:11
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 #, fuzzy
 #| msgid "API Key"
@@ -1579,7 +1579,7 @@ msgstr "Χρόνος λογαριασμού"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:610
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:197
-#: app/controllers/channels_email_controller.rb:237
+#: app/controllers/channels_email_controller.rb:232
 msgid "Account already exists!"
 msgstr "Ο λογαριασμός υπάρχει ήδη!"
 
@@ -1602,7 +1602,7 @@ msgstr "Χρόνος λογαριασμού"
 msgid "Accounted Time"
 msgstr "Καταγεγραμμένος χρόνος"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:147
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:153
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:132
 #: app/frontend/shared/entities/ticket/attributes.ts:14
@@ -2062,9 +2062,9 @@ msgstr "Προσθήκη υποκατηγορίας"
 msgid "Add subclause"
 msgstr "Προσθήκη υποπαραγράφου"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:170
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:172
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:196
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:68
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:117
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add tag"
@@ -3417,21 +3417,21 @@ msgstr "Authentication"
 msgid "Authentication Token"
 msgstr "Authentication"
 
-#: lib/email_helper/probe.rb:275
+#: lib/email_helper/probe.rb:290
 msgid "Authentication failed due to incorrect credentials."
 msgstr ""
 
-#: lib/email_helper/probe.rb:273
+#: lib/email_helper/probe.rb:288
 msgid "Authentication failed due to incorrect username."
 msgstr ""
 
-#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:271
+#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:286
 #, fuzzy
 #| msgid "Authentication"
 msgid "Authentication failed."
 msgstr "Authentication"
 
-#: lib/email_helper/probe.rb:276
+#: lib/email_helper/probe.rb:291
 msgid "Authentication not possible (not offered by the service)"
 msgstr ""
 
@@ -3593,11 +3593,11 @@ msgstr ""
 "Φορτώνει αυτόματα το αρχείο chat.css. Αν θέλετε να χρησιμοποιήσετε το δικό "
 "σας css, απλώς ορίστε το σε false."
 
-#: app/frontend/shared/components/Form/Form.vue:1351
+#: app/frontend/shared/components/Form/Form.vue:1359
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1360
+#: app/frontend/shared/components/Form/Form.vue:1368
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -4067,7 +4067,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:174
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:126
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:258
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
@@ -4629,7 +4629,7 @@ msgstr "Πραγματοποιήθηκαν αλλαγές που απαιτού�
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:164
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:114
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:176
 msgid "Channel"
@@ -5625,7 +5625,7 @@ msgstr ""
 msgid "Content could not be loaded."
 msgstr "%s Object(s) are created."
 
-#: app/models/store.rb:162
+#: app/models/store.rb:166
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Content is not a resizable image."
@@ -5689,16 +5689,16 @@ msgid "Context window size"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
-#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:57
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:77
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:18
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:19
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:101
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:108
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:544
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:547
 msgid "Continue"
 msgstr "Συνέχεια"
 
@@ -6016,7 +6016,7 @@ msgstr "Χώρα"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:8
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:79
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:72
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:252
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
@@ -6270,7 +6270,7 @@ msgstr "Δημιουργία Δοκιμαστικού Δελτίου"
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:119
 #: app/frontend/apps/desktop/pages/chat/components/ChatWindowDetails.vue:116
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:93
 #: app/frontend/shared/entities/organization/attributes.ts:21
 #: app/frontend/shared/entities/ticket/attributes.ts:102
 #: app/frontend/shared/entities/user/attributes.ts:22
@@ -6459,6 +6459,13 @@ msgstr "Μεταφράσεις"
 #| msgid "Time Accounting"
 msgid "Custom module '%s' is not available."
 msgstr "`Time Accounting"
+
+#: app/assets/javascripts/app/lib/mixins/email_notification_internal_only.coffee:30
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:51
+#, fuzzy
+#| msgid "Bulk action executed!"
+msgid "Custom verification email"
+msgstr "Εκτελέστηκε μαζική ενέργεια!"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
@@ -8310,7 +8317,7 @@ msgstr "Ενεργοποίηση δημιουργίας αιτήματος "
 msgid "Detected Language"
 msgstr "Γλώσσα"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:137
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:105
 #, fuzzy
 #| msgid "Language"
@@ -8505,8 +8512,7 @@ msgstr "αποσύνδεση"
 msgid "Dislikes count"
 msgstr "Συνδεδεμένοι λογαριασμοί"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:58
-#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:59
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:64
 msgid "Dismiss alert"
 msgstr ""
 
@@ -8636,6 +8642,11 @@ msgstr ""
 #| msgid "not exist"
 msgid "Does not exist"
 msgstr "δεν υπάρχει"
+
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:2
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:161
+msgid "Does this email server only deliver to internal recipients?"
+msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1832
 msgid "Domain"
@@ -9180,7 +9191,7 @@ msgstr "Email Inbound"
 msgid "Email Notification"
 msgstr "Email Notification"
 
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:17
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:22
 msgid "Email Notifications"
 msgstr ""
 
@@ -9232,7 +9243,7 @@ msgid "Email inbound"
 msgstr "Email Inbound"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:94
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:30
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:38
 #, fuzzy
 #| msgid "Email Notification"
 msgid "Email notification"
@@ -10571,7 +10582,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:42
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:121
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
 msgid "Filter"
 msgstr "Φίλτρο"
 
@@ -11020,7 +11031,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:13
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:104
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
@@ -11064,6 +11075,7 @@ msgstr ""
 msgid "Gateway"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:128
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:136
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee:91
 msgid "General communication error, maybe internet is not available!"
@@ -11277,7 +11289,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:25
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:16
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:16
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:27
 #: app/assets/javascripts/app/views/import/index.jst.eco:18
@@ -11922,13 +11934,13 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:416
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:334
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:80
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:67
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:74
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:73
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:29
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:11
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:107
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:63
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:68
 msgid "Host"
 msgstr "Εξυπηρετητής"
 
@@ -12264,7 +12276,7 @@ msgstr "Υπηρεσία εικόνας"
 msgid "Image actions"
 msgstr "Article Count"
 
-#: app/models/store.rb:169
+#: app/models/store.rb:173
 msgid "Image exceeds the maximum resizable pixel count."
 msgstr ""
 
@@ -12812,6 +12824,12 @@ msgstr "Διαγραφή βάσης γνώσεων"
 #| msgid "%s Object(s) are created."
 msgid "Internal attributes cannot be deleted"
 msgstr "%s Object(s) are created."
+
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:186
+#, fuzzy
+#| msgid "Internal"
+msgid "Internal email server"
+msgstr "Εσωτερικός"
 
 #: app/frontend/shared/errors/useErrorHandler.ts:33
 #, fuzzy
@@ -13386,7 +13404,7 @@ msgid ""
 "for errors."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:150
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:153
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Knowledge base articles"
@@ -14943,7 +14961,7 @@ msgstr "Συγχώνευση στο αίτημα#"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
-#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:225
+#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:234
 #: public/assets/form/form.js:41
 msgid "Message"
 msgstr "μήνυμα"
@@ -15834,7 +15852,7 @@ msgstr ""
 msgid "New ticket: %s"
 msgstr "Νέο Δελτίο"
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:60
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:220
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
 #, fuzzy
@@ -16396,9 +16414,9 @@ msgstr ""
 msgid "No supported target language is available."
 msgstr "Βάση γνώσεων"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:163
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:61
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:79
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:110
 #, fuzzy
 #| msgid "No template created yet."
 msgid "No tags added yet."
@@ -16702,12 +16720,6 @@ msgstr "Ειδοποίηση Αποστολέα"
 #, fuzzy
 #| msgid "Notification Sender"
 msgid "Notification read"
-msgstr "Ειδοποίηση Αποστολέα"
-
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:39
-#, fuzzy
-#| msgid "Notification Sender"
-msgid "Notification sender"
 msgstr "Ειδοποίηση Αποστολέα"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
@@ -17812,7 +17824,7 @@ msgstr "Γονέας"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:381
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:10
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:82
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:76
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:44
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:8
 #: app/assets/javascripts/app/models/webhook.coffee:13
@@ -17825,7 +17837,7 @@ msgstr "Γονέας"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:43
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:41
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:127
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:83
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:89
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:116
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:48
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
@@ -18213,6 +18225,7 @@ msgid "Please enter a valid JSON string."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:342
+#: app/services/service/system/check_and_set_email_notification_configuration.rb:52
 msgid "Please enter a valid email address."
 msgstr ""
 
@@ -18247,6 +18260,14 @@ msgstr ""
 
 #: app/services/service/system/import/apply_otrs_configuration.rb:82
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
+msgstr ""
+
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:6
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:176
+msgid ""
+"Please note that an internal-only email server may fail to deliver password "
+"reset, new device and similar system emails to recipients outside the "
+"organization."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:35
@@ -18352,9 +18373,9 @@ msgstr "Παρακαλώ περιμένετε..."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:421
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:85
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:70
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:77
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:159
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:93
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:99
 msgid "Port"
 msgstr "Πόρτα"
 
@@ -19429,9 +19450,9 @@ msgstr ""
 msgid "Remove this scheduled visibility change"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:151
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:153
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:171
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:49
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:92
 #, fuzzy
 #| msgid "Remove"
 msgid "Remove this tag"
@@ -20137,7 +20158,7 @@ msgstr "SMS Notification"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:420
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:733
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:84
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:71
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:78
 #: app/assets/javascripts/app/models/webhook.coffee:10
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:54
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:18
@@ -20145,7 +20166,7 @@ msgstr "SMS Notification"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:31
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco:2
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:145
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:104
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:110
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:62
 msgid "SSL verification"
 msgstr ""
@@ -20238,7 +20259,7 @@ msgstr "Πρόχειρο"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:140
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:108
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:186
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:122
 #, fuzzy
 #| msgid "Continue"
@@ -21119,7 +21140,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:78
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:58
-#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:214
+#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:223
 #: public/assets/chat/views/chat.eco:25
 msgid "Send"
 msgstr "Αποστολή"
@@ -21130,7 +21151,7 @@ msgstr "Αποστολή Email"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:56
 msgid "Send Mails via"
 msgstr ""
 
@@ -21174,7 +21195,7 @@ msgstr "Ανατροφοδότηση"
 msgid "Send invitation"
 msgstr "Κοινός οργανισμός"
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:48
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:53
 #, fuzzy
 #| msgid "Send Email"
 msgid "Send mails via"
@@ -21731,7 +21752,7 @@ msgstr ""
 msgid "Show notifications"
 msgstr "Αποκλεισμός ειδοποιήσεων"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
 #, fuzzy
 #| msgid "Original"
 msgid "Show original"
@@ -22056,7 +22077,7 @@ msgstr "Ασφάλεια"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:10
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:127
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:18
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:133
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:94
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:65
@@ -22329,7 +22350,7 @@ msgstr ""
 msgid "Start typing to search in Knowledge Base…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:151
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:154
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Start typing to search in knowledge base…"
@@ -22373,7 +22394,7 @@ msgstr ""
 msgid "Started"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:207
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:240
 #, fuzzy
 #| msgid "Import from"
 msgid "Started from %s"
@@ -22899,8 +22920,7 @@ msgstr "Tag"
 msgid "Tag \"%s\" already exists."
 msgstr "%s Object(s) are deleted."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:99
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:100
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
 #, fuzzy
 #| msgid "Update successful!"
 msgid "Tag added successfully."
@@ -22912,8 +22932,7 @@ msgstr "Επιτυχής Ενημέρωση "
 msgid "Tag assignment mode"
 msgstr "Assignment Timeout"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:99
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:124
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
 #, fuzzy
 #| msgid "Update successful!"
 msgid "Tag removed successfully."
@@ -22936,8 +22955,8 @@ msgstr "Δημιουργηθηκε"
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:138
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:134
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:36
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
@@ -23761,7 +23780,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:281
+#: lib/email_helper/probe.rb:296
 msgid "The connection was refused."
 msgstr ""
 
@@ -23818,7 +23837,7 @@ msgstr ""
 msgid "The currently selected AI provider does not support embeddings."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:258
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:295
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "The customer is typing"
@@ -24060,7 +24079,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:277
+#: lib/email_helper/probe.rb:292
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The hostname could not be found."
@@ -24299,11 +24318,11 @@ msgstr "%s Object(s) are updated."
 msgid "The order of your ticket overviews was reset."
 msgstr "Overviews"
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:60
+#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:64
 msgid "The original message was written in %s."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:54
+#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:58
 msgid "The original message was written in another language."
 msgstr ""
 
@@ -24949,15 +24968,13 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:44
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:57
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:63
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The tag could not be added."
 msgstr "%s Object(s) are created."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:48
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:61
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:67
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The tag could not be removed."
@@ -25060,8 +25077,8 @@ msgstr "%s Object(s) are created."
 msgid "The translation service does not support the requested target language."
 msgstr ""
 
-#: app/services/service/content_translation/backend/deepl.rb:140
-#: app/services/service/content_translation/backend/libre_translate.rb:123
+#: app/services/service/content_translation/backend/deepl.rb:105
+#: app/services/service/content_translation/backend/libre_translate.rb:88
 #, fuzzy
 #| msgid "Not configured"
 msgid "The translation service does not support the target language %s."
@@ -25336,7 +25353,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:279
+#: lib/email_helper/probe.rb:294
 msgid "There is no route to this host."
 msgstr ""
 
@@ -25756,7 +25773,7 @@ msgstr ""
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:216
 msgid "This file cannot be added. You can add images in these formats: %s."
 msgstr ""
 
@@ -25784,7 +25801,7 @@ msgstr ""
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr ""
 
-#: lib/email_helper/probe.rb:280
+#: lib/email_helper/probe.rb:295
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "This host cannot be reached."
@@ -26599,30 +26616,6 @@ msgid ""
 "it can lead to data loss in your condition attributes."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:108
-#, fuzzy
-#| msgid "Update successful!"
-msgid "Ticket tag added successfully."
-msgstr "Επιτυχής Ενημέρωση "
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:68
-#, fuzzy
-#| msgid "%s Object(s) are created."
-msgid "Ticket tag could not be added."
-msgstr "%s Object(s) are created."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:114
-#, fuzzy
-#| msgid "%s Object(s) are created."
-msgid "Ticket tag could not be removed."
-msgstr "%s Object(s) are created."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:133
-#, fuzzy
-#| msgid "Update successful!"
-msgid "Ticket tag removed successfully."
-msgstr "Επιτυχής Ενημέρωση "
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:35
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -26944,7 +26937,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:64
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:109
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:115
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:248
@@ -27198,7 +27191,7 @@ msgstr ""
 msgid "Translate all articles"
 msgstr "Μεταφράσεις"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:64
 #, fuzzy
 #| msgid "Translations"
 msgid "Translate article"
@@ -27220,7 +27213,7 @@ msgstr "Μεταφράσεις"
 msgid "Translated by AI, some formatting may be lost."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:186
 msgid "Translated text cannot be quoted. Show the original to quote it."
 msgstr ""
 
@@ -27255,7 +27248,7 @@ msgid "Translation in progress…"
 msgstr "Εκτελέστηκε μαζική ενέργεια!"
 
 #: app/models/setting/validation/content_translation_backend_config.rb:9
-#: app/models/setting/validation/content_translation_provider.rb:9
+#: app/models/setting/validation/content_translation_provider.rb:12
 msgid "Translation service configuration is incomplete"
 msgstr ""
 
@@ -27265,11 +27258,11 @@ msgstr ""
 msgid "Translation service is missing"
 msgstr "Μεταφράσεις"
 
-#: app/models/setting/validation/content_translation_provider.rb:8
+#: app/models/setting/validation/content_translation_provider.rb:11
 msgid "Translation service is not supported"
 msgstr ""
 
-#: app/models/setting/validation/content_translation_provider.rb:19
+#: app/models/setting/validation/content_translation_provider.rb:22
 msgid "Translation service must be switched off before its provider is removed"
 msgstr ""
 
@@ -27413,9 +27406,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:287
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
-#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:49
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:10
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:11
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:31
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:5
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:13
@@ -27559,8 +27552,8 @@ msgstr "Επιτυχής Ενημέρωση "
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:108
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:237
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:239
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr "Τυπος"
@@ -27588,7 +27581,7 @@ msgid "UID Field"
 msgstr "Ημερομηνία και ώρα"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:419
-#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:11
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:10
 #: app/assets/javascripts/app/views/api/access.jst.eco:47
 #: app/assets/javascripts/app/views/api/oauth.jst.eco:21
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
@@ -27739,7 +27732,7 @@ msgstr ""
 msgid "Unprocessable email"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:219
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:256
 #, fuzzy
 #| msgid "New User Accounts"
 msgid "Unread messages"
@@ -28318,7 +28311,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:68
 #: app/assets/javascripts/app/controllers/cti.coffee:3
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:81
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:68
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:75
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:93
 #: app/assets/javascripts/app/controllers/user.coffee:3
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:2
@@ -28337,7 +28330,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco:8
 #: app/frontend/apps/desktop/components/Search/plugins/user.ts:14
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:79
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderFull.vue:24
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:42
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
@@ -28393,7 +28386,7 @@ msgstr "Απόρριψη Αλλαγών"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
 #: app/assets/javascripts/app/controllers/signup.coffee:102
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:77
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:48
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -28703,7 +28696,7 @@ msgid "Verify sending and receiving"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:163
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:89
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:142
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Verifying and saving your configuration…"
@@ -28737,7 +28730,7 @@ msgstr "Αποκλεισμός ειδοποιήσεων"
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:53
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:30
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:47
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:28
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:29
 msgid "Verifying…"
 msgstr ""
 
@@ -29302,9 +29295,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:631
 #: app/assets/javascripts/app/controllers/tag.coffee:147
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:100
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:67
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:169
 msgid "Yes"
 msgstr ""
 
@@ -31230,6 +31225,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:10
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:23
 #: app/assets/javascripts/app/models/public_link.coffee:10
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:55
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
@@ -31892,6 +31888,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22
 #: app/assets/javascripts/app/models/group.coffee:9
 #: app/assets/javascripts/app/models/public_link.coffee:10
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:187
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:48
@@ -31946,6 +31943,31 @@ msgstr "... ολόκληρης της περιοχής κειμένου"
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee:68
 msgid "∅ Waiting time today"
 msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
+
+#, fuzzy
+#~| msgid "Notification Sender"
+#~ msgid "Notification sender"
+#~ msgstr "Ειδοποίηση Αποστολέα"
+
+#, fuzzy
+#~| msgid "Update successful!"
+#~ msgid "Ticket tag added successfully."
+#~ msgstr "Επιτυχής Ενημέρωση "
+
+#, fuzzy
+#~| msgid "%s Object(s) are created."
+#~ msgid "Ticket tag could not be added."
+#~ msgstr "%s Object(s) are created."
+
+#, fuzzy
+#~| msgid "%s Object(s) are created."
+#~ msgid "Ticket tag could not be removed."
+#~ msgstr "%s Object(s) are created."
+
+#, fuzzy
+#~| msgid "Update successful!"
+#~ msgid "Ticket tag removed successfully."
+#~ msgstr "Επιτυχής Ενημέρωση "
 
 #, fuzzy
 #~| msgid "Ticket update"

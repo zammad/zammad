@@ -382,7 +382,7 @@ msgstr "%s (অপশন)"
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:97
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:112
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:287
-#: app/frontend/shared/composables/useSelectOptions.ts:128
+#: app/frontend/shared/composables/useSelectOptions.ts:131
 msgid "%s (unknown)"
 msgstr "%s (অজানা)"
 
@@ -1313,7 +1313,7 @@ msgid "API error."
 msgstr "API এরর।"
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:20
-#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:12
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:11
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 msgid "API key"
 msgstr "API কী"
@@ -1442,7 +1442,7 @@ msgstr "সময় হিসাব"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:610
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:197
-#: app/controllers/channels_email_controller.rb:237
+#: app/controllers/channels_email_controller.rb:232
 msgid "Account already exists!"
 msgstr "অ্যাকাউন্ট ইতিমধ্যে বিদ্যমান!"
 
@@ -1465,7 +1465,7 @@ msgstr "সময় হিসাব"
 msgid "Accounted Time"
 msgstr "হিসাবকৃত সময়"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:147
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:153
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:132
 #: app/frontend/shared/entities/ticket/attributes.ts:14
@@ -1916,9 +1916,9 @@ msgstr "সাব-ক্যাটাগরি যোগ করুন"
 msgid "Add subclause"
 msgstr "সাব-ক্লজ যোগ করুন"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:170
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:172
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:196
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:68
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:117
 msgid "Add tag"
 msgstr "ট্যাগ যোগ করুন"
 
@@ -3171,19 +3171,19 @@ msgstr "অথেনটিকেশন"
 msgid "Authentication Token"
 msgstr "অথেনটিকেশন টোকেন"
 
-#: lib/email_helper/probe.rb:275
+#: lib/email_helper/probe.rb:290
 msgid "Authentication failed due to incorrect credentials."
 msgstr "ভুল ক্রেডেনশিয়ালের কারণে অথেনটিকেশন ব্যর্থ হয়েছে।"
 
-#: lib/email_helper/probe.rb:273
+#: lib/email_helper/probe.rb:288
 msgid "Authentication failed due to incorrect username."
 msgstr "ভুল ইউজারনেমের কারণে অথেনটিকেশন ব্যর্থ হয়েছে।"
 
-#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:271
+#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:286
 msgid "Authentication failed."
 msgstr "অথেনটিকেশন ব্যর্থ হয়েছে।"
 
-#: lib/email_helper/probe.rb:276
+#: lib/email_helper/probe.rb:291
 msgid "Authentication not possible (not offered by the service)"
 msgstr "অথেনটিকেশন সম্ভব নয় (সার্ভিস দ্বারা প্রদান করা হয় না)"
 
@@ -3324,11 +3324,11 @@ msgstr ""
 "স্বয়ংক্রিয়ভাবে chat.css ফাইল লোড করে। আপনি যদি নিজের css ব্যবহার করতে চান, শুধু "
 "এটি false সেট করুন।"
 
-#: app/frontend/shared/components/Form/Form.vue:1351
+#: app/frontend/shared/components/Form/Form.vue:1359
 msgid "Autosave in progress…"
 msgstr "অটোসেভ চলছে…"
 
-#: app/frontend/shared/components/Form/Form.vue:1360
+#: app/frontend/shared/components/Form/Form.vue:1368
 msgid "Autosaving is taking longer than expected…"
 msgstr "অটোসেভ প্রত্যাশার চেয়ে বেশি সময় নিচ্ছে…"
 
@@ -3762,7 +3762,7 @@ msgstr "CAPTCHA প্রোভাইডার অপশন"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:174
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:126
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:258
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
@@ -4240,7 +4240,7 @@ msgstr "এমন পরিবর্তন করা হয়েছে যা�
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:164
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:114
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:176
 msgid "Channel"
@@ -5185,7 +5185,7 @@ msgstr "সর্টিং মোড ম্যানুয়াল থাকল
 msgid "Content could not be loaded."
 msgstr "কনটেন্ট লোড করা যায়নি।"
 
-#: app/models/store.rb:162
+#: app/models/store.rb:166
 #, fuzzy
 #| msgid "Content could not be loaded."
 msgid "Content is not a resizable image."
@@ -5237,16 +5237,16 @@ msgid "Context window size"
 msgstr "কনটেক্সট উইন্ডোর আকার"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
-#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:57
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:77
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:18
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:19
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:101
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:108
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:544
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:547
 msgid "Continue"
 msgstr "চালিয়ে যান"
 
@@ -5511,7 +5511,7 @@ msgstr "দেশ"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:8
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:79
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:72
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:252
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
@@ -5755,7 +5755,7 @@ msgstr "তৈরি হওয়া ইন্টারনাল আর্টি
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:119
 #: app/frontend/apps/desktop/pages/chat/components/ChatWindowDetails.vue:116
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:93
 #: app/frontend/shared/entities/organization/attributes.ts:21
 #: app/frontend/shared/entities/ticket/attributes.ts:102
 #: app/frontend/shared/entities/user/attributes.ts:22
@@ -5930,6 +5930,13 @@ msgstr "কাস্টম নির্দেশনা"
 #| msgid "The locale '%s' is not active."
 msgid "Custom module '%s' is not available."
 msgstr "'%s' লোকেলটি সক্রিয় নয়।"
+
+#: app/assets/javascripts/app/lib/mixins/email_notification_internal_only.coffee:30
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:51
+#, fuzzy
+#| msgid "Resend verification email"
+msgid "Custom verification email"
+msgstr "যাচাইকরণ ইমেল পুনরায় পাঠান"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
@@ -7706,7 +7713,7 @@ msgstr "ডুপ্লিকেট টিকিট তৈরি শনাক্
 msgid "Detected Language"
 msgstr "শনাক্তকৃত ভাষা"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:137
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:105
 msgid "Detected language"
 msgstr "শনাক্তকৃত ভাষা"
@@ -7894,8 +7901,7 @@ msgstr "সংযুক্ত"
 msgid "Dislikes count"
 msgstr "অপছন্দের সংখ্যা"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:58
-#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:59
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:64
 msgid "Dismiss alert"
 msgstr "সতর্কতা খারিজ করুন"
 
@@ -7999,6 +8005,11 @@ msgstr "ডকুমেন্ট ফাইল"
 #| msgid "does not exist"
 msgid "Does not exist"
 msgstr "বিদ্যমান নেই"
+
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:2
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:161
+msgid "Does this email server only deliver to internal recipients?"
+msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1832
 msgid "Domain"
@@ -8491,7 +8502,7 @@ msgstr "আগত ইমেল"
 msgid "Email Notification"
 msgstr "ইমেল নোটিফিকেশন"
 
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:17
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:22
 msgid "Email Notifications"
 msgstr "ইমেল নোটিফিকেশন"
 
@@ -8531,7 +8542,7 @@ msgid "Email inbound"
 msgstr "আগত ইমেল"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:94
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:30
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:38
 msgid "Email notification"
 msgstr "ইমেল নোটিফিকেশন"
 
@@ -9781,7 +9792,7 @@ msgstr "ফাইলসিস্টেম"
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:42
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:121
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
 msgid "Filter"
 msgstr "ফিল্টার"
 
@@ -10174,7 +10185,7 @@ msgstr "Friendly Captcha"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:13
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:104
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
@@ -10214,6 +10225,7 @@ msgstr "GID"
 msgid "Gateway"
 msgstr "গেটওয়ে"
 
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:128
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:136
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee:91
 msgid "General communication error, maybe internet is not available!"
@@ -10395,7 +10407,7 @@ msgstr "প্রদত্ত টাইম জোন বৈধ নয়।"
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:25
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:16
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:16
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:27
 #: app/assets/javascripts/app/views/import/index.jst.eco:18
@@ -10981,13 +10993,13 @@ msgstr "হানিপট স্প্যাম সুরক্ষা"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:416
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:334
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:80
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:67
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:74
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:73
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:29
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:11
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:107
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:63
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:68
 msgid "Host"
 msgstr "হোস্ট"
 
@@ -11288,7 +11300,7 @@ msgstr "ছবি সার্ভিস"
 msgid "Image actions"
 msgstr "ছবির অ্যাকশন"
 
-#: app/models/store.rb:169
+#: app/models/store.rb:173
 msgid "Image exceeds the maximum resizable pixel count."
 msgstr ""
 
@@ -11765,6 +11777,12 @@ msgstr "অভ্যন্তরীণ নলেজ বেস ফিড:"
 #: app/models/object_manager/attribute.rb:714
 msgid "Internal attributes cannot be deleted"
 msgstr "অভ্যন্তরীণ অ্যাট্রিবিউটসমূহ মুছে ফেলা যাবে না"
+
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:186
+#, fuzzy
+#| msgid "Internal error"
+msgid "Internal email server"
+msgstr "অভ্যন্তরীণ ত্রুটি"
 
 #: app/frontend/shared/errors/useErrorHandler.ts:33
 msgid "Internal error"
@@ -12293,7 +12311,7 @@ msgid ""
 msgstr ""
 "নির্দিষ্ট ID সহ নলেজ বেস উত্তর পাওয়া যায়নি। URL-এ ত্রুটি আছে কিনা পরীক্ষা করে দেখুন।"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:150
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:153
 msgid "Knowledge base articles"
 msgstr "নলেজ বেস আর্টিকেলসমূহ"
 
@@ -13612,7 +13630,7 @@ msgstr "এই টিকিটটি %s-এ মিশিয়ে ফেলা �
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
-#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:225
+#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:234
 #: public/assets/form/form.js:41
 msgid "Message"
 msgstr "বার্তা"
@@ -14435,7 +14453,7 @@ msgstr ""
 msgid "New ticket: %s"
 msgstr "নতুন টিকিট: %s"
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:60
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:220
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
 msgid "New user"
@@ -14923,9 +14941,9 @@ msgstr ""
 msgid "No supported target language is available."
 msgstr "এখনো কোনো নলেজ বেস কনটেন্ট উপলব্ধ নেই।"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:163
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:61
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:79
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:110
 msgid "No tags added yet."
 msgstr "এখনো কোনো ট্যাগ যুক্ত করা হয়নি।"
 
@@ -15207,10 +15225,6 @@ msgstr "নোটিফিকেশন ম্যাট্রিক্স"
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:46
 msgid "Notification read"
 msgstr "নোটিফিকেশন পড়া হয়েছে"
-
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:39
-msgid "Notification sender"
-msgstr "নোটিফিকেশন প্রেরক"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 msgid "Notification sent to"
@@ -16168,7 +16182,7 @@ msgstr "মূল গ্রুপ"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:381
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:10
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:82
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:76
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:44
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:8
 #: app/assets/javascripts/app/models/webhook.coffee:13
@@ -16181,7 +16195,7 @@ msgstr "মূল গ্রুপ"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:43
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:41
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:127
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:83
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:89
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:116
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:48
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
@@ -16524,6 +16538,7 @@ msgid "Please enter a valid JSON string."
 msgstr "অনুগ্রহ করে একটি বৈধ JSON স্ট্রিং লিখুন।"
 
 #: app/frontend/shared/form/i18n/locales.ts:342
+#: app/services/service/system/check_and_set_email_notification_configuration.rb:52
 msgid "Please enter a valid email address."
 msgstr "অনুগ্রহ করে একটি বৈধ ইমেল ঠিকানা লিখুন।"
 
@@ -16555,6 +16570,14 @@ msgstr "অনুগ্রহ করে একটি বৈধ URL অন্ত�
 #: app/services/service/system/import/apply_otrs_configuration.rb:82
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
 msgstr "অনুগ্রহ করে OTRS মাইগ্রেটর প্লাগইন ইনস্টল করুন এবং একটি বৈধ URL প্রদান করুন।"
+
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:6
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:176
+msgid ""
+"Please note that an internal-only email server may fail to deliver password "
+"reset, new device and similar system emails to recipients outside the "
+"organization."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:35
 msgid ""
@@ -16660,9 +16683,9 @@ msgstr "অনুগ্রহ করে অপেক্ষা করুন…"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:421
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:85
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:70
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:77
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:159
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:93
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:99
 msgid "Port"
 msgstr "পোর্ট"
 
@@ -17581,9 +17604,9 @@ msgstr "নির্বাচিত মান সরিয়ে ফেলুন
 msgid "Remove this scheduled visibility change"
 msgstr "এই নির্ধারিত দৃশ্যমানতা পরিবর্তন সরিয়ে ফেলুন"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:151
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:153
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:171
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:49
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:92
 msgid "Remove this tag"
 msgstr "এই ট্যাগ সরিয়ে ফেলুন"
 
@@ -18263,7 +18286,7 @@ msgstr "SSL সার্টিফিকেটসমূহ"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:420
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:733
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:84
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:71
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:78
 #: app/assets/javascripts/app/models/webhook.coffee:10
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:54
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:18
@@ -18271,7 +18294,7 @@ msgstr "SSL সার্টিফিকেটসমূহ"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:31
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco:2
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:145
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:104
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:110
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:62
 msgid "SSL verification"
 msgstr "SSL যাচাইকরণ"
@@ -18358,7 +18381,7 @@ msgstr "খসড়া সংরক্ষণ করুন"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:140
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:108
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:186
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:122
 msgid "Save and continue"
 msgstr "সংরক্ষণ করুন এবং চালিয়ে যান"
@@ -19093,7 +19116,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:78
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:58
-#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:214
+#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:223
 #: public/assets/chat/views/chat.eco:25
 msgid "Send"
 msgstr "পাঠান"
@@ -19104,7 +19127,7 @@ msgstr "ইমেল পাঠান"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:56
 msgid "Send Mails via"
 msgstr "মেইল পাঠানোর মাধ্যম"
 
@@ -19136,7 +19159,7 @@ msgstr "BETA UI সম্পর্কে প্রতিক্রিয়া �
 msgid "Send invitation"
 msgstr "আমন্ত্রণ পাঠান"
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:48
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:53
 msgid "Send mails via"
 msgstr "মেইল পাঠানোর মাধ্যম"
 
@@ -19620,7 +19643,7 @@ msgstr "পরবর্তী ট্যাব দেখান"
 msgid "Show notifications"
 msgstr "বিজ্ঞপ্তি দেখান"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
 #, fuzzy
 #| msgid "Show more"
 msgid "Show original"
@@ -19898,7 +19921,7 @@ msgstr "সাইট কী"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:10
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:127
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:18
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:133
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:94
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:65
@@ -20140,7 +20163,7 @@ msgstr "ব্যবহারকারী সার্চ করতে টাই
 msgid "Start typing to search in Knowledge Base…"
 msgstr "নলেজ বেসে সার্চ করতে টাইপ করা শুরু করুন…"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:151
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:154
 msgid "Start typing to search in knowledge base…"
 msgstr "নলেজ বেসে সার্চ করতে টাইপ করা শুরু করুন…"
 
@@ -20176,7 +20199,7 @@ msgstr "সার্চ করতে টাইপ করা শুরু কর�
 msgid "Started"
 msgstr "শুরু হয়েছে"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:207
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:240
 #, fuzzy
 #| msgid "Start import from %s"
 msgid "Started from %s"
@@ -20654,8 +20677,7 @@ msgstr "ট্যাগ"
 msgid "Tag \"%s\" already exists."
 msgstr "ট্যাগ \"%s\" ইতিমধ্যে বিদ্যমান।"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:99
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:100
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
 msgid "Tag added successfully."
 msgstr "ট্যাগ সফলভাবে যোগ করা হয়েছে।"
 
@@ -20663,8 +20685,7 @@ msgstr "ট্যাগ সফলভাবে যোগ করা হয়ে�
 msgid "Tag assignment mode"
 msgstr "ট্যাগ অ্যাসাইনমেন্ট মোড"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:99
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:124
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
 msgid "Tag removed successfully."
 msgstr "ট্যাগ সফলভাবে সরানো হয়েছে।"
 
@@ -20683,8 +20704,8 @@ msgstr "%s ট্যাগ করা হয়েছে"
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:138
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:134
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:36
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
@@ -21508,7 +21529,7 @@ msgstr "সার্ভারের সাথে সংযোগ বিচ্ছ
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:281
+#: lib/email_helper/probe.rb:296
 msgid "The connection was refused."
 msgstr "সংযোগ প্রত্যাখ্যান করা হয়েছে।"
 
@@ -21570,7 +21591,7 @@ msgstr "বর্তমান ব্যবহারকারীর এই অব
 msgid "The currently selected AI provider does not support embeddings."
 msgstr "বর্তমানে নির্বাচিত AI প্রোভাইডার এম্বেডিং সমর্থন করে না।"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:258
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:295
 #, fuzzy
 #| msgid "CTI customer last activity"
 msgid "The customer is typing"
@@ -21803,7 +21824,7 @@ msgstr "প্রদত্ত টু-ফ্যাক্টর পদ্ধতি
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:277
+#: lib/email_helper/probe.rb:292
 msgid "The hostname could not be found."
 msgstr "হোস্টনেম খুঁজে পাওয়া যায়নি।"
 
@@ -22012,11 +22033,11 @@ msgstr "অনলাইন নোটিফিকেশনটি দেখা হ
 msgid "The order of your ticket overviews was reset."
 msgstr "আপনার টিকিট ওভারভিউসমূহের ক্রম রিসেট করা হয়েছে।"
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:60
+#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:64
 msgid "The original message was written in %s."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:54
+#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:58
 #, fuzzy
 #| msgid "Translate ticket articles into another language."
 msgid "The original message was written in another language."
@@ -22657,13 +22678,11 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "সিস্টেমটি সফলভাবে কনফিগার করা হয়েছে। আপনাকে রিডাইরেক্ট করা হচ্ছে।"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:44
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:57
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:63
 msgid "The tag could not be added."
 msgstr "ট্যাগ যোগ করা যায়নি।"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:48
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:61
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:67
 msgid "The tag could not be removed."
 msgstr "ট্যাগ সরানো যায়নি।"
 
@@ -22757,8 +22776,8 @@ msgstr "অনুবাদ সার্ভিস সমর্থিত নয়
 msgid "The translation service does not support the requested target language."
 msgstr "অনুবাদ সার্ভিস সমর্থিত নয়"
 
-#: app/services/service/content_translation/backend/deepl.rb:140
-#: app/services/service/content_translation/backend/libre_translate.rb:123
+#: app/services/service/content_translation/backend/deepl.rb:105
+#: app/services/service/content_translation/backend/libre_translate.rb:88
 #, fuzzy
 #| msgid "Translation service is not supported"
 msgid "The translation service does not support the target language %s."
@@ -23005,7 +23024,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:279
+#: lib/email_helper/probe.rb:294
 msgid "There is no route to this host."
 msgstr "এই হোস্টের কোনো রুট নেই।"
 
@@ -23395,7 +23414,7 @@ msgstr "এই ফিল্ডে %s-এর বেশি অক্ষর থা�
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "এই ফিল্ডটি ভুলভাবে কনফিগার করা হয়েছে এবং জমা দেওয়া যাবে না।"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:216
 msgid "This file cannot be added. You can add images in these formats: %s."
 msgstr ""
 
@@ -23421,7 +23440,7 @@ msgstr "এই গ্রুপের জন্য বহির্গামী �
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr "এই গ্রুপের উপ-গ্রুপগুলো অনুমোদিত নেস্টিং গভীরতা অতিক্রম করবে।"
 
-#: lib/email_helper/probe.rb:280
+#: lib/email_helper/probe.rb:295
 msgid "This host cannot be reached."
 msgstr "এই হোস্টে পৌঁছানো যাচ্ছে না।"
 
@@ -24232,22 +24251,6 @@ msgstr ""
 "টিকিট সিলেক্টরে এক্সপার্ট শর্তাবলী রয়েছে. আপনি যদি এক্সপার্ট মোড বন্ধ করেন, তাহলে "
 "আপনার শর্ত অ্যাট্রিবিউটে ডেটা হারানোর সম্ভাবনা রয়েছে।"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:108
-msgid "Ticket tag added successfully."
-msgstr "টিকিট ট্যাগ সফলভাবে যোগ করা হয়েছে।"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:68
-msgid "Ticket tag could not be added."
-msgstr "টিকিট ট্যাগ যোগ করা যায়নি।"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:114
-msgid "Ticket tag could not be removed."
-msgstr "টিকিট ট্যাগ সরানো যায়নি।"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:133
-msgid "Ticket tag removed successfully."
-msgstr "টিকিট ট্যাগ সফলভাবে সরানো হয়েছে।"
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:35
 msgid "Ticket tags could not be updated."
 msgstr "টিকিট ট্যাগসমূহ আপডেট করা যায়নি।"
@@ -24557,7 +24560,7 @@ msgstr "ফর্মের শিরোনাম"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:64
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:109
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:115
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:248
@@ -24806,7 +24809,7 @@ msgstr ""
 msgid "Translate all articles"
 msgstr "অনুবাদ সার্ভিস"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:64
 #, fuzzy
 #| msgid "Translation Service"
 msgid "Translate article"
@@ -24824,7 +24827,7 @@ msgstr "বিভাগটি ইংরেজিতে অনুবাদ কর
 msgid "Translated by AI, some formatting may be lost."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:186
 msgid "Translated text cannot be quoted. Show the original to quote it."
 msgstr ""
 
@@ -24853,7 +24856,7 @@ msgid "Translation in progress…"
 msgstr "বাল্ক অ্যাকশন চলছে…"
 
 #: app/models/setting/validation/content_translation_backend_config.rb:9
-#: app/models/setting/validation/content_translation_provider.rb:9
+#: app/models/setting/validation/content_translation_provider.rb:12
 msgid "Translation service configuration is incomplete"
 msgstr "অনুবাদ সার্ভিসের কনফিগারেশন সম্পূর্ণ নয়"
 
@@ -24861,11 +24864,11 @@ msgstr "অনুবাদ সার্ভিসের কনফিগারে�
 msgid "Translation service is missing"
 msgstr "অনুবাদ সার্ভিস অনুপস্থিত"
 
-#: app/models/setting/validation/content_translation_provider.rb:8
+#: app/models/setting/validation/content_translation_provider.rb:11
 msgid "Translation service is not supported"
 msgstr "অনুবাদ সার্ভিস সমর্থিত নয়"
 
-#: app/models/setting/validation/content_translation_provider.rb:19
+#: app/models/setting/validation/content_translation_provider.rb:22
 msgid "Translation service must be switched off before its provider is removed"
 msgstr ""
 
@@ -24998,9 +25001,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:287
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
-#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:49
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:10
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:11
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:31
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:5
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:13
@@ -25126,8 +25129,8 @@ msgstr "টু-ফ্যাক্টর পদ্ধতি সফলভাবে
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:108
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:237
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:239
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr "ধরন"
@@ -25149,7 +25152,7 @@ msgid "UID Field"
 msgstr "UID ফিল্ড"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:419
-#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:11
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:10
 #: app/assets/javascripts/app/views/api/access.jst.eco:47
 #: app/assets/javascripts/app/views/api/oauth.jst.eco:21
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
@@ -25281,7 +25284,7 @@ msgstr "এই প্যানেলটি আনপিন করুন"
 msgid "Unprocessable email"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:219
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:256
 #, fuzzy
 #| msgid "Unread messages count"
 msgid "Unread messages"
@@ -25892,7 +25895,7 @@ msgstr "টিকিট দেখার সময় ব্যবহৃত"
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:68
 #: app/assets/javascripts/app/controllers/cti.coffee:3
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:81
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:68
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:75
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:93
 #: app/assets/javascripts/app/controllers/user.coffee:3
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:2
@@ -25911,7 +25914,7 @@ msgstr "টিকিট দেখার সময় ব্যবহৃত"
 #: app/assets/javascripts/app/views/session.jst.eco:8
 #: app/frontend/apps/desktop/components/Search/plugins/user.ts:14
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:79
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderFull.vue:24
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:42
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
@@ -25959,7 +25962,7 @@ msgstr "শুধুমাত্র ব্যবহারকারীর পর�
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
 #: app/assets/javascripts/app/controllers/signup.coffee:102
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:77
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:48
 msgid "User could not be created."
 msgstr "ব্যবহারকারী তৈরি করা যায়নি।"
@@ -26242,7 +26245,7 @@ msgid "Verify sending and receiving"
 msgstr "পাঠানো ও গ্রহণ যাচাই করুন"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:163
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:89
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:142
 msgid "Verifying and saving your configuration…"
 msgstr "আপনার কনফিগারেশন যাচাই ও সংরক্ষণ করা হচ্ছে…"
 
@@ -26266,7 +26269,7 @@ msgstr "আপনার ইমেল যাচাই করা হচ্ছে�
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:53
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:30
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:47
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:28
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:29
 msgid "Verifying…"
 msgstr "যাচাই করা হচ্ছে…"
 
@@ -26825,9 +26828,11 @@ msgstr "হলুদ"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:631
 #: app/assets/javascripts/app/controllers/tag.coffee:147
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:100
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:67
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:169
 msgid "Yes"
 msgstr "হ্যাঁ"
 
@@ -28729,6 +28734,7 @@ msgstr "নতুন,বিটা,ডেস্কটপ ভিউ,ডেস্�
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:10
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:23
 #: app/assets/javascripts/app/models/public_link.coffee:10
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:55
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
@@ -29323,6 +29329,7 @@ msgstr "বছর"
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22
 #: app/assets/javascripts/app/models/group.coffee:9
 #: app/assets/javascripts/app/models/public_link.coffee:10
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:187
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:48
@@ -29375,6 +29382,21 @@ msgstr "…সম্পূর্ণ টেক্সট এরিয়ার"
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee:68
 msgid "∅ Waiting time today"
 msgstr "∅ আজকের অপেক্ষার সময়"
+
+#~ msgid "Notification sender"
+#~ msgstr "নোটিফিকেশন প্রেরক"
+
+#~ msgid "Ticket tag added successfully."
+#~ msgstr "টিকিট ট্যাগ সফলভাবে যোগ করা হয়েছে।"
+
+#~ msgid "Ticket tag could not be added."
+#~ msgstr "টিকিট ট্যাগ যোগ করা যায়নি।"
+
+#~ msgid "Ticket tag could not be removed."
+#~ msgstr "টিকিট ট্যাগ সরানো যায়নি।"
+
+#~ msgid "Ticket tag removed successfully."
+#~ msgstr "টিকিট ট্যাগ সফলভাবে সরানো হয়েছে।"
 
 #~ msgid "Logs"
 #~ msgstr "তালিকা"

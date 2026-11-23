@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-11-16 03:23+0000\n"
+"PO-Revision-Date: 2026-11-21 09:12+0000\n"
 "Last-Translator: albanobattistella <albanobattistella@gmail.com>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/it/>\n"
@@ -381,7 +381,7 @@ msgstr "%s (option)"
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:97
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:112
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:287
-#: app/frontend/shared/composables/useSelectOptions.ts:128
+#: app/frontend/shared/composables/useSelectOptions.ts:131
 msgid "%s (unknown)"
 msgstr "%s (sconosciuto)"
 
@@ -564,6 +564,9 @@ msgid ""
 "%s is the active translation provider. Turning on %s switches it off. Its "
 "configuration and logs are kept."
 msgstr ""
+"%s è il provider di traduzione attivo. L'attivazione di %s comporta la "
+"disattivazione di quello corrente. La sua configurazione e i relativi log "
+"vengono conservati."
 
 #: app/frontend/apps/desktop/pages/chat/components/ChatWindow.vue:180
 msgid "%s left the conversation."
@@ -1179,10 +1182,8 @@ msgid "AI Summary"
 msgstr "Riepilogo IA"
 
 #: db/seeds/permissions.rb:257
-#, fuzzy
-#| msgid "Translation"
 msgid "AI Translation"
-msgstr "Traduzione"
+msgstr "Traduzione tramite IA"
 
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:82
 msgid "AI Writing Assistant Tools"
@@ -1324,7 +1325,7 @@ msgid "API error."
 msgstr "Errore API."
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:20
-#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:12
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:11
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 msgid "API key"
 msgstr "Chiave API"
@@ -1451,7 +1452,7 @@ msgstr "Gestione del tempo"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:610
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:197
-#: app/controllers/channels_email_controller.rb:237
+#: app/controllers/channels_email_controller.rb:232
 msgid "Account already exists!"
 msgstr "L'account esiste già!"
 
@@ -1474,7 +1475,7 @@ msgstr "Gestione del tempo"
 msgid "Accounted Time"
 msgstr "Tempo contabilizzato"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:147
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:153
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:132
 #: app/frontend/shared/entities/ticket/attributes.ts:14
@@ -1923,9 +1924,9 @@ msgstr "Aggiungi sotto categoria"
 msgid "Add subclause"
 msgstr "Aggiungi sotto clausola"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:170
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:172
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:196
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:68
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:117
 msgid "Add tag"
 msgstr "Aggiungi tag"
 
@@ -3198,19 +3199,19 @@ msgstr "Autenticazione"
 msgid "Authentication Token"
 msgstr "Token di autenticazione"
 
-#: lib/email_helper/probe.rb:275
+#: lib/email_helper/probe.rb:290
 msgid "Authentication failed due to incorrect credentials."
 msgstr "Autenticazione fallita per credenziali non valide."
 
-#: lib/email_helper/probe.rb:273
+#: lib/email_helper/probe.rb:288
 msgid "Authentication failed due to incorrect username."
 msgstr "Autenticazione fallita per utente non valido."
 
-#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:271
+#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:286
 msgid "Authentication failed."
 msgstr "Autenticazione fallita."
 
-#: lib/email_helper/probe.rb:276
+#: lib/email_helper/probe.rb:291
 msgid "Authentication not possible (not offered by the service)"
 msgstr "Autenticazione non possibile (non fornita dal servizio)"
 
@@ -3350,11 +3351,11 @@ msgstr ""
 "Carica automaticamente il file chat.css. Se vuoi utilizzare il tuo css, "
 "basta impostarlo a false."
 
-#: app/frontend/shared/components/Form/Form.vue:1351
+#: app/frontend/shared/components/Form/Form.vue:1359
 msgid "Autosave in progress…"
 msgstr "Autosalvataggio in corso…"
 
-#: app/frontend/shared/components/Form/Form.vue:1360
+#: app/frontend/shared/components/Form/Form.vue:1368
 msgid "Autosaving is taking longer than expected…"
 msgstr "Il salvataggio automatico sta impiegando più tempo del previsto…"
 
@@ -3790,7 +3791,7 @@ msgstr "Opzioni del provider CAPTCHA"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:174
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:126
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:258
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
@@ -4265,7 +4266,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:164
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:114
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:176
 msgid "Channel"
@@ -5207,7 +5208,7 @@ msgstr "Il contenuto può essere riorganizzato solo se l'ordinamento è manuale.
 msgid "Content could not be loaded."
 msgstr "Impossibile caricare il contenuto."
 
-#: app/models/store.rb:162
+#: app/models/store.rb:166
 msgid "Content is not a resizable image."
 msgstr "Il contenuto non è un'immagine ridimensionabile."
 
@@ -5259,16 +5260,16 @@ msgid "Context window size"
 msgstr "Dimensioni della finestra di contesto"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
-#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:57
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:77
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:18
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:19
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:101
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:108
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:544
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:547
 msgid "Continue"
 msgstr "Continua"
 
@@ -5545,7 +5546,7 @@ msgstr "Paese"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:8
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:79
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:72
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:252
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
@@ -5793,7 +5794,7 @@ msgstr "Articolo interno creato"
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:119
 #: app/frontend/apps/desktop/pages/chat/components/ChatWindowDetails.vue:116
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:93
 #: app/frontend/shared/entities/organization/attributes.ts:21
 #: app/frontend/shared/entities/ticket/attributes.ts:102
 #: app/frontend/shared/entities/user/attributes.ts:22
@@ -5967,6 +5968,13 @@ msgstr "Istruzioni personalizzate"
 #: app/models/core_workflow.rb:91
 msgid "Custom module '%s' is not available."
 msgstr "Il modulo personalizzato '%s' non è disponibile."
+
+#: app/assets/javascripts/app/lib/mixins/email_notification_internal_only.coffee:30
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:51
+#, fuzzy
+#| msgid "Resend verification email"
+msgid "Custom verification email"
+msgstr "Invia nuovamente email di verifica"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
@@ -6232,10 +6240,8 @@ msgid "DeepL"
 msgstr "DeepL"
 
 #: db/seeds/settings.rb:6290
-#, fuzzy
-#| msgid "Config"
 msgid "DeepL Config"
-msgstr "Config"
+msgstr "Configurazione DeepL"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:32
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:231
@@ -7462,10 +7468,8 @@ msgstr ""
 "ticket."
 
 #: db/seeds/settings.rb:6278
-#, fuzzy
-#| msgid "Defines if a translation service is configured."
 msgid "Defines which translation provider is active."
-msgstr "Definisce se è configurato un servizio di traduzione."
+msgstr "Definisce quale fornitore di traduzioni è attivo."
 
 #: db/seeds/settings.rb:6351
 msgid "Defines which user roles automatic article translation applies to."
@@ -7811,7 +7815,7 @@ msgstr "Rileva creazione di ticket duplicati"
 msgid "Detected Language"
 msgstr "Lingua rilevata"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:137
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:105
 msgid "Detected language"
 msgstr "Lingua rilevata"
@@ -8000,8 +8004,7 @@ msgstr "Disconnesso"
 msgid "Dislikes count"
 msgstr "Numero di non mi piace"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:58
-#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:59
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:64
 msgid "Dismiss alert"
 msgstr "Chiudi l'avviso"
 
@@ -8103,6 +8106,11 @@ msgstr "Documento"
 #: app/frontend/apps/desktop/pages/cti/utils/callerLog.ts:53
 msgid "Does not exist"
 msgstr "Non esiste"
+
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:2
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:161
+msgid "Does this email server only deliver to internal recipients?"
+msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1832
 msgid "Domain"
@@ -8590,7 +8598,7 @@ msgstr "Email in ingresso"
 msgid "Email Notification"
 msgstr "Email di notifica"
 
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:17
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:22
 msgid "Email Notifications"
 msgstr "Notifiche email"
 
@@ -8631,7 +8639,7 @@ msgid "Email inbound"
 msgstr "Email in ingresso"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:94
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:30
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:38
 msgid "Email notification"
 msgstr "Email di notifica"
 
@@ -8666,10 +8674,8 @@ msgid "Email sent to %s"
 msgstr "Email inviata a %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:74
-#, fuzzy
-#| msgid "Email Account"
 msgid "Email urgency"
-msgstr "Account Email"
+msgstr "Urgenza dell'email"
 
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:111
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:90
@@ -9905,7 +9911,7 @@ msgstr "Filesystem"
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:42
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:121
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
 msgid "Filter"
 msgstr "Filtro"
 
@@ -10295,7 +10301,7 @@ msgstr "Friendly Captcha"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:13
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:104
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
@@ -10335,6 +10341,7 @@ msgstr "GID"
 msgid "Gateway"
 msgstr "Gateway"
 
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:128
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:136
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee:91
 msgid "General communication error, maybe internet is not available!"
@@ -10524,7 +10531,7 @@ msgstr "Il fuso orario indicato non è valido."
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:25
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:16
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:16
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:27
 #: app/assets/javascripts/app/views/import/index.jst.eco:18
@@ -11035,7 +11042,7 @@ msgstr "Priorità alta"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:276
 msgid "High urgency"
-msgstr ""
+msgstr "Massima urgenza"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "Highlight color"
@@ -11113,13 +11120,13 @@ msgstr "Protezione antispam tramite honeypot"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:416
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:334
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:80
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:67
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:74
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:73
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:29
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:11
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:107
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:63
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:68
 msgid "Host"
 msgstr "Host"
 
@@ -11427,7 +11434,7 @@ msgstr "Servizio ricerca immagini"
 msgid "Image actions"
 msgstr "Azioni immagine"
 
-#: app/models/store.rb:169
+#: app/models/store.rb:173
 msgid "Image exceeds the maximum resizable pixel count."
 msgstr "L'immagine supera il numero massimo di pixel ridimensionabili."
 
@@ -11913,6 +11920,12 @@ msgstr "Flusso interno della base di conoscenza:"
 #: app/models/object_manager/attribute.rb:714
 msgid "Internal attributes cannot be deleted"
 msgstr "Gli attributi interni non possono essere eliminati"
+
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:186
+#, fuzzy
+#| msgid "Internal error"
+msgid "Internal email server"
+msgstr "Errore interno"
 
 #: app/frontend/shared/errors/useErrorHandler.ts:33
 msgid "Internal error"
@@ -12454,7 +12467,7 @@ msgstr ""
 "Non è stata trovata la risposta nella knowledge base con l'ID specificato. "
 "Prova a verificare la presenza di errori nell'URL."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:150
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:153
 msgid "Knowledge base articles"
 msgstr "Articoli di base di conoscenza"
 
@@ -12731,10 +12744,8 @@ msgid "LibreTranslate"
 msgstr "LibreTranslate"
 
 #: db/seeds/settings.rb:6305
-#, fuzzy
-#| msgid "LibreTranslate"
 msgid "LibreTranslate Config"
-msgstr "LibreTranslate"
+msgstr "Configurazione di LibreTranslate"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:26
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:44
@@ -13109,7 +13120,7 @@ msgstr "Priorità bassa"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:278
 msgid "Low urgency"
-msgstr ""
+msgstr "Bassa urgenza"
 
 #: app/models/system_report/plugin/mac_address.rb:4
 msgid "MAC address (unique identifier of the report)"
@@ -13122,10 +13133,9 @@ msgstr "Server MCP"
 
 #: app/assets/javascripts/app/controllers/_integration/deepl.coffee:18
 #: app/assets/javascripts/app/controllers/_integration/libre_translate.coffee:18
-#, fuzzy
-#| msgid "The translation service cannot be reached."
 msgid "Machine translation service to translate ticket articles."
-msgstr "Il servizio di traduzione non è raggiungibile."
+msgstr ""
+"Servizio di traduzione automatica per tradurre gli articoli dei ticket."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:113
 msgid "Machine-translated, some formatting may be lost."
@@ -13215,10 +13225,8 @@ msgid "Manage AI provider of your system."
 msgstr "Gestisci il fornitore IA del sistema."
 
 #: db/seeds/permissions.rb:258
-#, fuzzy
-#| msgid "Manage translations of your system."
 msgid "Manage AI translation of your system."
-msgstr "Gestire le traduzioni del tuo sistema."
+msgstr "Gestisci la traduzione tramite IA del tuo sistema."
 
 #: db/seeds/permissions.rb:288
 msgid "Manage API of your system."
@@ -13765,7 +13773,7 @@ msgstr "Unito questo ticket in %s"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
-#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:225
+#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:234
 #: public/assets/form/form.js:41
 msgid "Message"
 msgstr "Messaggio"
@@ -14584,7 +14592,7 @@ msgstr ""
 msgid "New ticket: %s"
 msgstr "Nuovo ticket: %s"
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:60
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:220
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
 msgid "New user"
@@ -15062,9 +15070,9 @@ msgstr ""
 msgid "No supported target language is available."
 msgstr "Non è disponibile alcuna lingua di destinazione supportata."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:163
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:61
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:79
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:110
 msgid "No tags added yet."
 msgstr "Non sono ancora stati aggiunti tag."
 
@@ -15170,10 +15178,8 @@ msgid "Normal"
 msgstr "Normale"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:277
-#, fuzzy
-#| msgid "Normal"
 msgid "Normal urgency"
-msgstr "Normale"
+msgstr "Urgenza normale"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:6
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:64
@@ -15344,10 +15350,6 @@ msgstr "Matrice di notifica"
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:46
 msgid "Notification read"
 msgstr "Notifica letta"
-
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:39
-msgid "Notification sender"
-msgstr "Mittente notifiche"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 msgid "Notification sent to"
@@ -16314,7 +16316,7 @@ msgstr "Gruppo padre"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:381
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:10
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:82
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:76
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:44
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:8
 #: app/assets/javascripts/app/models/webhook.coffee:13
@@ -16327,7 +16329,7 @@ msgstr "Gruppo padre"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:43
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:41
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:127
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:83
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:89
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:116
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:48
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
@@ -16668,6 +16670,7 @@ msgid "Please enter a valid JSON string."
 msgstr "Per favore inserisci una stringa JSON valida."
 
 #: app/frontend/shared/form/i18n/locales.ts:342
+#: app/services/service/system/check_and_set_email_notification_configuration.rb:52
 msgid "Please enter a valid email address."
 msgstr "Per favore, inserisci un indirizzo email valido."
 
@@ -16700,6 +16703,14 @@ msgstr "Includi un URL valido."
 #: app/services/service/system/import/apply_otrs_configuration.rb:82
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
 msgstr "Installa il plugin di migrazione OTRS e fornisci un URL valido."
+
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:6
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:176
+msgid ""
+"Please note that an internal-only email server may fail to deliver password "
+"reset, new device and similar system emails to recipients outside the "
+"organization."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:35
 msgid ""
@@ -16810,9 +16821,9 @@ msgstr "Attendere prego…"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:421
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:85
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:70
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:77
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:159
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:93
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:99
 msgid "Port"
 msgstr "Porta"
 
@@ -17744,9 +17755,9 @@ msgstr "Rimuovi i valori selezionati"
 msgid "Remove this scheduled visibility change"
 msgstr "Rimuovi questa modifica di visibilità programmata"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:151
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:153
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:171
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:49
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:92
 msgid "Remove this tag"
 msgstr "Rimuovi questa etichetta"
 
@@ -18419,7 +18430,7 @@ msgstr "Certificati SSL"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:420
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:733
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:84
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:71
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:78
 #: app/assets/javascripts/app/models/webhook.coffee:10
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:54
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:18
@@ -18427,7 +18438,7 @@ msgstr "Certificati SSL"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:31
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco:2
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:145
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:104
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:110
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:62
 msgid "SSL verification"
 msgstr "Verifica SSL"
@@ -18514,7 +18525,7 @@ msgstr "Salva bozza"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:140
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:108
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:186
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:122
 msgid "Save and continue"
 msgstr "Salva e continua"
@@ -19261,7 +19272,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:78
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:58
-#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:214
+#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:223
 #: public/assets/chat/views/chat.eco:25
 msgid "Send"
 msgstr "Invia"
@@ -19272,7 +19283,7 @@ msgstr "Invia Email"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:56
 msgid "Send Mails via"
 msgstr "Spedisci Mails via"
 
@@ -19304,7 +19315,7 @@ msgstr "Invia opinione sull'interfaccia BETA"
 msgid "Send invitation"
 msgstr "Manda invito"
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:48
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:53
 msgid "Send mails via"
 msgstr "Spedisci email via"
 
@@ -19789,7 +19800,7 @@ msgstr "Visualizza la prossima scheda"
 msgid "Show notifications"
 msgstr "Mostra notifiche"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
 msgid "Show original"
 msgstr "Mostra l'originale"
 
@@ -20069,7 +20080,7 @@ msgstr "Chiave del sito"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:10
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:127
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:18
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:133
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:94
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:65
@@ -20316,7 +20327,7 @@ msgstr "Inizia a digitare per cercare gli utenti…"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Inizia a digitare per cercare nella base di conoscenza…"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:151
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:154
 msgid "Start typing to search in knowledge base…"
 msgstr "Inizia a digitare per cercare nella base di conoscenza…"
 
@@ -20352,7 +20363,7 @@ msgstr "Inizia a digitare per cercare…"
 msgid "Started"
 msgstr "Iniziato"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:207
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:240
 msgid "Started from %s"
 msgstr "Avviato da %s"
 
@@ -20470,10 +20481,8 @@ msgid "Store"
 msgstr "Store"
 
 #: db/seeds/settings.rb:6293
-#, fuzzy
-#| msgid "Stores the GitLab configuration."
 msgid "Stores the DeepL configuration."
-msgstr "Memorizza la configurazione di GitLab."
+msgstr "Memorizza la configurazione di DeepL."
 
 #: db/seeds/settings.rb:5483
 msgid "Stores the GitHub configuration."
@@ -20484,10 +20493,8 @@ msgid "Stores the GitLab configuration."
 msgstr "Memorizza la configurazione di GitLab."
 
 #: db/seeds/settings.rb:6308
-#, fuzzy
-#| msgid "Stores the translation service configuration."
 msgid "Stores the LibreTranslate configuration."
-msgstr "Memorizza la configurazione del servizio di traduzione."
+msgstr "Memorizza la configurazione di LibreTranslate."
 
 #: db/seeds/settings.rb:3315
 msgid ""
@@ -20706,10 +20713,8 @@ msgid "Switch here"
 msgstr "Cambia qui"
 
 #: app/assets/javascripts/app/controllers/_integration/_content_translation.coffee:133
-#, fuzzy
-#| msgid "AI provider"
 msgid "Switch provider"
-msgstr "Fornitore IA"
+msgstr "Cambia provider"
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:14
 msgid "Switch to new layout"
@@ -20720,10 +20725,8 @@ msgid "Switch to old interface"
 msgstr "Passa all'interfaccia vecchia"
 
 #: app/assets/javascripts/app/controllers/_integration/_content_translation.coffee:132
-#, fuzzy
-#| msgid "Translation service provider"
 msgid "Switch translation provider"
-msgstr "Provider del servizio di traduzione"
+msgstr "Cambia provider del servizio di traduzione"
 
 #: db/seeds/schedulers.rb:142
 msgid "Sync calendars with iCal feeds."
@@ -20832,8 +20835,7 @@ msgstr "Tag"
 msgid "Tag \"%s\" already exists."
 msgstr "L'etichetta \"%s\" esiste già."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:99
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:100
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
 msgid "Tag added successfully."
 msgstr "Tag aggiunto correttamente."
 
@@ -20841,8 +20843,7 @@ msgstr "Tag aggiunto correttamente."
 msgid "Tag assignment mode"
 msgstr "Modalità di assegnazione tag"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:99
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:124
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
 msgid "Tag removed successfully."
 msgstr "Tag rimosso con successo."
 
@@ -20861,8 +20862,8 @@ msgstr "Taggato %s"
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:138
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:134
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:36
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
@@ -21655,10 +21656,9 @@ msgstr ""
 "più presto."
 
 #: app/models/setting/validation/content_translation_backend_config.rb:25
-#, fuzzy
-#| msgid "The translation service cannot be reached."
 msgid "The configuration of the active translation service cannot be removed"
-msgstr "Il servizio di traduzione non è raggiungibile."
+msgstr ""
+"La configurazione del servizio di traduzione attivo non può essere rimossa"
 
 #: app/services/service/content_translation/base.rb:21
 msgid "The configured translation service is not available."
@@ -21675,7 +21675,7 @@ msgstr "La connessione al server è stata persa."
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:281
+#: lib/email_helper/probe.rb:296
 msgid "The connection was refused."
 msgstr "Connessione rifiutata."
 
@@ -21736,7 +21736,7 @@ msgid "The currently selected AI provider does not support embeddings."
 msgstr ""
 "Il fornitore di IA attualmente selezionato non supporta le incorporazioni."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:258
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:295
 msgid "The customer is typing"
 msgstr "Il cliente sta scrivendo"
 
@@ -21832,7 +21832,7 @@ msgstr "Non è stato possibile inviare l'email all'utente."
 
 #: app/models/postmaster_filter.rb:48
 msgid "The email urgency must be one of: %s."
-msgstr ""
+msgstr "L'urgenza dell'email deve essere una delle seguenti: %s."
 
 #: app/models/ai/provider_connection.rb:19
 msgid "The embedding dimensions must be a positive number."
@@ -21977,7 +21977,7 @@ msgstr "Il metodo a due fattori indicato non è ancora configurato."
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:277
+#: lib/email_helper/probe.rb:292
 msgid "The hostname could not be found."
 msgstr "Impossibile trovare il nome host."
 
@@ -22186,15 +22186,13 @@ msgstr "Impossibile contrassegnare come letta la notifica online."
 msgid "The order of your ticket overviews was reset."
 msgstr "L'ordine delle panoramiche dei ticket è stato ripristinato."
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:60
+#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:64
 msgid "The original message was written in %s."
-msgstr ""
+msgstr "Il messaggio originale è stato scritto in %s."
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:54
-#, fuzzy
-#| msgid "Translate ticket articles into another language."
+#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:58
 msgid "The original message was written in another language."
-msgstr "Tradurre gli articoli relativi ai ticket in un’altra lingua."
+msgstr "Il messaggio originale era scritto in un'altra lingua."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:255
 msgid "The page is not available anymore"
@@ -22847,13 +22845,11 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Il sistema è stato configurato correttamente. Verrai reindirizzato."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:44
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:57
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:63
 msgid "The tag could not be added."
 msgstr "Impossibile aggiungere il tag."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:48
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:61
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:67
 msgid "The tag could not be removed."
 msgstr "Impossibile rimuovere il tag."
 
@@ -22946,8 +22942,8 @@ msgid "The translation service does not support the requested target language."
 msgstr ""
 "Il servizio di traduzione non supporta la lingua di destinazione richiesta."
 
-#: app/services/service/content_translation/backend/deepl.rb:140
-#: app/services/service/content_translation/backend/libre_translate.rb:123
+#: app/services/service/content_translation/backend/deepl.rb:105
+#: app/services/service/content_translation/backend/libre_translate.rb:88
 msgid "The translation service does not support the target language %s."
 msgstr "Il servizio di traduzione non supporta la lingua di destinazione %s."
 
@@ -23197,7 +23193,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:279
+#: lib/email_helper/probe.rb:294
 msgid "There is no route to this host."
 msgstr "Nessuna rotta per questo host."
 
@@ -23589,7 +23585,7 @@ msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 "Questo campo non è stato configurato correttamente e non può essere salvato."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:216
 msgid "This file cannot be added. You can add images in these formats: %s."
 msgstr ""
 "Impossibile aggiungere questo file. È possibile aggiungere immagini nei "
@@ -23621,7 +23617,7 @@ msgstr ""
 "I sottogruppi di questo gruppo supererebbero la profondità di nidificazione "
 "consentita."
 
-#: lib/email_helper/probe.rb:280
+#: lib/email_helper/probe.rb:295
 msgid "This host cannot be reached."
 msgstr "Impossibile raggiungere l'host."
 
@@ -24458,22 +24454,6 @@ msgstr ""
 "Il selettore del ticket contiene condizioni avanzate. Se disattivi la "
 "modalità esperto, potresti perdere alcuni di questi attributi."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:108
-msgid "Ticket tag added successfully."
-msgstr "Etichetta assegnata con successo al ticket."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:68
-msgid "Ticket tag could not be added."
-msgstr "Impossibile aggiungere l'etichetta al ticket."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:114
-msgid "Ticket tag could not be removed."
-msgstr "Impossibile rimuovere l'etichetta al ticket."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:133
-msgid "Ticket tag removed successfully."
-msgstr "Etichetta rimossa correttamente dal ticket."
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:35
 msgid "Ticket tags could not be updated."
 msgstr "Impossibile aggiornare le etichette del ticket."
@@ -24784,7 +24764,7 @@ msgstr "Titolo del modulo"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:64
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:109
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:115
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:248
@@ -25036,7 +25016,7 @@ msgstr "Trasferito da"
 msgid "Translate all articles"
 msgstr "Traduci tutti gli articoli"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:64
 msgid "Translate article"
 msgstr "Traduci l'articolo"
 
@@ -25052,19 +25032,18 @@ msgstr "Traduci la sezione in inglese"
 msgid "Translated by AI, some formatting may be lost."
 msgstr "Tradotto dall'IA; parte della formattazione potrebbe andare persa."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:186
 msgid "Translated text cannot be quoted. Show the original to quote it."
 msgstr ""
+"Il testo tradotto non può essere citato. Per citarlo, mostra l'originale."
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 msgid "Translation"
 msgstr "Traduzione"
 
 #: db/seeds/settings.rb:6275
-#, fuzzy
-#| msgid "Translation Service"
 msgid "Translation Provider"
-msgstr "Servizio di traduzione"
+msgstr "Provider del servizio di traduzione"
 
 #: db/seeds/settings.rb:6260
 msgid "Translation Service"
@@ -25079,7 +25058,7 @@ msgid "Translation in progress…"
 msgstr "Traduzione in corso…"
 
 #: app/models/setting/validation/content_translation_backend_config.rb:9
-#: app/models/setting/validation/content_translation_provider.rb:9
+#: app/models/setting/validation/content_translation_provider.rb:12
 msgid "Translation service configuration is incomplete"
 msgstr "La configurazione del servizio di traduzione è incompleta"
 
@@ -25087,13 +25066,15 @@ msgstr "La configurazione del servizio di traduzione è incompleta"
 msgid "Translation service is missing"
 msgstr "Il servizio di traduzione non è disponibile"
 
-#: app/models/setting/validation/content_translation_provider.rb:8
+#: app/models/setting/validation/content_translation_provider.rb:11
 msgid "Translation service is not supported"
 msgstr "Il servizio di traduzione non è supportato"
 
-#: app/models/setting/validation/content_translation_provider.rb:19
+#: app/models/setting/validation/content_translation_provider.rb:22
 msgid "Translation service must be switched off before its provider is removed"
 msgstr ""
+"Il servizio di traduzione deve essere disattivato prima che il relativo "
+"provider venga rimosso"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/components/ArticleTranslationTargetMenu.vue:79
 msgid "Translation to %s"
@@ -25222,9 +25203,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:287
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
-#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:49
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:10
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:11
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:31
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:5
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:13
@@ -25352,8 +25333,8 @@ msgstr "Il metodo a due fattori è stato configurato correttamente."
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:108
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:237
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:239
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr "Tipo"
@@ -25375,7 +25356,7 @@ msgid "UID Field"
 msgstr "Campo UID"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:419
-#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:11
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:10
 #: app/assets/javascripts/app/views/api/access.jst.eco:47
 #: app/assets/javascripts/app/views/api/oauth.jst.eco:21
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
@@ -25504,7 +25485,7 @@ msgstr "Sblocca questo pannello"
 msgid "Unprocessable email"
 msgstr "Email non elaborabile"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:219
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:256
 msgid "Unread messages"
 msgstr "Messaggi non letti"
 
@@ -26097,7 +26078,7 @@ msgstr "Utilizzato durante la visualizzazione di un Ticket"
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:68
 #: app/assets/javascripts/app/controllers/cti.coffee:3
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:81
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:68
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:75
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:93
 #: app/assets/javascripts/app/controllers/user.coffee:3
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:2
@@ -26116,7 +26097,7 @@ msgstr "Utilizzato durante la visualizzazione di un Ticket"
 #: app/assets/javascripts/app/views/session.jst.eco:8
 #: app/frontend/apps/desktop/components/Search/plugins/user.ts:14
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:79
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderFull.vue:24
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:42
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
@@ -26164,7 +26145,7 @@ msgstr "Solo modifiche apportate dall'utente"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
 #: app/assets/javascripts/app/controllers/signup.coffee:102
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:77
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:48
 msgid "User could not be created."
 msgstr "Impossibile creare l'utente."
@@ -26446,7 +26427,7 @@ msgid "Verify sending and receiving"
 msgstr "Verifica invio e ricezione"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:163
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:89
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:142
 msgid "Verifying and saving your configuration…"
 msgstr "Verifica e salvataggio della configurazione…"
 
@@ -26470,7 +26451,7 @@ msgstr "Verifica indirizzo email…"
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:53
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:30
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:47
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:28
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:29
 msgid "Verifying…"
 msgstr "Verifica in corso…"
 
@@ -27031,9 +27012,11 @@ msgstr "Giallo"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:631
 #: app/assets/javascripts/app/controllers/tag.coffee:147
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:100
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:67
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:169
 msgid "Yes"
 msgstr "Sì"
 
@@ -28941,6 +28924,7 @@ msgstr "nuovo,beta,vista desktop,interfaccia utente desktop"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:10
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:23
 #: app/assets/javascripts/app/models/public_link.coffee:10
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:55
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
@@ -29538,6 +29522,7 @@ msgstr "anno/i"
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22
 #: app/assets/javascripts/app/models/group.coffee:9
 #: app/assets/javascripts/app/models/public_link.coffee:10
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:187
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:48
@@ -29591,6 +29576,21 @@ msgstr "…dell'intera area di testo"
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee:68
 msgid "∅ Waiting time today"
 msgstr "∅ Tempi di attesa - Oggi"
+
+#~ msgid "Notification sender"
+#~ msgstr "Mittente notifiche"
+
+#~ msgid "Ticket tag added successfully."
+#~ msgstr "Etichetta assegnata con successo al ticket."
+
+#~ msgid "Ticket tag could not be added."
+#~ msgstr "Impossibile aggiungere l'etichetta al ticket."
+
+#~ msgid "Ticket tag could not be removed."
+#~ msgstr "Impossibile rimuovere l'etichetta al ticket."
+
+#~ msgid "Ticket tag removed successfully."
+#~ msgstr "Etichetta rimossa correttamente dal ticket."
 
 #~ msgid "Logs"
 #~ msgstr "Log"

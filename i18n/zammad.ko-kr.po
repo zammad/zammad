@@ -444,7 +444,7 @@ msgstr "%s (옵션)"
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:97
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:112
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:287
-#: app/frontend/shared/composables/useSelectOptions.ts:128
+#: app/frontend/shared/composables/useSelectOptions.ts:131
 msgid "%s (unknown)"
 msgstr "%s (알수없음)"
 
@@ -1428,7 +1428,7 @@ msgid "API error."
 msgstr "로그아웃 API 오류."
 
 #: app/assets/javascripts/app/lib/app_post/content_translation_service/deepl.coffee:20
-#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:12
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:11
 #: app/assets/javascripts/app/views/channel/form.jst.eco:86
 #, fuzzy
 #| msgid "API Key"
@@ -1559,7 +1559,7 @@ msgstr "계정 시간"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:610
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:197
-#: app/controllers/channels_email_controller.rb:237
+#: app/controllers/channels_email_controller.rb:232
 msgid "Account already exists!"
 msgstr "계정이 이미 존재합니다!"
 
@@ -1584,7 +1584,7 @@ msgstr "계정 시간"
 msgid "Accounted Time"
 msgstr "집계된 시간"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:147
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:153
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:132
 #: app/frontend/shared/entities/ticket/attributes.ts:14
@@ -2059,9 +2059,9 @@ msgstr "하위 조항 추가"
 msgid "Add subclause"
 msgstr "하위 조항 추가"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:170
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:172
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:196
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:68
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:117
 msgid "Add tag"
 msgstr "태그 추가"
 
@@ -3348,19 +3348,19 @@ msgstr "인증"
 msgid "Authentication Token"
 msgstr "인증 토큰"
 
-#: lib/email_helper/probe.rb:275
+#: lib/email_helper/probe.rb:290
 msgid "Authentication failed due to incorrect credentials."
 msgstr "잘못된 자격 증명으로 인해 인증에 실패했습니다."
 
-#: lib/email_helper/probe.rb:273
+#: lib/email_helper/probe.rb:288
 msgid "Authentication failed due to incorrect username."
 msgstr "잘못된 사용자 이름으로 인해 인증에 실패했습니다."
 
-#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:271
+#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:286
 msgid "Authentication failed."
 msgstr "인증에 실패했습니다."
 
-#: lib/email_helper/probe.rb:276
+#: lib/email_helper/probe.rb:291
 msgid "Authentication not possible (not offered by the service)"
 msgstr "인증이 불가능합니다 (서비스에서 제공하지 않음)"
 
@@ -3507,11 +3507,11 @@ msgstr ""
 "자동 chat.css 파일을로드합니다. 당신이 당신의 자신의 CSS를 사용하려면, 단지 "
 "false로 설정합니다."
 
-#: app/frontend/shared/components/Form/Form.vue:1351
+#: app/frontend/shared/components/Form/Form.vue:1359
 msgid "Autosave in progress…"
 msgstr "자동 저장 중…"
 
-#: app/frontend/shared/components/Form/Form.vue:1360
+#: app/frontend/shared/components/Form/Form.vue:1368
 msgid "Autosaving is taking longer than expected…"
 msgstr "자동 저장에 예상보다 시간이 오래 걸리고 있습니다…"
 
@@ -3955,7 +3955,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketCreate/TicketCreateContent.vue:174
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:126
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:99
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:258
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:31
@@ -4455,7 +4455,7 @@ msgstr "변경 내용은 데이터베이스 업데이트를 필요로 하였다.
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:164
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:138
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:114
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:176
 msgid "Channel"
@@ -5418,7 +5418,7 @@ msgstr ""
 msgid "Content could not be loaded."
 msgstr "콘텐츠를 불러올 수 없습니다."
 
-#: app/models/store.rb:162
+#: app/models/store.rb:166
 #, fuzzy
 #| msgid "Content could not be loaded."
 msgid "Content is not a resizable image."
@@ -5472,16 +5472,16 @@ msgid "Context window size"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
-#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:57
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:77
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:18
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:19
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:101
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:108
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:544
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:547
 msgid "Continue"
 msgstr "계속"
 
@@ -5768,7 +5768,7 @@ msgstr "국가"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:8
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:42
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:79
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:72
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswerCreate/KnowledgeBaseAnswerCreateContent.vue:252
 #: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseCategoryFlyout/KnowledgeBaseCategoryFlyout.vue:192
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:114
@@ -6015,7 +6015,7 @@ msgstr "생성된 내부 게시물"
 #: app/frontend/apps/desktop/components/Ticket/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:119
 #: app/frontend/apps/desktop/pages/chat/components/ChatWindowDetails.vue:116
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:93
 #: app/frontend/shared/entities/organization/attributes.ts:21
 #: app/frontend/shared/entities/ticket/attributes.ts:102
 #: app/frontend/shared/entities/user/attributes.ts:22
@@ -6190,6 +6190,13 @@ msgstr "사용자 정의 지시사항"
 #| msgid "This feature is not enabled."
 msgid "Custom module '%s' is not available."
 msgstr "이 기능이 활성화되어 있지 않습니다."
+
+#: app/assets/javascripts/app/lib/mixins/email_notification_internal_only.coffee:30
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:51
+#, fuzzy
+#| msgid "Resend verification email"
+msgid "Custom verification email"
+msgstr "확인 이메일 다시 보내기"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:523
@@ -7988,7 +7995,7 @@ msgstr "중복 티켓 생성 감지"
 msgid "Detected Language"
 msgstr "감지된 언어"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:137
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:105
 msgid "Detected language"
 msgstr "감지된 언어"
@@ -8178,8 +8185,7 @@ msgstr "연결됨"
 msgid "Dislikes count"
 msgstr "싫어요 수"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:58
-#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:59
+#: app/frontend/shared/components/CommonAlert/CommonAlert.vue:64
 msgid "Dismiss alert"
 msgstr ""
 
@@ -8293,6 +8299,11 @@ msgstr "문서 파일"
 #| msgid "does not exist"
 msgid "Does not exist"
 msgstr "존재하지 않음"
+
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:2
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:161
+msgid "Does this email server only deliver to internal recipients?"
+msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1832
 msgid "Domain"
@@ -8813,7 +8824,7 @@ msgstr "이메일 인바운드"
 msgid "Email Notification"
 msgstr "이메일 알림"
 
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:17
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:22
 msgid "Email Notifications"
 msgstr "이메일 알림"
 
@@ -8859,7 +8870,7 @@ msgid "Email inbound"
 msgstr "이메일 인바운드"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:94
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:30
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:38
 #, fuzzy
 #| msgid "Email Notification"
 msgid "Email notification"
@@ -10123,7 +10134,7 @@ msgstr "파일 시스템"
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:42
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:121
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
 msgid "Filter"
 msgstr "필터"
 
@@ -10539,7 +10550,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:13
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:104
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:96
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:29
 msgid "From"
@@ -10579,6 +10590,7 @@ msgstr "GID"
 msgid "Gateway"
 msgstr "게이트웨이"
 
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:128
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:136
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee:91
 msgid "General communication error, maybe internet is not available!"
@@ -10770,7 +10782,7 @@ msgstr "지정한 시간대가 유효하지 않습니다."
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:25
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:16
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:16
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:27
 #: app/assets/javascripts/app/views/import/index.jst.eco:18
@@ -11367,13 +11379,13 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:416
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:334
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:80
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:67
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:74
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:73
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:29
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:11
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:107
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:63
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:68
 msgid "Host"
 msgstr "호스트"
 
@@ -11671,7 +11683,7 @@ msgstr "이미지 서비스"
 msgid "Image actions"
 msgstr "티켓 작업"
 
-#: app/models/store.rb:169
+#: app/models/store.rb:173
 msgid "Image exceeds the maximum resizable pixel count."
 msgstr ""
 
@@ -12171,6 +12183,12 @@ msgstr "내부 지식 베이스 피드:"
 #| msgid "The article could not be deleted."
 msgid "Internal attributes cannot be deleted"
 msgstr "게시물을 삭제할 수 없습니다."
+
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:186
+#, fuzzy
+#| msgid "Internal Error"
+msgid "Internal email server"
+msgstr "내부 오류"
 
 #: app/frontend/shared/errors/useErrorHandler.ts:33
 #, fuzzy
@@ -12734,7 +12752,7 @@ msgid ""
 msgstr ""
 "지정된 ID의 사용자를 찾을 수 없습니다. URL에 오류가 있는지 확인해보세요."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:150
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:153
 #, fuzzy
 #| msgid "Knowledge Base active"
 msgid "Knowledge base articles"
@@ -14108,7 +14126,7 @@ msgstr "이 티켓을 %s에 병합했습니다"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
-#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:225
+#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:234
 #: public/assets/form/form.js:41
 msgid "Message"
 msgstr "메시지"
@@ -14957,7 +14975,7 @@ msgstr ""
 msgid "New ticket: %s"
 msgstr "새 티켓: %s"
 
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:60
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogParticipant.vue:220
 #: app/frontend/apps/desktop/pages/organization/components/OrganizationDetailTopBar/actions/newUser.ts:13
 #, fuzzy
@@ -15468,9 +15486,9 @@ msgstr ""
 msgid "No supported target language is available."
 msgstr "심플 스토리지 서비스를 사용할 수 없습니다."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:163
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:165
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:189
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:61
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:79
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:110
 msgid "No tags added yet."
 msgstr "아직 태그가 추가되지 않았습니다."
 
@@ -15758,12 +15776,6 @@ msgstr "알림 매트릭스"
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:46
 msgid "Notification read"
 msgstr "알림 읽음"
-
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:39
-#, fuzzy
-#| msgid "Notification Sender"
-msgid "Notification sender"
-msgstr "알림 발신자"
 
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 #, fuzzy
@@ -16759,7 +16771,7 @@ msgstr "상위 그룹"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:381
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:10
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:82
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:76
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:44
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:8
 #: app/assets/javascripts/app/models/webhook.coffee:13
@@ -16772,7 +16784,7 @@ msgstr "상위 그룹"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:43
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:41
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:127
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:83
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:89
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:116
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:48
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
@@ -17123,6 +17135,7 @@ msgid "Please enter a valid JSON string."
 msgstr "유효한 JSON 문자열을 입력하세요."
 
 #: app/frontend/shared/form/i18n/locales.ts:342
+#: app/services/service/system/check_and_set_email_notification_configuration.rb:52
 msgid "Please enter a valid email address."
 msgstr "유효한 이메일 주소를 입력하세요."
 
@@ -17154,6 +17167,14 @@ msgstr "유효한 URL을 포함하세요."
 #: app/services/service/system/import/apply_otrs_configuration.rb:82
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
 msgstr "OTRS 마이그레이터 플러그인을 설치하고 유효한 URL을 제공하세요."
+
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:6
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:176
+msgid ""
+"Please note that an internal-only email server may fail to deliver password "
+"reset, new device and similar system emails to recipients outside the "
+"organization."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:35
 msgid ""
@@ -17254,9 +17275,9 @@ msgstr "잠시만 기다려주세요…"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:421
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:85
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:70
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:77
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:159
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:93
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:99
 msgid "Port"
 msgstr "포트"
 
@@ -18246,9 +18267,9 @@ msgstr "선택한 값 제거"
 msgid "Remove this scheduled visibility change"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:151
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:153
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:171
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:49
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:67
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:92
 msgid "Remove this tag"
 msgstr "이 태그 제거"
 
@@ -18938,7 +18959,7 @@ msgstr "SSL 인증서"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:420
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:733
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:84
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:71
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:78
 #: app/assets/javascripts/app/models/webhook.coffee:10
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:54
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:18
@@ -18946,7 +18967,7 @@ msgstr "SSL 인증서"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:31
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco:2
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:145
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:104
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:110
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:62
 msgid "SSL verification"
 msgstr "SSL 확인"
@@ -19035,7 +19056,7 @@ msgstr "초안 저장"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:140
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:108
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:186
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:122
 #, fuzzy
 #| msgid "Save and Continue"
@@ -19830,7 +19851,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:78
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:58
-#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:214
+#: app/frontend/apps/desktop/pages/chat/components/ChatComposer.vue:223
 #: public/assets/chat/views/chat.eco:25
 msgid "Send"
 msgstr "보내기"
@@ -19841,7 +19862,7 @@ msgstr "이메일 보내기"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:56
 msgid "Send Mails via"
 msgstr "다음을 통해 메일 보내기"
 
@@ -19883,7 +19904,7 @@ msgstr "피드백 보내기"
 msgid "Send invitation"
 msgstr "초대 보내기"
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:48
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:53
 msgid "Send mails via"
 msgstr "다음을 통해 메일 보내기"
 
@@ -20389,7 +20410,7 @@ msgstr "다음 탭 표시"
 msgid "Show notifications"
 msgstr "알림 표시"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
 #, fuzzy
 #| msgid "Original"
 msgid "Show original"
@@ -20672,7 +20693,7 @@ msgstr "키 붙여넣기"
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:10
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:127
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:18
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:133
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:94
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:65
@@ -20953,7 +20974,7 @@ msgstr "사용자 검색을 위해 입력을 시작하세요…"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "지식 베이스에서 검색하려면 입력을 시작하세요…"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:151
+#: app/frontend/shared/components/Form/fields/FieldEditor/extensions/KnowledgeBaseSuggestion.ts:154
 #, fuzzy
 #| msgid "Start typing to search in Knowledge Base…"
 msgid "Start typing to search in knowledge base…"
@@ -20991,7 +21012,7 @@ msgstr "검색하려면 입력을 시작하세요…"
 msgid "Started"
 msgstr "시작됨"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:207
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:240
 #, fuzzy
 #| msgid "Start Import from %s"
 msgid "Started from %s"
@@ -21491,8 +21512,7 @@ msgstr "꼬리표"
 msgid "Tag \"%s\" already exists."
 msgstr "태그 \"%s\"이(가) 이미 존재합니다."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:99
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:100
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
 #, fuzzy
 #| msgid "Ticket tag added successfully."
 msgid "Tag added successfully."
@@ -21504,8 +21524,7 @@ msgstr "티켓 태그가 성공적으로 추가되었습니다."
 msgid "Tag assignment mode"
 msgstr "지정 시간 초과"
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:99
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:124
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:128
 #, fuzzy
 #| msgid "Ticket tag removed successfully."
 msgid "Tag removed successfully."
@@ -21528,8 +21547,8 @@ msgstr "%s 생성됨"
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/desktop/components/KnowledgeBase/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttributes.vue:103
 #: app/frontend/apps/desktop/entities/knowledge-base/composables/useAnswerFormSchema.ts:134
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:138
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:134
+#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:36
+#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:48
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:124
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:144
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:75
@@ -22306,7 +22325,7 @@ msgstr "서버에 대한 연결이 끊어졌습니다."
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:281
+#: lib/email_helper/probe.rb:296
 msgid "The connection was refused."
 msgstr "연결이 거부되었습니다."
 
@@ -22367,7 +22386,7 @@ msgstr ""
 msgid "The currently selected AI provider does not support embeddings."
 msgstr "현재 선택한 AI 제공자는 임베딩을 지원하지 않습니다."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:258
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:295
 #, fuzzy
 #| msgid "CTI customer last activity"
 msgid "The customer is typing"
@@ -22600,7 +22619,7 @@ msgstr "지정된 이중 인증 방법이 아직 구성되지 않았습니다."
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:277
+#: lib/email_helper/probe.rb:292
 msgid "The hostname could not be found."
 msgstr "호스트 이름을 찾을 수 없습니다."
 
@@ -22806,11 +22825,11 @@ msgstr "%s 객체 (들) 업데이트됩니다."
 msgid "The order of your ticket overviews was reset."
 msgstr "The order of your ticket overviews was reset."
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:60
+#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:64
 msgid "The original message was written in %s."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:54
+#: app/frontend/apps/desktop/pages/ticket/composables/useAnsweredArticleTranslationNotice.ts:58
 msgid "The original message was written in another language."
 msgstr ""
 
@@ -23451,15 +23470,13 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "시스템이 성공적으로 구성되었습니다. 리디렉션 중입니다."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:44
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:57
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:63
 #, fuzzy
 #| msgid "Ticket tag could not be added."
 msgid "The tag could not be added."
 msgstr "티켓 태그를 추가할 수 없습니다."
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatWindowTags.vue:48
-#: app/frontend/apps/desktop/pages/knowledge-base/components/KnowledgeBaseAnswer/KnowledgeBaseAnswerSidebar/KnowledgeBaseAnswerTags.vue:61
+#: app/frontend/apps/desktop/entities/tags/composables/useTagAssignment.ts:67
 #, fuzzy
 #| msgid "Ticket tag could not be removed."
 msgid "The tag could not be removed."
@@ -23555,8 +23572,8 @@ msgstr "AI 제공업체가 지원되지 않습니다"
 msgid "The translation service does not support the requested target language."
 msgstr "AI 제공업체가 지원되지 않습니다"
 
-#: app/services/service/content_translation/backend/deepl.rb:140
-#: app/services/service/content_translation/backend/libre_translate.rb:123
+#: app/services/service/content_translation/backend/deepl.rb:105
+#: app/services/service/content_translation/backend/libre_translate.rb:88
 #, fuzzy
 #| msgid "AI provider is not supported"
 msgid "The translation service does not support the target language %s."
@@ -23807,7 +23824,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:279
+#: lib/email_helper/probe.rb:294
 msgid "There is no route to this host."
 msgstr "이 호스트에 대한 경로가 없습니다."
 
@@ -24185,7 +24202,7 @@ msgstr "이 필드는 %s자를 초과할 수 없습니다."
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "이 필드가 잘못 구성되어 제출할 수 없습니다."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorInput.vue:216
 msgid "This file cannot be added. You can add images in these formats: %s."
 msgstr ""
 
@@ -24217,7 +24234,7 @@ msgstr "이 그룹에는 발신 통신을 위한 이메일 주소가 구성되�
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr "이 그룹 또는 그 하위 그룹이 허용된 중첩 깊이를 초과합니다."
 
-#: lib/email_helper/probe.rb:280
+#: lib/email_helper/probe.rb:295
 msgid "This host cannot be reached."
 msgstr "이 호스트에 연결할 수 없습니다."
 
@@ -25052,22 +25069,6 @@ msgstr ""
 "티켓 선택기에 전문가 조건이 포함되어 있습니다. 전문가 모드를 끄면 조건 속성"
 "의 데이터 손실이 발생할 수 있습니다."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:108
-msgid "Ticket tag added successfully."
-msgstr "티켓 태그가 성공적으로 추가되었습니다."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:68
-msgid "Ticket tag could not be added."
-msgstr "티켓 태그를 추가할 수 없습니다."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:114
-msgid "Ticket tag could not be removed."
-msgstr "티켓 태그를 제거할 수 없습니다."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:133
-msgid "Ticket tag removed successfully."
-msgstr "티켓 태그가 성공적으로 제거되었습니다."
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:35
 msgid "Ticket tags could not be updated."
 msgstr "티켓 태그를 업데이트할 수 없습니다."
@@ -25379,7 +25380,7 @@ msgstr "양식의 제목"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/cti/components/CallerLogTable.vue:64
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:109
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:115
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:30
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:248
@@ -25639,7 +25640,7 @@ msgstr ""
 msgid "Translate all articles"
 msgstr "번역 소스"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:64
 #, fuzzy
 #| msgid "Translation Source"
 msgid "Translate article"
@@ -25659,7 +25660,7 @@ msgstr "필드 내용 번역"
 msgid "Translated by AI, some formatting may be lost."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:186
 msgid "Translated text cannot be quoted. Show the original to quote it."
 msgstr ""
 
@@ -25690,7 +25691,7 @@ msgid "Translation in progress…"
 msgstr "자동 저장 중…"
 
 #: app/models/setting/validation/content_translation_backend_config.rb:9
-#: app/models/setting/validation/content_translation_provider.rb:9
+#: app/models/setting/validation/content_translation_provider.rb:12
 #, fuzzy
 #| msgid "AI provider Azure configuration is incomplete"
 msgid "Translation service configuration is incomplete"
@@ -25702,13 +25703,13 @@ msgstr "AI 제공업체 Azure 구성이 불완전합니다"
 msgid "Translation service is missing"
 msgstr "번역 소스"
 
-#: app/models/setting/validation/content_translation_provider.rb:8
+#: app/models/setting/validation/content_translation_provider.rb:11
 #, fuzzy
 #| msgid "AI provider is not supported"
 msgid "Translation service is not supported"
 msgstr "AI 제공업체가 지원되지 않습니다"
 
-#: app/models/setting/validation/content_translation_provider.rb:19
+#: app/models/setting/validation/content_translation_provider.rb:22
 msgid "Translation service must be switched off before its provider is removed"
 msgstr ""
 
@@ -25841,9 +25842,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:287
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
-#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:49
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:10
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:11
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:31
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:5
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:13
@@ -25976,8 +25977,8 @@ msgstr "이중 인증 방법이 성공적으로 구성되었습니다."
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:108
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:237
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:239
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr "유형"
@@ -25999,7 +26000,7 @@ msgid "UID Field"
 msgstr "UID 필드"
 
 #: app/assets/javascripts/app/controllers/_ai/provider_connections.coffee:419
-#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:11
+#: app/assets/javascripts/app/lib/app_post/content_translation_service/libre_translate.coffee:10
 #: app/assets/javascripts/app/views/api/access.jst.eco:47
 #: app/assets/javascripts/app/views/api/oauth.jst.eco:21
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
@@ -26139,7 +26140,7 @@ msgstr "이 패널 고정 해제"
 msgid "Unprocessable email"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:219
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:256
 #, fuzzy
 #| msgid "Usages count"
 msgid "Unread messages"
@@ -26786,7 +26787,7 @@ msgstr "티켓을 볼 때 사용"
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:68
 #: app/assets/javascripts/app/controllers/cti.coffee:3
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:81
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:68
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:75
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:93
 #: app/assets/javascripts/app/controllers/user.coffee:3
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:2
@@ -26805,7 +26806,7 @@ msgstr "티켓을 볼 때 사용"
 #: app/assets/javascripts/app/views/session.jst.eco:8
 #: app/frontend/apps/desktop/components/Search/plugins/user.ts:14
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:79
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderFull.vue:24
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:42
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
@@ -26857,7 +26858,7 @@ msgstr "저장되지 않은 변경 사항"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
 #: app/assets/javascripts/app/controllers/signup.coffee:102
-#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:77
+#: app/frontend/apps/desktop/entities/user/composables/useUserCreate.ts:70
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:48
 msgid "User could not be created."
 msgstr "사용자를 생성할 수 없습니다."
@@ -27142,7 +27143,7 @@ msgid "Verify sending and receiving"
 msgstr "전송 및 수신 확인"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:163
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:89
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:142
 msgid "Verifying and saving your configuration…"
 msgstr "구성을 확인하고 저장 중…"
 
@@ -27166,7 +27167,7 @@ msgstr "이메일 확인 중…"
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:53
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:30
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:47
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:28
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:29
 msgid "Verifying…"
 msgstr "확인 중…"
 
@@ -27749,9 +27750,11 @@ msgstr "노란색"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:631
 #: app/assets/javascripts/app/controllers/tag.coffee:147
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:100
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:67
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:169
 msgid "Yes"
 msgstr "예"
 
@@ -29688,6 +29691,7 @@ msgstr "새로운,베타,데스크톱 뷰,데스크톱 UI"
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:10
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:23
 #: app/assets/javascripts/app/models/public_link.coffee:10
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:55
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
@@ -30310,6 +30314,7 @@ msgstr "년"
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22
 #: app/assets/javascripts/app/models/group.coffee:9
 #: app/assets/javascripts/app/models/public_link.coffee:10
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:187
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:48
@@ -30362,6 +30367,23 @@ msgstr "…전체 텍스트 영역의"
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee:68
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#, fuzzy
+#~| msgid "Notification Sender"
+#~ msgid "Notification sender"
+#~ msgstr "알림 발신자"
+
+#~ msgid "Ticket tag added successfully."
+#~ msgstr "티켓 태그가 성공적으로 추가되었습니다."
+
+#~ msgid "Ticket tag could not be added."
+#~ msgstr "티켓 태그를 추가할 수 없습니다."
+
+#~ msgid "Ticket tag could not be removed."
+#~ msgstr "티켓 태그를 제거할 수 없습니다."
+
+#~ msgid "Ticket tag removed successfully."
+#~ msgstr "티켓 태그가 성공적으로 제거되었습니다."
 
 #, fuzzy
 #~| msgid "Ticket title"
