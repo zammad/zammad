@@ -29,4 +29,9 @@ RSpec.describe Service::AI::Tool::Runtime::Cursor, :aggregate_failures do
       expect(described_class.decode(cursor, scope:)).to be_nil, cursor
     end
   end
+
+  it 'refuses an offset beyond the database\'s largest integer' do
+    expect(described_class.decode(described_class.encode(offset: described_class::MAX_OFFSET, scope:), scope:)).to eq(described_class::MAX_OFFSET)
+    expect(described_class.decode(described_class.encode(offset: described_class::MAX_OFFSET + 1, scope:), scope:)).to be_nil
+  end
 end

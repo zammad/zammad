@@ -489,6 +489,33 @@ RSpec.describe 'MCP server', :aggregate_failures, type: :request do
 
       expect(tool_runs).to be_empty
     end
+
+    it 'refuses arguments or params that are no object as invalid params, in both revisions' do
+      ['hello', ['hello'], 42].each do |arguments|
+        legacy_request('tools/call', { name: 'echo_text', arguments: }, id: 7)
+
+        expect(response).to have_http_status(:bad_request)
+        expect(json_response).to eq('jsonrpc' => '2.0', 'id' => 7, 'error' => { 'code' => -32_602, 'message' => 'A tool call takes its params and its arguments as JSON objects.' })
+        expect_valid('2025-11-25', 'JSONRPCErrorResponse', json_response)
+      end
+
+      modern_request('tools/call', { name: 'echo_text', arguments: 'hello' }, name: 'echo_text')
+      expect(json_response.dig('error', 'code')).to eq(-32_602)
+      expect_valid('2026-07-28', 'JSONRPCErrorResponse', json_response)
+
+      # The gem refuses a string as params itself, but passes these on to the tool call.
+      [{}, { params: nil }, { params: ['echo_text'] }].each do |params|
+        mcp_post({ jsonrpc: '2.0', id: 7, method: 'tools/call', **params }, headers: { 'MCP-Protocol-Version' => '2025-11-25' })
+
+        expect(response).to have_http_status(:bad_request), params.inspect
+        expect(json_response).to eq('jsonrpc' => '2.0', 'id' => 7, 'error' => { 'code' => -32_602, 'message' => 'A tool call takes its params and its arguments as JSON objects.' })
+      end
+
+      legacy_request('tools/call', { name: 'echo_text', arguments: nil })
+      expect(json_response['result']).to include('isError' => true, 'content' => [{ 'type' => 'text', 'text' => 'Missing required arguments: text' }])
+
+      expect(tool_runs).to be_empty
+    end
   end
 
   # The permission cases of reading a ticket, from outside: the tool's own spec holds the rest.

@@ -461,6 +461,48 @@ RSpec.describe Service::AI::Tool::SearchTickets, :aggregate_failures do
       searchindex_model_reload([Ticket])
     end
 
+    it 'pages a cursor built by hand up to the index\'s result window, and refuses one beyond it' do
+      other_ticket('VPN password', 'The VPN rejects my password.')
+      searchindex_model_reload([Ticket])
+      arguments = by_customer.merge('query' => 'password', 'limit' => 1)
+      cursor    = JSON.parse(Base64.urlsafe_decode64(perform(arguments).content[:next_cursor]))
+      forged    = ->(offset) { Base64.urlsafe_encode64(cursor.merge('offset' => offset).to_json, padding: false) }
+
+      expect(perform(arguments.merge('cursor' => forged.call(SearchIndexBackend::MAX_RESULT_WINDOW - 2))).content).to include(tickets: [], has_more: false)
+      expect(perform(arguments.merge('cursor' => forged.call(SearchIndexBackend::MAX_RESULT_WINDOW - 1))).content).to include(error: 'invalid_arguments')
+    end
+
+    it 'keeps the cursor of a page whose next batch the result window cuts off, and says where it pages no further' do
+      vpn  = other_ticket('VPN password', 'The VPN rejects my password.', created_at: 5.days.ago)
+      mail = other_ticket('Mail password', 'Mail rejects my password.', created_at: 4.days.ago)
+      searchindex_model_reload([Ticket])
+      # Without callbacks, so that the index still lists it.
+      mail.update_columns(group_id: create(:group).id)
+      Setting.set('es_model_settings', { 'Ticket' => { 'index.max_result_window' => 3 } })
+      arguments = by_customer.merge('query' => 'password', 'order_by' => 'asc', 'limit' => 1)
+
+      first = perform(arguments, context_object: nil)
+      last  = perform(arguments.merge('cursor' => first.content[:next_cursor]), context_object: nil)
+
+      expect(numbers(first)).to eq([vpn.number])
+      expect(first.content).to include(has_more: true, next_cursor: be_present)
+      expect(numbers(last)).to eq([newer.number])
+      expect(last.content).to include(has_more: true).and(not_include(:next_cursor))
+      expect(last.text).to include('More follow, but the search pages no further. Narrow the query to see them.')
+    end
+
+    it 'says that more follow where the result window holds no ticket the user may read' do
+      tickets = [other_ticket('VPN password', 'The VPN rejects my password.', created_at: 5.days.ago), other_ticket('Mail password', 'Mail rejects my password.', created_at: 4.days.ago)]
+      searchindex_model_reload([Ticket])
+      tickets.each { |hidden| hidden.update_columns(group_id: create(:group).id) }
+      Setting.set('es_model_settings', { 'Ticket' => { 'index.max_result_window' => 3 } })
+
+      result = perform(by_customer.merge('query' => 'password', 'order_by' => 'asc', 'limit' => 1), context_object: nil)
+
+      expect(result.content).to include(tickets: [], has_more: true).and(not_include(:next_cursor))
+      expect(result.text).to include('More follow, but the search pages no further.').and(not_include('none.'))
+    end
+
     it 'sorts the words found in the order asked for, also by order_by alone, and pages in it' do
       vpn = other_ticket('VPN password', 'The VPN rejects my password.', created_at: 2.days.ago)
       searchindex_model_reload([Ticket])

@@ -34,8 +34,16 @@ module Service::AI::Tool::Concerns::RecordSearch
     argument(:limit)
   end
 
+  # A cursor can be built by hand: a page beyond the index's result window fails the search.
   def offset
-    cursor_offset
+    value = cursor_offset
+    value if value && Service::AI::Tool::Search::ResultWindow.fits?(result_window, offset: value, limit:)
+  end
+
+  def result_window
+    return @result_window if defined?(@result_window)
+
+    @result_window = Service::AI::Tool::Search::ResultWindow.of(model, query:)
   end
 
   def content
@@ -43,7 +51,7 @@ module Service::AI::Tool::Concerns::RecordSearch
       query:       argument(:query).to_s.squish,
       result_key => rows,
       has_more:    more?,
-      next_cursor: (next_cursor_at(offset + limit) if more?),
+      next_cursor: (next_cursor_at(offset + limit) if more? && Service::AI::Tool::Search::ResultWindow.fits?(result_window, offset: offset + limit, limit:)),
     }.compact
   end
 
@@ -97,7 +105,7 @@ module Service::AI::Tool::Concerns::RecordSearch
     header = AI::PromptText.xml_text("#{record_noun.pluralize.capitalize} matching \"#{content[:query]}\"")
     return "#{header}: none. #{NONE_HINT}" if rows.empty?
 
-    more = content[:has_more] ? "More follow: call again with the same arguments and cursor \"#{content[:next_cursor]}\"." : 'No more follow.' # rubocop:disable Zammad/DetectTranslatableString
+    more = Service::AI::Tool::Search::ResultWindow.more_text(has_more: content[:has_more], next_cursor: content[:next_cursor])
 
     ["#{header}:", AI::PromptText.xml_text(rows.map { |row| line(row).squish }.join("\n")), more, detail_hint].join("\n\n")
   end

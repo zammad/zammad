@@ -79,6 +79,10 @@ RSpec.describe Service::AI::Tool::SearchUsers, :aggregate_failures do
     expect(first).to include(has_more: true)
     expect(second).to include(has_more: false)
     expect([first, second].flat_map { |page| page[:users].pluck(:id) }).to contain_exactly(customer.id, namesake.id)
+
+    # The database has no result window to keep a cursor in.
+    forged = Base64.urlsafe_encode64(JSON.parse(Base64.urlsafe_decode64(first[:next_cursor])).merge('offset' => SearchIndexBackend::MAX_RESULT_WINDOW).to_json, padding: false)
+    expect(perform({ query: 'Max Huber', limit: 1, cursor: forged }).content).to include(users: [], has_more: false)
   end
 
   it 'sorts by the field and direction asked for' do
@@ -243,6 +247,30 @@ RSpec.describe Service::AI::Tool::SearchUsers, :aggregate_failures do
 
     it 'answers a query the search cannot run as a failed search' do
       expect(perform({ query: 'Huber AND (' }).content).to include(error: 'search_failed')
+    end
+
+    it 'pages a cursor built by hand up to the index\'s result window, and refuses one beyond it' do
+      create(:customer, firstname: 'Max', lastname: 'Aaron')
+      searchindex_model_reload([User])
+      cursor = JSON.parse(Base64.urlsafe_decode64(perform({ query: 'Max', limit: 1 }).content[:next_cursor]))
+      forged = ->(offset) { Base64.urlsafe_encode64(cursor.merge('offset' => offset).to_json, padding: false) }
+
+      expect(perform({ query: 'Max', limit: 1, cursor: forged.call(SearchIndexBackend::MAX_RESULT_WINDOW - 2) }).content).to include(users: [], has_more: false)
+      expect(perform({ query: 'Max', limit: 1, cursor: forged.call(SearchIndexBackend::MAX_RESULT_WINDOW - 1) }).content).to include(error: 'invalid_arguments', message: include('cursor'))
+    end
+
+    it 'hands out no cursor beyond the result window an admin set for the model, and says that more follow' do
+      create(:customer, firstname: 'Max', lastname: 'Aaron')
+      create(:customer, firstname: 'Max', lastname: 'Zett')
+      searchindex_model_reload([User])
+      Setting.set('es_model_settings', { 'User' => { 'index.max_result_window' => 3 } })
+
+      first = perform({ query: 'Max', limit: 1 })
+      last  = perform({ query: 'Max', limit: 1, cursor: first.content[:next_cursor] })
+
+      expect(first.content).to include(has_more: true, next_cursor: be_present)
+      expect(last.content).to include(has_more: true).and(not_include(:next_cursor))
+      expect(last.text).to include('More follow, but the search pages no further. Narrow the query to see them.')
     end
   end
 end

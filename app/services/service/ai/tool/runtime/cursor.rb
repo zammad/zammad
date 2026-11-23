@@ -4,6 +4,9 @@
 #   form. It holds the position and a fingerprint of the list it belongs to, so that a cursor passed with other
 #   arguments than its list's is refused instead of paging another list from a position that means nothing there.
 class Service::AI::Tool::Runtime::Cursor
+  # A cursor can be built by hand: an offset beyond the database's largest integer would fail the query.
+  MAX_OFFSET = (2**63) - 1
+
   # @param offset [Integer] where the next page starts
   # @param scope [Hash] what makes the list: the arguments of the call, apart from the cursor and the page size
   # @return [String]
@@ -20,7 +23,7 @@ class Service::AI::Tool::Runtime::Cursor
     return if !data.is_a?(Hash) || data['scope'] != fingerprint(scope)
 
     offset = data['offset']
-    offset if offset.is_a?(Integer) && !offset.negative?
+    offset if offset.is_a?(Integer) && offset.between?(0, MAX_OFFSET)
   rescue ArgumentError, JSON::ParserError
     nil
   end
