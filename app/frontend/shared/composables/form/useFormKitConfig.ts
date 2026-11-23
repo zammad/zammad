@@ -1,11 +1,12 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { configSymbol } from '@formkit/vue'
 import { inject } from 'vue'
 
-import type { FormKitConfig } from '@formkit/core'
+import type { FormKitRootConfig } from '@formkit/core'
 
 const useFormKitConfig = () => {
-  return inject(Symbol.for('FormKitConfig')) as FormKitConfig
+  return inject(configSymbol) as FormKitRootConfig
 }
 
 export default useFormKitConfig

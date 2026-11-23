@@ -23,9 +23,6 @@ declare function setQueryPollingConfig(config?: Partial<QueryPollingConfig>): Qu
 declare function resetQueryPollingConfig(): QueryPollingConfig
 declare function getCurrentQueryPollingConfig(): QueryPollingConfig
 
-// TODO: Workaround for current problem with formkit version, remove when fixed
-declare module '@formkit/themes'
-
 // Workaround for spark-md5 not having proper type definitions.
 declare module 'spark-md5' {
   interface SparkMD5 {

@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { warn } from '@formkit/core'
 import { createApp } from 'vue'
 
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
@@ -33,5 +34,16 @@ describe('initializeForm', () => {
     initializeForm(app)
 
     expect(app.use).toHaveBeenCalled()
+  })
+
+  it('logs FormKit warnings as readable messages', (context) => {
+    context.skipConsole = true
+
+    initializeForm(app)
+    warn(153, 'example')
+
+    expect(console.warn).toHaveBeenCalledWith(
+      expect.stringContaining('Duplicate FormKit id "example"'),
+    )
   })
 })

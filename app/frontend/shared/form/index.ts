@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { register as registerDevMessages } from '@formkit/dev'
 import { createThemePlugin } from '@formkit/themes'
 import { plugin as formPlugin, bindings as bindingsPlugin } from '@formkit/vue'
 
-import '@formkit/dev'
 import type {
   FormAppSpecificTheme,
   FormDecoratorIcons,
@@ -87,6 +87,8 @@ export default function initializeForm(
   appSpecificTheme: FormAppSpecificTheme = {},
   appSpecificDecoratorIcons: FormDecoratorIcons = {},
 ) {
+  registerDevMessages()
+
   app.use(
     formPlugin,
     buildFormKitPluginConfig(
