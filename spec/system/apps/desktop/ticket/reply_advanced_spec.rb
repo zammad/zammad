@@ -118,6 +118,50 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
     raise 'The editor toolbar is out of view or covered'
   end
 
+  # Both blocks are measured in the same frame, a layout that moves in between would add to the gap.
+  def gap_between(first, second)
+    page.evaluate(
+      '([first, second]) => second.getBoundingClientRect().top - first.getBoundingClientRect().bottom',
+      arg: [first.element_handle, second.element_handle],
+    )
+  end
+
+  def line_height_of(block)
+    block.evaluate('(block) => block.getBoundingClientRect().height')
+  end
+
+  context 'with an empty line in the article' do
+    let(:closing_line) { 'Closing line after an empty one.' }
+
+    let(:article) do
+      create(:ticket_article, :inbound_email,
+             ticket: ticket, body: "<p>#{first_cite}</p><p>#{second_cite}</p><p></p><p>#{closing_line}</p>", content_type: 'text/html', from: customer.email)
+    end
+
+    it 'shows consecutive lines directly beneath each other, and an empty line as one line' do
+      first_line  = ticket_article(first_cite).get_by_text(first_cite, exact: true)
+      second_line = ticket_article(first_cite).get_by_text(second_cite, exact: true)
+      last_line   = ticket_article(first_cite).get_by_text(closing_line, exact: true)
+
+      expect(gap_between(first_line, second_line)).to be_within(0.5).of(0)
+      expect(gap_between(second_line, last_line)).to be_within(0.5).of(line_height_of(second_line))
+    end
+  end
+
+  it 'shows lines typed in the editor directly beneath each other, and an empty line as one line' do
+    reply
+    wait_for_test_flag('editor.signatureAdd')
+    expect_editor_focused
+    type_in_editor('Text', 'First line.', :enter, 'Second line.', :enter, :enter, 'Third line.')
+
+    first_line  = editor('Text').get_by_text('First line.', exact: true)
+    second_line = editor('Text').get_by_text('Second line.', exact: true)
+    third_line  = editor('Text').get_by_text('Third line.', exact: true)
+
+    expect(gap_between(first_line, second_line)).to be_within(0.5).of(0)
+    expect(gap_between(second_line, third_line)).to be_within(0.5).of(line_height_of(second_line))
+  end
+
   it 'keeps the editor toolbar reachable while scrolling the draft' do
     start_reply_with_quote
 

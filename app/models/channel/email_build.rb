@@ -234,6 +234,8 @@ Add/change markup to display html in any mail client nice.
     # https://github.com/martini/zammad/issues/165
     new_html = html.gsub('<blockquote type="cite">', '<blockquote type="cite" style="border-left: 2px solid blue; margin: 0 0 16px; padding: 8px 12px 8px 12px;">')
     new_html.gsub!(%r{<p>}mxi, '<p style="margin: 0;">')
+    # An empty paragraph has no height in a mail client, the line break keeps it one line high.
+    new_html.gsub!(%r{(<p\b[^>]*>)\s*</p>}i, '\1<br></p>')
     new_html.gsub!(%r{</?hr>}mxi, '<hr style="margin-top: 6px; margin-bottom: 6px; border: 0; border-top: 1px solid #dfdfdf;">')
     new_html
   end

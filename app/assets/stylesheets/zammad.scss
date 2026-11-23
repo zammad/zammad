@@ -14150,9 +14150,10 @@ output {
     }
   }
 
+  // One line of text. A rem is 10px here, so 1.25rem would fall short of it.
   p {
-    margin: 8px 0;
-    min-height: 1.25rem;
+    margin: 0;
+    min-height: 20px;
   }
 
   & > table,
@@ -15914,6 +15915,11 @@ span.is-disabled {
 
     @include phone {
       margin-bottom: 10px;
+    }
+
+    // Answers keep the space between paragraphs that .richtext-content drops for articles.
+    p {
+      margin: 8px 0;
     }
   }
 

@@ -515,6 +515,21 @@ RSpec.describe Channel::EmailBuild, type: :model do
       it_behaves_like 'adding styles to the element'
     end
 
+    context 'when html element is an empty p' do
+      let(:html) do
+        <<~HTML.chomp
+          <p>some text</p><p></p><p dir="auto"></p><p>123</p>
+        HTML
+      end
+      let(:expected_html) do
+        <<~HTML.chomp
+          <p style="margin: 0;">some text</p><p style="margin: 0;"><br></p><p dir="auto"><br></p><p style="margin: 0;">123</p>
+        HTML
+      end
+
+      it_behaves_like 'adding styles to the element'
+    end
+
     context 'when html element is a hr' do
       let(:html) do
         <<~HTML.chomp
@@ -589,6 +604,10 @@ RSpec.describe Channel::EmailBuild, type: :model do
 
       it 'adds the original element' do
         expect(generated_html).to match html
+      end
+
+      it 'gives paragraphs no vertical margin' do
+        expect(generated_html).to match(%r{^\s*p \{[^\}]*margin: 0;})
       end
     end
 

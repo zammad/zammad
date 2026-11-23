@@ -138,7 +138,7 @@
     }
 
     p {
-      @apply my-2 min-h-5;
+      @apply min-h-5;
     }
 
     blockquote {
