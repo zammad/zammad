@@ -520,8 +520,8 @@ importers:
         specifier: file:.eslint-plugin-zammad
         version: file:.eslint-plugin-zammad(eslint@10.15.0(jiti@2.7.0)(supports-color@7.2.0))
       fallow:
-        specifier: 3.43.2
-        version: 3.43.2
+        specifier: 3.44.0
+        version: 3.44.0
       jsdom:
         specifier: ^31.0.1
         version: 31.0.1
@@ -1358,47 +1358,47 @@ packages:
     resolution: {integrity: sha512-3RQHgEtvL1Frl/d1cSreo7qhJ3Gk1OdNUai/CtZ8G+wYeRQnJih3s9xJ9/kgYekPQRdwgh0HXRPqMlzWGwivIQ==}
     engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
 
-  '@fallow-cli/darwin-arm64@3.43.2':
-    resolution: {integrity: sha512-dJkGp1z7aBBMgI0YmN/hxkqSDEXaOw4pu0L8KtYXaQ9mnIUzPQ32xxTENFfoBh6GkbIJKrW2nlN5BEuCPj4CEQ==}
+  '@fallow-cli/darwin-arm64@3.44.0':
+    resolution: {integrity: sha512-BpUhIB+Uv2PfqN2gK8oPd5Fe3s1V8cZKmVE+1oLhiTr5BVxNX7MWa8UhqbbCF+TaLwwWAEBsucepo/hPCh5dMw==}
     cpu: [arm64]
     os: [darwin]
 
-  '@fallow-cli/darwin-x64@3.43.2':
-    resolution: {integrity: sha512-wKLRa2CsADlwD9eBxIh2gMjrQMl0VancYy0tfqXXdtPWwduOR/nOjyU7w3amB7LqsWB/DR6GBjrGk0DsDyvfPw==}
+  '@fallow-cli/darwin-x64@3.44.0':
+    resolution: {integrity: sha512-z4V12gHbRCry/D8REdN2sRbIUvvTDJ+1PchIqgkl6cmfkQU6WjZ0lee1D0YIBxL8+9NtbKlgj6uF9J9nbVXD2A==}
     cpu: [x64]
     os: [darwin]
 
-  '@fallow-cli/linux-arm64-gnu@3.43.2':
-    resolution: {integrity: sha512-9I7v22bDTZgJNaynwDtdCLGrFDQ4oqA4sQ7fj7nDt587JoJ+W82vu1AXL9tnAlp8j1X3FJwTxyu+LFtWLD8uxg==}
+  '@fallow-cli/linux-arm64-gnu@3.44.0':
+    resolution: {integrity: sha512-4aMbSoXgURAedwo6Ms2cg1QLgz9XBN9KLbKVDWdLYu5l5d9kFlSdu6FduGa9REXbhHD55vtp0cg5KtH4hBWA2g==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@fallow-cli/linux-arm64-musl@3.43.2':
-    resolution: {integrity: sha512-3GIfib/S6Ql/gtncsa1LGzs7W3UpyGyP4HNko4nR8v99J3YYl8jjad2BYil/9FfOwdgQQUxDebCtplqJUcHV1Q==}
+  '@fallow-cli/linux-arm64-musl@3.44.0':
+    resolution: {integrity: sha512-BWsGDJg8XPzLUMhgliDVKpeYcd+9eexp4DGn/3tcm0WDxp+GsM3YRG2dy/fDew67fVG2GdSvxKhxs7UfWs1H6w==}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@fallow-cli/linux-x64-gnu@3.43.2':
-    resolution: {integrity: sha512-ntmKYJ4BL22r57aQGg1xHs79PODnVlxsa7Y/fQvMI/puoLkC5QVlh9qJ0pyQAdgbdpgEnaJYIlOCYBHJHZsfpQ==}
+  '@fallow-cli/linux-x64-gnu@3.44.0':
+    resolution: {integrity: sha512-/n/WHl7vnmOn5s139x2NNCcn9R7e2zJVE8oSEdEOcpe5nTwudmBLCPmnB9Gq7pddOtfKFmaP/rbWjoiVgSEOMw==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@fallow-cli/linux-x64-musl@3.43.2':
-    resolution: {integrity: sha512-FL4nvFlnluVRWI7StbT+1KPThCm0scMKhleRiDAuWRb9vf6pF9DUP/lkxno45oDe1qADA/rBSQ0j0rchowt1Zw==}
+  '@fallow-cli/linux-x64-musl@3.44.0':
+    resolution: {integrity: sha512-f+vZ8+uVD3khlumQMXTmAq8VA6pRrT496WEKLBE+Et6w3B+pGwJQLTGdZUHXxqXID6MnY5hEGAKqK9IQxi8l/w==}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@fallow-cli/win32-arm64-msvc@3.43.2':
-    resolution: {integrity: sha512-FB4Tq7U2XYUDqGcxkn1J5ZDQ/eLR39vXCfrmJvmu6eWFJ32FD/4tonoO7ECjwjLq+Bct2+PIrKQTUiIkRXMtPg==}
+  '@fallow-cli/win32-arm64-msvc@3.44.0':
+    resolution: {integrity: sha512-mQYmj+vWZpBxuZq8ier9tKbtDhA48LrRgl8EQYH/1Pyeo3nnBuxJPCDE1yOP3tvR4NXJs0e5JREaVkQ9CvX2Jw==}
     cpu: [arm64]
     os: [win32]
 
-  '@fallow-cli/win32-x64-msvc@3.43.2':
-    resolution: {integrity: sha512-uIgg+wZYF6uLl+Gr6/LhqFtkUvKLIKMygxvBVdrq3b7Jom576OGoeHte/R0kalt0sd4LTJBXLeToP2a6Oh84dw==}
+  '@fallow-cli/win32-x64-msvc@3.44.0':
+    resolution: {integrity: sha512-RMb7QYuS6dg7Yhb33CLM7SnhWjpyI42K62w5Uv2tn+UumC16RaKwlPc6UNeRuvrADtGGpgJoeKFJfXSvZEO9DQ==}
     cpu: [x64]
     os: [win32]
 
@@ -4219,8 +4219,8 @@ packages:
   exsolve@1.1.1:
     resolution: {integrity: sha512-9U/jZUgjnSGyntRr6y5Muu1MJcwFl6kPu7k8qLF0IMNfLqvw0NZ4nnVDq0RVoZ0RvCyumib4Ez3KYrVfilrw+g==}
 
-  fallow@3.43.2:
-    resolution: {integrity: sha512-ibOZSDgDZLIHYFWmxtF+JkdQEdcyTxgpGojtNbB7oJTW1jYyFc87lqUYVN3ZFEXHLBgysU+rcQ37v4x8kl3YIw==}
+  fallow@3.44.0:
+    resolution: {integrity: sha512-0XeBIsE2Dp31b/sUOhvxzHNC6+TpJotle2saQjjTW4DACyBQR9unovYIL5f1gcQsIpvEoKcRlNmic+dCr/e4Qg==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -7640,28 +7640,28 @@ snapshots:
 
   '@faker-js/faker@10.6.0': {}
 
-  '@fallow-cli/darwin-arm64@3.43.2':
+  '@fallow-cli/darwin-arm64@3.44.0':
     optional: true
 
-  '@fallow-cli/darwin-x64@3.43.2':
+  '@fallow-cli/darwin-x64@3.44.0':
     optional: true
 
-  '@fallow-cli/linux-arm64-gnu@3.43.2':
+  '@fallow-cli/linux-arm64-gnu@3.44.0':
     optional: true
 
-  '@fallow-cli/linux-arm64-musl@3.43.2':
+  '@fallow-cli/linux-arm64-musl@3.44.0':
     optional: true
 
-  '@fallow-cli/linux-x64-gnu@3.43.2':
+  '@fallow-cli/linux-x64-gnu@3.44.0':
     optional: true
 
-  '@fallow-cli/linux-x64-musl@3.43.2':
+  '@fallow-cli/linux-x64-musl@3.44.0':
     optional: true
 
-  '@fallow-cli/win32-arm64-msvc@3.43.2':
+  '@fallow-cli/win32-arm64-msvc@3.44.0':
     optional: true
 
-  '@fallow-cli/win32-x64-msvc@3.43.2':
+  '@fallow-cli/win32-x64-msvc@3.44.0':
     optional: true
 
   '@fastify/busboy@3.2.5': {}
@@ -10587,18 +10587,18 @@ snapshots:
 
   exsolve@1.1.1: {}
 
-  fallow@3.43.2:
+  fallow@3.44.0:
     dependencies:
       detect-libc: 2.1.2
     optionalDependencies:
-      '@fallow-cli/darwin-arm64': 3.43.2
-      '@fallow-cli/darwin-x64': 3.43.2
-      '@fallow-cli/linux-arm64-gnu': 3.43.2
-      '@fallow-cli/linux-arm64-musl': 3.43.2
-      '@fallow-cli/linux-x64-gnu': 3.43.2
-      '@fallow-cli/linux-x64-musl': 3.43.2
-      '@fallow-cli/win32-arm64-msvc': 3.43.2
-      '@fallow-cli/win32-x64-msvc': 3.43.2
+      '@fallow-cli/darwin-arm64': 3.44.0
+      '@fallow-cli/darwin-x64': 3.44.0
+      '@fallow-cli/linux-arm64-gnu': 3.44.0
+      '@fallow-cli/linux-arm64-musl': 3.44.0
+      '@fallow-cli/linux-x64-gnu': 3.44.0
+      '@fallow-cli/linux-x64-musl': 3.44.0
+      '@fallow-cli/win32-arm64-msvc': 3.44.0
+      '@fallow-cli/win32-x64-msvc': 3.44.0
 
   fast-deep-equal@3.1.3: {}
 
