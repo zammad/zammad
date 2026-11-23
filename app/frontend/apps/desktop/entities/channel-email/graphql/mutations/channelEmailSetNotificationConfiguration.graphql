@@ -1,8 +1,13 @@
 mutation channelEmailSetNotificationConfiguration(
   $outboundConfiguration: ChannelEmailOutboundConfigurationInput!
+  $testAddress: String
 ) {
-  channelEmailSetNotificationConfiguration(outboundConfiguration: $outboundConfiguration) {
+  channelEmailSetNotificationConfiguration(
+    outboundConfiguration: $outboundConfiguration
+    testAddress: $testAddress
+  ) {
     success
+    refused
     errors {
       ...errors
     }

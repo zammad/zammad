@@ -2,12 +2,12 @@
 
 class Channel::Driver::MicrosoftGraphOutbound < Channel::Driver::BaseEmailOutbound
 
-  def deliver(options, attr, notification = false) # rubocop:disable Style/OptionalBooleanParameter
+  def deliver(options, attr, notification = false, system_bcc: true) # rubocop:disable Style/OptionalBooleanParameter
 
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    attr = prepare_message_attrs(attr, notification)
+    attr = prepare_message_attrs(attr, notification, system_bcc:)
 
     deliver_mail(attr, notification, MicrosoftGraphOutboundClient, options)
   end

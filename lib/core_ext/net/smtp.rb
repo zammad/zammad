@@ -1,6 +1,15 @@
 # rubocop:disable all
 module Net
   class SMTP
+    #
+    # ADD mark for an error of the session setup (greeting, EHLO, STARTTLS, login),
+    # which tells it from a reply to a mail
+    #
+    module SessionSetupError; end
+    #
+    # /ADD mark for an error of the session setup
+    #
+
     def do_start(helo_domain, user, secret, authtype)
       raise IOError, 'SMTP session already started' if @started
       if user || secret || authtype
@@ -46,6 +55,15 @@ module Net
 
       authenticate user, secret, (authtype || DEFAULT_AUTH_TYPE) if user
       @started = true
+    #
+    # ADD mark for an error of the session setup
+    #
+    rescue SMTPError => e
+      e.extend(SessionSetupError)
+      raise
+    #
+    # /ADD mark for an error of the session setup
+    #
     ensure
       unless @started
         # authentication failed, cancel connection.

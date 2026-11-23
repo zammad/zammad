@@ -6,12 +6,7 @@ class FormUpdater::Updater::GuidedSetup::EmailNotification < FormUpdater::Update
   end
 
   def resolve
-    if meta[:initial]
-      result['adapter'] = email_outbound_adapters
-      result['notification_sender'] = {
-        initialValue: Setting.get('notification_sender'),
-      }
-    end
+    result['adapter'] = email_outbound_adapters if meta[:initial]
 
     super
   end

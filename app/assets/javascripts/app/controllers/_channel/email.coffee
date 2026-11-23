@@ -908,6 +908,8 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
     @el.modal('hide')
 
 class ChannelEmailNotificationWizard extends App.ControllerWizardModal
+  @include App.EmailNotificationInternalOnly
+
   elements:
     '.modal-body': 'body'
   events:
@@ -915,7 +917,10 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
     'change [name="options::port"]':       'toggleSslVerifyVisibility'
     'change .js-outbound [name=adapter]':  'toggleOutboundAdapter'
     'submit .js-outbound':                 'probleOutbound'
+    'click  .js-internalOnlyConfirm':      'internalOnlyConfirm'
     'click  .js-close':                    'hide'
+    # Another server, port or account has to pass the usual check first.
+    'input  [name="options::host"], [name="options::port"], [name="options::user"], [name="options::password"]': 'internalOnlyReset'
 
   constructor: ->
     super
@@ -960,6 +965,7 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
     super
 
     @html App.view('channel/email_notification_wizard')()
+    @internalOnlyRender()
     @showSlide('js-outbound')
 
     # outbound
@@ -976,25 +982,26 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
     )
     @toggleOutboundAdapter()
 
-  toggleOutboundAdapter: =>
+  toggleOutboundAdapter: (e, params = @account.outbound) =>
+    @internalOnlyReset() if e
 
     # show used backend
     @el.find('.base-outbound-settings').html('')
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
-      configureAttributesOutbound = [
+      configureAttributesOutbound = @internalOnlyAttributes([
         { name: 'options::host',       display: __('Host'),     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
         { name: 'options::user',       display: __('User'),     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
         { name: 'options::password',   display: __('Password'), tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'new-password', single: true },
         { name: 'options::port',       display: __('Port'),     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
         { name: 'options::ssl_verify', display: __('SSL verification'), tag: 'boolean', default: true, null: true, translate: true, item_class: 'formGroup--halfSize' },
-      ]
+      ])
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
         model:
           configure_attributes: configureAttributesOutbound
           className: ''
-        params: @account.outbound
+        params: params
       )
 
   toggleSslVerifyVisibility: (e) ->
@@ -1051,12 +1058,14 @@ class ChannelEmailNotificationWizard extends App.ControllerWizardModal
           @showSlide('js-outbound')
           @showAlert('js-outbound', data.message_human || data.message)
           @showInvalidField('js-outbound', data.invalid_field)
+          @internalOnlyResult(data)
         @enable(e)
       error: (xhr) =>
         data = JSON.parse(xhr.responseText)
         @showSlide('js-outbound')
         @showAlert('js-outbound', data.message_human || data.message || data.error)
         @showInvalidField('js-outbound', data.invalid_field)
+        @internalOnlyResult(data)
         @enable(e)
     )
 

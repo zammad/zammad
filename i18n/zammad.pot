@@ -1038,7 +1038,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:610
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:197
-#: app/controllers/channels_email_controller.rb:237
+#: app/controllers/channels_email_controller.rb:232
 msgid "Account already exists!"
 msgstr ""
 
@@ -2574,20 +2574,20 @@ msgstr ""
 msgid "Authentication Token"
 msgstr ""
 
-#: lib/email_helper/probe.rb:275
+#: lib/email_helper/probe.rb:290
 msgid "Authentication failed due to incorrect credentials."
 msgstr ""
 
-#: lib/email_helper/probe.rb:273
+#: lib/email_helper/probe.rb:288
 msgid "Authentication failed due to incorrect username."
 msgstr ""
 
 #: app/controllers/import_otrs_controller.rb:17
-#: lib/email_helper/probe.rb:271
+#: lib/email_helper/probe.rb:286
 msgid "Authentication failed."
 msgstr ""
 
-#: lib/email_helper/probe.rb:276
+#: lib/email_helper/probe.rb:291
 msgid "Authentication not possible (not offered by the service)"
 msgstr ""
 
@@ -4445,16 +4445,16 @@ msgid "Context window size"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
-#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:57
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:77
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:18
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:19
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:101
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:108
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:46
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:544
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:547
 msgid "Continue"
 msgstr ""
 
@@ -5072,6 +5072,11 @@ msgstr ""
 
 #: app/models/core_workflow.rb:91
 msgid "Custom module '%s' is not available."
+msgstr ""
+
+#: app/assets/javascripts/app/lib/mixins/email_notification_internal_only.coffee:30
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:51
+msgid "Custom verification email"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
@@ -6784,6 +6789,11 @@ msgstr ""
 msgid "Does not exist"
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:2
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:161
+msgid "Does this email server only deliver to internal recipients?"
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb:1832
 msgid "Domain"
 msgstr ""
@@ -7247,7 +7257,7 @@ msgstr ""
 msgid "Email Notification"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:17
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:22
 msgid "Email Notifications"
 msgstr ""
 
@@ -7287,7 +7297,7 @@ msgid "Email inbound"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:94
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:30
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:38
 msgid "Email notification"
 msgstr ""
 
@@ -8317,7 +8327,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:42
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:121
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:123
 msgid "Filter"
 msgstr ""
 
@@ -8733,6 +8743,7 @@ msgstr ""
 msgid "Gateway"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:128
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:136
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee:91
 msgid "General communication error, maybe internet is not available!"
@@ -8914,7 +8925,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco:8
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:20
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:25
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:16
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:16
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:27
 #: app/assets/javascripts/app/views/import/index.jst.eco:18
@@ -9445,13 +9456,13 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:416
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:334
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:80
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:67
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:74
 #: app/assets/javascripts/app/controllers/knowledge_base/video_servers_manager.coffee:80
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:73
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:29
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:11
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:107
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:63
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:68
 msgid "Host"
 msgstr ""
 
@@ -10131,6 +10142,10 @@ msgstr ""
 
 #: app/models/object_manager/attribute.rb:714
 msgid "Internal attributes cannot be deleted"
+msgstr ""
+
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:186
+msgid "Internal email server"
 msgstr ""
 
 #: app/frontend/shared/errors/useErrorHandler.ts:33
@@ -13323,10 +13338,6 @@ msgstr ""
 msgid "Notification read"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:39
-msgid "Notification sender"
-msgstr ""
-
 #: app/frontend/apps/desktop/components/CommonHistoryFlyout/event-actions/notified.ts:31
 msgid "Notification sent to"
 msgstr ""
@@ -14224,7 +14235,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:381
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:10
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:82
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:76
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:44
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:8
 #: app/assets/javascripts/app/models/webhook.coffee:13
@@ -14237,7 +14248,7 @@ msgstr ""
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:43
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:41
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:127
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:83
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:89
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:116
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:48
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
@@ -14567,6 +14578,7 @@ msgid "Please enter a valid JSON string."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:342
+#: app/services/service/system/check_and_set_email_notification_configuration.rb:52
 msgid "Please enter a valid email address."
 msgstr ""
 
@@ -14597,6 +14609,11 @@ msgstr ""
 
 #: app/services/service/system/import/apply_otrs_configuration.rb:82
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
+msgstr ""
+
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:6
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:176
+msgid "Please note that an internal-only email server may fail to deliver password reset, new device and similar system emails to recipients outside the organization."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft_graph.coffee:35
@@ -14685,9 +14702,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:421
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:85
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:70
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:77
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:159
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:93
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:99
 msgid "Port"
 msgstr ""
 
@@ -16110,7 +16127,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:420
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:733
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:84
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:71
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:78
 #: app/assets/javascripts/app/models/webhook.coffee:10
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:54
 #: app/assets/javascripts/app/views/integration/gitlab.jst.eco:18
@@ -16118,7 +16135,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:31
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco:2
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:145
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:104
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:110
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:62
 msgid "SSL verification"
 msgstr ""
@@ -16205,7 +16222,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:140
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:108
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:186
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:122
 msgid "Save and continue"
 msgstr ""
@@ -16906,7 +16923,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:56
 msgid "Send Mails via"
 msgstr ""
 
@@ -16938,7 +16955,7 @@ msgstr ""
 msgid "Send invitation"
 msgstr ""
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:48
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:53
 msgid "Send mails via"
 msgstr ""
 
@@ -17661,7 +17678,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:10
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:127
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:18
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:133
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:94
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:65
@@ -19014,7 +19031,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:281
+#: lib/email_helper/probe.rb:296
 msgid "The connection was refused."
 msgstr ""
 
@@ -19240,7 +19257,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:277
+#: lib/email_helper/probe.rb:292
 msgid "The hostname could not be found."
 msgstr ""
 
@@ -20246,7 +20263,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:279
+#: lib/email_helper/probe.rb:294
 msgid "There is no route to this host."
 msgstr ""
 
@@ -20596,7 +20613,7 @@ msgstr ""
 msgid "This group's children would exceed the allowed nesting depth."
 msgstr ""
 
-#: lib/email_helper/probe.rb:280
+#: lib/email_helper/probe.rb:295
 msgid "This host cannot be reached."
 msgstr ""
 
@@ -21851,9 +21868,9 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:287
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:89
-#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:48
+#: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:49
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:71
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:10
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:11
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:31
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:5
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:13
@@ -21971,8 +21988,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:108
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:237
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:239
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Type"
 msgstr ""
@@ -22577,7 +22594,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:68
 #: app/assets/javascripts/app/controllers/cti.coffee:3
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:81
-#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:68
+#: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:75
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:93
 #: app/assets/javascripts/app/controllers/user.coffee:3
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:2
@@ -22596,7 +22613,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/session.jst.eco:8
 #: app/frontend/apps/desktop/components/Search/plugins/user.ts:14
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:117
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:73
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:79
 #: app/frontend/apps/desktop/pages/user/components/UserDetailTopBar/TopBarHeaderFull.vue:24
 #: app/frontend/apps/desktop/pages/user/components/UserDetailViewContent.vue:42
 #: app/frontend/apps/desktop/pages/user/routes.ts:9
@@ -22901,7 +22918,7 @@ msgid "Verify sending and receiving"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:163
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:89
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:142
 msgid "Verifying and saving your configuration…"
 msgstr ""
 
@@ -22925,7 +22942,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:53
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:30
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:47
-#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:28
+#: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:29
 msgid "Verifying…"
 msgstr ""
 
@@ -23408,9 +23425,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:631
 #: app/assets/javascripts/app/controllers/tag.coffee:147
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
+#: app/assets/javascripts/app/views/channel/email_notification_internal_only.jst.eco:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:100
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:67
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:169
 msgid "Yes"
 msgstr ""
 
@@ -25070,6 +25089,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:10
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:23
 #: app/assets/javascripts/app/models/public_link.coffee:10
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:140
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:55
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
@@ -25664,6 +25684,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22
 #: app/assets/javascripts/app/models/group.coffee:9
 #: app/assets/javascripts/app/models/public_link.coffee:10
+#: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:187
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:48

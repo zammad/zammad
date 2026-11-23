@@ -3,5 +3,5 @@
 import type { EmailOutboundData } from './email-inbound-outbound.ts'
 
 export type EmailNotificationData = EmailOutboundData & {
-  notification_sender: string
+  testAddress?: string
 }

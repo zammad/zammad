@@ -170,7 +170,7 @@
           </div>
 
           <table class="key-value">
-          <% if channel.options.outbound && channel.options.outbound.options: %>
+          <% if channel.options.outbound.adapter is 'smtp' and channel.options.outbound.options: %>
             <tr>
               <td><%- @T('User') %>
               <td><%= channel.options.outbound.options.user %>
@@ -181,6 +181,11 @@
             <tr>
               <td><%- @T('Protocol') %>
               <td><%= channel.options.outbound.adapter %>
+          <% if channel.options.outbound.adapter is 'smtp' and channel.options.outbound.internal_only: %>
+            <tr>
+              <td><%- @T('Internal email server') %>
+              <td><%- @T('yes') %>
+          <% end %>
           </table>
 
           <% if channel.status_in is 'error': %>

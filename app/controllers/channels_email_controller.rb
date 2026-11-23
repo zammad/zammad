@@ -209,8 +209,6 @@ class ChannelsEmailController < ApplicationController
 
     adapter = params[:adapter].downcase
 
-    email = Setting.get('notification_sender')
-
     channel = Channel
       .where(area: 'Email::Notification')
       .find { |elem| elem.options.dig(:outbound, :adapter).casecmp?(adapter) }
@@ -218,17 +216,12 @@ class ChannelsEmailController < ApplicationController
     original_options = channel&.options&.dig(:outbound)
     unmasked_params  = unmask_sensitive_params(params.permit!.to_h, original_options)
 
-    # connection test
-    result = EmailHelper::Probe.outbound(unmasked_params, email)
-
-    # save settings
-    if result[:result] == 'ok'
-      Service::System::SetEmailNotificationConfiguration
-        .execute(
-          adapter:,
-          new_configuration: unmasked_params[:options].to_h
-        )
-    end
+    result = Service::System::CheckAndSetEmailNotificationConfiguration
+      .execute(
+        adapter:,
+        new_configuration: unmasked_params[:options].to_h,
+        test_address:      params[:test_address],
+      )
 
     render json: mask_sensitive_values(result, nil)
   end

@@ -15,7 +15,6 @@ import {
 } from '#shared/graphql/types.ts'
 
 import { mockChannelEmailSetNotificationConfigurationMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailSetNotificationConfiguration.mocks.ts'
-import { mockChannelEmailValidateConfigurationOutboundMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationOutbound.mocks.ts'
 import { mockEmailAddressesQuery } from '#desktop/entities/email-addresses/graphql/queries/emailAddresses.mocks.ts'
 
 import { mockSystemImportStartMutation } from '../graphql/mutations/systemImportStart.mocks.ts'
@@ -170,17 +169,7 @@ describe('testing admin password request a11y', () => {
               },
             ],
           },
-          notification_sender: {
-            initialValue: 'Zammad Helpdesk <noreply@zammad.example.com>',
-          },
         },
-      },
-    })
-
-    mockChannelEmailValidateConfigurationOutboundMutation({
-      channelEmailValidateConfigurationOutbound: {
-        success: true,
-        errors: null,
       },
     })
 

@@ -33,7 +33,7 @@ module Gql::Mutations
 
       # field specific error(s)
       probe_result[:invalid_field].map do |key, _v|
-        { message: error_message, field: [field_prefix, key].join('.') }
+        { message: error_message, field: [field_prefix, key.to_s.camelize(:lower)].join('.') }
       end
     end
   end

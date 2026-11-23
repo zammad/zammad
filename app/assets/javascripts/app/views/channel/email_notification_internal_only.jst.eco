@@ -1,0 +1,7 @@
+<div class="alert alert--info vertical hide js-internalOnlyQuestion" role="alert">
+  <span id="email-notification-internal-only-question"><%- @T('Does this email server only deliver to internal recipients?') %></span>
+  <button class="alert-link js-internalOnlyConfirm" type="button" aria-describedby="email-notification-internal-only-question"><%- @T('Yes') %></button>
+</div>
+<div class="alert alert--info hide js-internalOnlyNote" role="alert">
+  <%- @T('Please note that an internal-only email server may fail to deliver password reset, new device and similar system emails to recipients outside the organization.') %>
+</div>

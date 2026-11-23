@@ -9293,6 +9293,17 @@ a.list-group-item.active > .badge,
       margin-top: 3px;
     }
   }
+
+  .alert-link {
+    align-self: flex-end;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 
 .tags,

@@ -8,7 +8,12 @@ import { useForm } from '#shared/components/Form/useForm.ts'
 import type { EmailOutboundData } from '../types/email-inbound-outbound.ts'
 import type { ShallowRef } from 'vue'
 
-export const useEmailOutboundForm = () => {
+interface EmailOutboundFormOptions {
+  // Only for a form which opts in, the other forms built from this schema stay as they are.
+  smtpFieldsAfterHost?: FormSchemaField[]
+}
+
+export const useEmailOutboundForm = (options: EmailOutboundFormOptions = {}) => {
   const formEmailOutbound: ShallowRef<FormRef | undefined> = shallowRef()
 
   const { updateFieldValues, values, formSetErrors, onChangedField } =
@@ -68,6 +73,7 @@ export const useEmailOutboundForm = () => {
                   },
                   required: true,
                 },
+                ...(options.smtpFieldsAfterHost ?? []),
                 {
                   name: 'user',
                   label: __('User'),
@@ -125,6 +131,7 @@ export const useEmailOutboundForm = () => {
     formEmailOutbound,
     emailOutboundSchema,
     emailOutboundFormChangeFields,
+    onEmailOutboundChangedField: onChangedField,
     updateEmailOutboundFieldValues: updateFieldValues,
     formEmailOutboundSetErrors: formSetErrors,
     formEmailOutboundValues: values,

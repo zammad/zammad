@@ -4,12 +4,12 @@ class Channel::Driver::Sendmail < Channel::Driver::BaseEmailOutbound
   include Channel::EmailHelper
 
   # Sends a message via Sendmail
-  def deliver(_options, attr, notification = false)
+  def deliver(_options, attr, notification = false, system_bcc: true)
 
     # return if we run import mode
     return if Setting.get('import_mode')
 
-    attr = prepare_message_attrs(attr, notification)
+    attr = prepare_message_attrs(attr, notification, system_bcc:)
 
     deliver_mail(attr, notification)
   end

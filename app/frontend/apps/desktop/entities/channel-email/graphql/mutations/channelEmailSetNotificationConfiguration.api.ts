@@ -5,11 +5,13 @@ import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/er
 import * as VueApolloComposable from '@vue/apollo-composable';
 
 export const ChannelEmailSetNotificationConfigurationDocument = gql`
-    mutation channelEmailSetNotificationConfiguration($outboundConfiguration: ChannelEmailOutboundConfigurationInput!) {
+    mutation channelEmailSetNotificationConfiguration($outboundConfiguration: ChannelEmailOutboundConfigurationInput!, $testAddress: String) {
   channelEmailSetNotificationConfiguration(
     outboundConfiguration: $outboundConfiguration
+    testAddress: $testAddress
   ) {
     success
+    refused
     errors {
       ...errors
     }

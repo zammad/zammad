@@ -27,5 +27,15 @@ RSpec.shared_examples 'using BCC' do
         channel.deliver({}, false)
       end
     end
+
+    context 'when the email is to go without BCC' do
+      it 'does not add BCC to the message' do
+        expect_any_instance_of(described_class)
+          .to receive(:deliver_mail)
+          .with(hash_excluding(bcc: bcc_email), any_args)
+
+        described_class.new.deliver({}, {}, system_bcc: false)
+      end
+    end
   end
 end

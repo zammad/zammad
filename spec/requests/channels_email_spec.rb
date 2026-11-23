@@ -483,4 +483,131 @@ RSpec.describe 'Email channel API endpoints', type: :request do
       end
     end
   end
+
+  describe 'POST /api/v1/channels_email_notification', aggregate_failures: true, authenticated_as: :user do
+    let(:user) { create(:admin) }
+    let(:params) do
+      {
+        adapter: 'smtp',
+        options: {
+          host:       'smtp.example.com',
+          port:       587,
+          user:       'some@example.com',
+          password:   'xyz',
+          ssl_verify: true,
+        },
+      }
+    end
+
+    let(:service_result) { { result: 'ok' } }
+    let(:smtp_channel) do
+      Channel.where(area: 'Email::Notification').to_a.find { it.options.dig(:outbound, :adapter) == 'smtp' }
+    end
+
+    context 'with the service stubbed' do
+      before do
+        allow(Service::System::CheckAndSetEmailNotificationConfiguration).to receive(:execute).and_return(service_result)
+      end
+
+      it 'checks and saves the configuration' do
+        post '/api/v1/channels_email_notification', params: params, as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to eq('result' => 'ok')
+        expect(Service::System::CheckAndSetEmailNotificationConfiguration).to have_received(:execute).with(
+          adapter:           'smtp',
+          new_configuration: include('host' => 'smtp.example.com', 'password' => 'xyz'),
+          test_address:      nil,
+        )
+      end
+
+      it 'passes the test address on' do
+        post '/api/v1/channels_email_notification', params: params.merge(test_address: 'admin@example.com'), as: :json
+
+        expect(Service::System::CheckAndSetEmailNotificationConfiguration).to have_received(:execute).with(
+          include(test_address: 'admin@example.com'),
+        )
+      end
+
+      context 'when the server refused the test mail' do
+        let(:service_result) do
+          {
+            result:        'invalid',
+            settings:      { adapter: 'smtp', options: { host: 'smtp.example.com', password: 'xyz' } },
+            message:       'smtp.example.com: 554 5.7.1 Relay access denied',
+            message_human: nil,
+            invalid_field: {},
+            refused:       true,
+          }
+        end
+
+        it 'returns the refusal with the password masked' do
+          post '/api/v1/channels_email_notification', params: params, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(json_response).to include(
+            'result'  => 'invalid',
+            'refused' => true,
+            'message' => 'smtp.example.com: 554 5.7.1 Relay access denied',
+          )
+          expect(json_response.dig('settings', 'options', 'password')).to eq(SensitiveParamsHelper::SENSITIVE_MASK)
+        end
+      end
+
+      context 'with a masked password' do
+        before do
+          smtp_channel.options[:outbound][:options][:password] = 'stored_password'
+          smtp_channel.save!
+        end
+
+        it 'uses the stored password' do
+          post '/api/v1/channels_email_notification',
+               params: params.deep_merge(options: { password: SensitiveParamsHelper::SENSITIVE_MASK }), as: :json
+
+          expect(Service::System::CheckAndSetEmailNotificationConfiguration).to have_received(:execute).with(
+            include(new_configuration: include('password' => 'stored_password')),
+          )
+        end
+      end
+
+      context 'when user is not an admin' do
+        let(:user) { create(:agent) }
+
+        it 'is forbidden' do
+          post '/api/v1/channels_email_notification', params: params, as: :json
+
+          expect(response).to have_http_status(:forbidden)
+          expect(Service::System::CheckAndSetEmailNotificationConfiguration).not_to have_received(:execute)
+        end
+      end
+
+      context 'when the system is a hosted one' do
+        before { Setting.set('system_online_service', true) }
+
+        it 'is forbidden' do
+          post '/api/v1/channels_email_notification', params: params, as: :json
+
+          expect(response).to have_http_status(:forbidden)
+          expect(Service::System::CheckAndSetEmailNotificationConfiguration).not_to have_received(:execute)
+        end
+      end
+    end
+
+    context 'when the request claims the sender to be internal-only' do
+      before do
+        allow(EmailHelper::Probe).to receive(:outbound).and_return({ result: 'ok' })
+      end
+
+      it 'saves the sender as not internal-only' do
+        post '/api/v1/channels_email_notification',
+             params: params.merge(internal_only: true).deep_merge(options: { internal_only: true }), as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(smtp_channel.reload).to have_attributes(
+          active:  true,
+          options: include(outbound: include(internal_only: false)),
+        )
+      end
+    end
+  end
 end

@@ -3,12 +3,14 @@
 class Channel::Driver::BaseEmailOutbound
   include Channel::EmailHelper
 
-  def deliver(_options, _attr, _notification = false) # rubocop:disable Style/OptionalBooleanParameter
+  def deliver(_options, _attr, _notification = false, system_bcc: true) # rubocop:disable Style/OptionalBooleanParameter
     raise 'not implemented'
   end
 
-  def prepare_message_attrs(attr, notification)
-    prepare_bcc_header(attr) if !notification
+  # A notification never carries the BCC of the system. An email that is sent in its place, but with
+  #   every error raised, leaves it out with system_bcc: false.
+  def prepare_message_attrs(attr, notification, system_bcc: true)
+    prepare_bcc_header(attr) if system_bcc && !notification
     prepare_idn_outbound(attr)
   end
 

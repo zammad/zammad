@@ -32,13 +32,13 @@ class Channel::Driver::Smtp < Channel::Driver::BaseEmailOutbound
   #  mail_attributes,
   #  notification
   # )
-  def deliver(options, attr, notification = false) # rubocop:disable Style/OptionalBooleanParameter
+  def deliver(options, attr, notification = false, system_bcc: true) # rubocop:disable Style/OptionalBooleanParameter
     # return if we run import mode
     return if Setting.get('import_mode')
 
     options = prepare_options(options, attr)
 
-    attr = prepare_message_attrs(attr, notification)
+    attr = prepare_message_attrs(attr, notification, system_bcc:)
 
     smtp_params = build_smtp_params(options)
 

@@ -517,6 +517,10 @@ describe('guided setup manual channel email', () => {
 
       expect(outboundForm).toBeVisible()
       expect(view.getByRole('button', { name: 'Save and continue' })).toBeInTheDocument()
+
+      // An email account has no internal-only route, unlike the notification sender.
+      expect(getByLabelText(outboundForm, 'Host')).toBeInTheDocument()
+      expect(queryByLabelText(outboundForm, 'Custom verification email')).not.toBeInTheDocument()
     })
 
     it('can show outbound configuration form when roundtrip is unsuccessful', async () => {

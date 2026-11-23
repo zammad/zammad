@@ -78,6 +78,24 @@ RSpec.describe Service::System::SetEmailNotificationConfiguration do
           active: false
         )
     end
+
+    it 'saves the sender as not internal-only' do
+      expect(channel_by_adapter('smtp').options.dig(:outbound, :internal_only)).to be(false)
+    end
+
+    context 'when the sender is internal-only' do
+      subject(:service_result) { described_class.execute(adapter:, new_configuration:, internal_only: true) }
+
+      it 'saves the sender as internal-only' do
+        expect(channel_by_adapter('smtp').options.dig(:outbound, :internal_only)).to be(true)
+      end
+
+      it 'clears the flag on the next save without it' do
+        described_class.execute(adapter:, new_configuration:)
+
+        expect(channel_by_adapter('smtp').options.dig(:outbound, :internal_only)).to be(false)
+      end
+    end
   end
 
   def channel_by_adapter(adapter)

@@ -4299,6 +4299,18 @@
               "deprecationReason": null
             },
             {
+              "name": "refused",
+              "description": "Did the mail server refuse the test email of the usual check? A check with a test address may follow.",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "success",
               "description": "Was the operation successful?",
               "args": [],
@@ -15612,11 +15624,11 @@
             },
             {
               "name": "channelEmailSetNotificationConfiguration",
-              "description": "Set confioguration for sending system notification emails",
+              "description": "Check the configuration for sending system notification emails with a test email and save it",
               "args": [
                 {
                   "name": "outboundConfiguration",
-                  "description": "Configuration to validate",
+                  "description": "Configuration to check and save",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
@@ -15625,6 +15637,16 @@
                       "name": "ChannelEmailOutboundConfigurationInput",
                       "ofType": null
                     }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "testAddress",
+                  "description": "Recipient of the test email for a mail server which only delivers to internal recipients",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
                   },
                   "defaultValue": null
                 }

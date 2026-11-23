@@ -123,6 +123,40 @@ instead.
 
 ## 7.4
 
+### The outbound check of email channels no longer accepts rejected test emails
+
+**Who is affected?** Admins whose mail server answers the test email of the outbound check with
+"Recipient address rejected" or "Sender address rejected: Domain not found", for the notification sender
+or for an email account, and API clients that run this check.
+
+When an outbound configuration is saved, Zammad sends a test email to an external address. A server that
+refused this email with one of the two replies used to pass the check nevertheless. Both replies now
+count as a failure, like any other refusal:
+
+- For the notification sender ("Channels › Email › Email Notification" and the notification step of the
+  setup wizards), Zammad asks after such a refusal whether the server only delivers to internal
+  recipients. Once confirmed, the test email goes to an address the admin enters, and the sender is saved
+  as internal-only when the server accepts that email.
+- For email accounts, there is no such option. The outbound check fails, and the automatic detection of
+  the account settings skips a server that answers this way.
+
+Saved configurations are not checked again by the update, the change shows the next time one of them is
+saved.
+
+API clients see the change in the response of `POST /api/v1/channels_email_outbound` and
+`POST /api/v1/channels_email_notification`. Both used to answer such a refusal with `"result": "ok"` and
+the reply of the server in `notice`. They now answer with `"result": "invalid"`, the reply in `message`
+and `"refused": true`, and no longer return `notice`. `POST /api/v1/channels_email_notification` takes
+the address for the check of an internal-only server as `test_address`.
+
+⚠️ For a notification sender on a server that only delivers to internal recipients, confirm the question
+and enter an address the server delivers to. For an email account, use a server that accepts email to
+external recipients. A rejected sender domain is not solved by another recipient: use a sender address
+with a resolvable domain. In an API client, treat `"result": "invalid"` of the two endpoints as a failed
+check and stop reading `notice`.
+
+**Related issue:** [#5937](https://github.com/zammad/zammad/issues/5937)
+
 ### Switching into another user's session requires the `admin.user` permission
 
 **Who is affected?** Admins of systems that gave the `admin.session` permission to a role without

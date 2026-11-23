@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 class Service::System::SetEmailNotificationConfiguration < Service::Base
+  attr_reader :adapter, :new_configuration, :internal_only
+
   # Setup Email Notification channel configuration
   #
   # @param [String] adapter sendmail or smtp
@@ -11,9 +13,11 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
   # @option new_configuration [String] :user login of SMTP server
   # @option new_configuration [String] :password of SMTP server
   # @option new_configuration [Boolean] :ssl_verify Wether SSL verification is performed
-  def initialize(adapter:, new_configuration:)
-    @adapter = adapter
+  # @param [Boolean] internal_only whether the server was verified with a recipient of the admin's choice
+  def initialize(adapter:, new_configuration:, internal_only: false)
+    @adapter           = adapter
     @new_configuration = new_configuration
+    @internal_only     = internal_only
   end
 
   def execute
@@ -34,15 +38,16 @@ class Service::System::SetEmailNotificationConfiguration < Service::Base
   private
 
   def update_single_channel(channel)
-    is_matching_adapter = @adapter.casecmp? channel.options.dig(:outbound, :adapter)
+    is_matching_adapter = adapter.casecmp? channel.options.dig(:outbound, :adapter)
 
     channel.active = is_matching_adapter
 
     if is_matching_adapter
       channel.options = {
         outbound: {
-          adapter: @adapter,
-          options: @new_configuration,
+          adapter:       adapter,
+          options:       new_configuration,
+          internal_only: internal_only,
         },
       }
 

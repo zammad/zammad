@@ -2,6 +2,9 @@
 
 class EmailHelper
   class Probe
+    # Servers refuse a recipient with temporary and permanent codes alike, so every negative reply to
+    #   the test mail counts, except 42x (the server closes the connection) and 43x, 53x (a missing login).
+    OUTBOUND_REFUSAL_CODES = [400..419, 440..499, 500..529, 540..599].freeze
 
     #
     # Try to guess email channel configuration from basic user data.
@@ -172,7 +175,12 @@ class EmailHelper
     #
     # Validate an outbound email channel configuration.
     #
-    def self.outbound(params, email, subject = nil)
+    # system_bcc: false leaves the BCC of the system out of the test mail, for a sender whose mails
+    #   never carry it.
+    def self.outbound(params, email, subject = nil, recipient: nil, system_bcc: true)
+      recipient = recipient.presence
+
+      raise ArgumentError, 'subject and recipient cannot be combined' if subject && recipient
 
       adapter = params[:adapter].downcase
 
@@ -184,23 +192,7 @@ class EmailHelper
         }
       end
 
-      # prepare test email
-      # rubocop:disable-next Zammad/DetectTranslatableString
-      mail = if subject
-               {
-                 from:    email,
-                 to:      email,
-                 subject: "Zammad Getting started Test Email #{subject}",
-                 body:    "This is a test email from Zammad to check if email sending and receiving work correctly.\n\nYou can ignore or delete this email.",
-               }
-             else
-               {
-                 from:    email,
-                 to:      'verify-external-smtp-sending@discard.zammad.org',
-                 subject: 'This is a Test Email',
-                 body:    "This is a test email from Zammad to verify if Zammad can send emails to an external address.\n\nIf you see this email, you can ignore or delete it.",
-               }
-             end
+      mail = outbound_test_mail(email, subject, recipient)
 
       if subject.present?
         mail['X-Zammad-Test-Message'] = subject
@@ -221,39 +213,77 @@ class EmailHelper
         driver_instance.deliver(
           params[:options],
           mail,
+          system_bcc:,
         )
       rescue => e
         Rails.logger.debug { e }
 
-        # check if sending email was ok, but mailserver rejected
-        if !subject
-          white_map = {
-            'Recipient address rejected'                => true,
-            'Sender address rejected: Domain not found' => true,
-          }
-          white_map.each_key do |key|
+        reply_error = outbound_reply_error(e)
+        message     = outbound_error_message(e, reply_error, params.dig(:options, :host))
 
-            next if !e.message.match?(%r{#{Regexp.escape(key)}}i)
-
-            return {
-              result:   'ok',
-              settings: params,
-              notice:   e.message,
-            }
-          end
-        end
-
-        return {
+        result = {
           result:        'invalid',
           settings:      params,
-          message:       e.message,
-          message_human: translation(e.message),
-          invalid_field: invalid_field(e.message),
+          message:       message,
+          message_human: translation(message),
+          invalid_field: invalid_field(message),
         }
+        result[:refused] = true if outbound_refused?(reply_error)
+
+        return result
       end
       {
         result: 'ok',
       }
+    end
+
+    # rubocop:disable-next Zammad/DetectTranslatableString
+    def self.outbound_test_mail(email, subject, recipient)
+      if subject
+        return {
+          from:    email,
+          to:      email,
+          subject: "Zammad Getting started Test Email #{subject}",
+          body:    "This is a test email from Zammad to check if email sending and receiving work correctly.\n\nYou can ignore or delete this email.",
+        }
+      end
+
+      body = if recipient
+               'This is a test email from Zammad to verify if Zammad can send emails to this address.'
+             else
+               'This is a test email from Zammad to verify if Zammad can send emails to an external address.'
+             end
+
+      {
+        from:    email,
+        to:      recipient || 'verify-external-smtp-sending@discard.zammad.org',
+        subject: 'This is a Test Email',
+        body:    "#{body}\n\nIf you see this email, you can ignore or delete it.",
+      }
+    end
+
+    # The driver re-raises with a plain message, and a QUIT that fails after a negative reply raises an
+    #   error of its own. So the reply that ended the session is the earliest error of Net::SMTP among the causes.
+    def self.outbound_reply_error(error)
+      errors = Enumerator.produce(error, &:cause).take_while(&:itself)
+
+      errors.rfind { |candidate| candidate.is_a?(Net::SMTPError) && candidate.response }
+    end
+
+    # After a failed QUIT the driver names that failure, so the reply of the server takes its place.
+    def self.outbound_error_message(error, reply_error, host)
+      return error.message if !reply_error || [error, error.cause].any? { |named| named.equal?(reply_error) }
+
+      "#{host}: #{reply_error.message}"
+    end
+
+    def self.outbound_refused?(reply_error)
+      # A reply of the session setup means that the connection or the login failed, whatever its code.
+      return false if !reply_error || reply_error.is_a?(Net::SMTP::SessionSetupError)
+
+      code = reply_error.response.status.to_i
+
+      OUTBOUND_REFUSAL_CODES.any? { |range| range.include?(code) }
     end
 
     def self.invalid_field(message_backend)

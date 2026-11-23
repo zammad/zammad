@@ -1,9 +1,14 @@
 class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
+  @include App.EmailNotificationInternalOnly
+
   events:
     'change .js-outbound [name=adapter]':  'toggleOutboundAdapter'
     'change [name="options::port"]':       'toggleSslVerifyVisibility'
     'change [name="options::ssl_verify"]': 'toggleSslVerifyAlert'
     'submit .js-outbound':                 'submit'
+    'click  .js-internalOnlyConfirm':      'internalOnlyConfirm'
+    # Another server, port or account has to pass the usual check first.
+    'input  [name="options::host"], [name="options::port"], [name="options::user"], [name="options::password"]': 'internalOnlyReset'
 
   constructor: ->
     super
@@ -46,6 +51,7 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
 
   render: =>
     @replaceWith App.view('getting_started/email_notification')()
+    @internalOnlyRender()
     configureAttributesOutbound = [
       { name: 'adapter', display: __('Send Mails via'), tag: 'select', multiple: false, null: false, options: @channelDriver.email.outbound, translate: true },
     ]
@@ -57,24 +63,26 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
     )
     @toggleOutboundAdapter()
 
-  toggleOutboundAdapter: =>
+  toggleOutboundAdapter: (e, params) =>
+    @internalOnlyReset() if e
 
     # show used backend
     @el.find('.base-outbound-settings').html('')
     adapter = @$('.js-outbound [name=adapter]').val()
     if adapter is 'smtp'
-      configureAttributesOutbound = [
+      configureAttributesOutbound = @internalOnlyAttributes([
         { name: 'options::host',       display: __('Host'),     tag: 'input', type: 'text',     limit: 120, null: false, autocapitalize: false, autofocus: true },
         { name: 'options::user',       display: __('User'),     tag: 'input', type: 'text',     limit: 120, null: true, autocapitalize: false, autocomplete: 'off' },
         { name: 'options::password',   display: __('Password'), tag: 'input', type: 'password', limit: 120, null: true, autocapitalize: false, autocomplete: 'off', single: true },
         { name: 'options::port',       display: __('Port'),     tag: 'input', type: 'text',     limit: 6,   null: true, autocapitalize: false, item_class: 'formGroup--halfSize' },
         { name: 'options::ssl_verify', display: __('SSL verification'), tag: 'boolean', default: true, null: true, translate: true, item_class: 'formGroup--halfSize' },
-      ]
+      ])
       @form = new App.ControllerForm(
         el:    @$('.base-outbound-settings')
         model:
           configure_attributes: configureAttributesOutbound
           className: ''
+        params: params
       )
 
   submit: (e) =>
@@ -110,12 +118,19 @@ class GettingStartedEmailNotification extends App.ControllerWizardFullScreen
           @showSlide('js-outbound')
           @showAlert('js-outbound', data.message_human || data.message )
           @showInvalidField('js-outbound', data.invalid_field)
+          @internalOnlyResult(data)
           @enable(e)
 
-      fail: =>
+      # The reply to an error status may come without a JSON body, for example from a proxy whose
+      #   timeout the check outlasted.
+      error: (xhr) =>
+        details = xhr.responseJSON || {}
+        message = details.message_human || details.message || details.error || __('General communication error, maybe internet is not available!')
+
         @showSlide('js-outbound')
-        @showAlert('js-outbound', data.message_human || data.message )
-        @showInvalidField('js-outbound', data.invalid_field)
+        @showAlert('js-outbound', message)
+        @showInvalidField('js-outbound', details.invalid_field)
+        @internalOnlyResult(details)
         @enable(e)
     )
 

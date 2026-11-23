@@ -130,10 +130,11 @@ export type ChannelEmailGuessConfigurationMutation = { channelEmailGuessConfigur
 
 export type ChannelEmailSetNotificationConfigurationMutationVariables = Exact<{
   outboundConfiguration: Types.ChannelEmailOutboundConfigurationInput;
+  testAddress?: string | null | undefined;
 }>;
 
 
-export type ChannelEmailSetNotificationConfigurationMutation = { channelEmailSetNotificationConfiguration: { __typename: 'ChannelEmailSetNotificationConfigurationPayload', success: boolean | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
+export type ChannelEmailSetNotificationConfigurationMutation = { channelEmailSetNotificationConfiguration: { __typename: 'ChannelEmailSetNotificationConfigurationPayload', success: boolean | null | undefined, refused: boolean | null | undefined, errors: Array<{ __typename: 'UserError', message: string, messagePlaceholder: Array<string> | null | undefined, field: string | null | undefined, exception: Types.EnumUserErrorException | null | undefined }> | null | undefined } | null | undefined };
 
 export type ChannelEmailValidateConfigurationInboundMutationVariables = Exact<{
   inboundConfiguration: Types.ChannelEmailInboundConfigurationInput;

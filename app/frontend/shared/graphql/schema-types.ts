@@ -670,6 +670,8 @@ export type ChannelEmailSetNotificationConfigurationPayload = {
   __typename?: 'ChannelEmailSetNotificationConfigurationPayload';
   /** Errors encountered during execution of the mutation. */
   errors?: Maybe<Array<UserError>>;
+  /** Did the mail server refuse the test email of the usual check? A check with a test address may follow. */
+  refused?: Maybe<Scalars['Boolean']['output']>;
   /** Was the operation successful? */
   success?: Maybe<Scalars['Boolean']['output']>;
 };
@@ -2700,7 +2702,7 @@ export type Mutations = {
   channelEmailAdd?: Maybe<ChannelEmailAddPayload>;
   /** Try to guess email channel configuration from user credentials */
   channelEmailGuessConfiguration?: Maybe<ChannelEmailGuessConfigurationPayload>;
-  /** Set confioguration for sending system notification emails */
+  /** Check the configuration for sending system notification emails with a test email and save it */
   channelEmailSetNotificationConfiguration?: Maybe<ChannelEmailSetNotificationConfigurationPayload>;
   /** Validate an inbound email channel configuration by trying to fetch email */
   channelEmailValidateConfigurationInbound?: Maybe<ChannelEmailValidateConfigurationInboundPayload>;
@@ -3020,6 +3022,7 @@ export type MutationsChannelEmailGuessConfigurationArgs = {
 /** All available mutations */
 export type MutationsChannelEmailSetNotificationConfigurationArgs = {
   outboundConfiguration: ChannelEmailOutboundConfigurationInput;
+  testAddress?: InputMaybe<Scalars['String']['input']>;
 };
 
 
