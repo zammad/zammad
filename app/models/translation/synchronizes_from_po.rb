@@ -48,34 +48,37 @@ module Translation::SynchronizesFromPo
 
   class_methods do # rubocop:disable Metrics/BlockLength
 
-    def sync
+    # Locales with unchanged translation files are skipped, unless force is given.
+    def sync(force: false)
       Locale.to_sync.each do |locale|
+        checksum = po_files_checksum(locale.locale)
+        next if !force && locale.translation_files_checksum.eql?(checksum)
+
         ActiveRecord::Base.transaction do
           sync_locale_from_po locale.locale
+          locale.update!(translation_files_checksum: checksum)
         end
       end
     end
 
     def sync_locale_from_po(locale) # rubocop:disable Metrics/AbcSize
 
-      previous_translation_map = Translation.where(locale: locale).index_by(&:source)
+      # Work on plain attribute rows, records are only loaded for strings that really change.
+      previous_translations    = Translation.where(locale: locale).pluck(:id, :source, :target, :target_initial, :is_synchronized_from_codebase, :synchronized_from_translation_file)
+      previous_translation_map = previous_translations.index_by(&:second)
+      previous_unmodified_ids  = previous_translations.filter_map { |id, _source, target, target_initial, is_synchronized_from_codebase| id if is_synchronized_from_codebase && target.eql?(target_initial) }
 
-      previous_unmodified_translations = Translation.where(locale: locale, is_synchronized_from_codebase: true).select { |t| t.target.eql?(t.target_initial) }
-      updated_translation_ids = Set[]
+      present_translation_ids = Set[]
+      changed_entries         = {}
       importable_translations = []
 
-      strings_for_locale(locale).each_pair do |source, entry| # rubocop:disable Metrics/BlockLength
+      strings_for_locale(locale).each_pair do |source, entry|
 
-        next if entry.skip_sync?
+        next if entry.skip_sync? || entry_exceeds_maximum_length?(locale, source, entry)
 
-        if source.length > 3000 || entry.translation.length > 3000
-          Rails.logger.error "Cannot import translation for locale #{locale} because it exceeds maximum string length of 3000: source: '#{source}', translation: '#{entry.translation}'"
-          next
-        end
-
-        t = previous_translation_map[source]
+        id, _source, _target, target_initial, is_synchronized_from_codebase, synchronized_from_translation_file = previous_translation_map[source]
         # New string
-        if !t
+        if !id
           importable_translations << Translation.new(
             locale:                             locale,
             source:                             source,
@@ -90,24 +93,40 @@ module Translation::SynchronizesFromPo
         end
 
         # Existing string
-        # Only change the target if it was not modified by the user
-        t.target = entry.translation if t.target.eql? t.target_initial
+        present_translation_ids.add id
 
-        t.is_synchronized_from_codebase      = true
-        t.synchronized_from_translation_file = entry.translation_file
-        t.target_initial                     = entry.translation
+        next if is_synchronized_from_codebase && target_initial.eql?(entry.translation) && synchronized_from_translation_file.eql?(entry.translation_file)
 
-        if t.changed.present?
-          t.updated_by_id = 1
-          t.save!
-        end
-        updated_translation_ids.add t.id
+        changed_entries[id] = entry
       end
 
+      sync_changed_entries changed_entries
       Translation.bulk_import importable_translations
       # Remove any unmodified & synchronized strings that are not present in the data any more.
-      previous_unmodified_translations.reject { |t| updated_translation_ids.member? t.id }.each(&:destroy!)
+      Translation.where(id: previous_unmodified_ids.reject { |id| present_translation_ids.member? id }).find_each(&:destroy!)
       true
+    end
+
+    def entry_exceeds_maximum_length?(locale, source, entry)
+      return false if source.length <= 3000 && entry.translation.length <= 3000
+
+      Rails.logger.error "Cannot import translation for locale #{locale} because it exceeds maximum string length of 3000: source: '#{source}', translation: '#{entry.translation}'"
+      true
+    end
+
+    def sync_changed_entries(changed_entries)
+      Translation.where(id: changed_entries.keys).find_each do |translation|
+        entry = changed_entries[translation.id]
+
+        # Only change the target if it was not modified by the user
+        translation.target = entry.translation if translation.target.eql? translation.target_initial
+
+        translation.is_synchronized_from_codebase      = true
+        translation.synchronized_from_translation_file = entry.translation_file
+        translation.target_initial                     = entry.translation
+        translation.updated_by_id                      = 1
+        translation.save!
+      end
     end
 
     def cached_strings_for_locale(locale)
@@ -134,6 +153,13 @@ module Translation::SynchronizesFromPo
         end
       end
       result
+    end
+
+    # Covers the translation files of a locale and the synchronization code itself,
+    #   so that a changed import logic causes a new synchronization as well.
+    def po_files_checksum(locale)
+      files = ['app/models/translation/synchronizes_from_po.rb', *po_files_for_locale(locale)]
+      Digest::SHA256.hexdigest(files.map { |file| "#{file}:#{Digest::SHA256.file(Rails.root.join(file)).hexdigest}" }.join("\n"))
     end
 
     # Returns all po files for a locale with zammad.*.po as first entry,

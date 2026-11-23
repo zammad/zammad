@@ -251,6 +251,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string  :name,                limit: 255, null: false
       t.string  :dir,                 limit: 9,   null: false, default: 'ltr'
       t.boolean :active,                          null: false, default: true
+      t.string  :translation_files_checksum, limit: 64, null: true
       t.timestamps limit: 3, null: false
     end
     add_index :locales, [:locale], unique: true

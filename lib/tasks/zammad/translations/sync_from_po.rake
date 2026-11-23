@@ -4,10 +4,10 @@ namespace :zammad do
 
   namespace :translations do
 
-    desc 'Synchronize latest translations from i18n/*.po to the database.'
-    task sync: :environment do
+    desc 'Synchronize latest translations from i18n/*.po to the database. Pass "force" to include locales with unchanged files.'
+    task :sync, [:force] => :environment do |_task, args|
       puts 'Synchronizing the latest translations from i18n/*.po to the database...'
-      Translation.sync
+      Translation.sync(force: args[:force].eql?('force'))
       puts 'done.'
     end
   end

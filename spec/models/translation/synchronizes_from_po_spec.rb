@@ -220,7 +220,7 @@ RSpec.describe Translation, 'synchronizes_from_po' do
       CUSTOM_PO
 
       described_class.delete_all
-      described_class.sync
+      described_class.sync(force: true)
     end
 
     after :all do # rubocop:disable RSpec/BeforeAfterAll
@@ -281,4 +281,55 @@ RSpec.describe Translation, 'synchronizes_from_po' do
     end
   end
 
+  context 'when synchronizing all locales' do
+    before do
+      allow(described_class).to receive(:sync_locale_from_po)
+
+      Locale.to_sync.each do |locale|
+        locale.update!(translation_files_checksum: described_class.po_files_checksum(locale.locale))
+      end
+    end
+
+    context 'when the translation files did not change' do
+      it 'skips all locales' do
+        described_class.sync
+        expect(described_class).not_to have_received(:sync_locale_from_po)
+      end
+
+      it 'synchronizes all locales if forced', :aggregate_failures do
+        described_class.sync(force: true)
+        expect(described_class).to have_received(:sync_locale_from_po).with('en-us')
+        expect(described_class).to have_received(:sync_locale_from_po).with('de-de')
+      end
+    end
+
+    context 'when a locale was not synchronized yet' do
+      before do
+        Locale.find_by(locale: 'de-de').update!(translation_files_checksum: nil)
+      end
+
+      it 'synchronizes only this locale', :aggregate_failures do
+        described_class.sync
+        expect(described_class).to have_received(:sync_locale_from_po).once.with('de-de')
+        expect(described_class).not_to have_received(:sync_locale_from_po).with('en-us')
+        expect(Locale.find_by(locale: 'de-de').translation_files_checksum).to eq(described_class.po_files_checksum('de-de'))
+      end
+    end
+
+    context 'when a translation file was added for a locale' do
+      before do
+        FileUtils.copy(Rails.root.join('i18n/zammad.de-de.po'), Rails.root.join('i18n/testaddon.de-de.po'))
+      end
+
+      after do
+        FileUtils.remove(Rails.root.join('i18n/testaddon.de-de.po'))
+      end
+
+      it 'synchronizes only this locale', :aggregate_failures do
+        described_class.sync
+        expect(described_class).to have_received(:sync_locale_from_po).once.with('de-de')
+        expect(described_class).not_to have_received(:sync_locale_from_po).with('en-us')
+      end
+    end
+  end
 end
