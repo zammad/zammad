@@ -6681,7 +6681,6 @@ msgstr ""
 msgid "Dislikes count"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:58
 #: app/frontend/shared/components/CommonAlert/CommonAlert.vue:64
 msgid "Dismiss alert"
 msgstr ""
@@ -17404,7 +17403,7 @@ msgstr ""
 msgid "Show notifications"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
 msgid "Show original"
 msgstr ""
 
@@ -17919,7 +17918,7 @@ msgstr ""
 msgid "Started"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:207
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:240
 msgid "Started from %s"
 msgstr ""
 
@@ -19061,7 +19060,7 @@ msgstr ""
 msgid "The currently selected AI provider does not support embeddings."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:258
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:295
 msgid "The customer is typing"
 msgstr ""
 
@@ -21675,7 +21674,7 @@ msgstr ""
 msgid "Translate all articles"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:64
 msgid "Translate article"
 msgstr ""
 
@@ -21691,7 +21690,7 @@ msgstr ""
 msgid "Translated by AI, some formatting may be lost."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:186
 msgid "Translated text cannot be quoted. Show the original to quote it."
 msgstr ""
 
@@ -22121,7 +22120,7 @@ msgstr ""
 msgid "Unprocessable email"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:219
+#: app/frontend/apps/desktop/pages/chat/components/ChatThread.vue:256
 msgid "Unread messages"
 msgstr ""
 

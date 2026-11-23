@@ -366,7 +366,7 @@ describe('ArticleBubbleActionList', () => {
       expect(toggle).toHaveAttribute('aria-busy', 'true')
       expect(toggle).toHaveAttribute('aria-disabled', 'true')
       expect(toggle).toHaveAttribute('aria-pressed', 'false')
-      expect(toggle).toHaveClass('text-[#8E9299]!')
+      expect(toggle).toHaveClass('text-normal/50!')
 
       await wrapper.events.click(toggle)
 
@@ -397,22 +397,26 @@ describe('ArticleBubbleActionList', () => {
       )
     })
 
-    it('shows a failure, and puts it away on press', async () => {
+    // The article body names the failure and offers the retry.
+    it('is disabled and refuses the press after a failure', async () => {
       enableTranslation()
+      articleTranslation.isTranslationActive = () => true
       articleTranslation.translationFor = () => ({ status: 'error', error: 'Provider down' })
 
       const wrapper = renderArticleBubbleActionList({})
 
-      const toggle = await wrapper.findByRole('button', {
-        name: 'Dismiss alert',
-      })
+      const toggle = await wrapper.findByRole('button', { name: 'Translate article' })
+
+      expect(toggle).toHaveAttribute('aria-disabled', 'true')
+      expect(toggle).toHaveAttribute('aria-busy', 'false')
       expect(toggle).toHaveAttribute('aria-pressed', 'false')
-      expect(toggle).not.toHaveAttribute('aria-disabled')
-      expect(toggle).toHaveClass('border-red-500!', 'text-red-500!')
+      expect(toggle).toHaveClass('text-normal/50!')
+      expect(toggle).not.toHaveClass('border-red-500!')
+      expect(toggle).not.toHaveClass('text-red-500!')
 
       await wrapper.events.click(toggle)
 
-      expect(articleTranslation.showOriginal).toHaveBeenCalledTimes(1)
+      expect(articleTranslation.showOriginal).not.toHaveBeenCalled()
       expect(articleTranslation.showTranslation).not.toHaveBeenCalled()
     })
 
@@ -434,7 +438,7 @@ describe('ArticleBubbleActionList', () => {
 
       await expectState({ status: 'pending' }, 'Translate article')
       await expectState({ status: 'done', content: 'Hallo', translated: true }, 'Show original')
-      await expectState({ status: 'error', error: 'Provider down' }, 'Dismiss alert')
+      await expectState({ status: 'error', error: 'Provider down' }, 'Translate article')
       await expectState(undefined, 'Translate article')
     })
 
