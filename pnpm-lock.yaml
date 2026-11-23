@@ -424,8 +424,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2(pinia@4.0.3(@vue/devtools-api@8.2.1)(typescript@6.0.3)(vue@3.5.43(typescript@6.0.3)))
       '@sa11y/vitest':
-        specifier: ^8.3.1
-        version: 8.3.1(@types/node@26.2.0)(@vitest/browser-playwright@5.1.1)(@vitest/ui@5.1.1)(jsdom@31.0.1)(vite@8.3.8(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))
+        specifier: ^8.4.0
+        version: 8.4.0(@types/node@26.2.0)(@vitest/browser-playwright@5.1.1)(@vitest/ui@5.1.1)(jsdom@31.0.1)(vite@8.3.8(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))
       '@sinonjs/fake-timers':
         specifier: ^15.5.0
         version: 15.5.0
@@ -2518,28 +2518,28 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@sa11y/assert@8.3.1':
-    resolution: {integrity: sha512-L7vu+K/kKc8MNEsUbirraE7/DsyWWcEAMa+JjYW7RNIWZQ70NHir6BPh/RuSc4pv5vNQ//wTQKDvkWc2gio9oQ==}
+  '@sa11y/assert@8.4.0':
+    resolution: {integrity: sha512-bAy2rJA9+WpDPR9JHTPQf6KqB/IYJWie7KNgiw5XCgj0XCvTW/3PxralmKKUlB9oPj/z26iyUHEDkA1H059zvA==}
     engines: {node: ^20 || ^22 || ^24}
 
-  '@sa11y/common@8.3.1':
-    resolution: {integrity: sha512-batO03dlNk/FcmXpy38cqo6qZrxvkUbZuAEtziVVdGprkjtEXK2LkAazn2huTpx8iAbmHvKmaMG9bGiMbDN0bg==}
+  '@sa11y/common@8.4.0':
+    resolution: {integrity: sha512-SixGyS5iNmcKtPz04YX6kVkEGrtS13LoKTSMijXDLlZngvXreIAO2buJhPWS8G8QIYxxrEMJGYrRWO6ROAzPgA==}
     engines: {node: ^20 || ^22 || ^24}
 
-  '@sa11y/format@8.3.1':
-    resolution: {integrity: sha512-j1PNGOymraDrdvsBELEfMd1XAvL1ZQE9twQSgmItS8Iz2h66UmSEFX+r8w0ZdGbyCykqg1ybr9MQBk/RaR2m4Q==}
+  '@sa11y/format@8.4.0':
+    resolution: {integrity: sha512-cEYvsD6Ncw57SddDGrYB090qAeRoorKgErIJIBDMkmzStme9LDd2AP0rEC8a4b+7R/8hQURA/2JOndCv+lpvyQ==}
     engines: {node: ^20 || ^22 || ^24}
 
-  '@sa11y/matcher@8.3.1':
-    resolution: {integrity: sha512-IZeJKCjXU3Uv5MOgy7ysBu6D24Ar8C7HpUjka+N1MZZJvIYZheBuFrQ63UoFEHoEe7Wox4m99xKVZPk04IJOxg==}
+  '@sa11y/matcher@8.4.0':
+    resolution: {integrity: sha512-1jqs0wekvEj+e2Of56mySo3snbBmUmE5+HPa++0kSwqHirlD7Pmh3+Y4eQg5oX90LO/RrI/E0AO5/iId/cRY7w==}
     engines: {node: ^20 || ^22 || ^24}
 
-  '@sa11y/preset-rules@8.3.1':
-    resolution: {integrity: sha512-mznBEBp0B/IWidVJdb38gnm8rZhM97NEADme7+DJnr9AXnvxWxtWyFEBbQS8/TOhWPcI/fE1BleApC0iee7GGA==}
+  '@sa11y/preset-rules@8.4.0':
+    resolution: {integrity: sha512-KkQiZzhhXfVwEDFaSFECUDsBFddLPuiTvi/m0YkAVzowG+TkGb4z9aVugX65eIq0MOgH3WtiG29wPlJS3MtlWA==}
     engines: {node: ^20 || ^22 || ^24}
 
-  '@sa11y/vitest@8.3.1':
-    resolution: {integrity: sha512-UD36pcwRjM9nCA+Fp9+4tiJpk+wsgHFcxZCaSkmNBzcOUHYEvqh+6wgrZJXZTzvofiqWiRYhxuylguMMLavZKg==}
+  '@sa11y/vitest@8.4.0':
+    resolution: {integrity: sha512-ULcqhrVJB1qJTG8OF1qZ8plRT7XlXA0QEAGS5zniscrt342iq6rOBz+j0rf3P4NHMSLY+w7owKfPz22IsyhJpQ==}
     engines: {node: ^20 || ^22 || ^24}
 
   '@sindresorhus/merge-streams@4.0.0':
@@ -8693,39 +8693,39 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.62.4':
     optional: true
 
-  '@sa11y/assert@8.3.1':
+  '@sa11y/assert@8.4.0':
     dependencies:
-      '@sa11y/common': 8.3.1
-      '@sa11y/format': 8.3.1
-      '@sa11y/preset-rules': 8.3.1
+      '@sa11y/common': 8.4.0
+      '@sa11y/format': 8.4.0
+      '@sa11y/preset-rules': 8.4.0
       axe-core: 4.14.0
 
-  '@sa11y/common@8.3.1':
+  '@sa11y/common@8.4.0':
     dependencies:
       axe-core: 4.14.0
 
-  '@sa11y/format@8.3.1':
+  '@sa11y/format@8.4.0':
     dependencies:
-      '@sa11y/common': 8.3.1
-      '@sa11y/preset-rules': 8.3.1
+      '@sa11y/common': 8.4.0
+      '@sa11y/preset-rules': 8.4.0
       axe-core: 4.14.0
 
-  '@sa11y/matcher@8.3.1':
+  '@sa11y/matcher@8.4.0':
     dependencies:
-      '@sa11y/assert': 8.3.1
-      '@sa11y/format': 8.3.1
-      '@sa11y/preset-rules': 8.3.1
+      '@sa11y/assert': 8.4.0
+      '@sa11y/format': 8.4.0
+      '@sa11y/preset-rules': 8.4.0
 
-  '@sa11y/preset-rules@8.3.1':
+  '@sa11y/preset-rules@8.4.0':
     dependencies:
-      '@sa11y/common': 8.3.1
+      '@sa11y/common': 8.4.0
 
-  '@sa11y/vitest@8.3.1(@types/node@26.2.0)(@vitest/browser-playwright@5.1.1)(@vitest/ui@5.1.1)(jsdom@31.0.1)(vite@8.3.8(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))':
+  '@sa11y/vitest@8.4.0(@types/node@26.2.0)(@vitest/browser-playwright@5.1.1)(@vitest/ui@5.1.1)(jsdom@31.0.1)(vite@8.3.8(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))':
     dependencies:
-      '@sa11y/assert': 8.3.1
-      '@sa11y/format': 8.3.1
-      '@sa11y/matcher': 8.3.1
-      '@sa11y/preset-rules': 8.3.1
+      '@sa11y/assert': 8.4.0
+      '@sa11y/format': 8.4.0
+      '@sa11y/matcher': 8.4.0
+      '@sa11y/preset-rules': 8.4.0
       vitest: 5.1.1(@types/node@26.2.0)(@vitest/browser-playwright@5.1.1)(@vitest/ui@5.1.1)(jsdom@31.0.1)(vite@8.3.8(@types/node@26.2.0)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))
     transitivePeerDependencies:
       - '@edge-runtime/vm'
