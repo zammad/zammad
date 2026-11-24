@@ -294,9 +294,6 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
       visit 'ticket/create'
 
       find('[data-type=email-out]').click
-
-      # Typing while the form is still updated loses the focus, and the "o" of ".com" then opens the overviews.
-      wait_for_core_workflow
     end
 
     it 'can be cleared by cutting out text' do
@@ -321,7 +318,9 @@ RSpec.describe 'Ticket Create', time_zone: 'Europe/London', type: :system do
     end
 
     def add_email(input)
-      field = find_field('CC')
+      # The token field is set up with a delay and moves the plain input away, which loses the focus
+      #   while typing. The rest of the address then goes to the hotkeys, and the "o" opens the overviews.
+      field = find_field('CC', class: 'token-input')
       field.fill_in with: input
       field.execute_script "$(this).trigger('blur')" # trigger blur
 
