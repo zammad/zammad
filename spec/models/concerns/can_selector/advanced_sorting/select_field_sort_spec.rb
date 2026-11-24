@@ -77,6 +77,28 @@ RSpec.describe CanSelector::AdvancedSorting::SelectFieldSort, db_strategy: :rese
             select: include(column_reference).and(include("'2','3','1'")),
           )
         end
+
+        context 'when a translation changes after the sorting was cached' do
+          before do
+            instance.calculate_sorting
+            allow(Translation).to receive(:translate_all).and_call_original
+          end
+
+          it 'sorts by the changed translation of the locale' do
+            Translation.find_by(locale: 'de-de', source: 'Role').update!(target: 'Aufgabe')
+
+            expect(described_class.new(input, locale, Ticket).calculate_sorting).to include(
+              select: include("'1','2','3'"),
+            )
+          end
+
+          it 'keeps the cached sorting if a translation of another locale changes' do
+            Translation.find_by(locale: 'en-us', source: 'Role').update!(target: 'Duty')
+            described_class.new(input, locale, Ticket).calculate_sorting
+
+            expect(Translation).not_to have_received(:translate_all)
+          end
+        end
       end
 
       context 'when locale is en-us' do
@@ -87,6 +109,18 @@ RSpec.describe CanSelector::AdvancedSorting::SelectFieldSort, db_strategy: :rese
             order:  order_reference,
             select: include(column_reference).and(include("'3','1','2'")),
           )
+        end
+
+        context 'when the sorting was cached for another locale before' do
+          before do
+            described_class.new(input, 'de-de', Ticket).calculate_sorting
+          end
+
+          it 'returns the order of its own locale' do
+            expect(result).to include(
+              select: include(column_reference).and(include("'3','1','2'")),
+            )
+          end
         end
       end
     end

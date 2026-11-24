@@ -32,7 +32,7 @@ module CanSelector
       end
 
       def sorted_ids_cache_key
-        "translated-relations-sort-#{locale}-#{assoc.klass.all.cache_key_with_version}-#{Translation.all.cache_key_with_version}"
+        "translated-relations-sort-#{locale}-#{assoc.klass.all.cache_key_with_version}-#{Translation.where(locale:).cache_key_with_version}"
       end
 
       def calculate_sorted_ids
