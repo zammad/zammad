@@ -26,7 +26,7 @@ class BackgroundServices
       end
 
       def launch
-        Delayed::Worker.reset
+        initialize_thread_settings
 
         loop do
           break if BackgroundServices.shutdown_requested
@@ -55,6 +55,13 @@ class BackgroundServices
       end
 
       private
+
+      # Not Delayed::Worker.reset: it would also reset process-wide settings like max_run_time,
+      #   see config/initializers/delayed_jobs_timeout_per_job.rb.
+      def initialize_thread_settings
+        ::Delayed::Worker.sleep_delay = ::Delayed::Worker::DEFAULT_SLEEP_DELAY
+        ::Delayed::Worker.read_ahead  = ::Delayed::Worker::DEFAULT_READ_AHEAD
+      end
 
       def process_results(result, realtime)
         result.sum.zero? ? process_empty : process_busy(result, realtime)
