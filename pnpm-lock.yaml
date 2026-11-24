@@ -280,7 +280,7 @@ importers:
         specifier: 5.0.0-beta.1
         version: 5.0.0-beta.1(@apollo/client@4.3.8(graphql-ws@6.4.3(graphql@17.1.0)(ws@8.23.0))(graphql@17.1.0)(rxjs@7.8.2))(@vue/reactivity@3.5.46)(@vue/runtime-core@3.5.46)(@vueuse/core@15.0.0(vue@3.5.46(typescript@6.0.3)))(@wry/equality@0.5.7)(rxjs@7.8.2)
       '@vue/runtime-core':
-        specifier: ^3.5.43
+        specifier: ^3.5.46
         version: 3.5.46
       '@vueuse/core':
         specifier: ^15.0.0
@@ -331,7 +331,7 @@ importers:
         specifier: ^3.0.1
         version: 3.0.1
       pinia:
-        specifier: ^4.0.3
+        specifier: ^4.1.0
         version: 4.1.0(@vue/devtools-api@8.2.1)(typescript@6.0.3)(vue@3.5.46(typescript@6.0.3))
       qrcode:
         specifier: ^1.5.4
@@ -361,7 +361,7 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1(rolldown@1.2.19)(rollup@4.68.8)(supports-color@7.2.0)
       vue:
-        specifier: ^3.5.43
+        specifier: ^3.5.46
         version: 3.5.46(typescript@6.0.3)
       vue-advanced-cropper:
         specifier: ^2.8.9
@@ -370,10 +370,10 @@ importers:
         specifier: 1.19.0
         version: 1.19.0(vue@3.5.46(typescript@6.0.3))
       vue-echarts:
-        specifier: ^8.3.1
+        specifier: ^8.3.2
         version: 8.3.2(echarts@6.1.0)(vue@3.5.46(typescript@6.0.3))
       vue-router:
-        specifier: ^5.3.1
+        specifier: ^5.5.1
         version: 5.5.1(@vue/compiler-sfc@3.5.46)(pinia@4.1.0(@vue/devtools-api@8.2.1)(typescript@6.0.3)(vue@3.5.46(typescript@6.0.3)))(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.4)(yaml@2.9.1))(vue@3.5.46(typescript@6.0.3))
       vue3-draggable-resizable:
         specifier: ^1.6.5
@@ -476,7 +476,7 @@ importers:
         specifier: ^5.1.1
         version: 5.1.1(playwright@1.65.1)(vite@8.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.4)(yaml@2.9.1))(vitest@5.1.1)
       '@vue/compiler-dom':
-        specifier: ^3.5.43
+        specifier: ^3.5.46
         version: 3.5.46
       '@vue/devtools-api':
         specifier: ^8.2.1
@@ -485,10 +485,10 @@ importers:
         specifier: ^14.9.0
         version: 14.9.0(eslint-plugin-vue@10.12.1(@typescript-eslint/parser@8.73.0(eslint@10.15.0(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3))(eslint@10.15.0(jiti@2.7.0)(supports-color@7.2.0))(vue-eslint-parser@10.4.2(eslint@10.15.0(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)))(eslint@10.15.0(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.3)
       '@vue/server-renderer':
-        specifier: ^3.5.43
+        specifier: ^3.5.46
         version: 3.5.46
       '@vue/test-utils':
-        specifier: ^2.5.1
+        specifier: ^2.6.0
         version: 2.6.0(@vue/compiler-dom@3.5.46)(@vue/server-renderer@3.5.46)(vue@3.5.46(typescript@6.0.3))
       eslint:
         specifier: ^10.15.0
@@ -593,7 +593,7 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(@vue/compiler-dom@3.5.46)(@vue/server-renderer@3.5.46)(vitest@5.1.1)(vue@3.5.46(typescript@6.0.3))
       vue-tsc:
-        specifier: ^3.3.11
+        specifier: ^3.3.14
         version: 3.3.14(typescript@6.0.3)
 
 packages:
