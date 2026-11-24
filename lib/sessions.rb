@@ -124,15 +124,7 @@ returns
 =end
 
   def self.list
-    client_ids = sessions
-    session_list = {}
-    client_ids.each do |client_id|
-      data = get(client_id)
-      next if !data
-
-      session_list[client_id] = data
-    end
-    session_list
+    @store.get_many(sessions.select { valid_client_id?(it) })
   end
 
 =begin
@@ -266,18 +258,7 @@ returns
 =end
 
   def self.send_to(user_id, data)
-
-    # list all current clients
-    client_list = sessions
-    client_list.each do |client_id|
-      session = Sessions.get(client_id)
-      next if !session
-      next if !session[:user]
-      next if !session[:user]['id']
-      next if session[:user]['id'].to_i != user_id.to_i
-
-      Sessions.send(client_id, data)
-    end
+    deliver_many([{ data:, user_id: }])
     true
   end
 
@@ -302,26 +283,61 @@ broadcase also not to sender
 =end
 
   def self.broadcast(data, recipient = 'authenticated', sender_user_id = nil)
+    deliver_many([{ data:, recipient:, sender_user_id: }]).first
+  end
 
-    # list all current clients
-    recipients = []
-    client_list = sessions
-    client_list.each do |client_id|
-      session = Sessions.get(client_id)
-      next if !session
+=begin
 
-      if recipient != 'public'
-        next if session[:user].blank?
-        next if session[:user]['id'].blank?
-      end
+send several messages, reading the sessions only once
 
-      next if sender_user_id && session[:user] && session[:user]['id'] && session[:user]['id'].to_i == sender_user_id.to_i
+  Sessions.deliver_many([
+    { data: data, user_id: user_id },                              # like Sessions.send_to
+    { data: data, recipient: 'public', sender_user_id: user_id },  # like Sessions.broadcast
+  ])
 
-      Sessions.send(client_id, data)
-      recipients.push client_id
+every client gets its messages in the given order
+
+returns
+
+  [array_with_client_ids_of_recipients_per_message]
+
+=end
+
+  def self.deliver_many(messages)
+    return [] if messages.empty?
+
+    client_sessions = @store.get_many(sessions.select { valid_client_id?(it) })
+    entries         = []
+
+    recipients = messages.map do |message|
+      client_ids = client_sessions.filter_map { |client_id, session| client_id if recipient?(session, message) }
+      client_ids.each { |client_id| entries.push([client_id, message[:data]]) }
+      client_ids
     end
+
+    @store.send_data_many(entries)
     recipients
   end
+
+  def self.recipient?(session, message)
+    if message.key?(:user_id)
+      return false if !session[:user]
+      return false if !session[:user]['id']
+
+      return session[:user]['id'].to_i == message[:user_id].to_i
+    end
+
+    if message[:recipient] != 'public'
+      return false if session[:user].blank?
+      return false if session[:user]['id'].blank?
+    end
+
+    sender_user_id = message[:sender_user_id]
+    return false if sender_user_id && session[:user] && session[:user]['id'] && session[:user]['id'].to_i == sender_user_id.to_i
+
+    true
+  end
+  private_class_method :recipient?
 
 =begin
 

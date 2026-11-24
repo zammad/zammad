@@ -149,6 +149,135 @@ RSpec.describe Sessions do
     end
   end
 
+  describe 'delivering messages' do
+    let(:sessions) { { 'a1' => { 'id' => 11 }, 'a2' => { 'id' => 11 }, 'b1' => { 'id' => 12 }, 'c1' => {} } }
+    let(:store)    { described_class.instance_variable_get(:@store) }
+
+    before do
+      described_class.cleanup
+      sessions.each do |client_id, user|
+        described_class.create(client_id, user, { type: 'websocket' })
+        described_class.queue(client_id)
+      end
+    end
+
+    after do
+      described_class.cleanup
+    end
+
+    def received
+      sessions.keys.index_with { described_class.queue(it).pluck('event') }
+    end
+
+    describe '.deliver_many' do
+      it 'sends to the authenticated sessions' do
+        described_class.deliver_many([{ data: { event: 'one' }, recipient: 'authenticated' }])
+
+        expect(received).to eq('a1' => ['one'], 'a2' => ['one'], 'b1' => ['one'], 'c1' => [])
+      end
+
+      it 'sends to the authenticated sessions without a recipient' do
+        described_class.deliver_many([{ data: { event: 'one' }, recipient: nil }])
+
+        expect(received).to eq('a1' => ['one'], 'a2' => ['one'], 'b1' => ['one'], 'c1' => [])
+      end
+
+      it 'sends to all sessions with the public recipient' do
+        described_class.deliver_many([{ data: { event: 'one' }, recipient: 'public' }])
+
+        expect(received).to eq('a1' => ['one'], 'a2' => ['one'], 'b1' => ['one'], 'c1' => ['one'])
+      end
+
+      it 'skips the sessions of the sender' do
+        described_class.deliver_many([{ data: { event: 'one' }, recipient: 'public', sender_user_id: '11' }])
+
+        expect(received).to eq('a1' => [], 'a2' => [], 'b1' => ['one'], 'c1' => ['one'])
+      end
+
+      it 'sends to the sessions of a user' do
+        described_class.deliver_many([{ data: { event: 'one' }, user_id: '11' }])
+
+        expect(received).to eq('a1' => ['one'], 'a2' => ['one'], 'b1' => [], 'c1' => [])
+      end
+
+      it 'skips a listed client id that is not valid' do
+        allow(described_class).to receive(:sessions).and_return([*sessions.keys, '../c2'])
+        allow(store).to receive(:get_many).and_call_original
+
+        described_class.deliver_many([{ data: { event: 'one' }, recipient: 'public' }])
+
+        expect(store).to have_received(:get_many).with(sessions.keys)
+      end
+
+      it 'skips a listed session without a value' do
+        allow(described_class).to receive(:sessions).and_return([*sessions.keys, 'd1'])
+
+        expect(described_class.deliver_many([{ data: { event: 'one' }, recipient: 'public' }])).to eq([sessions.keys])
+      end
+
+      it 'gives every client its messages in the given order' do
+        described_class.deliver_many(
+          [
+            { data: { event: 'one' }, recipient: 'public' },
+            { data: { event: 'two' }, user_id: 11 },
+            { data: { event: 'three' }, recipient: 'authenticated', sender_user_id: 12 },
+            { data: { event: 'four' }, user_id: 12 },
+          ]
+        )
+
+        expect(received).to eq('a1' => %w[one two three], 'a2' => %w[one two three], 'b1' => %w[one four], 'c1' => ['one'])
+      end
+
+      it 'decides every message of a buffer on the sessions read at its start', :aggregate_failures do
+        changed = false
+        allow(store).to receive(:get_many).and_wrap_original do |original, client_ids|
+          original.call(client_ids).tap do
+            next if changed
+
+            changed = true
+            described_class.destroy('b1')
+            described_class.create('d1', { 'id' => 13 }, { type: 'websocket' })
+          end
+        end
+        buffer = [{ data: { event: 'one' }, recipient: 'authenticated' }, { data: { event: 'two' }, user_id: 12 }]
+
+        expect(described_class.deliver_many(buffer)).to match([contain_exactly('a1', 'a2', 'b1'), ['b1']])
+        expect(described_class.deliver_many(buffer)).to match([contain_exactly('a1', 'a2', 'd1'), []])
+        expect(store).to have_received(:get_many).twice
+      end
+
+      it 'returns the recipients of every message' do
+        expect(described_class.deliver_many([{ data: { event: 'one' }, user_id: 12 }, { data: { event: 'two' }, recipient: 'public', sender_user_id: 11 }]))
+          .to match([contain_exactly('b1'), contain_exactly('b1', 'c1')])
+      end
+
+      it 'does nothing without messages', :aggregate_failures do
+        allow(store).to receive(:get_many).and_call_original
+
+        expect(described_class.deliver_many([])).to eq([])
+        expect(store).not_to have_received(:get_many)
+      end
+
+      it 'sends nothing without sessions' do
+        described_class.cleanup
+
+        expect(described_class.deliver_many([{ data: { event: 'one' }, recipient: 'public' }])).to eq([[]])
+      end
+    end
+
+    describe '.broadcast' do
+      it 'returns the client ids of the recipients' do
+        expect(described_class.broadcast({ event: 'one' }, 'authenticated', 11)).to contain_exactly('b1')
+      end
+    end
+
+    describe '.send_to' do
+      it 'returns true' do
+        expect(described_class.send_to(11, { event: 'one' })).to be(true)
+      end
+    end
+  end
+
   describe '.queue' do
     it 'returns empty array for invalid client_id' do
       expect(described_class.queue('../malicious')).to eq([])
