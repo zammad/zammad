@@ -33,7 +33,7 @@ module Ticket::Article::HasTicketContactAttributesImpact
       ticket.touch # rubocop:disable Rails/SkipsModelValidations
       return
     end
-    ticket.save!
+    ticket.without_core_workflow_validation { ticket.save! }
   end
 
   def update_ticket_count_attribute
@@ -47,7 +47,7 @@ module Ticket::Article::HasTicketContactAttributesImpact
       ticket.touch # rubocop:disable Rails/SkipsModelValidations
       return
     end
-    ticket.save!
+    ticket.without_core_workflow_validation { ticket.save! }
   end
 
   def compute_articles_count

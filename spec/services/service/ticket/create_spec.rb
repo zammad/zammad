@@ -114,6 +114,43 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         )
     end
 
+    context 'when an article is present' do
+      before do
+        ticket_data[:article] = { body: Faker::Lorem.sentence }
+      end
+
+      it 'runs the core workflow validation only for the ticket data', :aggregate_failures do
+        allow(CoreWorkflow).to receive(:perform).and_call_original
+
+        expect(service_result.screen).to eq('create_middle')
+        expect(CoreWorkflow).to have_received(:perform)
+          .with(hash_including(payload: hash_including('request_id' => 'ChecksCoreWorkflow.validate_workflows')))
+          .once
+      end
+
+      context 'when a value of the ticket is not allowed' do
+        let(:open_state) { Ticket::State.find_by(name: 'open') }
+
+        before do
+          ticket_data[:state] = open_state
+          create(:core_workflow,
+                 object:  'Ticket',
+                 perform: {
+                   'ticket.state_id': {
+                     operator:      'remove_option',
+                     remove_option: [open_state.id.to_s]
+                   },
+                 })
+        end
+
+        it 'raises an error and creates no ticket' do
+          expect { service_result }
+            .to raise_error(Exceptions::ApplicationModel, "Invalid value '#{open_state.id}' for field 'state_id'!")
+            .and not_change(Ticket, :count)
+        end
+      end
+    end
+
     it 'fills in the sender and the recipient of an agent\'s article, but keeps those of a prepared one', :aggregate_failures do
       ticket_data[:article] = { body: 'Hello', type: 'phone', sender: 'Agent', to: 'someone@example.com' }
 

@@ -109,6 +109,28 @@ RSpec.shared_examples 'ChecksCoreWorkflow' do
     end
   end
 
+  describe '#without_core_workflow_validation' do
+    subject(:ticket) { create(:ticket, group: agent_group) }
+
+    before do
+      ticket.screen = 'edit'
+      allow(CoreWorkflow).to receive(:perform).and_call_original
+    end
+
+    it 'saves without running the workflows of the screen', :aggregate_failures do
+      ticket.without_core_workflow_validation { ticket.update!(title: 'changed') }
+
+      expect(CoreWorkflow).not_to have_received(:perform)
+      expect(ticket.screen).to eq('edit')
+    end
+
+    it 'restores the screen when the block raises', :aggregate_failures do
+      expect { ticket.without_core_workflow_validation { raise 'failed' } }.to raise_error('failed')
+
+      expect(ticket.screen).to eq('edit')
+    end
+  end
+
   describe 'Tickets can be closed with the bulk action, even when a mandatory field is empty #4198', db_strategy: :reset do
     let(:ticket) { create(:ticket, group: agent_group, state: Ticket::State.find_by(name: 'open')) }
     let(:ticket2)       { create(:ticket, group: agent_group, state: Ticket::State.find_by(name: 'open')) }
