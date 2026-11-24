@@ -1,0 +1,204 @@
+{
+  "name": "set_ticket_references",
+  "title": "Set ticket references",
+  "description": "Link a ticket to GitHub issues, GitLab issues and i-doit objects, and remove such links, as the ticket view does. Name only the references to add or remove; the others stay. Name a GitHub or GitLab issue by its link and an i-doit object by its ID, as those systems show them; this tool does not search them. Each reference to add is checked in its system; one it does not find is named and not added, the others are saved. Only the integrations switched on in Zammad can be used. get_ticket shows the references a ticket has.",
+  "inputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "add": {
+        "type": "array",
+        "description": "References to add.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "type": "string",
+              "enum": [
+                "github",
+                "gitlab",
+                "idoit"
+              ]
+            },
+            "value": {
+              "type": "string",
+              "description": "A GitHub or GitLab issue by its link; an i-doit object by its ID."
+            }
+          },
+          "required": [
+            "system",
+            "value"
+          ]
+        }
+      },
+      "remove": {
+        "type": "array",
+        "description": "References to remove, as get_ticket shows them.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "type": "string",
+              "enum": [
+                "github",
+                "gitlab",
+                "idoit"
+              ]
+            },
+            "value": {
+              "type": "string",
+              "description": "A GitHub or GitLab issue by its link; an i-doit object by its ID."
+            }
+          },
+          "required": [
+            "system",
+            "value"
+          ]
+        }
+      },
+      "ticket_number": {
+        "type": "string",
+        "description": "The ticket number as shown in Zammad, e.g. \"31042\" or \"Ticket#31042\"."
+      },
+      "ticket_id": {
+        "type": "integer",
+        "description": "The internal ID of the ticket, e.g. 8812."
+      },
+      "ticket_url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "ticket_id": {
+        "type": "integer"
+      },
+      "ticket_number": {
+        "type": "string"
+      },
+      "url": {
+        "type": "string",
+        "description": "A link to the ticket in Zammad."
+      },
+      "added": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "type": "string"
+            },
+            "value": {}
+          },
+          "required": [
+            "system",
+            "value"
+          ]
+        }
+      },
+      "removed": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "type": "string"
+            },
+            "value": {}
+          },
+          "required": [
+            "system",
+            "value"
+          ]
+        }
+      },
+      "already_present": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "type": "string"
+            },
+            "value": {}
+          },
+          "required": [
+            "system",
+            "value"
+          ]
+        },
+        "description": "References to add the ticket had already."
+      },
+      "not_present": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "type": "string"
+            },
+            "value": {}
+          },
+          "required": [
+            "system",
+            "value"
+          ]
+        },
+        "description": "References to remove the ticket did not have."
+      },
+      "refused": {
+        "type": "array",
+        "description": "References to add their system did not find, or did not answer for.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "system": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "system",
+            "value",
+            "reason"
+          ]
+        }
+      },
+      "references": {
+        "type": "object",
+        "description": "The ticket's references afterwards, by system.",
+        "additionalProperties": {
+          "type": "array"
+        }
+      }
+    },
+    "required": [
+      "ticket_id",
+      "ticket_number",
+      "url",
+      "added",
+      "removed",
+      "already_present",
+      "not_present",
+      "refused",
+      "references"
+    ]
+  },
+  "annotations": {
+    "destructiveHint": true,
+    "idempotentHint": true,
+    "openWorldHint": true,
+    "readOnlyHint": false
+  }
+}
