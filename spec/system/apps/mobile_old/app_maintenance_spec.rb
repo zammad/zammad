@@ -33,8 +33,8 @@ RSpec.describe 'Mobile > App Update Check', app: :mobile, type: :system do
     before do
       visit '/', skip_waiting: true
       wait_for_test_flag('applicationLoaded.loaded')
-      wait_for_test_flag('useConfigUpdatesSubscription.subscribed')
-      wait_for_test_flag('usePushMessagesSubscription.subscribed')
+      wait_for_subscription_start('configUpdates')
+      wait_for_subscription_start('pushMessages')
 
       Setting.set('maintenance_mode', true)
     end
@@ -64,7 +64,7 @@ RSpec.describe 'Mobile > App Update Check', app: :mobile, type: :system do
     before do
       visit '/', skip_waiting: true
       wait_for_test_flag('applicationLoaded.loaded')
-      wait_for_test_flag('usePushMessagesSubscription.subscribed')
+      wait_for_subscription_start('pushMessages')
     end
 
     it 'reacts to maintenance broadcast message' do
