@@ -93,6 +93,13 @@ class Sessions::Store::File
     data
   end
 
+  def get_many(client_ids)
+    client_ids.each_with_object({}) do |client_id, result|
+      data = get(client_id)
+      result[client_id] = data if data
+    end
+  end
+
   def send_data(client_id, data)
     location = new_message_filename_for(client_id)
     return false if !location
@@ -105,6 +112,12 @@ class Sessions::Store::File
       return false
     end
     true
+  end
+
+  def send_data_many(entries)
+    entries.each do |client_id, data|
+      send_data(client_id, data)
+    end
   end
 
   def queue(client_id)

@@ -157,6 +157,58 @@ RSpec.describe Sessions::Store::File do
     end
   end
 
+  describe '#get_many' do
+    before do
+      instance.create('a1', { user: { 'id' => 1 }, meta: { type: 'websocket' } }.to_json)
+      instance.create('a2', { user: {}, meta: { type: 'ajax' } }.to_json)
+      instance.create('a3', { user: { 'id' => 3 }, meta: { type: 'websocket' } }.to_json)
+      File.delete("#{instance.send(:safe_session_path, 'a2')}/session")
+    end
+
+    after do
+      %w[a1 a2 a3].each { instance.destroy(it) }
+    end
+
+    it 'returns the sessions by client id, like #get' do
+      expect(instance.get_many(%w[a3 a1])).to eq('a3' => instance.get('a3'), 'a1' => instance.get('a1'))
+    end
+
+    it 'removes a session whose value is missing' do
+      expect { instance.get_many(%w[a1 a2 a3]) }
+        .to change { instance.sessions.include?('a2') }
+        .to(false)
+    end
+
+    it 'leaves out a session whose value is missing' do
+      expect(instance.get_many(%w[a1 a2 a3]).keys).to eq(%w[a1 a3])
+    end
+
+    it 'returns an empty hash without client ids' do
+      expect(instance.get_many([])).to eq({})
+    end
+  end
+
+  describe '#send_data_many' do
+    before do
+      %w[a1 a2].each { instance.create(it, { user: { 'id' => 1 }, meta: {} }.to_json) }
+    end
+
+    after do
+      %w[a1 a2].each { instance.destroy(it) }
+    end
+
+    it 'keeps the order of the messages per client', :aggregate_failures do
+      instance.send_data_many([['a1', { event: 'one' }], ['a2', { event: 'one' }], ['a1', { event: 'two' }], ['a2', { event: 'three' }]])
+
+      expect(instance.queue('a1').pluck('event')).to eq(%w[one two])
+      expect(instance.queue('a2').pluck('event')).to eq(%w[one three])
+    end
+
+    it 'does nothing without messages' do
+      expect { instance.send_data_many([]) }.not_to raise_error
+    end
+  end
+
   describe '#new_message_filename_for' do
     let(:client_id) { 'abc123' }
 

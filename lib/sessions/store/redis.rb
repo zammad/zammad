@@ -12,6 +12,9 @@ class Sessions::Store::Redis
   SPOOL_KEY = "spool#{KEY_SUFFIX}".freeze
   NODES_KEY = "nodes#{KEY_SUFFIX}".freeze
 
+  GET_MANY_SLICE_SIZE = 1000
+  PIPELINE_SLICE_SIZE = 1000
+
   def initialize
     @redis = Zammad::Service::Redis.new
   end
@@ -56,23 +59,18 @@ class Sessions::Store::Redis
   end
 
   def get(client_id)
-    data = nil
+    parse_session(client_id, @redis.get(client_session_key(client_id)))
+  end
 
-    # if only session is missing, then it's an error behavior
-    session = @redis.get client_session_key(client_id)
-    if !session
-      destroy(client_id)
-      Sessions.log('error', "missing session value for '#{client_id}', removing session.")
-      return
+  def get_many(client_ids)
+    client_ids.each_slice(GET_MANY_SLICE_SIZE).with_object({}) do |slice, result|
+      values = @redis.mget(slice.map { client_session_key(it) })
+
+      slice.zip(values) do |client_id, session|
+        data = parse_session(client_id, session)
+        result[client_id] = data if data
+      end
     end
-
-    data_json = JSON.parse(session)
-    if data_json
-      data        = Sessions.symbolize_keys(data_json)
-      data[:user] = data_json['user'] # for compat. reasons
-    end
-
-    data
   end
 
   def send_data(client_id, data)
@@ -81,6 +79,30 @@ class Sessions::Store::Redis
     @redis.rpush(key, data.to_json).positive?.tap do
       # Make sure message keys are cleaned up even if they are no longer listed in 'sessions'.
       @redis.expire(key, 1.hour) if key_is_new
+    end
+  end
+
+  def send_data_many(entries)
+    payloads = {}.compare_by_identity
+
+    entries.each_slice(PIPELINE_SLICE_SIZE) do |slice|
+      keys = slice.map { |client_id, _data| client_messages_key(client_id) }
+
+      lengths = @redis.pipelined do |pipeline|
+        slice.each_with_index do |(_client_id, data), index|
+          pipeline.rpush(keys[index], payloads[data] ||= data.to_json)
+        end
+      end
+
+      # A length of 1 means the push created the key. Like #send_data, only a new key gets the expiry,
+      #   so that a queue nobody reads is still dropped an hour after it was created. It is set per slice,
+      #   so that a connection lost in between leaves at most the new queues of one slice without it.
+      new_keys = keys.zip(lengths).filter_map { |key, length| key if length == 1 }
+      next if new_keys.empty?
+
+      @redis.pipelined do |pipeline|
+        new_keys.each { pipeline.expire(it, 1.hour) }
+      end
     end
   end
 
@@ -168,6 +190,25 @@ class Sessions::Store::Redis
   end
 
   protected
+
+  def parse_session(client_id, session)
+    data = nil
+
+    # if only session is missing, then it's an error behavior
+    if !session
+      destroy(client_id)
+      Sessions.log('error', "missing session value for '#{client_id}', removing session.")
+      return
+    end
+
+    data_json = JSON.parse(session)
+    if data_json
+      data        = Sessions.symbolize_keys(data_json)
+      data[:user] = data_json['user'] # for compat. reasons
+    end
+
+    data
+  end
 
   def client_session_key(client_id)
     "#{SESSIONS_KEY}/#{client_id}"

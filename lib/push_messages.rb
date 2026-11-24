@@ -53,17 +53,19 @@ module PushMessages
   end
 
   def self.deliver(messages)
-    messages.each do |message|
-      if message[:type] == 'send_to'
-        Sessions.send_to(message[:user_id], message[:data])
-      else
-        Sessions.broadcast(
-          message[:data][:message],
-          message[:data][:type],
-          message[:data][:current_user_id],
-        )
+    Sessions.deliver_many(
+      messages.map do |message|
+        if message[:type] == 'send_to'
+          { data: message[:data], user_id: message[:user_id] }
+        else
+          {
+            data:           message[:data][:message],
+            recipient:      message[:data][:type],
+            sender_user_id: message[:data][:current_user_id],
+          }
+        end
       end
-    end
+    )
     true
   end
 
