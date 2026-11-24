@@ -58,11 +58,15 @@ RSpec.describe 'Scenario > User profile', authenticated_as: :authenticate, type:
   it 'syncs an inline note change into a second open session' do
     visit "#user/profile/#{customer.id}"
 
+    second_agent = create(:agent, password: 'test', groups: [group])
+
     using_session(:second_browser) do
-      login(username: create(:agent, password: 'test', groups: [group]).login, password: 'test')
+      login(username: second_agent.login, password: 'test')
 
       visit "#user/profile/#{customer.id}"
     end
+
+    wait_for_authenticated_session(user: second_agent)
 
     find('.content.active .profile [data-name="note"]').send_keys 'some realtime note'
     find('.content.active .profile-window h1').click
