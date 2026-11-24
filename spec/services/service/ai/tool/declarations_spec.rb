@@ -101,7 +101,7 @@ RSpec.describe 'Declarations of the AI tools' do # rubocop:disable RSpec/Describ
 
   # Offering a tool over MCP makes it part of a public interface: it is added here on purpose, never by accident.
   it 'offers exactly these tools over MCP' do
-    expect(Service::AI::Tool::Runtime::Router.tools.select { |tool| tool.offered_in?(:mcp) }.map(&:tool_name)).to eq(%w[add_internal_note create_article create_ticket get_current_user get_knowledge_base_answer get_organization get_overview_tickets get_shared_draft get_ticket get_ticket_articles get_ticket_fields get_ticket_history get_user link_knowledge_base_answer link_tickets list_overviews list_tags read_attachment save_shared_draft search_knowledge_base search_organizations search_tickets search_users send_shared_draft set_ticket_tags update_ticket])
+    expect(Service::AI::Tool::Runtime::Router.tools.select { |tool| tool.offered_in?(:mcp) }.map(&:tool_name)).to eq(%w[add_internal_note create_article create_ticket get_current_user get_knowledge_base_answer get_organization get_overview_tickets get_shared_draft get_ticket get_ticket_articles get_ticket_fields get_ticket_history get_user link_knowledge_base_answer link_tickets list_overviews list_tags read_attachment save_shared_draft search_knowledge_base search_organizations search_tickets search_users send_shared_draft set_ticket_references set_ticket_tags update_ticket])
   end
 
   Service::AI::Tool::Runtime::Router.tools.select { |tool| tool.offered_in?(:mcp) }.each do |tool|
