@@ -61,7 +61,9 @@ frontend:vitest:browser:
     - !reference [.rule_fragments, then_manual_in_mr]
   timeout: 15 minutes
   script:
-    - pnpm test:browser --run --reporter=default --reporter=junit --outputFile.junit=$CI_PROJECT_DIR/$CI_JUNIT_REPORT_DIR/vitest-browser.xml
+    # Only run one worker to avoid load peaks affecting other jobs: Vitest opens a
+    #   browser page per worker otherwise, up to one per core.
+    - pnpm test:browser --run --max-workers=1 --reporter=default --reporter=junit --outputFile.junit=$CI_PROJECT_DIR/$CI_JUNIT_REPORT_DIR/vitest-browser.xml
 
 # Loops the browser specs selected with VITEST_BROWSER_TEST_FILTER, optionally narrowed
 #   to the examples matching VITEST_BROWSER_TEST_NAME_PATTERN. A separate Vitest run per
