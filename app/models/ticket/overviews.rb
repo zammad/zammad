@@ -38,6 +38,10 @@ index of certain overviews by user
 
   result = Ticket::Overviews.index(User.find(3), ['all_unassigned', 'my_assigned'])
 
+counts only, without the ticket lists (no :tickets key in the result)
+
+  result = Ticket::Overviews.index(User.find(3), with_tickets: false)
+
 returns
 
  [
@@ -71,7 +75,7 @@ returns
 
 =end
 
-  def self.index(user, links = nil)
+  def self.index(user, links = nil, with_tickets: true)
     overviews = Ticket::Overviews.all(
       current_user: user,
       links:        links,
@@ -92,21 +96,6 @@ returns
                 user_scopes[:overview]
               end
 
-      ticket_result = scope
-        .distinct
-        .where(db_query_params.query_condition, *db_query_params.bind_condition)
-        .joins(db_query_params.tables)
-        .reorder(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
-        .limit(limit_per_overview)
-        .pluck(:id, :updated_at, Arel.sql(db_query_params.order_by))
-
-      tickets = ticket_result.map do |ticket|
-        {
-          id:         ticket[0],
-          updated_at: ticket[1],
-        }
-      end
-
       count = scope
         .distinct
         .where(db_query_params.query_condition, *db_query_params.bind_condition)
@@ -120,10 +109,26 @@ returns
           view:       overview.link,
           updated_at: overview.updated_at,
         },
-        tickets:  tickets,
+        tickets:  (_index_tickets(scope, db_query_params) if with_tickets),
         count:    count,
-      }
+      }.compact
     end
+  end
+
+  def self._index_tickets(scope, db_query_params)
+    scope
+      .distinct
+      .where(db_query_params.query_condition, *db_query_params.bind_condition)
+      .joins(db_query_params.tables)
+      .reorder(Arel.sql("#{db_query_params.order_by} #{db_query_params.direction}"))
+      .limit(limit_per_overview)
+      .pluck(:id, :updated_at, Arel.sql(db_query_params.order_by))
+      .map do |ticket|
+        {
+          id:         ticket[0],
+          updated_at: ticket[1],
+        }
+      end
   end
 
   def self.tickets_for_overview(overview, user, order_by: nil, order_direction: nil)

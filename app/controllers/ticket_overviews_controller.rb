@@ -20,7 +20,7 @@ class TicketOverviewsController < ApplicationController
 
     # get navbar overview data
     if !params[:view]
-      index_and_lists = Ticket::Overviews.index(current_user)
+      index_and_lists = Ticket::Overviews.index(current_user, with_tickets: false)
       indexes = []
       index_and_lists.each do |index|
         overview = Overview.lookup(id: index[:overview][:id])
@@ -37,7 +37,7 @@ class TicketOverviewsController < ApplicationController
       return
     end
 
-    index_and_lists = Ticket::Overviews.index(current_user)
+    index_and_lists = Ticket::Overviews.index(current_user, [params[:view].to_s])
 
     assets = {}
     result = {}
