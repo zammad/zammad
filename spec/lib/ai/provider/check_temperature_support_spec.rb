@@ -58,6 +58,67 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
     end
   end
 
+  # A bad request passing for a temperature rejection would hide a broken config.
+  shared_examples 'a temperature check not fooled by other errors' do
+    it 'detects a rejected temperature with only a type and a message' do
+      stub_response(failed_response(400, {
+        error: { type: 'invalid_request_error', message: 'invalid temperature: only 1 is allowed for this model' },
+      }.to_json))
+
+      expect(provider.check_temperature_support!(config)).to be(false)
+    end
+
+    it 'raises for a bad request that does not mention the temperature' do
+      stub_response(failed_response(400, {
+        error: { type: 'invalid_request_error', message: 'invalid model: k9 does not exist' },
+      }.to_json))
+
+      expect { provider.check_temperature_support!(config) }
+        .to raise_error(AI::Provider::CheckTemperatureSupportError)
+    end
+
+    it 'raises when another parameter is named as the problem' do
+      stub_response(failed_response(400, {
+        error: { type: 'invalid_request_error', param: 'model', message: 'model is invalid, temperature is fine' },
+      }.to_json))
+
+      expect { provider.check_temperature_support!(config) }
+        .to raise_error(AI::Provider::CheckTemperatureSupportError)
+    end
+
+    it 'raises when an error code other than the temperature one is given' do
+      stub_response(failed_response(400, {
+        error: { type: 'invalid_request_error', code: 'model_not_found', message: 'model not found, temperature is fine' },
+      }.to_json))
+
+      expect { provider.check_temperature_support!(config) }
+        .to raise_error(AI::Provider::CheckTemperatureSupportError)
+    end
+
+    it 'raises for another error type that happens to mention the temperature' do
+      stub_response(failed_response(500, {
+        error: { type: 'server_error', message: 'temperature sensor offline' },
+      }.to_json))
+
+      expect { provider.check_temperature_support!(config) }
+        .to raise_error(AI::Provider::CheckTemperatureSupportError)
+    end
+
+    it 'raises when the error is not an object' do
+      stub_response(failed_response(400, { error: 'temperature' }.to_json))
+
+      expect { provider.check_temperature_support!(config) }
+        .to raise_error(AI::Provider::CheckTemperatureSupportError)
+    end
+
+    it 'maps a message with invalid UTF-8 to the provider message' do
+      stub_response(failed_response(400, %({"error":{"type":"invalid_request_error","message":"\xFF temperature"}}).b))
+
+      expect { provider.check_temperature_support!(config) }
+        .to raise_error(AI::Provider::CheckTemperatureSupportError, 'Invalid request - please check your input')
+    end
+  end
+
   shared_examples 'a temperature check skipping known models' do
     it 'leaves the temperature out for a model known to reject it', :aggregate_failures do
       stub_response(UserAgent::Result.new(success: true, code: 200, data: {}))
@@ -74,6 +135,7 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
 
     include_examples 'a config validating temperature check'
     include_examples 'a temperature check skipping known models'
+    include_examples 'a temperature check not fooled by other errors'
   end
 
   context 'with Azure' do
@@ -81,6 +143,7 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
     let(:config)   { { token: 'sk-123', url_completions: 'https://example.com/openai/deployments/test/chat/completions' } }
 
     include_examples 'a config validating temperature check'
+    include_examples 'a temperature check not fooled by other errors'
   end
 
   context 'with a custom OpenAI compatible provider' do
@@ -90,6 +153,21 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
 
     include_examples 'a config validating temperature check'
     include_examples 'a temperature check skipping known models'
+    include_examples 'a temperature check not fooled by other errors'
+
+    it 'leaves the temperature out of chat requests once the probe detected the rejection', :aggregate_failures do
+      stub_response(failed_response(400, {
+        error: { type: 'invalid_request_error', message: 'invalid temperature: only 1 is allowed for this model' },
+      }.to_json))
+
+      detected = provider.check_temperature_support!(config.merge(model: 'k3.1-pro'))
+
+      stub_response(UserAgent::Result.new(success: true, code: 200, data: { 'choices' => [{ 'message' => { 'content' => 'Hi' } }] }))
+      chat_config = config.merge(model: 'k3.1-pro', model_temperature_support: detected)
+
+      expect(provider.new(config: chat_config).chat(prompt_system: 'sys', prompt_user: 'usr', prompt_image: nil)).to eq('Hi')
+      expect(UserAgent).to have_received(:post).with(anything, hash_excluding(:temperature), anything)
+    end
   end
 
   context 'with Anthropic' do
@@ -100,7 +178,6 @@ RSpec.describe AI::Provider, '.check_temperature_support!' do
     include_examples 'a config validating temperature check'
     include_examples 'a temperature check skipping known models'
 
-    # Anthropic's error body carries neither param nor code, so the base matcher would miss it.
     it 'detects a rejected temperature without the param/code fields' do
       stub_response(failed_response(400, {
         type:  'error',

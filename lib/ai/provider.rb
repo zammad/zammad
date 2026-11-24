@@ -133,7 +133,13 @@ class AI::Provider
       error = data.is_a?(Hash) ? data['error'] : nil
       return false if !error.is_a?(Hash)
 
-      error.values_at('type', 'param', 'code') == %w[invalid_request_error temperature unsupported_value]
+      type, param, code = error.values_at('type', 'param', 'code')
+      return true if [type, param, code] == %w[invalid_request_error temperature unsupported_value]
+
+      # Some compatible endpoints (e.g. Kimi) send neither param nor code and name the parameter in
+      # the message only.
+      message = error['message'].to_s
+      type == 'invalid_request_error' && param.blank? && code.blank? && message.valid_encoding? && message.match?(%r{\btemperature\b}i)
     rescue JSON::ParserError
       false
     end
