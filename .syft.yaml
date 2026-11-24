@@ -1,0 +1,45 @@
+# Syft reads this file from its working directory. Select the settings for what is
+#   scanned with a profile, e.g. `syft scan dir:. --profile repository`.
+
+# Builds must not depend on Anchore's update server.
+check-for-app-update: false
+
+source:
+  supplier: Zammad GmbH
+
+profiles:
+  # The dependencies that ship with Zammad, as declared in the lockfiles of the
+  #   checkout. The other lockfiles only hold build and development tooling.
+  repository:
+    default-catalogers:
+      - ruby-gemfile-cataloger
+      - javascript-lock-cataloger
+    # Only packages: the file catalogers would add the lockfiles themselves. Both
+    #   settings are needed, either alone makes syft warn about the other.
+    select-catalogers:
+      - -file
+    file:
+      metadata:
+        selection: none
+    exclude:
+      - '**/.eslint-plugin-zammad/**'
+      - ./public/assets/chat/**
+      - ./public/assets/images/**
+
+  # The installed contents of a packager.io package (contrib/packager.io/after.sh) or
+  #   Docker image (Dockerfile). The sbom-cataloger merges the JS dependencies from
+  #   pnpm-lock.cdx.json, they only exist compiled into the assets.
+  installation:
+    default-catalogers:
+      - image
+    select-catalogers:
+      - +sbom-cataloger
+      - -file
+    file:
+      metadata:
+        selection: none
+    exclude:
+      # Zammad's own lint plugin. It ships only because the asset build needs it.
+      - '**/.eslint-plugin-zammad/**'
+      # Holds syft itself in the Docker build. An --exclude option would replace this list.
+      - ./tmp/**

@@ -39,6 +39,11 @@ has a bright and sustainable future, consider becoming a Zammad customer!
   [![binary packages for Zammad develop](https://img.shields.io/badge/Branch-develop-lightgrey.svg)](https://packager.io/gh/zammad/zammad/refs/develop)
 - License: [![AGPL license](https://img.shields.io/badge/License-AGPL%203.0-brightgreen.svg)](https://github.com/zammad/zammad/blob/develop/LICENSE)
 
+## Supply Chain Security
+
+Every DEB/RPM package and Docker image of Zammad comes with a software bill of materials (SBOM)
+in CycloneDX format that lists the components it ships: `/opt/zammad/sbom.cdx.json`.
+
 ## Further Information
 
 - [Installing & Getting Started](https://docs.zammad.org)

@@ -11,6 +11,7 @@
 #   commit that fails linting. The manual lint jobs are not listed, a job needing them
 #   would wait for them forever. Neither is 'lint: bundle-audit': a newly published
 #   advisory fails it without any change in the commit, which must not hold up the tests.
+#   Nor is 'lint: sbom', whose check guards the generated SBOM, not the code under test.
 #
 # Jobs with rules of their own are optional, because filtered pipelines ($JOB_FILTER,
 #   $BROWSER_TEST_FILTER) do not contain them, and needing a job that is missing from the

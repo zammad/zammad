@@ -228,3 +228,40 @@
   # artifacts:
   #   reports:
   #     secret_detection: secret-detection-report.json
+
+# The scanned dependencies are configured in the `repository` profile of .syft.yaml.
+#   Neither lockfile marks development dependencies in a way syft understands, so these
+#   are listed as well.
+# The image without the -debug suffix has no shell.
+'lint: sbom':
+  extends: .template_lint
+  image:
+    name: 'anchore/syft:debug'  # Use -debug because it brings the shell GitLab needs.
+    entrypoint: ['']
+  timeout: 5 minutes
+  rules:
+    - !reference [.rule_fragments, variable_filters]
+    - if: $CI_COMMIT_TAG
+      when: on_success
+    - if: $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH =~ /^stable/
+      when: on_success
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: on_success
+    - when: never
+  script:
+    - >
+      /syft scan dir:.
+      --profile repository
+      --source-name zammad
+      --source-version "${CI_COMMIT_TAG:-$CI_COMMIT_SHA}"
+      --output cyclonedx-json=sbom.cdx.json
+    # Development dependencies are listed here (see above), so their absence cannot be checked.
+    # The image has its shell in /busybox, not in /bin where the shebang looks.
+    - sh .gitlab/sbom/verify.sh sbom.cdx.json pkg:gem/rails pkg:npm/vue
+  after_script: []
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - sbom.cdx.json
+    reports:
+      cyclonedx: sbom.cdx.json

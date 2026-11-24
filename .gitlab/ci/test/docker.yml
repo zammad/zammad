@@ -45,6 +45,8 @@ docker base tests:
   extends: .template_docker
   script:
     - docker build --build-arg COMMIT_SHA=${CI_COMMIT_SHORT_SHA} --pull -t $ZAMMAD_IMAGE .
+    - docker run --rm --entrypoint cat $ZAMMAD_IMAGE /opt/zammad/sbom.cdx.json > sbom.cdx.json
+    - .gitlab/sbom/verify.sh sbom.cdx.json pkg:deb/debian/nginx pkg:generic/ruby pkg:gem/rails pkg:npm/vue '!pkg:gem/rspec-rails' '!pkg:npm/vitest'
     - cd zammad-docker-compose
     - .github/tests/setup/default.sh
     - DISABLE_EXTERNAL_TESTS=1 .github/tests/default.sh
