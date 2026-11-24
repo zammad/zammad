@@ -48,7 +48,11 @@ export const mountComponent = (
 
   const router = createRouter({
     history: createMemoryHistory('/'),
-    routes: [{ path: '/', component: { template: '<div />' } }],
+    // Like the app's error route, the catch-all lets links resolve external urls without a warning.
+    routes: [
+      { path: '/', component: { template: '<div />' } },
+      { name: 'Error', path: '/:pathMatch(.*)*', component: { template: '<div />' } },
+    ],
   })
 
   const plugins = [

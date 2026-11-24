@@ -4,6 +4,7 @@
 import { onActivated, useTemplateRef, watch } from 'vue'
 
 import { useReducedMotion } from '#shared/composables/useReducedMotion.ts'
+import { waitForAncestorAnimations } from '#shared/utils/animations.ts'
 
 import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
@@ -63,7 +64,10 @@ onActivated(() => requestAnimationFrame(revealRequested))
 
 const onBeforeEnter = (element: Element) => enteringWindows.add(element)
 
-const onAfterEnter = (element: Element) => {
+// Vue ends the enter on a timer when a transition end comes late, so the window can still be growing.
+const onAfterEnter = async (element: Element) => {
+  await waitForAncestorAnimations(element as HTMLElement)
+
   enteringWindows.delete(element)
 
   if (element === findWindowToReveal()) reveal(element)
