@@ -100,13 +100,14 @@ const linesAsParagraphs = (html: string) => {
     .join('')
 }
 
+const htmlAsContent = (html: string) =>
+  props.context.extensionSet === 'reduced' ? paragraphsAsLines(html) : html
+
 const getEditorContent = (editor: Editor, type: EditorContentType) => {
   if (type === 'text/plain') return editor.getText()
   if (editor.isEmpty) return ''
 
-  const content = editor.getHTML()
-
-  return props.context.extensionSet === 'reduced' ? paragraphsAsLines(content) : content
+  return htmlAsContent(editor.getHTML())
 }
 
 const actionBarComponent = getEditorComponents().actionBar
@@ -199,7 +200,7 @@ const editorExtensions = computed(() => {
 const showActionBar = ref(false)
 const editorValue = ref<string>(VITE_TEST_MODE ? props.context._value : '')
 
-const { hasImageExtension, loadFiles, takeImagesOnTheirWay } = useAttachments(
+const { hasImageExtension, loadFiles, takeContentWithImagesOnTheirWay } = useAttachments(
   editorExtensions.value,
   props.context.formId,
 )
@@ -528,7 +529,8 @@ const editorCustomContext = {
   },
   addSignature,
   removeSignature,
-  takeImagesOnTheirWay: () => (editor.value ? takeImagesOnTheirWay(editor.value) : undefined),
+  takeContentWithImagesOnTheirWay: () =>
+    editor.value ? takeContentWithImagesOnTheirWay(editor.value)?.then(htmlAsContent) : undefined,
   focus: focusEditor,
   // Set either way, to replace the queued variant the wrapper offers until the editor is loaded.
   insertKnowledgeBaseAnswer: editorExtensions.value.some(

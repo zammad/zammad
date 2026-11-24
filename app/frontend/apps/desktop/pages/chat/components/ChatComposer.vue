@@ -76,16 +76,16 @@ const submit = async () => {
   const written = fieldValue()
 
   // An image pasted right before belongs to this message, also while it is still being read.
-  const imagesOnTheirWay = editorContext()?.takeImagesOnTheirWay?.()
+  const writtenWithImages = editorContext()?.takeContentWithImagesOnTheirWay?.()
 
-  if (!imagesOnTheirWay && !hasContent(written)) return
+  if (!writtenWithImages && !hasContent(written)) return
 
   isSending.value = true
 
   // Emptied right away like in the old interface, so the agent can go on with the next message.
   setFieldValue('')
 
-  const sent = imagesOnTheirWay ? `${written}${await imagesOnTheirWay}` : written
+  const sent = writtenWithImages ? await writtenWithImages : written
 
   if (!hasContent(sent)) {
     isSending.value = false

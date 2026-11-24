@@ -91,10 +91,10 @@ export interface FieldEditorContext {
   removeSignature(): void
   focus(): void
   getEditorValue(type: EditorContentType): string
-  // Hands over the images that were pasted or dropped but are still being read, as the HTML they
-  //   would have had in the content, which they no longer reach. Nothing when none is on its way;
-  //   not offered before the editor is loaded.
-  takeImagesOnTheirWay?(): Promise<string> | undefined
+  // Hands over the images that were pasted or dropped but are still being read, in the content as it
+  //   would have been with them, which they no longer reach. Nothing when none is on its way; not
+  //   offered before the editor is loaded.
+  takeContentWithImagesOnTheirWay?(): Promise<string> | undefined
   // Only offered by editors with the knowledge base mention (`??`).
   insertKnowledgeBaseAnswer?(translationId: ID): void
   signature?: Pick<PossibleSignature, 'internalId' | 'renderedBody'> | null

@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { getHTMLFromFragment, type Extensions } from '@tiptap/core'
-import { Fragment } from '@tiptap/pm/model'
 import { computed } from 'vue'
 
 import { convertInlineImages } from '#shared/components/Form/fields/FieldEditor/utils.ts'
@@ -36,27 +35,33 @@ export const useAttachments = (extensions: Extensions, formId: string) => {
       })
   }
 
-  const takeImagesOnTheirWay = (editor: Editor) => {
+  // The images go where the cursor is now, as if they had arrived: appended to the content's HTML,
+  //   they would lose a line break before them, which the HTML of a line does not end with.
+  const takeContentWithImagesOnTheirWay = (editor: Editor) => {
     if (!imagesOnTheirWay.size) return undefined
 
     const taken = [...imagesOnTheirWay]
+    const { state } = editor
 
     taken.forEach((entry) => {
       entry.isTaken = true
     })
 
-    return Promise.all(taken.map(({ images }) => images.catch(() => []))).then((images) =>
-      getHTMLFromFragment(
-        Fragment.from(
-          images
-            .flat()
-            .map(({ content, name, type }) =>
-              editor.schema.nodes.image.create({ src: content, alt: name, type }),
-            ),
-        ),
-        editor.schema,
-      ),
-    )
+    return Promise.all(taken.map(({ images }) => images.catch(() => []))).then((images) => {
+      const nodes = images
+        .flat()
+        .map(({ content, name, type }) =>
+          state.schema.nodes.image.create({ src: content, alt: name, type }),
+        )
+
+      // Like `setImages`, with the paragraph after them; with no image read, the selection stays.
+      const { from, to } = state.selection
+      const doc = nodes.length
+        ? state.tr.replaceWith(from, to, [...nodes, state.schema.nodes.paragraph.create()]).doc
+        : state.doc
+
+      return getHTMLFromFragment(doc.content, state.schema)
+    })
   }
 
   const addFilesToAttachments = (files: File[]) => {
@@ -108,6 +113,6 @@ export const useAttachments = (extensions: Extensions, formId: string) => {
   return {
     hasImageExtension,
     loadFiles,
-    takeImagesOnTheirWay,
+    takeContentWithImagesOnTheirWay,
   }
 }

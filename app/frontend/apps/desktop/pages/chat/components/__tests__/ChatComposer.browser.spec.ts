@@ -51,6 +51,32 @@ const pasteImage = async (field: Awaited<ReturnType<typeof mountComposer>>['fiel
   await expect.poll(() => page.getByRole('button', { name: 'Send' }).element()).toBeEnabled()
 }
 
+// Holds a pasted image back from the editor until it is let go, so the Enter comes while it is still
+//   being read, however fast the runner is.
+const holdImageReading = () => {
+  const { readAsDataURL } = FileReader.prototype
+  const held: (() => void)[] = []
+  let isLetGo = false
+
+  vi.spyOn(FileReader.prototype, 'readAsDataURL').mockImplementation(function read(
+    this: FileReader,
+    blob: Blob,
+  ) {
+    const reading = () => readAsDataURL.call(this, blob)
+
+    if (isLetGo) reading()
+    else held.push(reading)
+  })
+  onTestFinished(() => {
+    vi.restoreAllMocks()
+  })
+
+  return () => {
+    isLetGo = true
+    held.splice(0).forEach((reading) => reading())
+  }
+}
+
 describe('ChatComposer in the browser', () => {
   it('sends the message as HTML on Enter and breaks the line on Shift+Enter', async () => {
     const { send, field } = await mountComposer()
@@ -145,17 +171,7 @@ describe('ChatComposer in the browser', () => {
   })
 
   it('sends an image along that was pasted right before the Enter, and nothing written after it', async () => {
-    const { readAsDataURL } = FileReader.prototype
-
-    vi.spyOn(FileReader.prototype, 'readAsDataURL').mockImplementation(function read(
-      this: FileReader,
-      blob: Blob,
-    ) {
-      setTimeout(() => readAsDataURL.call(this, blob), 300)
-    })
-    onTestFinished(() => {
-      vi.restoreAllMocks()
-    })
+    const letImagesGo = holdImageReading()
 
     const { send, field } = await mountComposer()
 
@@ -165,6 +181,9 @@ describe('ChatComposer in the browser', () => {
     // In one go: the next message is begun while the image of this one is still being read.
     await userEvent.keyboard('{Enter}Next')
 
+    expect(send).not.toHaveBeenCalled()
+    letImagesGo()
+
     await expect.poll(() => send.mock.calls.length).toBe(1)
     expect(send.mock.calls[0]).toEqual([
       expect.stringMatching(
@@ -173,6 +192,25 @@ describe('ChatComposer in the browser', () => {
     ])
     await expect.element(field).toHaveTextContent('Next')
     expect(field.element().querySelector('img[src]')).toBeNull()
+  })
+
+  it('keeps the line break before an image that is still being read on the Enter', async () => {
+    const letImagesGo = holdImageReading()
+
+    const { send, field } = await mountComposer()
+
+    await userEvent.click(field)
+    await userEvent.keyboard('Look:{Shift>}{Enter}{/Shift}')
+    await pasteImage(field)
+    await userEvent.keyboard('{Enter}')
+
+    expect(send).not.toHaveBeenCalled()
+    letImagesGo()
+
+    await expect.poll(() => send.mock.calls.length).toBe(1)
+    expect(send.mock.calls[0]).toEqual([
+      expect.stringMatching(/^Look:<br><img [^>]*src="data:image\/[a-z]+;base64,[^"]+"[^>]*>$/),
+    ])
   })
 
   it('leaves the Enter on an image to the image, which opens its resize frame', async () => {
