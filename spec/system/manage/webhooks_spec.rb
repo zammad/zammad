@@ -5,7 +5,8 @@ require 'system/examples/pagination_examples'
 
 RSpec.describe 'Manage > Webhook', type: :system do
   context 'when ajax pagination' do
-    include_examples 'pagination', model: :webhook, klass: Webhook, path: 'manage/webhook'
+    # An IP address needs no DNS lookup - with a hostname, each of the 500 records resolves it on validation.
+    include_examples 'pagination', model: :webhook, klass: Webhook, path: 'manage/webhook', create_params: { endpoint: 'http://203.0.113.10/endpoint' }
   end
 
   context 'when showing the example payload' do
