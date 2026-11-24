@@ -219,6 +219,23 @@ RSpec.describe Service::EntityAttribute::Type, :aggregate_failures do
 
       expect(type_of(ticket_field('state_id')).choices(allowed: ['', *allowed]).map(&:last)).to eq(%w[closed open])
     end
+
+    it 'gives the list a key that changes with the states to choose from and with one of them' do
+      type    = type_of(ticket_field('state_id'))
+      open    = Ticket::State.lookup(name: 'open')
+      allowed = Ticket::State.where(name: %w[open closed]).pluck(:id).map(&:to_s)
+      key     = type.option_list_key(allowed:)
+
+      expect(type.option_list_key(allowed:)).to eq(key)
+      expect(type.option_list_key(allowed: [open.id.to_s])).not_to eq(key)
+      expect(type.option_list_key).not_to eq(key)
+      expect(key.first).to eq('Service::EntityAttribute::Type::TicketState')
+      expect(type_of(ticket_field('priority_id')).option_list_key.first).to eq('Service::EntityAttribute::Type::TicketPriority')
+
+      travel 1.second
+      open.update!(name: 'in progress')
+      expect(type.option_list_key(allowed:)).not_to eq(key)
+    end
   end
 
   describe 'TicketGroup' do
@@ -269,6 +286,32 @@ RSpec.describe Service::EntityAttribute::Type, :aggregate_failures do
       expect(error_of(type, 'Finance')).to eq(['invalid_value', 'group "Finance" does not exist. Valid groups: Support.'])
       expect(error_of(type, 'Sales')).to eq(['invalid_value', 'group "Sales" does not exist. Valid groups: Support.'])
     end
+
+    it 'gives the list a key that changes with the groups to choose from, and with a group that is none of them' do
+      sales = create(:group, name: 'Sales')
+      emea  = create(:group, name: 'EMEA', parent: sales)
+      agent.group_names_access_map = { 'Support' => 'full', emea.name => 'full' }
+      key = type.option_list_key
+
+      expect(key).to include(type.records.pluck(:id).sort)
+      expect(type.option_list_key).to eq(key)
+      expect(type.option_list_key(allowed: ['', group.id.to_s])).to include([group.id]).and(not_eq(key))
+
+      # A change that is not the latest one of all groups, like one whose transaction ends after a later change.
+      travel_to(1.hour.ago) { sales.update!(note: 'A parent the agent may not choose.') }
+      expect(type.option_list_key).to include(key.second).and(not_eq(key))
+
+      agent.group_names_access_map = { 'Support' => 'full' }
+      expect(type.option_list_key).to include([group.id])
+    end
+
+    it 'keeps the ticket\'s own group in the key, and has no key for a caller that acts for nobody' do
+      archive = create(:group, name: 'Archive')
+      own     = described_class.for(ticket_field('group_id'), user: agent, record: create(:ticket, group: archive))
+
+      expect(own.option_list_key).to include(own.records.pluck(:id).sort).and(include([archive.id, group.id].sort))
+      expect(described_class.unscoped(ticket_field('group_id')).option_list_key).to be_nil
+    end
   end
 
   describe 'Owner' do
@@ -281,6 +324,44 @@ RSpec.describe Service::EntityAttribute::Type, :aggregate_failures do
       expect(type.resolve('Nobody').id).to eq(1)
       expect(type.label(1)).to eq('nobody')
       expect(type.label(carla.id)).to eq('Carla Agent')
+    end
+
+    it 'gives the list a key that changes with a name and the way names read, not with a login' do
+      key = type.option_list_key
+
+      travel 1.second
+      carla.update!(last_login: Time.zone.now)
+      expect(type.option_list_key).to eq(key)
+      expect(type.option_list_key(allowed: [agent.id.to_s])).not_to eq(key)
+
+      carla.update!(lastname: 'Colleague')
+      renamed = type.option_list_key
+      expect(renamed).not_to eq(key)
+
+      Setting.set('user_name_format', 'last_first')
+      expect(type_of(ticket_field('owner_id')).option_list_key).not_to eq(renamed)
+    end
+
+    it 'lists the names in the format its key names, also where the setting changes after the key was read' do
+      key = type.option_list_key(allowed: [carla.id.to_s])
+
+      Setting.set('user_name_format', 'last_first')
+
+      expect(type.option_list(allowed: [carla.id.to_s]).map(&:label)).to eq(['Carla Agent'])
+      expect(type.option_list_key(allowed: [carla.id.to_s])).to eq(key)
+      expect(type_of(ticket_field('owner_id')).option_list(allowed: [carla.id.to_s]).map(&:label)).to eq(['Agent Carla'])
+    end
+
+    it 'gives the list another key with each of what the label of an agent without a name reads' do
+      nameless = create(:agent, firstname: '', lastname: '', email: 'nameless@example.com', phone: '', mobile: '', login: 'nameless')
+
+      keys = [{}, { email: '' }, { phone: '+49 30 123456' }, { phone: '', mobile: '+49 170 123456' }, { mobile: '', login: 'jdoe' }].map do |change|
+        nameless.update!(change)
+
+        type.option_list_key(allowed: [nameless.id.to_s])
+      end
+
+      expect(keys.uniq.size).to eq(5)
     end
 
     it 'names the candidates of a name two agents share, and no customer' do

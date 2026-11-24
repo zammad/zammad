@@ -14,6 +14,7 @@ export const FormUpdaterDocument = gql`
   ) {
     fields
     flags
+    optionSignatures
   }
 }
     `;

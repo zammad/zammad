@@ -14,5 +14,6 @@ query formUpdater(
   ) {
     fields
     flags
+    optionSignatures
   }
 }

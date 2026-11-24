@@ -16,6 +16,14 @@ class FormUpdater::Relation
     end
   end
 
+  # Everything #options is built from, so that the same key stands for the same options: the items in their order, each
+  #   with what its option reads of it. A relation whose options take more than its items adds that, or has no key.
+  #
+  # @return [Object, nil] nil for options that are built on every request
+  def options_key
+    [self.class.name, items.pluck(:id, *options_key_columns)]
+  end
+
   private
 
   def order
@@ -24,6 +32,11 @@ class FormUpdater::Relation
 
   def display_name(item)
     item.name
+  end
+
+  # What #display_name reads of an item, for #options_key: the time of its last change stands for all of it.
+  def options_key_columns
+    %i[updated_at]
   end
 
   def relation_type

@@ -120,6 +120,14 @@ class Service::EntityAttribute::Type
     nil
   end
 
+  # Everything #option_list is built from, for a caller that keeps the list: the same key stands for the same list.
+  #
+  # @param allowed [Array<String>, nil] the stored values Core Workflow allows, nil for every value
+  # @return [Object, nil] nil for a list that has to be built every time
+  def option_list_key(allowed: nil)
+    nil
+  end
+
   private
 
   # @return [Object] what the record stores for the value a caller passed

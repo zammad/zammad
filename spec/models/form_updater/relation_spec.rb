@@ -101,4 +101,64 @@ RSpec.describe FormUpdater::Relation do
       expect(option_values).to eq(filter_ids)
     end
   end
+
+  describe '#options_key', :aggregate_failures do
+    def options_key(relation_class, filter_ids, **)
+      relation_class.new(context: { current_user: agent }, current_user: agent, filter_ids:, **).options_key
+    end
+
+    it 'changes with the items and with one of them' do
+      states = Ticket::State.where(name: %w[new open])
+      key    = options_key(FormUpdater::Relation::TicketState, states.ids)
+
+      expect(options_key(FormUpdater::Relation::TicketState, states.ids)).to eq(key)
+      expect(options_key(FormUpdater::Relation::TicketState, [states.first.id])).not_to eq(key)
+      expect(key.first).to eq('FormUpdater::Relation::TicketState')
+      expect(options_key(FormUpdater::Relation::TicketPriority, Ticket::Priority.ids).first).to eq('FormUpdater::Relation::TicketPriority')
+
+      travel 1.second
+      states.first.update!(note: 'Changed.')
+      expect(options_key(FormUpdater::Relation::TicketState, states.ids)).not_to eq(key)
+    end
+
+    it 'changes for owners with a name and the way names read, not with a login' do
+      other = create(:agent)
+      key   = options_key(FormUpdater::Relation::Owner, [other.id])
+
+      travel 1.second
+      other.update!(last_login: Time.zone.now)
+      expect(options_key(FormUpdater::Relation::Owner, [other.id])).to eq(key)
+
+      other.update!(lastname: 'Colleague')
+      renamed = options_key(FormUpdater::Relation::Owner, [other.id])
+      expect(renamed).not_to eq(key)
+
+      Setting.set('user_name_format', 'last_first')
+      expect(options_key(FormUpdater::Relation::Owner, [other.id])).not_to eq(renamed)
+    end
+
+    it 'names the format the owners read in, also where the setting changes after the key was read' do
+      other    = create(:agent, firstname: 'Carla', lastname: 'Agent')
+      relation = FormUpdater::Relation::Owner.new(context: { current_user: agent }, current_user: agent, filter_ids: [other.id])
+      key      = relation.options_key
+
+      Setting.set('user_name_format', 'last_first')
+
+      expect(relation.options.pluck(:label)).to eq(['Carla Agent'])
+      expect(relation.options_key).to eq(key)
+      expect(options_key(FormUpdater::Relation::Owner, [other.id])).not_to eq(key)
+    end
+
+    it 'changes for an owner without a name with each of what stands for the name' do
+      nameless = create(:agent, firstname: '', lastname: '', email: 'nameless@example.com', phone: '', mobile: '', login: 'nameless')
+
+      keys = [{}, { email: '' }, { phone: '+49 30 123456' }, { phone: '', mobile: '+49 170 123456' }, { mobile: '', login: 'jdoe' }].map do |change|
+        nameless.update!(change)
+
+        options_key(FormUpdater::Relation::Owner, [nameless.id])
+      end
+
+      expect(keys.uniq.size).to eq(5)
+    end
+  end
 end

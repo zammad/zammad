@@ -18,7 +18,16 @@ class Service::EntityAttribute::Type::Owner < Service::EntityAttribute::Type::Re
     [([Service::EntityAttribute::NameMatch::NOBODY_ID.to_s, NOBODY] if nobody), *super].compact
   end
 
+  def option_list_key(allowed: nil)
+    [*super, name_format]
+  end
+
   private
+
+  # A user's record changes with every login, so the key holds what a label reads in place of the time of that change.
+  def option_list_key_columns
+    %i[firstname lastname email phone mobile login]
+  end
 
   # Every ticket may go back to nobody, whatever the group allows.
   def convert(value, allowed:)
@@ -77,6 +86,11 @@ class Service::EntityAttribute::Type::Owner < Service::EntityAttribute::Type::Re
 
   # A user without name, email and phone has the login.
   def option_label(record)
-    record.fullname.presence || record.login
+    record.fullname(name_format:).presence || record.login
+  end
+
+  # Read once, so that a list reads in the format its key names, also where the setting changes in between.
+  def name_format
+    @name_format ||= Setting.get('user_name_format')
   end
 end

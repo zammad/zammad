@@ -13,5 +13,8 @@ module Gql::Types::Input::FormUpdater
     argument :request_id, String, required: false, description: 'Generated frontend request ID'
     argument :additional_data, GraphQL::Types::JSON, required: false, description: 'Additional data for form updater'
     argument :dirty_fields, [String], required: false, description: 'List of dirty fields'
+    argument :known_option_signatures, GraphQL::Types::JSON, required: false do
+      description 'Signatures of the option lists the form holds already, by field name. A field whose list still has the same signature gets no options in the result.'
+    end
   end
 end

@@ -1572,4 +1572,273 @@ describe('Form.vue - Form updater requests', () => {
 
     expect(mockFormUpdaterApi.calls.behave).toBe(2)
   })
+
+  it('names the signature of an option list it holds and keeps the list when no options come back', async () => {
+    const groupOptions = [
+      { value: 1, label: 'Users' },
+      { value: 2, label: 'Support' },
+    ]
+
+    const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willBehave((variables) => ({
+      data: {
+        formUpdater: {
+          fields: {
+            group_id: variables.meta.knownOptionSignatures?.group_id
+              ? { show: true }
+              : { show: true, options: groupOptions },
+          },
+          flags: {},
+          optionSignatures: { group_id: 'signature-1' },
+        },
+      },
+    }))
+
+    const { view, form } = await renderTicketCreateForm({
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+      schema: [
+        {
+          type: 'text',
+          name: 'customerId',
+          label: 'Customer',
+          triggerFormUpdater: true,
+        },
+        {
+          type: 'select',
+          name: 'group_id',
+          label: 'Group',
+        },
+      ],
+    })
+
+    await waitUntil(() => form.value.formInitialSettled)
+
+    expect(
+      mockFormUpdaterApi.spies.behave.mock.calls[0][0].meta.knownOptionSignatures,
+    ).toBeUndefined()
+
+    await view.events.type(view.getByLabelText('Customer'), 'customer-123')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.behave === 2)
+    await getNode('form-ticket-create')?.settled
+    await waitForNextTick(true)
+
+    expect(mockFormUpdaterApi.spies.behave.mock.calls[1][0].meta.knownOptionSignatures).toEqual({
+      group_id: 'signature-1',
+    })
+
+    await view.events.click(view.getByLabelText('Group'))
+
+    expect(view.getByRole('option', { name: 'Users' })).toBeInTheDocument()
+    expect(view.getByRole('option', { name: 'Support' })).toBeInTheDocument()
+  })
+
+  it('names no signature of an option list a form handler replaced', async () => {
+    const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willBehave(() => ({
+      data: {
+        formUpdater: {
+          fields: { group_id: { show: true, options: [{ value: 1, label: 'Users' }] } },
+          flags: {},
+          optionSignatures: { group_id: 'signature-1' },
+        },
+      },
+    }))
+
+    const { view, form } = await renderTicketCreateForm({
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+      schema: [
+        {
+          type: 'text',
+          name: 'customerId',
+          label: 'Customer',
+          triggerFormUpdater: true,
+        },
+        {
+          type: 'select',
+          name: 'group_id',
+          label: 'Group',
+        },
+      ],
+      handlers: [
+        {
+          execution: [FormHandlerExecution.FieldChange],
+          callback: (_execution, { updateSchemaDataField }, { changedField }) => {
+            if (changedField?.name !== 'customerId') return
+
+            updateSchemaDataField({
+              name: 'group_id',
+              props: { options: [{ value: 3, label: 'Sales' }] },
+            })
+          },
+        },
+      ],
+    })
+
+    await waitUntil(() => form.value.formInitialSettled)
+
+    await view.events.type(view.getByLabelText('Customer'), 'customer-123')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.behave >= 2)
+
+    const { meta } = mockFormUpdaterApi.spies.behave.mock.calls[1][0]
+
+    expect(meta.changedField.name).toBe('customerId')
+    expect(meta.knownOptionSignatures).toBeUndefined()
+  })
+
+  it('names no signature of an option list a form handler changed in place', async () => {
+    const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willBehave(() => ({
+      data: {
+        formUpdater: {
+          fields: {
+            group_id: {
+              show: true,
+              options: [
+                { value: 1, label: 'Users' },
+                { value: 2, label: 'Support' },
+              ],
+            },
+          },
+          flags: {},
+          optionSignatures: { group_id: 'signature-1' },
+        },
+      },
+    }))
+
+    const { view, form } = await renderTicketCreateForm({
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+      schema: [
+        {
+          type: 'text',
+          name: 'customerId',
+          label: 'Customer',
+          triggerFormUpdater: true,
+        },
+        {
+          type: 'select',
+          name: 'group_id',
+          label: 'Group',
+        },
+      ],
+      handlers: [
+        {
+          execution: [FormHandlerExecution.FieldChange],
+          callback: (_execution, { schemaData }, { changedField }) => {
+            if (changedField?.name !== 'customerId') return
+
+            ;(schemaData.fields.group_id.props.options as unknown[]).pop()
+          },
+        },
+      ],
+    })
+
+    await waitUntil(() => form.value.formInitialSettled)
+
+    await view.events.type(view.getByLabelText('Customer'), 'customer-123')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.behave >= 2)
+
+    const { meta } = mockFormUpdaterApi.spies.behave.mock.calls[1][0]
+
+    expect(meta.changedField.name).toBe('customerId')
+    expect(meta.knownOptionSignatures).toBeUndefined()
+  })
+
+  it('names no signature of an option list an initial form handler changed in the result', async () => {
+    const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willBehave(() => ({
+      data: {
+        formUpdater: {
+          fields: {
+            group_id: {
+              show: true,
+              options: [
+                { value: 1, label: 'Users' },
+                { value: 2, label: 'Support' },
+              ],
+            },
+          },
+          flags: {},
+          optionSignatures: { group_id: 'signature-1' },
+        },
+      },
+    }))
+
+    const { view, form } = await renderTicketCreateForm({
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+      schema: [
+        {
+          type: 'text',
+          name: 'customerId',
+          label: 'Customer',
+          triggerFormUpdater: true,
+        },
+        {
+          type: 'select',
+          name: 'group_id',
+          label: 'Group',
+        },
+      ],
+      handlers: [
+        {
+          execution: [FormHandlerExecution.Initial],
+          callback: (_execution, _reactivity, { formUpdaterData }) => {
+            formUpdaterData?.fields.group_id.options.pop()
+          },
+        },
+      ],
+    })
+
+    await waitUntil(() => form.value.formInitialSettled)
+
+    await view.events.type(view.getByLabelText('Customer'), 'customer-123')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.behave >= 2)
+
+    const { meta } = mockFormUpdaterApi.spies.behave.mock.calls[1][0]
+
+    expect(meta.changedField.name).toBe('customerId')
+    expect(meta.knownOptionSignatures).toBeUndefined()
+  })
+
+  it('names no signature of an option list which changed fields from outside are merged into', async () => {
+    const mockFormUpdaterApi = mockGraphQLApi(FormUpdaterDocument).willBehave(() => ({
+      data: {
+        formUpdater: {
+          fields: { group_id: { show: true, options: [{ value: 1, label: 'Users' }] } },
+          flags: {},
+          optionSignatures: { group_id: 'signature-1' },
+        },
+      },
+    }))
+
+    const view = await renderForm({
+      props: {
+        formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+        schema: [
+          {
+            type: 'text',
+            name: 'customerId',
+            label: 'Customer',
+            triggerFormUpdater: true,
+          },
+          {
+            type: 'select',
+            name: 'group_id',
+            label: 'Group',
+          },
+        ],
+        changeFields: {
+          group_id: { options: [{ value: 3, label: 'Sales' }] } as Partial<FormSchemaField>,
+        },
+      },
+    })
+
+    await view.events.type(view.getByLabelText('Customer'), 'customer-123')
+
+    await waitUntil(() => mockFormUpdaterApi.calls.behave >= 2)
+
+    const { meta } = mockFormUpdaterApi.spies.behave.mock.calls[1][0]
+
+    expect(meta.changedField.name).toBe('customerId')
+    expect(meta.knownOptionSignatures).toBeUndefined()
+  })
 })

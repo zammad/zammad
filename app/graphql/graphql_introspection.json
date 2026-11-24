@@ -9339,6 +9339,16 @@
                 }
               },
               "defaultValue": null
+            },
+            {
+              "name": "knownOptionSignatures",
+              "description": "Signatures of the option lists the form holds already, by field name. A field whose list still has the same signature gets no options in the result.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "JSON",
+                "ofType": null
+              },
+              "defaultValue": null
             }
           ],
           "interfaces": null,
@@ -9426,6 +9436,22 @@
             {
               "name": "flags",
               "description": null,
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "JSON",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "optionSignatures",
+              "description": "Signature of the current option list of a field, by field name. It is returned also when the options are not, because the form holds the list with this signature already.",
               "args": [],
               "type": {
                 "kind": "NON_NULL",

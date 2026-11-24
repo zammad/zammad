@@ -7,6 +7,10 @@ class FormUpdater::Relation::Group < FormUpdater::Relation
     FormUpdater::OptionList.form_options(options, integer: true, tree: options.any? { |option| option.children.any? })
   end
 
+  def options_key
+    Service::EntityAttribute::Type::TicketGroup.option_list_key_of(items.pluck(:id))
+  end
+
   private
 
   def relation_type

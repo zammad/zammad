@@ -15,6 +15,7 @@ import {
   toRef,
   watch,
   markRaw,
+  toRaw,
   useSlots,
   onBeforeUnmount,
   effectScope,
@@ -308,6 +309,10 @@ const values = computed<FormValues>(() => {
 
 const relationFields: FormUpdaterRelationField[] = []
 const relationFieldBelongsToObjectField: Record<string, string> = {}
+
+// The option lists which arrived with a signature. As long as the form names the signature of a list it holds, the
+// form updater leaves that list out of its result.
+const signedFieldOptions = new Map<string, { signature: string; options: unknown }>()
 
 const formUpdaterProcessing = computed(() => !!formNode.value?.context?.state.formUpdaterProcessing)
 
@@ -929,6 +934,33 @@ const executeFormHandler = (
   })
 }
 
+const rememberSignedFieldOptions = (formUpdater: FormUpdaterQuery['formUpdater']) => {
+  const signatures: Record<string, string> = formUpdater.optionSignatures ?? {}
+
+  Object.entries(signatures).forEach(([fieldName, signature]) => {
+    const options = formUpdater.fields[fieldName]?.options
+
+    // Without options the form updater confirmed the list the form holds.
+    if (options === undefined) return
+
+    // A copy, as the list itself can change in place later, e.g. by changed fields from outside merged into it.
+    signedFieldOptions.set(fieldName, { signature, options: cloneDeep(options) })
+  })
+}
+
+const getKnownOptionSignatures = () => {
+  const signatures: Record<string, string> = {}
+
+  signedFieldOptions.forEach(({ signature, options }, fieldName) => {
+    // Only for a list the field still holds as it arrived, e.g. a form handler can replace or change it.
+    if (!isEqual(toRaw(schemaData.fields[fieldName]?.props.options), options)) return
+
+    signatures[fieldName] = signature
+  })
+
+  return signatures
+}
+
 const formUpdaterVariables = shallowRef<FormUpdaterQueryVariables>()
 let nextFormUpdaterVariables: Maybe<FormUpdaterQueryVariables>
 const executeFormUpdaterRefetch = () => {
@@ -942,6 +974,12 @@ const executeFormUpdaterRefetch = () => {
       visible: false,
     }),
   )
+
+  // Collected right before the request, a form handler of the same tick can still replace a list.
+  const knownOptionSignatures = getKnownOptionSignatures()
+  if (!isEmpty(knownOptionSignatures)) {
+    nextFormUpdaterVariables.meta.knownOptionSignatures = knownOptionSignatures
+  }
 
   formUpdaterVariables.value = nextFormUpdaterVariables
 
@@ -1424,6 +1462,9 @@ const initializeFormSchema = () => {
     handleFormUpdaterAutosaveNotification()
 
     formUpdaterQueryHandler.onResult((queryResult) => {
+      // Before anything can change the result: the form handlers below get the result itself.
+      if (queryResult?.data?.formUpdater) rememberSignedFieldOptions(queryResult.data.formUpdater)
+
       // Execute the form handler function so that they can manipulate the form updater result.
       if (!formSchemaInitialized.value) {
         executeFormHandler(

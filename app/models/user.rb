@@ -182,9 +182,10 @@ returns
 
 =end
 
-  def fullname(email_fallback: true, recipient_line: false)
+  # @param name_format [String, nil] the format to follow in place of the setting, for a caller that reads it once
+  def fullname(email_fallback: true, recipient_line: false, name_format: nil)
     # Email sending: always first name last name (regardless of setting)
-    format = recipient_line ? 'first_last' : Setting.get('user_name_format')
+    format = recipient_line ? 'first_last' : (name_format || Setting.get('user_name_format'))
 
     name = display_name_from_parts(format)
 

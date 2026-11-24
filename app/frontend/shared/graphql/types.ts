@@ -1651,7 +1651,7 @@ export type FormUpdaterQueryVariables = Exact<{
 }>;
 
 
-export type FormUpdaterQuery = { formUpdater: { __typename: 'FormUpdaterResult', fields: any, flags: any } };
+export type FormUpdaterQuery = { formUpdater: { __typename: 'FormUpdaterResult', fields: any, flags: any, optionSignatures: any } };
 
 export type ObjectManagerFrontendAttributesQueryVariables = Exact<{
   object: Types.EnumObjectManagerObjects;

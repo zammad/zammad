@@ -13,7 +13,7 @@ class FormUpdater::Updater::KnowledgeBase::Category::Create < FormUpdater::Updat
     #   open to this user. The top level has to be asked for separately — it is not an option
     #   row but the absence of one, so an empty option list alone does not rule it out (an
     #   editor of a knowledge base without any categories yet is the everyday case).
-    parent_relation.top_level_selectable? || parent_relation.options.any?
+    parent_relation.top_level_selectable? || parent_relation.selectable_categories.any?
   end
 
   def resolve

@@ -36,6 +36,12 @@ class Service::EntityAttribute::Type::Relation < Service::EntityAttribute::Type
     choosable(allowed).map { |record| Option.new(value: record.id.to_s, label: option_label(record)) }
   end
 
+  # The records to choose from in the list's order, each with what the list reads of it. A type whose list takes more
+  #   than its records adds that.
+  def option_list_key(allowed: nil)
+    [self.class.name, choosable(allowed).pluck(:id, *option_list_key_columns)]
+  end
+
   # The record itself, under the attribute's name without "_id".
   def data_key
     name.delete_suffix('_id')
@@ -105,5 +111,10 @@ class Service::EntityAttribute::Type::Relation < Service::EntityAttribute::Type
   # A record's own label in a list, which names its parents itself where it has them.
   def option_label(record)
     record_label(record)
+  end
+
+  # What #option_label reads of a record, for #option_list_key: the time of its last change stands for all of it.
+  def option_list_key_columns
+    %i[updated_at]
   end
 end

@@ -41,11 +41,14 @@ module FormUpdater::Updater::KnowledgeBase::Answer::Concerns::HasCategoryField
     #   always belongs to a category, so there is no "top level" an empty field could mean. It is
     #   sent all the same, so the field's contract travels with its options; that it must not be
     #   clearable is the frontend schema's business, the updater has no way to express it.
-    result['categoryId'] = { options: category_relation.options, required: true }
+    result['categoryId'] = { required: true }
 
     resolved = super
 
     drop_unoffered_category
+
+    # Last, as a list the form holds is kept only while it has the field's value, which is known by now.
+    apply_options('categoryId', -> { category_relation.options_key }) { category_relation.options }
 
     resolved
   end

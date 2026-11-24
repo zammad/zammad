@@ -23,6 +23,8 @@ module FormUpdater::Updater::KnowledgeBase::Category::Concerns::HasParentAndPerm
   def resolve
     result['parentId'] = parent_id_field
 
+    apply_options('parentId', -> { parent_relation.options_key }) { parent_relation.options }
+
     super
   end
 
@@ -43,7 +45,7 @@ module FormUpdater::Updater::KnowledgeBase::Category::Concerns::HasParentAndPerm
     )
   end
 
-  # Options are refreshed on every run, but the parent value is only the *initial* one —
+  # The options follow on every run (see #resolve), but the parent value is only the *initial* one —
   #   resending it later would overwrite whatever the user has picked since.
   #
   # An empty field means the top level, so a user who may not create there must not be able to
@@ -51,7 +53,7 @@ module FormUpdater::Updater::KnowledgeBase::Category::Concerns::HasParentAndPerm
   #   submits. The mutation still decides for real — this only saves the round trip that would
   #   come back forbidden.
   def parent_id_field
-    field = { options: parent_relation.options, required: !parent_relation.top_level_selectable? }
+    field = { required: !parent_relation.top_level_selectable? }
 
     initial = meta[:initial] ? initial_parent_value : nil
     field[:initialValue] = initial if !initial.nil?

@@ -39,6 +39,18 @@ class FormUpdater::Relation::KnowledgeBaseEditorCategory < FormUpdater::Relation
     options_tree(root_categories)
   end
 
+  # The categories offered, each with its place in the tree, and their translations: a title reads in the locale asked
+  #   for, else in the primary one. The translations are asked for here, as the categories may come from a kept list.
+  def options_key
+    [
+      self.class.name,
+      kb_locale&.id,
+      knowledge_base.kb_locales.reorder(:id).pluck(:id, :primary),
+      selectable_categories.map { |category| [category.id, category.parent_id, category.position] },
+      ::KnowledgeBase::Category::Translation.where(category_id: selectable_categories.map(&:id)).reorder(:id).pluck(:id, :kb_locale_id, :updated_at),
+    ]
+  end
+
   # Only the category form asks: creating a top level category means creating it under the
   #   knowledge base, which CategoryPolicy#create? allows only for an editor of the knowledge
   #   base itself — so a granular editor who is locked out of it may not clear the parent field.

@@ -17,6 +17,8 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
 
     FormUpdater::CoreWorkflow.perform_mapping(perform_result, result, relation_fields:, object:, field_types:)
 
+    sign_fixed_options(perform_result[:all_options].keys)
+
     return if perform_result[:flags].blank?
 
     @flags = @flags.merge(perform_result[:flags])
@@ -24,15 +26,40 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
 
   private
 
+  # A field's own options cost next to nothing to build, so the list is its own signature: a form that holds it is
+  #   spared the transfer only.
+  def sign_fixed_options(names)
+    names.each do |name|
+      options = result.dig(name, :options)
+      next if options.nil?
+
+      result[name].delete(:options) if options_to_send(name, FormUpdater::OptionCache.signature(options)) { options }.nil?
+    end
+  end
+
   # A relation the field layer lists for the form: the records of Core Workflow's values it lets the user choose, so that
   #   the form and the layer's other clients offer the same records.
   def relation_options(relation_field)
-    type = field_types[relation_field[:name]] if relation_field[:filter_ids]
-    return super if !type.is_a?(Service::EntityAttribute::Type::Relation)
+    type = field_layer_relation(relation_field)
+    return super if type.nil?
 
     options = type.option_list(allowed: relation_field[:filter_ids].map(&:to_s))
 
     FormUpdater::OptionList.form_options(options, integer: true, tree: options.any? { |option| option.children.any? })
+  end
+
+  def relation_options_key(relation_field)
+    type = field_layer_relation(relation_field)
+    return super if type.nil?
+
+    type.option_list_key(allowed: relation_field[:filter_ids].map(&:to_s))
+  end
+
+  # @return [Service::EntityAttribute::Type::Relation, nil] nil for a relation the form's own relation classes list
+  def field_layer_relation(relation_field)
+    type = field_types[relation_field[:name]] if relation_field[:filter_ids]
+
+    type if type.is_a?(Service::EntityAttribute::Type::Relation)
   end
 
   def field_types

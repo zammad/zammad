@@ -116,6 +116,65 @@ RSpec.describe FormUpdater::Relation::KnowledgeBaseEditorCategory do
     end
   end
 
+  describe '#options_key', :aggregate_failures do
+    let!(:root)  { create(:knowledge_base_category, knowledge_base: knowledge_base) }
+    let!(:child) { create(:knowledge_base_category, knowledge_base: knowledge_base, parent: root) }
+
+    # A relation of its own each time, as one request has: it reads the categories once.
+    def options_key(excluded_category: nil, kb_locale: self.kb_locale)
+      described_class.new(context: {}, current_user:, knowledge_base: KnowledgeBase.find(knowledge_base.id), excluded_category:, kb_locale:).options_key
+    end
+
+    it 'changes with the categories offered and the locale their titles read in' do
+      key = options_key
+
+      expect(options_key).to eq(key)
+      expect(options_key(excluded_category: child)).not_to eq(key)
+
+      other_locale = create(:knowledge_base_locale, knowledge_base: knowledge_base, system_locale: Locale.find_by(locale: 'de-de'))
+      added        = options_key
+
+      expect(added).not_to eq(key)
+      expect(options_key(kb_locale: other_locale)).not_to eq(added)
+
+      # A category without a title in the locale asked for reads in the primary one.
+      knowledge_base.kb_locales.find_by(primary: true).update!(primary: false)
+      other_locale.update!(primary: true)
+
+      expect(options_key).not_to eq(added)
+    end
+
+    it 'changes with a title also where the categories offered come from a kept list' do
+      role = current_user.roles.first
+      create(:knowledge_base_permission, permissionable: knowledge_base, role:, access: 'reader')
+      create(:knowledge_base_permission, permissionable: child, role:, access: 'editor')
+
+      # The kept list is found by the latest change of all categories, which a change before it does not move.
+      root.update_columns(updated_at: 5.seconds.from_now)
+      key = options_key
+
+      child.translations.first.update!(title: 'Renamed')
+
+      expect(options_key).not_to eq(key)
+    end
+
+    it 'changes with a title, a move and a new position of a category' do
+      keys = [
+        -> {},
+        -> { child.translations.first.update!(title: 'Renamed') },
+        -> { child.update!(parent: nil) },
+        -> { child.update!(position: 99) },
+      ].map do |change|
+        travel 1.second
+        change.call
+
+        options_key
+      end
+
+      expect(keys.uniq.size).to eq(4)
+    end
+  end
+
   # Flattened values of the whole option tree.
   def option_values
     flatten = lambda do |options|

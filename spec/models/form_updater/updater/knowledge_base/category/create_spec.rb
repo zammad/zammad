@@ -24,6 +24,27 @@ RSpec.describe(FormUpdater::Updater::KnowledgeBase::Category::Create) do
     updater.resolve[:fields]
   end
 
+  describe 'the parents the form holds already', :aggregate_failures do
+    let!(:parent) { create(:knowledge_base_category, knowledge_base: knowledge_base) }
+
+    def resolve(known_option_signatures: nil)
+      form = described_class.new(context:, relation_fields: [], meta: { known_option_signatures: }, data: { 'parentId' => parent.id })
+      form.authorized?
+
+      form.resolve
+    end
+
+    it 'gets them with a signature, and only the signature once it names it' do
+      first = resolve
+      again = resolve(known_option_signatures: first[:option_signatures])
+
+      expect(first[:fields]['parentId']).to include(options: [include(value: parent.id)], required: false)
+      expect(first[:option_signatures]['parentId']).to be_present
+      expect(again[:fields]['parentId']).to eq(required: false)
+      expect(again[:option_signatures]).to eq(first[:option_signatures])
+    end
+  end
+
   describe '#authorized?' do
     it 'authorizes an editor to add a category' do
       expect(updater.authorized?).to be true

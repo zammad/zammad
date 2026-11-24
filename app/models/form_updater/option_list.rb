@@ -13,4 +13,13 @@ module FormUpdater::OptionList
       item
     end
   end
+
+  # @param options [Array<Hash>] the options as the form's field takes them
+  # @return [Set<String>] the values the user may choose, those below others too
+  def self.selectable_values(options)
+    options.each_with_object(Set.new) do |option, values|
+      values << option[:value].to_s if !option[:disabled]
+      values.merge(selectable_values(option[:children])) if option[:children]
+    end
+  end
 end
