@@ -75,6 +75,7 @@ RSpec.describe 'Knowledge Base Locale Answer Read', authenticated_as: true, type
       ensure_websocket do
         visit "#knowledge_base/#{knowledge_base.id}/locale/#{locale_name}/answer/#{published_answer.id}"
       end
+      wait_for_authenticated_session(user: current_user)
 
       travel 1.minute
     end
