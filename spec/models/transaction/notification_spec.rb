@@ -287,6 +287,149 @@ RSpec.describe Transaction::Notification, type: :model do
     end
   end
 
+  describe 'online notifications of several recipients' do
+    let(:group)          { create(:group) }
+    let(:agents)         { create_list(:agent, 3, groups: [group]) }
+    let(:last_recipient) { agents.max_by(&:login) }
+    let(:ticket)         { create(:ticket, group:, state_name: 'open', pending_time: Time.current) }
+    let(:instance)       { build(ticket, User.find(1), 'reminder_reached') }
+
+    def online_notification_count
+      OnlineNotification.where(object_lookup_id: ObjectLookup.by_name('Ticket'), o_id: ticket.id).count
+    end
+
+    def notification_history
+      ticket.history_get.select { |entry| entry['type'] == 'notification' }.pluck('value_to')
+    end
+
+    before do
+      agents.each do |agent|
+        agent.preferences[:notification_config][:matrix][:reminder_reached][:criteria] = {
+          'owned_by_me' => false, 'owned_by_nobody' => false, 'subscribed' => false, 'no' => true
+        }
+        agent.save!
+      end
+
+      allow(NotificationFactory::Mailer).to receive(:notification).and_return(true)
+    end
+
+    it 'creates the online notifications of all recipients before the first email' do
+      counts_at_delivery = []
+      allow(NotificationFactory::Mailer).to receive(:notification) do
+        counts_at_delivery.push(online_notification_count)
+        true
+      end
+
+      instance.perform
+
+      expect(counts_at_delivery).to eq([3, 3, 3])
+    end
+
+    it 'sends the emails outside of the database transactions of the online notifications' do
+      open_transactions = ActiveRecord::Base.connection.open_transactions
+      open_transactions_at_delivery = []
+      allow(NotificationFactory::Mailer).to receive(:notification) do
+        open_transactions_at_delivery.push(ActiveRecord::Base.connection.open_transactions)
+        true
+      end
+
+      instance.perform
+
+      expect(open_transactions_at_delivery).to eq([open_transactions] * 3)
+    end
+
+    it 'lists the used channels of every recipient in the ticket history' do
+      instance.perform
+
+      expect(notification_history).to match_array(agents.map { |agent| "#{agent.email}(reminder_reached:online,email)" })
+    end
+
+    context 'when the email of the first recipient fails to be sent' do
+      let(:error) { Channel::DeliveryError.new('Smtp: broken message (ArgumentError)', ArgumentError.new('broken message')) }
+
+      before do
+        call_count = 0
+        allow(NotificationFactory::Mailer).to receive(:notification) do
+          call_count += 1
+          raise error if call_count == 1
+
+          true
+        end
+      end
+
+      it 'keeps the online notifications and sends the emails of the other recipients', aggregate_failures: true do
+        expect { instance.perform }.to change { online_notification_count }.by(3)
+        expect(notification_history).to contain_exactly(
+          "#{agents.min_by(&:login).email}(reminder_reached:online)",
+          *agents.sort_by(&:login).drop(1).map { |agent| "#{agent.email}(reminder_reached:online,email)" },
+        )
+      end
+    end
+
+    context 'when an unexpected error occurs while sending the first email' do
+      before do
+        call_count = 0
+        allow(NotificationFactory::Mailer).to receive(:notification) do
+          call_count += 1
+          raise 'broken template' if call_count == 1
+
+          true
+        end
+      end
+
+      it 'keeps the online notifications and sends the emails of the other recipients', aggregate_failures: true do
+        expect { instance.perform }.to change { online_notification_count }.by(3)
+        expect(notification_history).to contain_exactly(
+          "#{agents.min_by(&:login).email}(reminder_reached:online)",
+          *agents.sort_by(&:login).drop(1).map { |agent| "#{agent.email}(reminder_reached:online,email)" },
+        )
+      end
+    end
+
+    context 'when the history entry of the first recipient fails to be written' do
+      let(:error) { ActiveRecord::StatementInvalid.new('broken history') }
+
+      before do
+        call_count = 0
+        allow(History).to receive(:add).and_wrap_original do |original, data|
+          if data[:history_type] == 'notification'
+            call_count += 1
+            raise error if call_count == 1
+          end
+
+          original.call(data)
+        end
+        allow(Rails.logger).to receive(:error)
+      end
+
+      it 'sends the emails and writes the history entries of the other recipients', aggregate_failures: true do
+        instance.perform
+
+        expect(NotificationFactory::Mailer).to have_received(:notification).exactly(3).times
+        expect(notification_history).to match_array(agents.sort_by(&:login).drop(1).map { |agent| "#{agent.email}(reminder_reached:online,email)" })
+        expect(Rails.logger).to have_received(:error).with(error)
+      end
+    end
+
+    context 'when the online notification of the last recipient fails' do
+      before do
+        allow(instance).to receive(:send_to_single_recipient_online).and_wrap_original do |original, user, *args|
+          raise 'broken online notification' if user == last_recipient
+
+          original.call(user, *args)
+        end
+      end
+
+      it 'still sends the emails of the recipients notified before', aggregate_failures: true do
+        expect { instance.perform }
+          .to raise_error(RuntimeError, 'broken online notification')
+          .and change { online_notification_count }.by(2)
+        expect(NotificationFactory::Mailer).to have_received(:notification).twice
+        expect(notification_history).to match_array((agents - [last_recipient]).map { |agent| "#{agent.email}(reminder_reached:online,email)" })
+      end
+    end
+  end
+
   describe 'daily locks behaviour' do
     let(:group)      { create(:group) }
     let(:user)       { create(:agent, groups: [group]) }
