@@ -14,13 +14,8 @@ module Gql::Types
 
     def total_count
       # A connection over a plain Array — a search result that was assembled in Ruby rather than
-      #   queried — has no relation to ask about grouping, and Array#size is already the total.
-      if object.items.respond_to?(:group_values) && object.items.group_values.any?
-        return object.items
-          .unscope(:order)
-          .count(:all)
-          .count
-      end
+      #   queried — has nothing to count in the database, and Array#size is already the total.
+      return object.items.count_rows if object.items.is_a?(ActiveRecord::Relation)
 
       object.items&.count
     end

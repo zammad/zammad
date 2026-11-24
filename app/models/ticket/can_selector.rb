@@ -38,7 +38,7 @@ get count of tickets and tickets which match on selector
         next [] if scope.nil?
 
         [
-          scope.count(:all).count, # grouped queries count is a hash, not a single digit :(
+          scope.count_rows,
           scope.limit(limit)
         ]
       rescue ActiveRecord::StatementInvalid => e

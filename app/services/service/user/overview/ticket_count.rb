@@ -13,14 +13,9 @@ class Service::User::Overview::TicketCount < Service::Base
 
   # @return [Integer]
   def execute
-    counted = Service::User::Overview::Tickets
+    Service::User::Overview::Tickets
       .with_current_user(current_user)
       .execute(overview:)
-      .unscope(:order)
-      .count(:all)
-
-    # Counted per ticket, as the overview's query groups by ticket; an overview whose condition cannot be read has no
-    #   query and counts as a plain zero.
-    counted.is_a?(Hash) ? counted.size : counted
+      .count_rows
   end
 end
