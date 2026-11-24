@@ -386,7 +386,7 @@ importers:
         version: 7.4.1
     devDependencies:
       '@colbymchenry/codegraph':
-        specifier: ^1.6.3
+        specifier: ^1.6.4
         version: 1.6.4
       '@faker-js/faker':
         specifier: ^10.6.0
