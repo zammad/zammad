@@ -15,7 +15,7 @@ class Whatsapp::Webhook::Message::Status
     raise Whatsapp::Webhook::Payload::ProcessableError, __('No related article found to process the status message on.') if @related_article.nil?
 
     @ticket = @related_article.ticket
-    return if ticket_done?
+    return if ticket_done? || processed?
 
     create_article
     update_related_article
@@ -27,6 +27,10 @@ class Whatsapp::Webhook::Message::Status
   def ticket_done?
     state_ids = Ticket::State.where(name: %w[closed merged removed]).pluck(:id)
     state_ids.include?(@ticket.state_id)
+  end
+
+  def processed?
+    false
   end
 
   def body

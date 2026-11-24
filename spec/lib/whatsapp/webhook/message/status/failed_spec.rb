@@ -96,6 +96,21 @@ RSpec.describe Whatsapp::Webhook::Message::Status::Failed, :aggregate_failures, 
           )
         end
       end
+
+      context 'when the failure is delivered again' do
+        before { described_class.new(data:, channel:).process }
+
+        it 'adds no second note' do
+          expect { described_class.new(data:, channel:).process }.not_to change(Ticket::Article, :count)
+        end
+
+        it 'adds a note once the message failed after it was sent again' do
+          article.reload.preferences['whatsapp'] = { message_id: article.message_id }
+          article.save!
+
+          expect { described_class.new(data:, channel:).process }.to change(Ticket::Article, :count).by(1)
+        end
+      end
     end
 
     context 'when no related article exists' do

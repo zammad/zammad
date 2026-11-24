@@ -124,6 +124,19 @@ RSpec.shared_examples 'Whatsapp::Webhook::Message media' do |type:, mime_type:, 
           content_type: 'text/plain',
         )
       end
+
+      context 'when the download fails' do
+        before do
+          allow_any_instance_of(WhatsappSdk::Api::Medias).to receive(:get).and_raise(Net::ReadTimeout)
+        end
+
+        it 'marks the article, so that an agent can download the media again' do
+          described_class.new(data:, channel:).process
+
+          article = Ticket::Article.find_by(message_id: 'wamid.HBgNNDkxNTE1NjA4MDY5OBUCABIYFjNFQjBDMUM4M0I5NDRFNThBMUQyMjYA')
+          expect(article.preferences[:whatsapp]).to include(media_error: true)
+        end
+      end
     end
   end
 end

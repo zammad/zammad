@@ -11,6 +11,9 @@ class Whatsapp::Webhook::Message
   end
 
   def process
+    # Meta delivers a message again when it gets no answer in time.
+    return if processed?
+
     @user = create_or_update_user
 
     UserInfo.current_user_id = user.id
@@ -21,6 +24,14 @@ class Whatsapp::Webhook::Message
   end
 
   private
+
+  def processed?
+    Ticket::Article.exists?(message_id_md5: Digest::MD5.hexdigest(message_id))
+  end
+
+  def message_id
+    data[:entry].first[:changes].first[:value][:messages].first[:id]
+  end
 
   def attachment?
     false
@@ -139,16 +150,19 @@ class Whatsapp::Webhook::Message
         'Mime-Type' => mime_type,
       },
     )
-  rescue Whatsapp::Client::CloudAPIError
-    preferences = article.preferences
-    preferences[:whatsapp] ||= {}
-    preferences[:whatsapp][:media_error] = true
-    article.update!(preferences:)
   rescue Whatsapp::Incoming::Media::InvalidMediaTypeError => e
     article.update!(
       body:     e.message,
       internal: true,
     )
+  rescue => e
+    # Any failure, as Meta's retry of the message finds the article and downloads nothing. An agent can download again.
+    Rails.logger.error "WhatsApp media download for article #{article.id} failed: #{e.class}: #{e.message}"
+
+    preferences = article.preferences
+    preferences[:whatsapp] ||= {}
+    preferences[:whatsapp][:media_error] = true
+    article.update!(preferences:)
   end
 
   def create_welcome_article
@@ -220,7 +234,7 @@ class Whatsapp::Webhook::Message
   def article_preferences
     {
       entry_id:   @data[:entry].first[:id],
-      message_id: @data[:entry].first[:changes].first[:value][:messages].first[:id],
+      message_id: message_id,
       type:       @data[:entry].first[:changes].first[:value][:messages].first[:type],
     }
   end

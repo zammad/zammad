@@ -13,7 +13,7 @@ class Whatsapp::Webhook::Message::Reaction < Whatsapp::Webhook::Message
     raise Whatsapp::Webhook::Payload::ProcessableError, __('No related article found to process the reaction message on.') if @related_article.nil?
 
     @ticket = @related_article.ticket
-    return if ticket_done?
+    return if ticket_done? || reaction_unchanged?
 
     @user = create_or_update_user
     UserInfo.current_user_id = @user.id
@@ -32,6 +32,11 @@ class Whatsapp::Webhook::Message::Reaction < Whatsapp::Webhook::Message
   def ticket_done?
     state_ids = Ticket::State.where(name: %w[closed merged removed]).pluck(:id)
     state_ids.include?(@ticket.state_id)
+  end
+
+  # A repeated delivery carries the emoji the article has already.
+  def reaction_unchanged?
+    related_article.preferences.dig(:whatsapp, :reaction, :emoji) == emoji
   end
 
   def emoji

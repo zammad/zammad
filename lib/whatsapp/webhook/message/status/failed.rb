@@ -5,6 +5,11 @@ class Whatsapp::Webhook::Message::Status::Failed < Whatsapp::Webhook::Message::S
 
   private
 
+  # Sending the message again replaces its WhatsApp preferences, so only a repeated delivery finds the failure here.
+  def processed?
+    related_article.preferences.dig(:whatsapp, :delivery_status) == 'fail'
+  end
+
   def create_article?
     true
   end

@@ -94,5 +94,24 @@ RSpec.describe Whatsapp::Webhook::Message::Text, :aggregate_failures, current_us
         )
       end
     end
+
+    context 'when the message was delivered before' do
+      let(:ticket) { Ticket.last }
+
+      before { described_class.new(data:, channel:).process }
+
+      it 'adds no article and does not follow up the ticket again' do
+        ticket.update!(state: Ticket::State.find_by(name: 'pending reminder'), pending_time: 1.day.from_now)
+
+        expect { described_class.new(data:, channel:).process }.not_to change(Ticket::Article, :count)
+        expect(ticket.reload.state.name).to eq('pending reminder')
+      end
+
+      it 'creates no new ticket after the first one was closed' do
+        ticket.update!(state: Ticket::State.find_by(name: 'closed'))
+
+        expect { described_class.new(data:, channel:).process }.not_to change(Ticket, :count)
+      end
+    end
   end
 end

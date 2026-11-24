@@ -85,7 +85,7 @@ RSpec.describe Whatsapp::Webhook::Message::Reaction, :aggregate_failures, curren
     context 'when a reaction got removed' do
       before do
         article = Ticket::Article.last
-        article.preferences[:whatsapp][:reaction] = '👍'
+        article.preferences[:whatsapp][:reaction] = { emoji: '👍', author: from[:name] }
         article.save!
 
         data[:entry].first[:changes].first[:value][:messages].first[:reaction].delete(:emoji)
@@ -109,6 +109,15 @@ RSpec.describe Whatsapp::Webhook::Message::Reaction, :aggregate_failures, curren
           expect(History.last.history_type.name).to eq('removed')
           expect(History.last.value_to).to eq('')
         end
+      end
+    end
+
+    context 'when the reaction is delivered again' do
+      before { described_class.new(data:, channel:).process }
+
+      it 'writes no history and notifies nobody again' do
+        expect { described_class.new(data:, channel:).process }.not_to change(History, :count)
+        expect(TransactionJob).to have_received(:perform_now).once
       end
     end
   end
