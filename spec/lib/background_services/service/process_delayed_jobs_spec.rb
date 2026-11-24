@@ -5,7 +5,6 @@ require 'lib/background_services/service/process_delayed_jobs_examples'
 
 RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, :aggregate_failures, ensure_threads_exited: true do
   before do
-    stub_const "#{described_class}::SLEEP_IF_EMPTY", 1
     stub_const 'SampleDelayedJob', Class.new(ApplicationJob) { def perform; end }
     stub_const 'SampleDelayedAIJob', Class.new(AIJob) { def perform; end }
   end
@@ -64,7 +63,7 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedJobs, :aggregate_failu
       instance.send(:process_results, [0, 0], 1)
 
       expect(instance).to have_received(:process_empty)
-      expect(instance).to have_received(:interruptible_sleep)
+      expect(instance).to have_received(:interruptible_sleep).with(1.second)
     end
 
     it 'loops immediately when there was anything to process', :aggregate_failures do

@@ -17,6 +17,12 @@ class BackgroundServices
         raise 'not implemented'
       end
 
+      # Each empty pass costs a reservation query per thread, so only services
+      #   whose jobs a user waits for poll more often.
+      def self.sleep_if_empty
+        SLEEP_IF_EMPTY
+      end
+
       def self.pre_launch
         start_time = Time.zone.now
 
@@ -64,7 +70,7 @@ class BackgroundServices
         Rails.logger.debug do
           format('*** no jobs processed in %<queues>s, sleeping…', queues: self.class.queues) # rubocop:disable Style/FormatStringToken
         end
-        interruptible_sleep SLEEP_IF_EMPTY
+        interruptible_sleep self.class.sleep_if_empty
         Rails.logger.debug do
           format('*** worker thread loop processing %<queues>s queues', queues: self.class.queues) # rubocop:disable Style/FormatStringToken
         end

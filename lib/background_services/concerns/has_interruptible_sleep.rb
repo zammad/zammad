@@ -4,12 +4,16 @@ module BackgroundServices::Concerns::HasInterruptibleSleep
   extend ActiveSupport::Concern
 
   # Sleep in short intervals so that we can handle TERM/INT signals timely.
-  # @param [Integer] seconds to sleep for
+  # @param [Numeric, ActiveSupport::Duration] seconds to sleep for
   def interruptible_sleep(interval)
-    interval.times do
+    remaining = interval.to_f
+
+    while remaining.positive?
       break if BackgroundServices.shutdown_requested
 
-      sleep 1
+      step = [remaining, 1].min
+      sleep step
+      remaining -= step
     end
   end
 

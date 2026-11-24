@@ -13,6 +13,10 @@ class BackgroundServices
       def self.queues
         [:default].freeze
       end
+
+      def self.sleep_if_empty
+        1.second
+      end
     end
   end
 end

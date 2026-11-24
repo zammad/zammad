@@ -5,7 +5,6 @@ require 'lib/background_services/service/process_delayed_jobs_examples'
 
 RSpec.describe BackgroundServices::Service::ProcessDelayedAIJobs, :aggregate_failures, ensure_threads_exited: true do
   before do
-    stub_const "#{described_class}::SLEEP_IF_EMPTY", 1
     stub_const 'SampleDelayedJob', Class.new(ApplicationJob) { def perform; end }
     stub_const 'SampleDelayedAIJob', Class.new(AIJob) { def perform; end }
     # This job does not finish so that we can test the job scheduling.
@@ -16,6 +15,10 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedAIJobs, :aggregate_fai
   let(:instance) { described_class.new(manager:) }
 
   describe '#run' do
+    before do
+      allow(described_class).to receive(:sleep_if_empty).and_return(1.second)
+    end
+
     context 'with a queued job' do
       before do
         Delayed::Job.destroy_all
@@ -50,6 +53,12 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedAIJobs, :aggregate_fai
         # 5 are assigned to a different thread each - but not more
         expect(Delayed::Job.where(queue: 'ai').where.not(locked_by: nil).pluck(:locked_by).uniq.count).to eq 5
       end
+    end
+  end
+
+  describe '.sleep_if_empty' do
+    it 'polls every four seconds' do
+      expect(described_class.sleep_if_empty).to eq(4.seconds)
     end
   end
 

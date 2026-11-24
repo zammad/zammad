@@ -5,7 +5,6 @@ require 'lib/background_services/service/process_delayed_jobs_examples'
 
 RSpec.describe BackgroundServices::Service::ProcessDelayedCommunicationInboundJobs, :aggregate_failures, ensure_threads_exited: true do
   before do
-    stub_const "#{described_class}::SLEEP_IF_EMPTY", 1
     stub_const 'SampleDelayedJob', Class.new(ApplicationJob) { def perform; end }
     stub_const 'SampleDelayedCommunicationInboundJob', Class.new(ApplicationJob) {
       queue_as :communication_inbound
@@ -33,6 +32,12 @@ RSpec.describe BackgroundServices::Service::ProcessDelayedCommunicationInboundJo
         end.to change(Delayed::Job, :count).by(-1)
         expect(Delayed::Job.last.queue).to eq 'default'
       end
+    end
+  end
+
+  describe '.sleep_if_empty' do
+    it 'polls every four seconds' do
+      expect(described_class.sleep_if_empty).to eq(4.seconds)
     end
   end
 
