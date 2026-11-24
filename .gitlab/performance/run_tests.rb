@@ -57,7 +57,8 @@ def expect(title:, max_time:, max_sql_queries:, results:, &)
 
   sql_queries = 0
   failed      = false
-  callback = ->(_name, _start, _finish, _id, payload) { sql_queries += 1 if !payload[:cached] }
+  # Schema queries are caused once per process by the first use of a model, not by the tested code.
+  callback = ->(_name, _start, _finish, _id, payload) { sql_queries += 1 if !payload[:cached] && payload[:name] != 'SCHEMA' }
   time = Benchmark.measure do
     ActiveSupport::Notifications.subscribed(callback, 'sql.active_record', &)
   end
