@@ -613,6 +613,9 @@ RSpec.describe 'Ticket zoom > Link knowledge base answer', type: :system do
 
       it 'shows the empty state and still allows generating a draft' do
         within :active_content, '.link_kb_answers' do
+          # The search result re-renders the widget, which swallows a click landing at the same time.
+          expect(page).to have_text('No suggestions.')
+
           find('.js-kb-ai-generate').click
         end
 
