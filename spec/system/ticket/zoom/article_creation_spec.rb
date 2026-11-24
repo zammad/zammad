@@ -182,6 +182,7 @@ RSpec.describe 'Ticket zoom > Article creation', type: :system do
 
         # make sure ticket is done loading and change will be pushed via WS
         find(:active_ticket_article, ticket_article)
+        wait_for_authenticated_session(user: customer)
 
         ticket_note.update!(internal: false)
 
