@@ -6224,7 +6224,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_form_item.jst.eco:18
 #: app/assets/javascripts/app/views/knowledge_base_video_servers/index.jst.eco:28
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:29
-#: app/assets/javascripts/app/views/profile/devices.jst.eco:25
+#: app/assets/javascripts/app/views/profile/devices.jst.eco:26
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:21
 #: app/assets/javascripts/app/views/session.jst.eco:24
 #: app/assets/javascripts/app/views/sla/index.jst.eco:59
@@ -20412,6 +20412,7 @@ msgstr ""
 msgid "This conversation was transferred to another chat."
 msgstr ""
 
+#: app/assets/javascripts/app/views/profile/devices.jst.eco:21
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:136
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:186
 msgid "This device"
