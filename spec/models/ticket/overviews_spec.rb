@@ -156,7 +156,7 @@ RSpec.describe Ticket::Overviews do
 
       result = described_class.tickets_for_overview(overview, user)
 
-      expect(described_class.tickets_for_overview(overview, user).unscope(:order).count(:all).count).to eq(2)
+      expect(described_class.tickets_for_overview(overview, user).count_rows).to eq(2)
       expect(result.pluck(:id)).to contain_exactly(source_ticket.id, source_ticket2.id)
     end
 

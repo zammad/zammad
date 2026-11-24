@@ -69,7 +69,7 @@ module Gql::Types
     end
 
     def ticket_count
-      count_tickets(::Ticket::Overviews.tickets_for_overview(object, context.current_user))
+      ::Ticket::Overviews.tickets_for_overview(object, context.current_user).count_rows
     end
 
     def cached_ticket_count(cache_ttl:)
@@ -77,7 +77,7 @@ module Gql::Types
       cache_key = "OverviewType.cached_ticket_count(overview:#{object.id},cache_ttl:#{cache_ttl})-#{partition.key}"
 
       Rails.cache.fetch(cache_key, expires_in: cache_ttl) do
-        count_tickets(partition.tickets)
+        partition.tickets.count_rows
       end
     end
 
@@ -121,13 +121,6 @@ module Gql::Types
 
     def flatten_columns(columns)
       [ columns ].flatten
-    end
-
-    def count_tickets(tickets)
-      tickets
-        .unscope(:order)
-        .count(:all)
-        .count # double-count due to grouping in underlying scope
     end
   end
 end
