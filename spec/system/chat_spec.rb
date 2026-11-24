@@ -468,6 +468,64 @@ RSpec.describe 'Chat Handling', type: :system do
     end
   end
 
+  context 'when renaming a chat session', authenticated_as: :authenticate do
+    let(:chat_window)     { '.active .chat-window' }
+    let(:chat_topic_name) { Chat.first.name }
+    let(:chat_session_id) { Chat::Session.last.id }
+
+    # The form has no submit button, it is sent when it gets closed again.
+    def rename_chat_session(name)
+      click "#{chat_window} .js-info"
+      find("#{chat_window} .js-metaForm input[name='name']").set(name)
+      click "#{chat_window} .js-info"
+    end
+
+    before do
+      visit '/'
+
+      enable_agent_chat
+
+      using_session :customer do
+        visit chat_url
+        open_chat_dialog
+      end
+
+      accept_chat
+    end
+
+    it 'shows the new name in the header and in the desktop notification' do
+      page.execute_script("App.Event.bind('notifyDesktop', function(data) { window.notifyDesktopTitle = data.title })")
+
+      rename_chat_session('VIP customer')
+
+      expect(page).to have_css("#{chat_window} .chat-name", text: "VIP customer ##{chat_session_id}")
+
+      using_session :customer do
+        check_content('.zammad-chat .zammad-chat-agent-status', 'Online')
+        send_customer_message('my name is customer')
+      end
+
+      check_content("#{chat_window} .chat-message--customer", 'my name is customer')
+      expect(page.evaluate_script('window.notifyDesktopTitle')).to eq('VIP customer')
+    end
+
+    it 'shows the chat topic name again after the name was cleared' do
+      rename_chat_session('VIP customer')
+
+      expect(page).to have_css("#{chat_window} .chat-name", text: "VIP customer ##{chat_session_id}")
+
+      rename_chat_session('')
+
+      expect(page).to have_css("#{chat_window} .chat-name", text: "#{chat_topic_name} ##{chat_session_id}")
+    end
+
+    it 'limits the name to the length of the database column' do
+      click "#{chat_window} .js-info"
+
+      expect(page).to have_css("#{chat_window} .js-metaForm input[name='name'][maxlength='250']")
+    end
+  end
+
   context 'when jquery variant is used' do
     before do
       visit '/'
