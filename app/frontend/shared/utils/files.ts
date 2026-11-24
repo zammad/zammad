@@ -246,6 +246,40 @@ export const canPreviewFile = (type?: Maybe<string>): FilePreview | false => {
   return false
 }
 
+/**
+ * The value of the `DownloadURL` drag format, with which Chromium-based browsers save a
+ *   dragged file wherever it is dropped (desktop, file manager, mail client). Other browsers
+ *   ignore the format and keep dragging the plain link.
+ */
+export const getFileDownloadDragData = (
+  name: string,
+  type: Maybe<string> | undefined,
+  url: string,
+) => {
+  if (!name || !url) return undefined
+
+  let absoluteUrl: URL
+  try {
+    absoluteUrl = new URL(url, window.location.origin)
+  } catch {
+    return undefined
+  }
+
+  // A file still in the upload cache is only a data URI, there is nothing to download yet.
+  if (absoluteUrl.protocol !== 'http:' && absoluteUrl.protocol !== 'https:') return undefined
+
+  // Not `sanitizedContentType()`, it cuts subtypes such as `vnd.ms-excel` at the first dot.
+  const contentType = type?.split(';')[0].trim() || 'application/octet-stream'
+
+  // HTML attachments are only ever opened in a new tab, never downloaded.
+  if (contentType === 'text/html') return undefined
+
+  // The parts are separated by colons, so one in the file name would cut it short.
+  const fileName = name.replaceAll(':', '_')
+
+  return `${contentType}:${fileName}:${absoluteUrl.href}`
+}
+
 export const convertFilesToAttachmentInput = (formId: string, attachments?: FileUploaded[]) => {
   const files = attachments?.map((file) => ({
     name: file.name,

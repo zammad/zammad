@@ -1,11 +1,11 @@
 <div class="attachments-block js-attachments">
   <% for data in @ticketAttachments: %>
     <% content_type = @ContentOrMimeType(data.attachment) %>
-    <a class="attachment attachment--preview  <%- @ContentTypeIcon(content_type) if @ContentTypeIcon(content_type) %>" data-preview-url="<%= data.attachment.preview_url %>" data-id="<%= data.attachment.id %>" target="_blank" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= data.article.ticket_id %>/<%= data.article.id %>/<%= data.attachment.id %>?disposition=attachment" data-type="attachment"<% if @canDownload(content_type): %> download<% end %>>
+    <a class="attachment attachment--preview  <%- @ContentTypeIcon(content_type) if @ContentTypeIcon(content_type) %>" data-preview-url="<%= data.attachment.preview_url %>" data-id="<%= data.attachment.id %>" target="_blank" href="<%= App.Config.get('api_path') %>/ticket_attachment/<%= data.article.ticket_id %>/<%= data.article.id %>/<%= data.attachment.id %>?disposition=attachment" data-type="attachment" data-filename="<%= data.attachment.filename %>" data-content-type="<%= content_type %>"<% if @canDownload(content_type): %> download<% end %>>
       <div class="attachment-icon">
       <% if content_type && @ContentTypeIcon(content_type): %>
         <% if @canPreview(content_type): %>
-          <img src="<%= App.Config.get('api_path') %>/ticket_attachment/<%= data.article.ticket_id %>/<%= data.article.id %>/<%= data.attachment.id %>?view=preview">
+          <img src="<%= App.Config.get('api_path') %>/ticket_attachment/<%= data.article.ticket_id %>/<%= data.article.id %>/<%= data.attachment.id %>?view=preview" draggable="false">
         <% else: %>
           <%- @Icon( @ContentTypeIcon(content_type) ) %>
         <% end %>

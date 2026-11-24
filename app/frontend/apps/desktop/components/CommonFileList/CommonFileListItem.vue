@@ -9,6 +9,7 @@ import { i18n } from '#shared/i18n.ts'
 import {
   canDownloadFile,
   canPreviewFile,
+  getFileDownloadDragData,
   humanizeFileSize,
   splitFileName,
   type FilePreview,
@@ -118,6 +119,23 @@ const downloadAction = computed<ReturnType<typeof buildDownloadAction>>((current
   return currentValue && isEqual(currentValue, action) ? currentValue : action
 })
 
+const downloadDragData = computed(() =>
+  getFileDownloadDragData(props.file.name, props.file.type, props.file.downloadUrl),
+)
+
+const onDragStart = (event: DragEvent) => {
+  if (!downloadDragData.value) return
+
+  event.dataTransfer?.setData('DownloadURL', downloadDragData.value)
+
+  // The preview button carries no link of its own, so browsers without `DownloadURL` would
+  //   drag nothing from it.
+  event.dataTransfer?.setData(
+    'text/uri-list',
+    new URL(props.file.downloadUrl, window.location.origin).href,
+  )
+}
+
 const onPrimaryClick = () => {
   if (!canPreview.value) return
 
@@ -141,14 +159,18 @@ const onPrimaryClick = () => {
       :is="primaryAction.component"
       v-tooltip="primaryAction.label"
       v-bind="primaryAction.attrs"
+      :draggable="downloadDragData ? 'true' : undefined"
       class="flex min-w-0 flex-1 items-center gap-2 text-left no-underline! focus-visible-app-default select-none focus-visible:rounded-[3px]"
       @click="onPrimaryClick"
+      @dragstart="onDragStart"
     >
+      <!-- Not draggable itself, otherwise the thumbnail would be dropped instead of the file. -->
       <img
         v-if="canPreview === 'image'"
         class="size-9 shrink-0 rounded-[3px] border border-neutral-100 object-cover dark:border-gray-900"
         :src="file.preview"
         :alt="$t('Image name: %s', file.name)"
+        draggable="false"
         @error="imageFailed = true"
       />
       <div
@@ -195,6 +217,7 @@ const onPrimaryClick = () => {
           'group-active:text-white!': canPreview,
         }"
         @mousedown.stop
+        @dragstart="onDragStart"
       >
         <CommonIcon size="xs" decorative name="download" />
       </CommonLink>
