@@ -278,7 +278,7 @@ GEM
     em-websocket (0.5.3)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0)
-    email_address (0.2.9)
+    email_address (0.2.10)
       base64
       simpleidn
     erb (6.0.7)
