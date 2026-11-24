@@ -90,10 +90,8 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
     expect(editor('Text')).to contain_text("Hello #{customer.firstname},")
   end
 
-  # The reply form is too narrow for the whole toolbar.
   def insert_table
-    toolbar.get_by_role('button', name: 'Overflow menu', exact: true).click
-    page.get_by_role('menuitem', name: 'Insert table').click
+    toolbar.get_by_role('button', name: 'Insert table', exact: true).click
 
     expect(table).to be_visible
   end

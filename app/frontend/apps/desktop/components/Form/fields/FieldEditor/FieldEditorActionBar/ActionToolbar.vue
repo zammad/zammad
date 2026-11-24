@@ -28,9 +28,25 @@ interface Props {
 const actionBar = useTemplateRef<HTMLDivElement>('action-bar')
 const actionButtons = useTemplateRef<Array<InstanceType<typeof ActionButton>>>('action-button')
 
+const hiddenActionNames = ref<Set<string>>(new Set())
+
+// Reports from out of view are stale, and would keep the overflow menu and the room it takes:
+//   the resumed button observers report again once the toolbar is back.
+let isInView = true
+
+const setActionVisible = (name: string, visible: boolean) => {
+  if (!isInView) return
+
+  if (visible) hiddenActionNames.value.delete(name)
+  else hiddenActionNames.value.add(name)
+}
+
 useIntersectionObserver(
   actionBar,
   ([{ isIntersecting }]) => {
+    isInView = isIntersecting
+    if (!isIntersecting) hiddenActionNames.value.clear()
+
     actionButtons.value?.forEach((actionButton) => {
       if (isIntersecting) actionButton?.resumeIntersectionObserver()
       else actionButton?.pauseIntersectionObserver()
@@ -82,14 +98,13 @@ useEventListener('click', (e) => {
   }
 })
 
-const visibleActions = ref<Map<string, boolean>>(new Map())
 const disabledActionNames = ref<Set<string>>(new Set())
 
 const editorActions = useEditorActions(toRef(props, 'editor'), 'text/html')
 
 const invisibleActions = computed(() =>
   editorActions.actions.value
-    .filter((action) => visibleActions.value.get(action.name) === false)
+    .filter((action) => hiddenActionNames.value.has(action.name))
     .map((action) =>
       Object.assign(action, {
         key: action.name,
@@ -165,7 +180,7 @@ whenever(
                 $emit('click-action', action, event)
               }
             "
-            @visible="visibleActions.set(action.name, $event)"
+            @visible="setActionVisible(action.name, $event)"
           />
           <hr
             v-if="action.showDivider"

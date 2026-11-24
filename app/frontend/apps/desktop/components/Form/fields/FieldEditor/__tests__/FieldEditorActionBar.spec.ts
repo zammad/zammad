@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 
 import { queryByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -10,9 +10,14 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { EXTENSION_NAME as TEXT_TOOL_EXTENSION_NAME } from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
 import type { FieldEditorNotice } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import {
+  getEditorComponents,
+  initializeEditorComponents,
+} from '#shared/components/Form/initializeFieldEditor.ts'
 import { i18n } from '#shared/i18n.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
+import FieldEditorActionMenu from '#desktop/components/Form/fields/FieldEditor/FieldEditorActionMenu.vue'
 import { FIELD_EDITOR_OPTIONS } from '#desktop/components/Form/fields/FieldEditor/useFieldEditorOptions.ts'
 
 import FieldEditorActionBar from '../FieldEditorActionBar.vue'
@@ -362,19 +367,27 @@ describe('basic toolbar testing', () => {
   })
 })
 
-describe('notice', () => {
-  const renderActionBar = (notice?: FieldEditorNotice, editor?: unknown) =>
-    renderComponent(FieldEditorActionBar, {
-      props: {
-        contentType: 'text/html',
-        visible: true,
-        disabledExtensions: [],
-        formId: getUuid(),
-        formContext: { notice },
-        editor,
-      },
-    })
+const renderActionBar = (notice?: FieldEditorNotice, editor?: unknown) =>
+  renderComponent(FieldEditorActionBar, {
+    props: {
+      contentType: 'text/html',
+      visible: true,
+      disabledExtensions: [],
+      formId: getUuid(),
+      formContext: { notice },
+      editor,
+    },
+  })
 
+const editorStub = (storage: Record<string, unknown> = {}) => ({
+  isActive: () => false,
+  getAttributes: () => ({}),
+  on: vi.fn(),
+  off: vi.fn(),
+  storage,
+})
+
+describe('notice', () => {
   it('shows the notice below the toolbar', () => {
     const view = renderActionBar({ key: 'first', text: 'Mind the gap.' })
 
@@ -451,18 +464,71 @@ describe('notice', () => {
 
     const view = renderActionBar(
       { key: 'first', text: 'Mind the gap.' },
-      {
-        isActive: () => false,
-        getAttributes: () => ({}),
-        on: vi.fn(),
-        off: vi.fn(),
-        storage: { [TEXT_TOOL_EXTENSION_NAME]: { showAiTextLoader } },
-      },
+      editorStub({ [TEXT_TOOL_EXTENSION_NAME]: { showAiTextLoader } }),
     )
 
     showAiTextLoader.value = true
 
     await waitFor(() => expect(view.getByRole('toolbar', { hidden: true })).not.toBeVisible())
     expect(view.getByRole('alert')).toBeVisible()
+  })
+})
+
+// The overflow menu button is told by its icon, the tooltip that names it is not set up here.
+describe('overflow menu', () => {
+  const editorComponents = getEditorComponents()
+
+  beforeAll(() => {
+    initializeEditorComponents({ ...editorComponents, actionMenu: FieldEditorActionMenu })
+  })
+
+  afterAll(() => {
+    initializeEditorComponents(editorComponents)
+  })
+
+  // The latest of the mocked observers that watches the element.
+  const observerOf = (element: Element) => {
+    const { calls, results } = vi.mocked(IntersectionObserver).mock
+
+    const index = results.findLastIndex(({ value }) =>
+      value.observe.mock.calls.some(([target]: [Element]) => target === element),
+    )
+
+    if (index === -1) throw new Error('The element is not observed.')
+
+    return calls[index][0]
+  }
+
+  const report = (element: Element, isIntersecting: boolean) =>
+    observerOf(element)(
+      [{ target: element, isIntersecting } as unknown as IntersectionObserverEntry],
+      {} as IntersectionObserver,
+    )
+
+  it('moves an action that does not fit into the overflow menu', async () => {
+    const view = renderActionBar(undefined, editorStub())
+
+    const insertTable = view.getByRole('button', { name: 'Insert table' })
+    await waitFor(() => observerOf(insertTable))
+
+    report(insertTable, false)
+
+    await waitFor(() => expect(view.queryByIconName('three-dots-vertical')).toBeInTheDocument())
+  })
+
+  // The specification lets an observer deliver a report it queued before it was disconnected.
+  it('ignores a report of an action that arrives after the toolbar went out of view', async () => {
+    const view = renderActionBar(undefined, editorStub())
+
+    const toolbar = view.getByRole('toolbar')
+    const insertTable = view.getByRole('button', { name: 'Insert table' })
+    await waitFor(() => observerOf(toolbar))
+    await waitFor(() => observerOf(insertTable))
+
+    report(toolbar, false)
+    report(insertTable, false)
+    await nextTick()
+
+    expect(view.queryByIconName('three-dots-vertical')).not.toBeInTheDocument()
   })
 })
