@@ -5,6 +5,8 @@ class Sequencer::Unit::Import::Common::Ticket::Article::InlineImages < Sequencer
 
   uses :mapped, :instance
 
+  INLINE_DATA_CACHE_SIZE = 64.megabytes
+
   def process
     check_for_existing_instance
     return if !contains_inline_image?(mapped[:body])
@@ -24,15 +26,17 @@ class Sequencer::Unit::Import::Common::Ticket::Article::InlineImages < Sequencer
     clean_image_url = image_url.gsub(%r{^cid:}, '')
     return if !http_url?(clean_image_url, log_context)
 
-    @cache ||= {}
-    return @cache[clean_image_url] if @cache[clean_image_url]
-
-    image_data = download(clean_image_url)
-    return if image_data.blank?
-
-    @cache[clean_image_url] = "data:image/png;base64,#{Base64.strict_encode64(image_data)}"
-    @cache[clean_image_url]
+    inline_data_cache.fetch(clean_image_url, skip_nil: true) do
+      image_data = download(clean_image_url)
+      "data:image/png;base64,#{Base64.strict_encode64(image_data)}" if image_data.present?
+    end
   end
+
+  # An import runs for days in the same process, so the cache must not grow with the number of images.
+  def self.inline_data_cache
+    @inline_data_cache ||= ActiveSupport::Cache::MemoryStore.new(size: INLINE_DATA_CACHE_SIZE)
+  end
+  private_class_method :inline_data_cache
 
   def self.download(image_url)
     logger.debug { "Downloading inline image from #{image_url}" }
