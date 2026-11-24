@@ -1912,6 +1912,13 @@ RSpec.describe Ticket, type: :model do
              preferences: {
                'Content-Type' => 'text/plain',
              })
+      create(:store, :image,
+             object:      'Ticket::Article',
+             o_id:        article1.id,
+             filename:    'noname',
+             preferences: {
+               'Content-Type' => 'image/png; name=noname',
+             })
       create(:ticket_article, ticket: ticket, body: 'a' * ((1024**2) * 1.2)) # body with 1,2 mb
       create(:ticket_article, ticket: ticket)
       ticket.search_index_attribute_lookup
@@ -1934,6 +1941,10 @@ RSpec.describe Ticket, type: :model do
 
       it 'verify if txt exists' do
         expect(search_index_attribute_lookup['article'][0]['attachment'][1]['_name']).to eq 'some_file.txt'
+      end
+
+      it 'verify if inline image without extension is ignored' do
+        expect(search_index_attribute_lookup['article'][0]['attachment'].pluck('_name')).not_to include('noname')
       end
     end
 
