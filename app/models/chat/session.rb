@@ -102,16 +102,14 @@ class Chat::Session < ApplicationModel
       .map(&:attributes)
   end
 
+  def attributes_with_messages_and_tags
+    attributes.merge(
+      'messages' => messages.reorder(created_at: :asc).map(&:attributes),
+      'tags'     => tag_list,
+    )
+  end
+
   def self.active_chats_by_user_id(user_id)
-    actice_sessions = []
-    Chat::Session.where(state: 'running', user_id: user_id).reorder(created_at: :asc).each do |session|
-      session_attributes = session.attributes
-      session_attributes['messages'] = []
-      Chat::Message.where(chat_session_id: session.id).reorder(created_at: :asc).each do |message|
-        session_attributes['messages'].push message.attributes
-      end
-      actice_sessions.push session_attributes
-    end
-    actice_sessions
+    Chat::Session.where(state: 'running', user_id: user_id).reorder(created_at: :asc).map(&:attributes_with_messages_and_tags)
   end
 end
