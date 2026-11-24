@@ -85,7 +85,9 @@
 }
 
 @layer components {
-  .absolute-floating-input:focus-within label,
+  /* A disabled field renders as readonly (#6494), so it can still take focus to
+     be scrolled — the label must not float as if it were being edited then. */
+  .absolute-floating-input:not([data-disabled]):focus-within label,
   .absolute-floating-input.formkit-outer[data-populated] label {
     @apply -translate-y-2 scale-75 opacity-75 after:scale-[1.3] ltr:translate-x-[2px] rtl:pt-5 rtl:pb-0 rtl:text-xs;
   }
@@ -94,7 +96,7 @@
     @apply scale-100! text-xs opacity-75;
   }
 
-  .floating-textarea:focus-within label,
+  .floating-textarea:not([data-disabled]):focus-within label,
   .floating-textarea.formkit-outer[data-populated] label {
     @apply translate-y-1.5! text-xs! opacity-75!;
   }

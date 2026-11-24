@@ -2182,9 +2182,11 @@ fieldset > .form-group {
     pointer-events: none;
     cursor: not-allowed !important;
 
-    input:read-only.form-control:not(.js-input, .js-objectSelect) {
+    input:read-only.form-control:not(.js-input, .js-objectSelect),
+    textarea:read-only.form-control {
       pointer-events: auto;
       cursor: auto;
+      caret-color: transparent;
     }
   }
 

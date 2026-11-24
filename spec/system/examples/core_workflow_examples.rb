@@ -78,6 +78,12 @@ RSpec.shared_examples 'core workflow' do
       expect(page).to have_css("textarea[name='#{matrix_field(:show)}']")
       expect_field_state_actions
       expect_fill_in_actions
+
+      # Pointer events stay on, so overflowing content remains scrollable and
+      #   selectable, while the hidden caret avoids an editable look (#6494).
+      textarea = page.find("div[data-attribute-name='#{matrix_field(:set_readonly)}'] textarea[name='#{matrix_field(:set_readonly)}']")
+      expect(textarea.evaluate_script('getComputedStyle(this).pointerEvents')).to eq('auto')
+      expect(textarea.evaluate_script('getComputedStyle(this).caretColor')).to eq('rgba(0, 0, 0, 0)')
     end
   end
 

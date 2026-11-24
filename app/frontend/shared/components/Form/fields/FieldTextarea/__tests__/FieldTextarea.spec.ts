@@ -77,23 +77,32 @@ describe('Form - Field - Textarea (Formkit-BuildIn)', () => {
     expect(emittedInput[11][0]).toBe('example body')
   })
 
-  it('can be disabled', async () => {
+  it('renders the disabled state as readonly, so content stays reachable', async () => {
     const textarea = wrapper.getByLabelText('Body')
 
-    expect(textarea).toBeEnabled()
+    expect(textarea).not.toHaveAttribute('readonly')
+    expect(textarea).not.toHaveAttribute('tabindex')
+    expect(textarea).not.toHaveAttribute('aria-disabled')
 
     await wrapper.rerender({
       disabled: true,
     })
 
-    expect(textarea).toBeDisabled()
+    // Readonly instead of disabled, so overflowing content stays scrollable,
+    //   selectable and resizable (#6494).
+    expect(textarea).not.toHaveAttribute('disabled')
+    expect(textarea).toHaveAttribute('readonly')
+    expect(textarea).toHaveAttribute('tabindex', '-1')
+    expect(textarea).toHaveAttribute('aria-disabled', 'true')
 
-    // Rest the disabled state again and check if it's enabled again.
+    // Reset the disabled state again and check if it's enabled again.
     await wrapper.rerender({
       disabled: false,
     })
 
-    expect(textarea).toBeEnabled()
+    expect(textarea).not.toHaveAttribute('readonly')
+    expect(textarea).not.toHaveAttribute('tabindex')
+    expect(textarea).not.toHaveAttribute('aria-disabled')
   })
 })
 

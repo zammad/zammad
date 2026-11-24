@@ -1,11 +1,15 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { password as passwordDefinition } from '@formkit/inputs'
+import { password as passwordDefinition, textInput } from '@formkit/inputs'
 import { useEventListener } from '@vueuse/core'
 import { cloneDeep } from 'lodash-es'
 
 import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
+import addLink from '#shared/form/features/addLink.ts'
+import addSubmitEvent from '#shared/form/features/addSubmitEvent.ts'
+import defaultEmptyValueString from '#shared/form/features/defaultEmptyValueString.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
+import { setPopulatedOnWebkitAutofill } from '#shared/form/features/setPopulatedOnWebkitAutofill.ts'
 
 import type { FormKitNode } from '@formkit/core'
 
@@ -37,9 +41,24 @@ const switchPasswordVisibility = (node: FormKitNode) => {
   })
 }
 
-initializeFieldDefinition(localPasswordDefinition, {
-  features: [switchPasswordVisibility, formUpdaterTrigger('delayed')],
-})
+// FormKit exports password as an alias of its shared text definition, so it
+//   declares the same baseline as FieldInputs. The stock input section stays:
+//   a readonly password is of no use.
+initializeFieldDefinition(
+  localPasswordDefinition,
+  {
+    props: ['alternativeBackground'],
+    features: [
+      addLink,
+      addSubmitEvent,
+      switchPasswordVisibility,
+      formUpdaterTrigger('delayed'),
+      setPopulatedOnWebkitAutofill,
+      defaultEmptyValueString,
+    ],
+  },
+  { schema: textInput },
+)
 
 export default {
   fieldType: 'password',
