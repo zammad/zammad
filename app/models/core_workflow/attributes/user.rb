@@ -52,7 +52,10 @@ class CoreWorkflow::Attributes::User < CoreWorkflow::Attributes::Base
       user_ids = [1]
     end
 
-    User.where(id: group_owner_ids_user_ids, active: true).each do |user|
+    owners = User.where(id: group_owner_ids_user_ids, active: true)
+    return user_ids.concat(owners.pluck(:id)) if @attributes.assets == false
+
+    owners.each do |user|
       user_ids << user.id
       assets(user)
     end

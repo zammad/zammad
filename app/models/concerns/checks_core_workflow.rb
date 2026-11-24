@@ -13,6 +13,17 @@ module ChecksCoreWorkflow
     attr_accessor :screen
   end
 
+  # For saves the system makes on a record already validated in this request (article counters):
+  #   they change no user input, so the screen's workflows need not run again.
+  def without_core_workflow_validation
+    previous_screen = screen
+    @screen = nil
+
+    yield
+  ensure
+    @screen = previous_screen
+  end
+
   private
 
   class_methods do

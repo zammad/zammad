@@ -42,6 +42,26 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
       it 'adds article accounted time to ticket' do
         expect(service_result.time_unit).to eq(2)
       end
+
+      it 'runs the core workflow validation only for the ticket data', :aggregate_failures do
+        allow(CoreWorkflow).to receive(:perform).and_call_original
+
+        service_result
+
+        expect(CoreWorkflow).to have_received(:perform)
+          .with(hash_including(payload: hash_including('request_id' => 'ChecksCoreWorkflow.validate_workflows')))
+          .once
+        expect(ticket.screen).to eq('edit')
+      end
+
+      context 'when a required field of the ticket is missing' do
+        let(:ticket_data) { { state: Ticket::State.find_by(name: 'pending reminder'), article: { body: new_body } } }
+
+        it 'raises an error and adds no article', :aggregate_failures do
+          expect { service_result }.to raise_error(Exceptions::ApplicationModel, "Missing required value for field 'pending_time'!")
+          expect(ticket.articles.reload).to be_empty
+        end
+      end
     end
 
     context 'when macro is given' do
