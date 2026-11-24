@@ -81,11 +81,20 @@ class Transaction::Notification
 
     prepare_recipients_and_reasons
 
-    # send notifications
-    recipients_and_channels.each do |recipient_settings|
-      ActiveRecord::Base.transaction do
-        send_to_single_recipient(recipient_settings)
+    # Commit the online notifications of all recipients first: every SMTP round
+    #   trip would otherwise hold back the online notifications of later recipients.
+    notified_recipients = []
+    begin
+      recipients_and_channels.each do |recipient_settings|
+        notified_recipient = ActiveRecord::Base.transaction do
+          send_to_single_recipient(recipient_settings)
+        end
+        notified_recipients.push(notified_recipient) if notified_recipient
       end
+    ensure
+      # Also after a later recipient failed: the online notifications and daily
+      #   locks of these recipients are committed, so no later run sends this email.
+      notified_recipients.each { |notified_recipient| deliver_email_and_add_history(**notified_recipient) }
     end
   end
 
@@ -188,11 +197,7 @@ class Transaction::Notification
       send_to_single_recipient_online(user, ticket, article)
     end
 
-    if channels['email'] && user.email.present? && deliver_email(user, ticket, article, changes)
-      used_channels.push 'email'
-    end
-
-    add_recipient_list_to_history(ticket, user, used_channels, @item[:type])
+    { user:, channels:, changes:, used_channels: }
   end
 
   def add_recipient_list_to_history(ticket, user, channels, type)
@@ -228,11 +233,23 @@ class Transaction::Notification
     User.group_access(group_id, 'full').sort_by(&:login)
   end
 
+  def deliver_email_and_add_history(user:, channels:, changes:, used_channels:)
+    if channels['email'] && user.email.present? && deliver_email(user, ticket, article, changes)
+      used_channels.push 'email'
+    end
+
+    add_recipient_list_to_history(ticket, user, used_channels, @item[:type])
+  # Not re-raised: the daily locks of the remaining recipients are committed, so
+  #   they must still get their email, and the dispatcher would only log it too.
+  rescue => e
+    Rails.logger.error e
+  end
+
   # Deliver the email notification, but never let a broken 'Email::Notification'
-  #   channel take the online notification down with it (see #6308): the mail is
-  #   sent after the online notification was already created, inside the same
-  #   database transaction, and a propagating error would roll it back and abort
-  #   the remaining recipients as well.
+  #   channel abort the notification (see #6308): a propagating error would skip
+  #   the email and the history entry of all remaining recipients. Any other
+  #   error of a single email is contained as well: the daily locks of all
+  #   recipients are committed already, so no later run would send their email.
   #
   # Channel#deliver already marked the channel as faulty before raising, so the
   #   misconfiguration stays visible to admins via the channel status. A daily
@@ -249,6 +266,10 @@ class Transaction::Notification
     @email_channel_failed = true if channel_failure?(e)
 
     Rails.logger.error "Unable to send ticket email notification to #{user.email}: #{e.message}"
+
+    false
+  rescue => e
+    Rails.logger.error e
 
     false
   end
