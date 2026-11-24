@@ -34,7 +34,7 @@ module CanSelector
 
       def sorted_ids_cache_key
         cache_prefix = self.class.name.demodulize.tableize.tr('_', '-')
-        "#{cache_prefix}-#{object_manager_attribute.cache_key_with_version}-#{Translation.all.cache_key_with_version}"
+        "#{cache_prefix}-#{locale}-#{object_manager_attribute.cache_key_with_version}-#{Translation.where(locale:).cache_key_with_version}"
       end
 
       def calculate_sorted_ids

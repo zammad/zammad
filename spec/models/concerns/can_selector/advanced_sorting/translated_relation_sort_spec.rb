@@ -42,6 +42,28 @@ RSpec.describe CanSelector::AdvancedSorting::TranslatedRelationSort do
           order:  order_reference,
         )
       end
+
+      context 'when a translation changes after the sorting was cached' do
+        before do
+          instance.calculate_sorting
+          allow(Translation).to receive(:translate_all).and_call_original
+        end
+
+        it 'sorts by the changed translation of the locale' do
+          Translation.find_by(locale: 'de-de', source: 'merged').update!(target: 'abgelegt')
+
+          expect(described_class.new(input, locale, Ticket).calculate_sorting).to include(
+            select: include('5,4,1,2,3,6'),
+          )
+        end
+
+        it 'keeps the cached sorting if a translation of another locale changes' do
+          Translation.find_by(locale: 'en-us', source: 'merged').update!(target: 'archived')
+          described_class.new(input, locale, Ticket).calculate_sorting
+
+          expect(Translation).not_to have_received(:translate_all)
+        end
+      end
     end
 
     context 'when locale is en-us' do
