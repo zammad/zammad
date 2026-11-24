@@ -6,6 +6,8 @@ import { page, userEvent } from 'vitest/browser'
 
 import { mockApolloClient, routeRequest } from '#tests/browser/utils.ts'
 
+import testFlags from '#shared/utils/testFlags.ts'
+
 import { EDITOR_IMAGE, findEditor, mockImageUpload, mountEditor } from './browser-utils.ts'
 
 const routeAttachment = () =>
@@ -62,7 +64,13 @@ describe('resizing image within editor', () => {
       'tests/browser/fixtures/example.png',
     )
 
-    await page.elementLocator(await findImage()).click()
+    const image = await findImage()
+
+    // The resize frame takes its size from the load handler; opened before it ran, the frame
+    //   stays at 0x0 and every drag resizes to 0x0.
+    await expect.poll(() => testFlags.get('editor.imageResized')).toBe(true)
+
+    await page.elementLocator(image).click()
 
     await expect.poll(() => document.querySelectorAll('.vdr-handle').length).toBeGreaterThan(0)
 
