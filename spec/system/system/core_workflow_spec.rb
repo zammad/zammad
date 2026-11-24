@@ -11,9 +11,13 @@ RSpec.describe 'System > Core Workflows', type: :system do
 
   it 'shows correct screens and objects' do
     click_on 'New Workflow'
+
+    # The form first offers all objects and screens, the Core Workflow response narrows them down.
+    expect(page).to have_select('preferences::screen', options: ['-'])
     expect(all("select[name='object'] option").map(&:text)).not_to include('Sla')
+
     find_field('object').select 'Ticket'
-    expect(all("select[name='preferences::screen'] option").map(&:text)).to eq(['Creation mask', 'Edit mask'])
+    expect(page).to have_select('preferences::screen', options: ['Creation mask', 'Edit mask'])
   end
 
   describe 'for saved entry', authenticated_as: :authenticate do
@@ -30,11 +34,12 @@ RSpec.describe 'System > Core Workflows', type: :system do
 
     it 'shows correct screens and objects' do
       first('tr.item').first('td').click
+
+      expect(page).to have_select('preferences::screen', options: ['Creation mask', 'Edit mask'], selected: ['Creation mask', 'Edit mask'])
       expect(all("select[name='object'] option").map(&:text)).not_to include('Sla')
-      expect(all("select[name='preferences::screen'] option").map(&:text)).to eq(['Creation mask', 'Edit mask'])
-      expect(all("select[name='preferences::screen'] option[selected]").map(&:text)).to eq(['Creation mask', 'Edit mask'])
+
       find_field('object').select '-'
-      expect(all("select[name='preferences::screen'] option").map(&:text)).to eq(['-'])
+      expect(page).to have_select('preferences::screen', options: ['-'])
     end
 
     it 'clones multiple selection for context field correctly (#4314)' do
