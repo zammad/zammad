@@ -93,7 +93,7 @@
 
     "fallow": "3.45.0",
     "jsdom": "^31.0.1",
-    "markdownlint-cli2": "^0.24.1",
+    "markdownlint-cli2": "^0.24.2",
     "mock-apollo-client": "^2.0.0",
     "oxfmt": "^0.79.0",
     "oxlint": "^1.94.0",

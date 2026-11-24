@@ -527,7 +527,7 @@ importers:
         specifier: ^31.0.1
         version: 31.0.1
       markdownlint-cli2:
-        specifier: ^0.24.1
+        specifier: ^0.24.2
         version: 0.24.2(supports-color@7.2.0)
       mock-apollo-client:
         specifier: ^2.0.0
