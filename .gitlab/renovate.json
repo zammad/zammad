@@ -203,6 +203,11 @@
       "groupSlug": "tiptap-related"
     },
     {
+      "description": "1.43.0 and 1.43.1 put a click behind a trailing space before it, see the override in pnpm-workspace.yaml.",
+      "matchPackageNames": ["prosemirror-view"],
+      "allowedVersions": "<1.43.0"
+    },
+    {
       "matchCategories": ["js"],
       "matchPackageNames": ["postcss", "postcss-html", "sass", "autoprefixer", "/tailwind/"],
       "groupName": "Tailwind/Styling packages",
