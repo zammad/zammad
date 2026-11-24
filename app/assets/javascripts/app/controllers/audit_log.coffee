@@ -42,6 +42,7 @@ class AuditLog extends App.ControllerSubContent
     @genericController = new AuditLogIndex(
       el: @el
       id: @id
+      veryLarge: true
       genericObject: 'AuditLog'
       defaultSortBy: 'created_at'
       defaultOrder: 'DESC'
