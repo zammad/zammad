@@ -4671,6 +4671,10 @@ msgstr ""
 msgid "Could not set two-factor authentication method as default"
 msgstr ""
 
+#: lib/telegram_helper.rb:23
+msgid "Could not verify the bot with Telegram."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/link.coffee:72
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:482
 msgid "Couldn't save changes"
@@ -10183,6 +10187,10 @@ msgstr ""
 msgid "Invalid API key - please check your configuration"
 msgstr ""
 
+#: lib/telegram_helper.rb:21
+msgid "Invalid API token."
+msgstr ""
+
 #: app/controllers/application_controller/authenticates.rb:57
 msgid "Invalid BasicAuth credentials"
 msgstr ""
@@ -10220,6 +10228,10 @@ msgstr ""
 
 #: app/services/service/system/run_auto_wizard.rb:17
 msgid "Invalid auto wizard file."
+msgstr ""
+
+#: lib/telegram_helper.rb:16
+msgid "Invalid bot information from Telegram."
 msgstr ""
 
 #: app/controllers/long_polling_controller.rb:83
@@ -18722,11 +18734,11 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr ""
 
-#: lib/telegram_helper.rb:690
+#: lib/telegram_helper.rb:701
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr ""
 
-#: lib/telegram_helper.rb:27
+#: lib/telegram_helper.rb:34
 msgid "The Telegram integration can only be configured on systems using the HTTPS protocol."
 msgstr ""
 
@@ -19183,7 +19195,7 @@ msgstr ""
 msgid "The event could not be processed."
 msgstr ""
 
-#: lib/telegram_helper.rb:698
+#: lib/telegram_helper.rb:709
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -19710,11 +19722,11 @@ msgstr ""
 msgid "The required parameter 'code' is missing."
 msgstr ""
 
-#: lib/telegram_helper.rb:56
+#: lib/telegram_helper.rb:63
 msgid "The required parameter 'group_id' is invalid."
 msgstr ""
 
-#: lib/telegram_helper.rb:51
+#: lib/telegram_helper.rb:58
 msgid "The required parameter 'group_id' is missing."
 msgstr ""
 
@@ -20159,7 +20171,7 @@ msgstr ""
 msgid "The way to communicate with us is this thing called \"ticket\"."
 msgstr ""
 
-#: lib/telegram_helper.rb:35
+#: lib/telegram_helper.rb:42
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
@@ -20372,7 +20384,7 @@ msgstr ""
 msgid "This article is not part of the ticket."
 msgstr ""
 
-#: lib/telegram_helper.rb:47
+#: lib/telegram_helper.rb:54
 msgid "This bot already exists."
 msgstr ""
 
@@ -23221,7 +23233,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:21
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:18
-#: lib/telegram_helper.rb:644
+#: lib/telegram_helper.rb:655
 msgid "Welcome! Feel free to ask me a question!"
 msgstr ""
 

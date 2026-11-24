@@ -15,15 +15,22 @@ check token and return bot attributes of token
 =end
 
   def self.check_token(token)
-    result = nil
-    begin
-      Telegram::Bot::Client.run(token) do |bot|
-        result = bot.api.getMe
-      end
-    rescue
-      raise Exceptions::UnprocessableContent, 'invalid api token'
+    # BotFullInfo also requires capability flags that channel setup does not use.
+    response = Telegram::Bot::Client.new(token).api.call('getMe')
+    identity = response['result'] if response.is_a?(Hash) && response['ok'] == true
+    if !identity.is_a?(Hash) || identity['is_bot'] != true
+      raise Exceptions::UnprocessableContent, __('Invalid bot information from Telegram.')
     end
-    result
+
+    Telegram::Bot::Types::User.new(identity.slice('id', 'is_bot', 'first_name', 'username', 'last_name'))
+  rescue Telegram::Bot::Exceptions::ResponseError => e
+    raise Exceptions::UnprocessableContent, __('Invalid API token.') if [401, 404].include?(e.response.status)
+
+    raise Exceptions::UnprocessableContent, __('Could not verify the bot with Telegram.')
+  rescue Faraday::Error
+    raise Exceptions::UnprocessableContent, __('Could not verify the bot with Telegram.')
+  rescue JSON::ParserError, Dry::Struct::Error
+    raise Exceptions::UnprocessableContent, __('Invalid bot information from Telegram.')
   end
 
 =begin
@@ -100,13 +107,17 @@ returns
         channel = Channel.new
       end
     end
+    # Telegram no longer returns a bot's last name in getMe.
+    previous_bot = channel.options&.dig(:bot)
+    last_name = previous_bot[:last_name] if previous_bot && previous_bot[:id] == bot.id
+
     channel.area = 'Telegram::Bot'
     channel.options = {
       bot:            {
         id:         bot.id,
         username:   bot.username,
         first_name: bot.first_name,
-        last_name:  bot.last_name,
+        last_name:  bot.last_name || last_name,
       },
       callback_token: callback_token,
       callback_url:   callback_url,

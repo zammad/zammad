@@ -255,7 +255,7 @@ GEM
       dry-types (~> 1.8, >= 1.8.2)
       ice_nine (~> 0.11)
       zeitwerk (~> 2.6)
-    dry-types (1.9.1)
+    dry-types (1.9.2)
       bigdecimal (>= 3.0)
       concurrent-ruby (~> 1.0)
       dry-core (~> 1.0)
@@ -832,7 +832,7 @@ GEM
       logger
     systemu (2.6.5)
     tcr (0.4.1)
-    telegram-bot-ruby (2.8.1)
+    telegram-bot-ruby (2.10.0)
       dry-struct (~> 1.6)
       faraday (~> 2.0)
       faraday-multipart (~> 1.0)
