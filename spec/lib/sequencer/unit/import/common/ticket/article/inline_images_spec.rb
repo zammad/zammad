@@ -49,5 +49,53 @@ RSpec.describe Sequencer::Unit::Import::Common::Ticket::Article::InlineImages do
         include_examples 'skipping the image'
       end
     end
+
+    context 'with many images' do
+      let(:unit_class) { Class.new(described_class) }
+      let(:image_data) { 'x' * 1500 }
+      let(:data_uri)   { "data:image/png;base64,#{Base64.strict_encode64(image_data)}" }
+
+      def numbered_url(number)
+        "https://example.zendesk.com/attachments/token/image#{number}/?name=image.png"
+      end
+
+      before do
+        stub_const("#{described_class}::INLINE_DATA_CACHE_SIZE", 10.kilobytes)
+        allow(unit_class).to receive(:download).and_return(image_data)
+      end
+
+      it 'downloads a repeated image only once', :aggregate_failures do
+        expect(unit_class.inline_data(numbered_url(1))).to eq(data_uri)
+        expect(unit_class.inline_data(numbered_url(1))).to eq(data_uri)
+        expect(unit_class).to have_received(:download).with(numbered_url(1)).once
+      end
+
+      it 'does not cache an image that could not be downloaded' do
+        allow(unit_class).to receive(:download).and_return(nil)
+        2.times { unit_class.inline_data(numbered_url('failed')) }
+        expect(unit_class).to have_received(:download).with(numbered_url('failed')).twice
+      end
+
+      it 'does not keep more images than fit into its size' do
+        urls = (1..50).map { |number| numbered_url(number) }
+        urls.each { |url| unit_class.inline_data(url) }
+        urls.reverse_each { |url| unit_class.inline_data(url) }
+
+        images_that_fit = 10.kilobytes / data_uri.bytesize
+        expect(unit_class).to have_received(:download).at_least((urls.size * 2) - images_that_fit).times
+      end
+
+      it 'evicts the least recently used image first', :aggregate_failures do
+        (1..3).each { |number| unit_class.inline_data(numbered_url(number)) }
+        unit_class.inline_data(numbered_url(1))
+        (4..5).each { |number| unit_class.inline_data(numbered_url(number)) }
+
+        unit_class.inline_data(numbered_url(1))
+        unit_class.inline_data(numbered_url(2))
+
+        expect(unit_class).to have_received(:download).with(numbered_url(1)).once
+        expect(unit_class).to have_received(:download).with(numbered_url(2)).twice
+      end
+    end
   end
 end
