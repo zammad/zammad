@@ -23,7 +23,7 @@ import type { Ref } from 'vue'
 export const EXTENSION_NAME = 'mentionUser'
 const EXTENSION_LINK_NAME = 'mentionUserLink'
 
-const ACTIVATOR = '@@'
+export const USER_MENTION_ACTIVATOR = '@@'
 
 export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   const app = useApplicationStore()
@@ -46,7 +46,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
         () =>
         // TODO: Check if this explicit typing is still needed after the release of TipTap version. > ^3.3
         ({ chain }: CommandProps) =>
-          chain().insertContent(` ${ACTIVATOR}`).run(),
+          chain().insertContent(` ${USER_MENTION_ACTIVATOR}`).run(),
     }),
     addOptions() {
       return {
@@ -56,7 +56,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     },
   }).configure({
     suggestion: buildMentionSuggestion({
-      activator: ACTIVATOR,
+      activator: USER_MENTION_ACTIVATOR,
       type: 'user',
       label: __('Users'),
       placeholder: __('Start typing to search for users…'),

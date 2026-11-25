@@ -28,14 +28,13 @@ vi.hoisted(() => {
 
 const generateFingerprintSpy = vi.fn()
 
-vi.mock('#shared/utils/browser.ts', () => {
-  return {
-    generateFingerprint: () => {
-      generateFingerprintSpy()
-      return 'dummy'
-    },
-  }
-})
+vi.mock('#shared/utils/browser.ts', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('#shared/utils/browser.ts')>()),
+  generateFingerprint: () => {
+    generateFingerprintSpy()
+    return 'dummy'
+  },
+}))
 
 const userCurrentDeviceList = [
   {

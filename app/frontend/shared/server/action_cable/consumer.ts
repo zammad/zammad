@@ -37,6 +37,16 @@ ActionCable.Connection.prototype.reopen = () => {
   originalReopen.call(consumer.connection)
 }
 
+// Register window.disconnectWebSocket and window.reconnectWebSocket to simulate a lost connection
+//   for debugging. A disconnect also stops the reconnect attempts until the reconnect.
+window.disconnectWebSocket = (): void => {
+  consumer.disconnect()
+}
+
+window.reconnectWebSocket = (): void => {
+  consumer.connect()
+}
+
 export const actionCableReopenDelay = ActionCable.Connection.reopenDelay
 
 export const checkWebSocketConnection = () => {

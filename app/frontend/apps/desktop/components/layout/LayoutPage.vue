@@ -22,6 +22,7 @@ import { useAppBreakpoints } from '#desktop/composables/responsiveness/useAppBre
 import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.ts'
 
 import { SidebarName } from './types.ts'
+import { useLayoutShortcuts } from './useLayoutShortcuts.ts'
 import { useSidebarDisplay } from './useSidebarDisplay.ts'
 
 const config = toRef(useApplicationStore(), 'config')
@@ -97,6 +98,8 @@ onBeforeMount(() => {
 })
 
 const { hasReducedMotion } = useReducedMotion()
+
+useLayoutShortcuts()
 </script>
 
 <template>

@@ -15,6 +15,13 @@ import { convertToGraphQLId, getIdFromGraphQLId } from '#shared/graphql/utils.ts
 import { mockKnowledgeBaseQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBase.mocks.ts'
 import { mockKnowledgeBaseAnswerQuery } from '#desktop/entities/knowledge-base/graphql/queries/knowledgeBaseAnswer.mocks.ts'
 
+const copyToClipboardMock = vi.fn()
+
+vi.mock('#shared/composables/useCopyToClipboard.ts', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('#shared/composables/useCopyToClipboard.ts')>()),
+  useCopyToClipboard: () => ({ copyToClipboard: copyToClipboardMock }),
+}))
+
 const ANSWER_ID = convertToGraphQLId('KnowledgeBase::Answer', 5)
 const PREVIOUS_ANSWER_ID = convertToGraphQLId('KnowledgeBase::Answer', 4)
 const NEXT_ANSWER_ID = convertToGraphQLId('KnowledgeBase::Answer', 6)
@@ -152,6 +159,34 @@ describe('knowledge base answer header', () => {
       within(breadcrumb).getByRole('heading', { name: 'Some Knowledge Base Answer' }),
       'the opened answer is the page heading',
     ).toBeInTheDocument()
+  })
+
+  it('copies the answer title, then with the link via the period shortcut', async () => {
+    mockApplicationConfig({ fqdn: 'zammad.example.com', http_type: 'https' })
+
+    const view = await visitView(ANSWER_PATH)
+
+    await view.findAllByRole('heading', { name: 'Some Knowledge Base Answer' })
+
+    copyToClipboardMock.mockClear()
+
+    await view.events.keyboard('...')
+
+    const url = `https://zammad.example.com/desktop${ANSWER_PATH}`
+
+    expect(copyToClipboardMock).toHaveBeenCalledTimes(2)
+    expect(copyToClipboardMock).toHaveBeenNthCalledWith(1, 'Some Knowledge Base Answer')
+    expect(copyToClipboardMock).toHaveBeenNthCalledWith(2, [
+      {
+        data: {
+          'text/html': `<a href="${url}">Some Knowledge Base Answer</a>`,
+          'text/plain': `Some Knowledge Base Answer\n${url}`,
+        },
+        options: {
+          presentationStyle: 'unspecified',
+        },
+      },
+    ])
   })
 
   it('shows the answer title, its publication state and its edit metadata', async () => {

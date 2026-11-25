@@ -18,17 +18,18 @@ export const useTicketNumber = (ticket: Ref<TicketLabel | undefined>) => {
     () => ticketNumber.value && `${config.value.ticket_hook}${ticketNumber.value}`,
   )
 
+  const ticketUrl = computed(
+    () =>
+      ticket.value?.internalId &&
+      `${config.value.http_type}://${config.value.fqdn}/desktop/tickets/${ticket.value.internalId}`,
+  )
+
   const { copyToClipboard } = useCopyToClipboard()
 
   const copyTicketNumberToClipboard = () => {
-    if (!ticketNumberWithTicketHook.value || !ticket.value?.internalId) return
+    if (!ticketNumberWithTicketHook.value || !ticketUrl.value) return
 
-    copyToClipboard([
-      createLinkClipboardItem(
-        `${config.value.http_type}://${config.value.fqdn}/desktop/tickets/${ticket.value.internalId}`,
-        ticketNumberWithTicketHook.value,
-      ),
-    ])
+    copyToClipboard([createLinkClipboardItem(ticketUrl.value, ticketNumberWithTicketHook.value)])
   }
 
   return {

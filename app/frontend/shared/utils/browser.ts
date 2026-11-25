@@ -11,6 +11,8 @@ export const isMobile = device.type === 'mobile'
 
 export const os = parser.getOS()
 
+export const isMac = () => /mac/i.test(os.name ?? '')
+
 export const generateFingerprint = () => {
   const windowResolution = `${window.screen.availWidth}x${window.screen.availHeight}/${window.screen.pixelDepth}`
 

@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useApplicationStore } from '#shared/stores/application.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
+import { canCreateTicket } from '#shared/entities/ticket/composables/useTicketCreateView.ts'
 
 import type { AddMenuItem } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/types.ts'
 
@@ -11,14 +10,7 @@ export default {
   order: 100,
   label: __('New ticket'),
   variant: 'secondary',
-  show() {
-    const { config } = useApplicationStore()
-    const { user } = useSessionStore()
-
-    if (user?.permissions?.names.includes('ticket.agent')) return true
-
-    return config.customer_ticket_create
-  },
+  show: canCreateTicket,
   icon: 'plus-square-fill',
   link: '/tickets/create',
 } as AddMenuItem

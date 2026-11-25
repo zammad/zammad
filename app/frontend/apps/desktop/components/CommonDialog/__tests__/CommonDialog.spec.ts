@@ -5,6 +5,10 @@ import { flushPromises } from '@vue/test-utils'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import Form from '#shared/components/Form/Form.vue'
+
+import { useFormSubmitShortcut } from '#desktop/composables/useFormSubmitShortcut.ts'
+
 import CommonDialog from '../CommonDialog.vue'
 import { getDialogMeta, useDialog } from '../useDialog.ts'
 
@@ -283,5 +287,48 @@ describe('visuals for common dialog', () => {
     })
 
     expect(document.body).include(wrapper.baseElement)
+  })
+})
+
+describe('submitting a form in a common dialog', () => {
+  it('submits the form with ctrl+enter from one of its fields', async () => {
+    getDialogMeta().dialogsOptions.set('form-dialog', {
+      name: 'form-dialog',
+      component: vi.fn().mockResolvedValue({}),
+      refocus: true,
+    })
+
+    // The visuals above clear the body, the dialog's target with it.
+    if (!document.getElementById('main-content')) {
+      const mainContent = document.createElement('div')
+      mainContent.id = 'main-content'
+      document.body.append(mainContent)
+    }
+
+    const onSubmit = vi.fn()
+
+    const wrapper = renderComponent(
+      {
+        components: { CommonDialog, Form },
+        template: html`
+          <CommonDialog name="form-dialog" :footer-action-options="{ formNodeId: 'dialog-form' }">
+            <Form id="dialog-form" :schema="schema" @submit="onSubmit" />
+          </CommonDialog>
+        `,
+        setup: () => {
+          useFormSubmitShortcut()
+
+          return { schema: [{ type: 'text', name: 'title', label: 'Title' }], onSubmit }
+        },
+      },
+      { router: true, dialog: true, form: true },
+    )
+
+    await vi.waitFor(() => expect(wrapper.getByLabelText('Title')).toBeVisible())
+
+    wrapper.getByLabelText('Title').focus()
+    await wrapper.events.keyboard('{Control>}{Enter}{/Control}')
+
+    await vi.waitFor(() => expect(onSubmit).toHaveBeenCalledOnce())
   })
 })

@@ -13,7 +13,11 @@ export const useConnection = () => {
   })
 
   handleConnection(
-    () => dialog.open(),
-    () => dialog.close(),
+    () => {
+      // Opening it again would remount it, ending a game that outlasted the previous outage.
+      if (!dialog.isOpened.value) dialog.open()
+    },
+    // The dialog closes itself, as it stays open while its game is running.
+    () => {},
   )
 }

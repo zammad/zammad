@@ -25,6 +25,10 @@
 - `assets/camera-video.svg`
 - `assets/camera.svg`
 - `assets/card-list.svg`
+- `assets/caret-down-fill.svg`
+- `assets/caret-left-fill.svg`
+- `assets/caret-right-fill.svg`
+- `assets/caret-up-fill.svg`
 - `assets/chat-left-text.svg`
 - `assets/chat.svg`
 - `assets/check-all.svg`

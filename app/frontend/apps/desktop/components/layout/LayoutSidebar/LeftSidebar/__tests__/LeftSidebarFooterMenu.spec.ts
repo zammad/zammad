@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
 import { ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -54,6 +55,23 @@ describe('layout sidebar footer menu', () => {
 
     const avatar = view.getByTestId('common-avatar')
     expect(avatar).toHaveClass('size-small')
+  })
+
+  it('toggles the user menu with the u key', async () => {
+    const view = renderComponent(LeftSidebarFooterMenu, {
+      router: true,
+      store: true,
+    })
+
+    await view.events.keyboard('u')
+
+    expect(await view.findByRole('menuitem', { name: 'Sign out' })).toBeInTheDocument()
+
+    await view.events.keyboard('u')
+
+    await waitFor(() =>
+      expect(view.queryByRole('menuitem', { name: 'Sign out' })).not.toBeInTheDocument(),
+    )
   })
 
   it('renders the inline collapse button on smaller screens', async () => {

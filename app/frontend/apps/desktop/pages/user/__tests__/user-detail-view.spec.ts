@@ -192,6 +192,28 @@ describe('User Detail View', () => {
         expect(within(items[1]).getByRole('heading')).toHaveAccessibleName('Nicole Braun')
       })
 
+      it('copies the user name, then with the link via the period shortcut', async () => {
+        const view = await visitView('/users/2')
+
+        copyToClipboardMock.mockClear()
+
+        await view.events.keyboard('...')
+
+        expect(copyToClipboardMock).toHaveBeenCalledTimes(2)
+        expect(copyToClipboardMock).toHaveBeenNthCalledWith(1, 'Nicole Braun')
+        expect(copyToClipboardMock).toHaveBeenNthCalledWith(2, [
+          {
+            data: {
+              'text/html': '<a href="http://zammad.example.com/desktop/users/2">Nicole Braun</a>',
+              'text/plain': 'Nicole Braun\nhttp://zammad.example.com/desktop/users/2',
+            },
+            options: {
+              presentationStyle: 'unspecified',
+            },
+          },
+        ])
+      })
+
       it('copies user name', async () => {
         const view = await visitView('/users/2')
 

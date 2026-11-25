@@ -186,6 +186,29 @@ describe('Organization Detail View', () => {
       expect(within(items[1]).getByRole('heading')).toHaveAccessibleName('Zammad Foundation')
     })
 
+    it('copies the organization name, then with the link via the period shortcut', async () => {
+      const { view } = await visitOrganizationView()
+
+      copyToClipboardMock.mockClear()
+
+      await view.events.keyboard('...')
+
+      expect(copyToClipboardMock).toHaveBeenCalledTimes(2)
+      expect(copyToClipboardMock).toHaveBeenNthCalledWith(1, 'Zammad Foundation')
+      expect(copyToClipboardMock).toHaveBeenNthCalledWith(2, [
+        {
+          data: {
+            'text/html':
+              '<a href="http://zammad.example.com/desktop/organizations/1">Zammad Foundation</a>',
+            'text/plain': 'Zammad Foundation\nhttp://zammad.example.com/desktop/organizations/1',
+          },
+          options: {
+            presentationStyle: 'unspecified',
+          },
+        },
+      ])
+    })
+
     it('copies organization name', async () => {
       const { view, header } = await visitOrganizationView()
 

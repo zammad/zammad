@@ -25,6 +25,7 @@ import TableHeader from './TableHeader.vue'
 import TableRow from './TableRow.vue'
 import TableRowGroupBy from './TableRowGroupBy.vue'
 import { type AdvancedTableProps, type TableAdvancedItem, type TableAttribute } from './types.ts'
+import { CURRENT_ROW_ATTRIBUTE, useTableRowNavigation } from './useTableRowNavigation.ts'
 import { getTicketPriorityLinkColorClasses } from './utils.ts'
 
 const props = withDefaults(defineProps<AdvancedTableProps>(), {
@@ -239,6 +240,30 @@ const loadedItems = computed<TableAdvancedItem[]>((currentItems) => {
 
   return newItems
 })
+
+const tableBody = useTemplateRef('table-body')
+
+const { currentRowId } = useTableRowNavigation(tableBody, (itemId) => {
+  const item = loadedItems.value.find((loadedItem) => loadedItem.id === itemId)
+  if (!item || !props.hasBulkAction) return false
+
+  updateCheckedItem(item)
+
+  return true
+})
+
+// Rows nothing can be done with have no current row of their own.
+const currentSelectedRowId = computed(
+  () => ((props.onClickRow || props.hasBulkAction) && currentRowId.value) || props.selectedRowId,
+)
+
+// Another list in the same table, e.g. another overview, starts at its first row.
+watch(
+  () => props.storageKeyId,
+  () => {
+    currentRowId.value = undefined
+  },
+)
 
 const remainingItems = computed(() => {
   const itemCount = props.totalItemsCount >= props.maxItems ? props.maxItems : props.totalItemsCount
@@ -537,6 +562,7 @@ watch(
     <!-- :TODO tabindex should be -1 re-evaluate when we work on bulk action with checkbox  -->
     <!-- SR should not be able to focus the row but each action node  -->
     <tbody
+      ref="table-body"
       class="relative"
       :inert="isSorting"
       :class="{
@@ -556,7 +582,8 @@ watch(
         <TableRow
           :item="item"
           :class="rowClass?.(item)"
-          :is-row-selected="!hasBulkAction && item.id === selectedRowId"
+          :is-row-selected="!hasBulkAction && item.id === currentSelectedRowId"
+          v-bind="{ [CURRENT_ROW_ATTRIBUTE]: item.id === currentSelectedRowId || undefined }"
           tabindex="-1"
           :has-checkbox="hasBulkAction"
           :no-auto-striping="!!groupByAttribute"
@@ -615,7 +642,7 @@ watch(
                     ]"
                     class="block! truncate text-sm group-hover:text-contrast! group-focus-visible:text-white group-active:text-white! hover:no-underline! group-active:dark:text-white!"
                     @click.stop
-                    @keydown.stop
+                    @keydown.enter.stop
                   >
                     <EntityAttributeContent
                       mode="table"

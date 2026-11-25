@@ -271,10 +271,11 @@ export interface FormRef {
   values: FormValues
   flags: Record<string, boolean>
   updateSchemaDataField: UpdateSchemaDataFieldFunction
+  // Resolves once every field has its new value.
   updateChangedFields: (
     changedFields: Record<string, Partial<FormSchemaField>>,
     changesCanTriggerFormUpdater?: boolean,
-  ) => void
+  ) => Promise<unknown>
 
   getNodeByName(id: string): FormKitNode | undefined
 

@@ -2,7 +2,10 @@
 
 <script setup lang="ts">
 import { until } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, useTemplateRef } from 'vue'
+
+import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import CommonEmptyMessage from '#desktop/components/CommonEmptyMessage/CommonEmptyMessage.vue'
 import type { NavigationTab } from '#desktop/components/CommonTabs/types.ts'
@@ -13,6 +16,7 @@ import DragAndDropBulkWrapper from '#desktop/components/Ticket/DragAndDropBulk/D
 import { useDragAndDropBulk } from '#desktop/components/Ticket/DragAndDropBulk/useDragAndDropBulk.ts'
 import TicketBulkEditButton from '#desktop/components/Ticket/TicketBulkEditButton.vue'
 import { useTicketBulkEdit } from '#desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts'
+import { useListKeyboardNavigation } from '#desktop/composables/useListKeyboardNavigation.ts'
 import TicketList from '#desktop/pages/ticket-overviews/components/TicketList.vue'
 import TicketOverviewsSidebar from '#desktop/pages/ticket-overviews/components/TicketOverviewsSidebar.vue'
 import { useTicketOverviews } from '#desktop/pages/ticket-overviews/composables/useTicketOverviews.ts'
@@ -99,6 +103,41 @@ const breadcrumbItems = computed(() => [
   },
 ])
 
+const sidebarInstance = useTemplateRef('sidebar')
+const listInstance = useTemplateRef('list')
+
+const focusActiveOverviewLink = () => {
+  const activeLink = (
+    sidebarInstance.value?.$el as HTMLElement | undefined
+  )?.querySelector<HTMLElement>('a[aria-current="page"]')
+
+  activeLink?.focus()
+
+  // The sidebar is not shown on small screens.
+  return !!activeLink && document.activeElement === activeLink
+}
+
+const locale = useLocaleStore()
+
+// The sidebar is on the side of the start of the text.
+const isRtl = computed(() => locale.localeData?.dir === EnumTextDirection.Rtl)
+const keyToSidebar = computed(() => (isRtl.value ? 'ArrowRight' : 'ArrowLeft'))
+const keyToList = computed(() => (isRtl.value ? 'ArrowLeft' : 'ArrowRight'))
+
+const { focusList } = useListKeyboardNavigation({
+  list: () => listInstance.value?.$el as HTMLElement | undefined,
+  onLeave: (key) => key === keyToSidebar.value && focusActiveOverviewLink(),
+  // An overview without tickets leaves the keys to the overview links.
+  onEmpty: focusActiveOverviewLink,
+})
+
+const onSidebarKeydown = (event: KeyboardEvent) => {
+  if (event.key !== keyToList.value || event.defaultPrevented) return
+  if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+
+  if (focusList()) event.preventDefault()
+}
+
 const { checkedTicketIds, openBulkEditFlyout, bulkSelector } = useTicketBulkEdit()
 
 const {
@@ -122,7 +161,7 @@ const {
       background-variant="secondary"
       :name="SidebarName.TicketOverviews"
     >
-      <TicketOverviewsSidebar />
+      <TicketOverviewsSidebar ref="sidebar" @keydown="onSidebarKeydown" />
     </LayoutSidebar>
 
     <LayoutContent
@@ -142,6 +181,7 @@ const {
       </template>
       <TicketList
         v-if="currentOverview"
+        ref="list"
         class="px-4 pb-4"
         :overview-id="currentOverview.id"
         :overview-name="currentOverview.name"

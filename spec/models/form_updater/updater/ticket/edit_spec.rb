@@ -51,7 +51,9 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
         options: [ { value: group.id, label: group.name } ],
       },
       'state_id'    => {
-        options: Ticket::State.by_category(:viewable_agent_edit).reorder(name: :asc).map { |state| { value: state.id, label: state.name } },
+        options: Ticket::State.by_category(:viewable_agent_edit).reorder(name: :asc).map do |state|
+          { value: state.id, label: state.name, **(state.default_close ? { defaultClose: true } : {}) }
+        end,
       },
       'priority_id' => {
         options: Ticket::Priority.where(active: true).reorder(id: :asc).map { |priority| { value: priority.id, label: priority.name } },
@@ -88,6 +90,48 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
         'state_id'    => include(expected_result['state_id']),
         'priority_id' => include(expected_result['priority_id']),
       )
+    end
+
+    context 'when a core workflow restricts the states' do
+      let(:closed_state) { Ticket::State.find_by(default_close: true) }
+      let(:open_state)   { Ticket::State.find_by(name: 'open') }
+
+      before do
+        create(:core_workflow, object: 'Ticket', perform: { 'ticket.state_id' => { operator: 'remove_option', remove_option: [open_state.id.to_s] } })
+      end
+
+      it 'still marks the default close state' do
+        expect(resolved_result.resolve[:fields]['state_id'][:options]).to include({ value: closed_state.id, label: closed_state.name, defaultClose: true })
+          .and not_include(include(value: open_state.id))
+      end
+    end
+
+    # A ticket in state new keeps that state on offer, so the edit form lists the states of the create form.
+    context 'when the create form lists the same states' do
+      let(:ticket) { create(:ticket, group:, state: Ticket::State.find_by(name: 'new')) }
+
+      def state_options(updater_class, id: nil)
+        updater = updater_class.new(context:, relation_fields:, meta: { initial: true, form_id: SecureRandom.uuid }, data: {}, id:)
+        updater.authorized?
+        updater.resolve[:fields]['state_id'][:options]
+      end
+
+      it 'marks the default close state for the edit form only', :aggregate_failures do
+        expect(state_options(described_class, id: Gql::ZammadSchema.id_from_object(ticket))).to include(include(defaultClose: true))
+        expect(state_options(FormUpdater::Updater::Ticket::Create)).to all(not_include(:defaultClose))
+      end
+    end
+
+    context 'when the default close state is not offered' do
+      let(:closed_state) { Ticket::State.find_by(default_close: true) }
+
+      before do
+        create(:core_workflow, object: 'Ticket', perform: { 'ticket.state_id' => { operator: 'remove_option', remove_option: [closed_state.id.to_s] } })
+      end
+
+      it 'marks no state' do
+        expect(resolved_result.resolve[:fields]['state_id'][:options]).to all(not_include(:defaultClose))
+      end
     end
 
     context 'when body is used' do

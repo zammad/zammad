@@ -1,6 +1,9 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 
@@ -155,5 +158,24 @@ describe('CommonLink.vue', () => {
       },
     })
     expect(getLink()).toHaveAttribute('href', '')
+  })
+
+  it('marks the link to the current page', async () => {
+    const { getLink, ...wrapper } = renderCommonLink({
+      props: {
+        link: '/example',
+        internal: true,
+      },
+    })
+
+    expect(getLink()).not.toHaveAttribute('aria-current')
+
+    await getTestRouter().push('/example')
+
+    await waitFor(() => expect(getLink()).toHaveAttribute('aria-current', 'page'))
+
+    await wrapper.rerender({ link: 'https://www.zammad.org', internal: false, external: true })
+
+    expect(getLink()).not.toHaveAttribute('aria-current')
   })
 })

@@ -51,8 +51,8 @@ describe('Testing "user mention" popup: "@@" command', () => {
     await expect.element(popup).not.toBeInTheDocument()
 
     await expect.poll(editorHtml).toContain('<p dir="auto">@@Jo mail.com</p>')
-    // Escape in any editor currently blurs it (see zammad/zammad#6525); `type` refocuses it.
-    await userEvent.type(editor, '{Backspace}{Backspace}123')
+    // The editor keeps the focus, typing goes on where it was.
+    await userEvent.keyboard('{Backspace}{Backspace}123')
     await expect.poll(editorHtml).toContain('<p dir="auto">@@Jo mail.c123</p>')
     await userEvent.type(editor, '{ArrowLeft}{ArrowLeft}654')
     await expect.poll(editorHtml).toContain('<p dir="auto">@@Jo mail.c165423</p>')

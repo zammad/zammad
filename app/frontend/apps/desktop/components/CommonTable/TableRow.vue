@@ -58,6 +58,7 @@ const hasScreenReaderHelpText = computed(() => !!document?.getElementById(rowId)
       'bg-blue-800!': !hasCheckbox && isRowSelected,
       'cursor-pointer': isClickable,
     }"
+    class="scroll-mt-10"
     :style="{ clipPath: 'xywh(0 0 100% 100% round 0.375rem)' }"
     :data-item-id="item.id"
     data-test-id="table-row"

@@ -653,19 +653,19 @@ App.Config.set(
             {
               key: '1'
               hotkeys: true,
-              description: __('Format as h1 heading')
+              description: __('Format as H1 heading')
               globalEvent: 'richtext-h1'
             }
             {
               key: '2'
               hotkeys: true,
-              description: __('Format as h2 heading')
+              description: __('Format as H2 heading')
               globalEvent: 'richtext-h2'
             }
             {
               key: '3'
               hotkeys: true,
-              description: __('Format as h3 heading')
+              description: __('Format as H3 heading')
               globalEvent: 'richtext-h3'
             }
             {

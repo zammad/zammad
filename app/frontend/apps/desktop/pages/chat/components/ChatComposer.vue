@@ -189,18 +189,13 @@ const onTab = (event: KeyboardEvent) => {
   event.stopPropagation()
 }
 
-// Escape closes an open list first, which takes the focus off the editor too (zammad/zammad#6525);
-//   the agent goes on writing or sends. Otherwise it leaves the loop of the inputs, unless it
-//   cancels an input method conversion; with a single input there is no loop to leave.
+// Escape closes an open list first, and the agent goes on writing or sends. Otherwise it leaves
+//   the loop of the inputs, unless it cancels an input method conversion; with a single input
+//   there is no loop to leave.
 const onEscape = (event: KeyboardEvent) => {
   if (event.key !== 'Escape' || !isInText(event)) return
 
-  if (isSuggestionListOpen(event)) {
-    requestAnimationFrame(focus)
-    return
-  }
-
-  if (!hasLoop.value || isComposing(event)) return
+  if (isSuggestionListOpen(event) || !hasLoop.value || isComposing(event)) return
 
   emit('leave')
 }

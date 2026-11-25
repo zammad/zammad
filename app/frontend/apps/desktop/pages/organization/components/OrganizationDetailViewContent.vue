@@ -27,6 +27,7 @@ import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/C
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import OrganizationTicketBarChart from '#desktop/components/Ticket/TicketBarChart/OrganizationTicketBarChart.vue'
+import { useObjectReferenceShortcut } from '#desktop/composables/useObjectReferenceShortcut.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useScrollPosition } from '#desktop/composables/useScrollPosition.ts'
 import { useTicketByOrganizationUpdatesSubscription } from '#desktop/entities/ticket/graphql/subscriptions/ticketByOrganizationUpdates.api.ts'
@@ -63,6 +64,11 @@ const {
 )
 
 const { organizationDisplayName } = useOrganizationEntity(organization)
+
+useObjectReferenceShortcut(() => ({
+  title: organizationDisplayName.value,
+  path: organization.value && `/organizations/${organization.value.internalId}`,
+}))
 
 usePage({
   metaTitle: organizationDisplayName,

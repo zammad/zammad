@@ -13,6 +13,8 @@ declare global {
     setQueryPollingConfig(config?: Partial<QueryPollingConfig>): QueryPollingConfig
     resetQueryPollingConfig(): QueryPollingConfig
     getCurrentQueryPollingConfig(): QueryPollingConfig
+    disconnectWebSocket(): void
+    reconnectWebSocket(): void
   }
 }
 
@@ -22,6 +24,9 @@ declare function setLogLevel(level: LogLevel, persistent: boolean): void
 declare function setQueryPollingConfig(config?: Partial<QueryPollingConfig>): QueryPollingConfig
 declare function resetQueryPollingConfig(): QueryPollingConfig
 declare function getCurrentQueryPollingConfig(): QueryPollingConfig
+
+declare function disconnectWebSocket(): void
+declare function reconnectWebSocket(): void
 
 // Workaround for spark-md5 not having proper type definitions.
 declare module 'spark-md5' {

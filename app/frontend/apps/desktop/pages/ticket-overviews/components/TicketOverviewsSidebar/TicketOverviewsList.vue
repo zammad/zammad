@@ -1,13 +1,21 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useTemplateRef } from 'vue'
+
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
 import type { NavigationMenuEntry } from '#desktop/components/NavigationMenu/types.ts'
 import { useTicketOverviews } from '#desktop/pages/ticket-overviews/composables/useTicketOverviews.ts'
 
 const { overviews, overviewsTicketCountById } = useTicketOverviews()
+
+const navigationInstance = useTemplateRef('navigation')
+
+useTraverseOptions(() => navigationInstance.value?.$el as HTMLElement | undefined, {
+  direction: 'vertical',
+})
 
 const overviewsItems = computed((): NavigationMenuEntry[] =>
   overviews.value?.map((item) => ({
@@ -21,6 +29,7 @@ const overviewsItems = computed((): NavigationMenuEntry[] =>
 
 <template>
   <NavigationMenuList
+    ref="navigation"
     :aria-label="$t('Overview navigation list')"
     count-variant="info"
     count-size="xs"

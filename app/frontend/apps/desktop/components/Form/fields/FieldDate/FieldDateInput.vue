@@ -250,6 +250,9 @@ onKeyStroke(
 )
 
 const onInputKeydown = announceSegmentChange((event: KeyboardEvent) => {
+  // With a modifier, Enter submits the form around the field.
+  if (event.key === 'Enter' && (event.ctrlKey || event.metaKey)) return
+
   if (event.key === 'Escape') {
     if (!isOpen.value) return
     stopEvent(event)
@@ -387,7 +390,7 @@ const iconClasses =
       tabindex="0"
       role="button"
       @click.stop="clearValue()"
-      @keydown.enter.prevent="clearValue()"
+      @keydown.enter.exact.prevent="clearValue()"
       @keydown.space.prevent="clearValue()"
     />
     <CommonIcon
@@ -400,7 +403,7 @@ const iconClasses =
       aria-haspopup="dialog"
       :aria-expanded="isOpen"
       @click.stop="toggle()"
-      @keydown.enter.prevent="toggle()"
+      @keydown.enter.exact.prevent="toggle()"
       @keydown.space.prevent="toggle()"
     />
     <Teleport to="body">

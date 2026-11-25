@@ -17,7 +17,7 @@ import type { CommandProps } from '@tiptap/core'
 
 export const EXTENSION_NAME = 'mentionText'
 
-const ACTIVATOR = '::'
+export const TEXT_MODULE_ACTIVATOR = '::'
 
 const LIMIT_QUERY_MODULES = 10
 
@@ -60,7 +60,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
         () =>
         // TODO: Check if this explicit typing is still needed after the stable release of next TipTap version.
         ({ chain }: CommandProps) =>
-          chain().insertContent(` ${ACTIVATOR}`).run(),
+          chain().insertContent(` ${TEXT_MODULE_ACTIVATOR}`).run(),
     }),
     addOptions() {
       return {
@@ -70,7 +70,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     },
   }).configure({
     suggestion: buildMentionSuggestion({
-      activator: ACTIVATOR,
+      activator: TEXT_MODULE_ACTIVATOR,
       type: 'text',
       label: __('Text modules'),
       placeholder: __('Start typing to search for text modules…'),

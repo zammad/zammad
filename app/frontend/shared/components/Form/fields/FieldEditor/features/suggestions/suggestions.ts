@@ -282,6 +282,11 @@ export default function buildMentionExtension<T>(
         onKeyDown(props) {
           if (props.event.key === 'Escape') {
             removeAndCleanupPopover()
+
+            // The press only closes the list. The page must not act on it as well, e.g. take the
+            //   focus off the editor, so that the next characters typed run shortcuts.
+            props.event.stopPropagation()
+
             return true
           }
 

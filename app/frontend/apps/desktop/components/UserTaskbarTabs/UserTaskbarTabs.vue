@@ -6,7 +6,9 @@ import { computedAsync } from '@vueuse/core'
 import { cloneDeep } from 'lodash-es'
 import { storeToRefs } from 'pinia'
 import { watch, useTemplateRef, nextTick, onMounted, shallowRef } from 'vue'
+import { useRouter } from 'vue-router'
 
+import { useKeyboardShortcut } from '#shared/composables/useKeyboardShortcut/useKeyboardShortcut.ts'
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import { EnumTaskbarEntityAccess } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
@@ -27,6 +29,7 @@ import UserTaskbarTabForbidden from './UserTaskbarTabForbidden.vue'
 import UserTaskbarTabNotFound from './UserTaskbarTabNotFound.vue'
 import UserTaskbarTabRemove from './UserTaskbarTabRemove.vue'
 import UserTaskbarTabsSkeleton from './UserTaskbarTabsSkeleton.vue'
+import { useTaskbarTabRemove } from './useTaskbarTabRemove.ts'
 
 export interface Props {
   collapsed?: boolean
@@ -212,6 +215,55 @@ const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
     taskbarTabListByTabEntityKey.value[tabEntityKey].dirty
   )
 }
+
+const router = useRouter()
+
+const { removeTaskbarTab } = useTaskbarTabRemove()
+
+useKeyboardShortcut(
+  'close-current-tab',
+  () => {
+    const tabEntityKey = activeTaskbarTabEntityKey.value
+    if (!tabEntityKey) return
+
+    const taskbarTab = taskbarTabListByTabEntityKey.value[tabEntityKey]
+    if (!taskbarTab) return
+
+    removeTaskbarTab(
+      taskbarTab,
+      getTaskbarTabDirtyFlag(tabEntityKey),
+      getTaskbarTabTypePlugin(taskbarTab.type),
+    )
+  },
+  { onlyOutsideInputs: true },
+)
+
+// Wraps around at either end; without an active tab, next starts at the first and previous at
+//   the last one, as in the old desktop view.
+const activateSiblingTab = (step: 1 | -1) => {
+  const order = dndTaskbarTabListOrder.value
+  if (!order.length) return
+
+  const activeIndex = activeTaskbarTabEntityKey.value
+    ? order.indexOf(activeTaskbarTabEntityKey.value)
+    : -1
+
+  const index =
+    activeIndex === -1
+      ? step === 1
+        ? 0
+        : order.length - 1
+      : (activeIndex + step + order.length) % order.length
+
+  const link = getTaskbarTabLink(order[index])
+  if (link && link !== '#') router.push(link)
+}
+
+// Shift with an arrow extends a text selection, which has to keep working.
+const siblingTabShortcutOptions = { onlyOutsideInputs: true, onlyWithoutSelection: true }
+
+useKeyboardShortcut('show-next-tab', () => activateSiblingTab(1), siblingTabShortcutOptions)
+useKeyboardShortcut('show-previous-tab', () => activateSiblingTab(-1), siblingTabShortcutOptions)
 
 const { isTouchDevice } = useTouchDevice()
 </script>

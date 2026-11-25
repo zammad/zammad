@@ -19,8 +19,10 @@ import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { SidebarName } from '#desktop/components/layout/types.ts'
+import { useObjectReferenceShortcut } from '#desktop/composables/useObjectReferenceShortcut.ts'
 import { useScrollPosition } from '#desktop/composables/useScrollPosition.ts'
 import { useKnowledgeBaseAnswerDelete } from '#desktop/entities/knowledge-base/composables/useKnowledgeBaseAnswerDelete.ts'
+import { knowledgeBaseAnswerRoute } from '#desktop/entities/knowledge-base/utils/routeLocation.ts'
 
 import KnowledgeBaseAnswerAttachments from '../components/KnowledgeBaseAnswer/KnowledgeBaseAnswerAttachments.vue'
 import KnowledgeBaseAnswerContent from '../components/KnowledgeBaseAnswer/KnowledgeBaseAnswerContent.vue'
@@ -67,6 +69,14 @@ useOnlineNotificationSeen(answerTranslation)
 
 const route = useRoute()
 const router = useRouter()
+
+useObjectReferenceShortcut(() => ({
+  title: answer.value?.translation?.title,
+  path:
+    answer.value &&
+    props.localeCode &&
+    router.resolve(knowledgeBaseAnswerRoute(props.localeCode, answer.value.id)).fullPath,
+}))
 
 const { localeData } = storeToRefs(useLocaleStore())
 

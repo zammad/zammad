@@ -10,6 +10,7 @@ import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
 import { avatarMenuItems } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/index.ts'
+import { useSidebarPopoverShortcut } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/useSidebarPopoverShortcut.ts'
 import { SidebarName } from '#desktop/components/layout/types.ts'
 import { useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
@@ -20,6 +21,8 @@ const { isSidebarCollapsed } = useSidebarDisplay(SidebarName.Primary)
 const avatarSize = computed(() => (isSidebarCollapsed?.value ? 'small' : 'normal'))
 
 const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
+
+useSidebarPopoverShortcut('user-menu', () => toggle(true))
 </script>
 
 <template>

@@ -49,6 +49,27 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
 
   private
 
+  # Marks the state the close shortcut sets, among the states this ticket may take.
+  def relation_options(relation_field)
+    options = super
+    return options if relation_field[:name] != 'state_id'
+
+    default_close_id = default_close_state_id
+    options.each { |option| option[:defaultClose] = true if option[:value] == default_close_id }
+  end
+
+  # Keeps the marked list apart from the same states listed by other forms.
+  def relation_options_key(relation_field)
+    key = super
+    return key if key.nil? || relation_field[:name] != 'state_id'
+
+    [key, :default_close, default_close_state_id]
+  end
+
+  def default_close_state_id
+    ::Ticket::State.find_by(default_close: true)&.id
+  end
+
   def article_body_empty?
     !data.dig('article', 'body') || data['article']['body'].empty?
   end

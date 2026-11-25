@@ -26,8 +26,10 @@ import {
 } from '#desktop/components/BetaUi/composables/useBetaUiFeedbackConsent.ts'
 import { initializeConfirmationDialog } from '#desktop/components/CommonConfirmationDialog/initializeConfirmationDialog.ts'
 import CommonImageViewer from '#desktop/components/CommonImageViewer/CommonImageViewer.vue'
+import { initializeKeyboardShortcutsDialog } from '#desktop/components/KeyboardShortcutsDialog/useKeyboardShortcutsDialog.ts'
 import { useBrowserNotificationPermissionRequest } from '#desktop/composables/useBrowserNotification.ts'
 import { useConnection } from '#desktop/composables/useConnection.ts'
+import { useFormSubmitShortcut } from '#desktop/composables/useFormSubmitShortcut.ts'
 import { useChatSessionStores } from '#desktop/entities/chat/composables/useChatSessionStores.ts'
 import { useCtiCallNotification } from '#desktop/entities/cti/composables/useCtiCallNotification.ts'
 import { useCtiCallPickup } from '#desktop/entities/cti/composables/useCtiCallPickup.ts'
@@ -60,6 +62,7 @@ onBeforeMount(() => {
 useAppMaintenanceCheck()
 useUnknownAddressDetection()
 usePushMessages()
+useFormSubmitShortcut()
 
 // Add a check for authenticated changes (e.g. login/logout in a other
 // browser tab or maintenance mode switch).
@@ -106,6 +109,7 @@ useOnEmitter('session-invalid', async () => {
 })
 
 initializeConfirmationDialog()
+initializeKeyboardShortcutsDialog()
 
 // Initialize the user taskbar tabs store after a valid session is present on
 // the app level, so that the query keeps alive.

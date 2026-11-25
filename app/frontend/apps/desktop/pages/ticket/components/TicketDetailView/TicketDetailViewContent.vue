@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onKeyStroke, useLocalStorage, useScroll, whenever } from '@vueuse/core'
-import { cloneDeep } from 'lodash-es'
+import { useLocalStorage, useScroll, whenever } from '@vueuse/core'
+import { cloneDeep, unionBy } from 'lodash-es'
 import {
   computed,
   toRef,
@@ -53,6 +53,7 @@ import UserError from '#shared/errors/UserError.ts'
 import { EnumFormUpdaterId, EnumTaskbarApp, EnumUserErrorException } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { GraphQLErrorTypes, type GraphQLHandlerError } from '#shared/types/error.ts'
+import { edgesToArray } from '#shared/utils/helpers.ts'
 
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonIndicator from '#desktop/components/CommonIndicator/CommonIndicator.vue'
@@ -73,6 +74,7 @@ import { useAnsweredArticleTranslationNotice } from '../../composables/useAnswer
 import { ARTICLES_INFORMATION_KEY } from '../../composables/useArticleContext.ts'
 import { useProvideTicketSidebar } from '../../composables/useProvideTicketSidebar.ts'
 import { useTicketArticleReply } from '../../composables/useTicketArticleReply.ts'
+import { useTicketDetailViewShortcuts } from '../../composables/useTicketDetailViewShortcuts.ts'
 import {
   initializeTicketInformation,
   provideTicketInformation,
@@ -187,23 +189,6 @@ const handleScrollToUnreadArticle = () => {
   handleScrollToArticle('unread')
   clearUnreadArticles()
 }
-
-// Keyboard shortcuts
-onKeyStroke('ArrowLeft', (event) => {
-  // Prevent reacting when the target is on any other element e.g inputs
-  const target = event.target as HTMLElement
-  if (target !== document.body) return
-
-  handleScrollToArticle('previous')
-})
-
-onKeyStroke('ArrowRight', (event) => {
-  // Prevent reacting when the target is on any other element e.g inputs
-  const target = event.target as HTMLElement
-  if (target !== document.body) return
-
-  handleScrollToArticle('next')
-})
 
 const isReplyActive = computed(() => !isLoadingArticles.value && isInitialSettled.value)
 
@@ -476,7 +461,10 @@ const errorCallback = (errorHandler: GraphQLHandlerError) =>
 const { isTicketFormGroupValid, initialTicketValue, editTicket, buildTicketResetValues } =
   useTicketEdit(ticket, form, errorCallback)
 
-const { openReplyForm } = useTicketArticleReplyAction(form, showTicketArticleReplyForm)
+const { openReplyForm, getNewArticleBody } = useTicketArticleReplyAction(
+  form,
+  showTicketArticleReplyForm,
+)
 
 const isFormValid = computed(() => {
   if (!newTicketArticlePresent.value) return isTicketFormGroupValid.value
@@ -705,6 +693,28 @@ const handleShowArticleForm = (
 ) =>
   // Not opened from an article: `null`, as an absent value would keep the one of an earlier reply.
   openReplyForm({ articleType, answeredArticleId: null, ...performReply?.(ticket.value!) })
+
+useTicketDetailViewShortcuts({
+  ticket,
+  articles: computed(() =>
+    unionBy(
+      edgesToArray(articleResult.value?.firstArticles),
+      edgesToArray(articleResult.value?.articles),
+      'id',
+    ),
+  ),
+  form,
+  isReady: computed(() => !!ticket.value && isReplyActive.value),
+  isTicketEditable,
+  newTicketArticlePresent,
+  ticketArticleTypes,
+  articleTranslation,
+  showArticleForm: handleShowArticleForm,
+  openReplyForm,
+  getNewArticleBody,
+  submit: checkSubmitEditTicket,
+  scrollToArticle: handleScrollToArticle,
+})
 </script>
 
 <template>

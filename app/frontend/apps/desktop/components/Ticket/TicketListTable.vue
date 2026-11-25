@@ -254,7 +254,7 @@ const skeletonColumns = computed(() => columnWidths.value.length)
             internal
             no-hover-styling
             @click.stop
-            @keydown.stop
+            @keydown.enter.stop
           >
             <span class="block truncate">
               <EntityAttributeContent

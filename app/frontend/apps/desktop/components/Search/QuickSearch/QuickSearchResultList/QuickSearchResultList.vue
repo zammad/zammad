@@ -11,6 +11,7 @@ import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import { useQuickSearchLazyQuery } from '#desktop/components/Search/graphql/queries/quickSearch.api.ts'
 import QuickSearchResultListSkeleton from '#desktop/components/Search/QuickSearch/QuickSearchResultList/skeleton/QuickSearchResultListSkeleton.vue'
+import { searchFieldFocusState } from '#desktop/components/Search/searchFieldFocus.ts'
 import type { QuickSearchResultData } from '#desktop/components/Search/types.ts'
 
 import { useSearchPlugins } from '../../plugins/index.ts'
@@ -115,7 +116,12 @@ const { resetQuickSearchInputField } = useQuickSearchInput()
   <QuickSearchResultListSkeleton :loading="isLoadingSearchResults">
     <CommonLink
       class="group/link mb-4 block"
-      :link="{ name: 'Search', params: { searchTerm: search || null } }"
+      :link="{
+        name: 'Search',
+        params: { searchTerm: search || null },
+        state: searchFieldFocusState,
+        force: true,
+      }"
       @click="resetQuickSearchInputField"
       @keydown.enter="$event.target.click()"
     >

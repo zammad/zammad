@@ -131,6 +131,7 @@ defineExpose({
         [internalClass]: isInternalLink,
       },
     ]"
+    :aria-current="isInternalLink && isExactActive ? 'page' : undefined"
     tabindex="0"
     @click="onClick"
   >

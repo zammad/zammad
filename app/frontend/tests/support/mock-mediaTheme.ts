@@ -3,17 +3,13 @@
 import type { EnumAppearanceTheme } from '#shared/graphql/types.ts'
 
 const addEventListener = vi.fn()
+const removeEventListener = vi.fn()
 
 export const mockMediaTheme = (theme: EnumAppearanceTheme) => {
   window.matchMedia = (rule) =>
     ({
-      matches: rule === '(prefers-color-scheme: dark)' && theme === 'dark',
+      matches: rule === `(prefers-color-scheme: ${theme})`,
       addEventListener,
-    }) as any
-
-  window.matchMedia = (rule) =>
-    ({
-      matches: rule === '(prefers-color-scheme: light)' && theme === 'light',
-      addEventListener,
+      removeEventListener,
     }) as any
 }

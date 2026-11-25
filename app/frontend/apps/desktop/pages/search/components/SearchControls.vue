@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { computed, nextTick, onBeforeMount, shallowRef, useTemplateRef } from 'vue'
-import { onBeforeRouteUpdate } from 'vue-router'
+import { computed, nextTick, onBeforeMount, onBeforeUnmount, shallowRef, useTemplateRef } from 'vue'
+import { useRouter } from 'vue-router'
 
 import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
@@ -18,6 +18,7 @@ import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/Common
 import type { Tab } from '#desktop/components/CommonTabs/types.ts'
 import type { FilterSelectorEntry } from '#desktop/components/Form/fields/FieldFilterSelector/types.ts'
 import { searchPlugins } from '#desktop/components/Search/plugins/index.ts'
+import { consumeSearchFieldFocusRequest } from '#desktop/components/Search/searchFieldFocus.ts'
 import type { FilterSelectorEntityOverride } from '#desktop/components/Search/types.ts'
 import { useKeepAliveHooks } from '#desktop/composables/useKeepAliveHooks.ts'
 
@@ -154,15 +155,27 @@ const onFilterPanelTransitionEnd = (event: TransitionEvent) => {
 const advancedFiltersSectionId = 'advanced-filters'
 const advancedFiltersButtonId = 'advanced-filters-button'
 
-defineExpose({ clearAndFocusSearch })
+defineExpose({ clearAndFocusSearch, focusSearch })
+
+// Kept alive with other pages, only the shown view reacts to a search started elsewhere.
+let isShown = false
+
+const focusSearchIfRequested = () => {
+  if (consumeSearchFieldFocusRequest()) focusSearch()
+}
 
 useKeepAliveHooks({
   onInitialActivated() {
-    focusSearch()
+    isShown = true
+    focusSearchIfRequested()
   },
   onReactivated() {
+    isShown = true
     if (props.filterCount) openFilterPanel()
-    focusSearch()
+    focusSearchIfRequested()
+  },
+  onDeactivated() {
+    isShown = false
   },
 })
 
@@ -175,9 +188,14 @@ onBeforeMount(() => {
   isFilterPanelFullyExpanded.value = true
 })
 
-onBeforeRouteUpdate((to, from) => {
-  if (to.params.searchTerm !== from.params.searchTerm) focusSearch()
+// Another search from the quick search while this view is shown, also one that changes only the
+//   query or repeats the search shown. Checked after the navigation, whose router state is not
+//   known yet before it.
+const removeNavigationHook = useRouter().afterEach((to, from, failure) => {
+  if (isShown && !failure) focusSearchIfRequested()
 })
+
+onBeforeUnmount(removeNavigationHook)
 </script>
 
 <template>

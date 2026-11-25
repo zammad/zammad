@@ -3,22 +3,16 @@
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue'
 
-import {
-  NotificationTypes,
-  useNotifications,
-} from '#shared/components/CommonNotifications/index.ts'
 import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables/useTicketArticleReplyAction.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
 import { createArticleActions } from '#shared/entities/ticket-article/action/plugins/index.ts'
-import { getArticleSelection } from '#shared/entities/ticket-article/composables/getArticleSelection.ts'
-import { usePendingArticleAction } from '#shared/entities/ticket-article/composables/usePendingArticleAction/usePendingArticleAction.ts'
 import { useArticleTranslationStore } from '#shared/entities/ticket-article/stores/articleTranslation.ts'
-import log from '#shared/utils/log.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import { useArticleActionPerform } from '#desktop/pages/ticket/composables/useArticleActionPerform.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 const props = defineProps<{
@@ -109,9 +103,13 @@ const { getNewArticleBody, openReplyForm } = useTicketArticleReplyAction(
   showTicketArticleReplyForm,
 )
 
-const { isPending, isActionPending, performAction } = usePendingArticleAction()
-
-const { notify } = useNotifications()
+const { isPending, isActionPending, performArticleAction } = useArticleActionPerform({
+  ticket,
+  form,
+  articleTranslation,
+  openReplyForm,
+  getNewArticleBody,
+})
 
 const disposeCallbacks: (() => unknown)[] = []
 
@@ -127,16 +125,6 @@ const handleDisposeCallbacks = () => {
 onUnmounted(handleDisposeCallbacks)
 
 const recalculateTriggerId = ref(0)
-
-const articleSelection = (articleInternalId: number) => {
-  try {
-    // Can throw RangeError.
-    return getArticleSelection(articleInternalId)
-  } catch (err) {
-    log.error('[Article Quote] Failed to parse article selection', err)
-    return undefined
-  }
-}
 
 const actions = computed(() => {
   // Recalculation trigger ID cannot be less than 0, so it's just a hint for Vue to recalculate this computed property.
@@ -168,32 +156,7 @@ const actions = computed(() => {
       separatorTop: action.separatorTop,
       ...(action.perform
         ? {
-            onClick: () => {
-              if (!ticket.value) return
-
-              const selection = articleSelection(props.article.internalId)
-
-              // A translation takes the place of the original in the article body, so a quote of
-              //   it would read as if the customer had written it.
-              const isQuoteRefused =
-                !!(selection?.html || selection?.text) &&
-                articleTranslation.isTranslationDisplayed(props.article.id)
-
-              if (isQuoteRefused && action.quotesSelection)
-                notify({
-                  id: 'article-translation-quote-refused',
-                  type: NotificationTypes.Warn,
-                  message: __('Translated text cannot be quoted. Show the original to quote it.'),
-                })
-
-              performAction(action, ticket.value, props.article, {
-                formId: form.value?.formId ?? '',
-                selection: isQuoteRefused ? undefined : selection,
-                openReplyForm: (values) =>
-                  openReplyForm({ ...values, answeredArticleId: props.article.id }),
-                getNewArticleBody,
-              })
-            },
+            onClick: () => performArticleAction(action, props.article),
           }
         : {}),
     }

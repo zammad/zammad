@@ -19,6 +19,7 @@ import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import NotificationButton from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue'
 import NotificationPopover from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover.vue'
+import { useSidebarPopoverShortcut } from '#desktop/components/layout/LayoutSidebar/LeftSidebar/useSidebarPopoverShortcut.ts'
 import {
   useBrowserNotification,
   useBrowserNotificationTab,
@@ -29,6 +30,8 @@ const webNotificationList = new Map<ID, Notification>()
 const { unseenCount, notificationsCountSubscription } = useOnlineNotificationCount()
 
 const { popover, popoverTarget, toggle, open, close } = usePopover()
+
+useSidebarPopoverShortcut('notifications', () => toggle(true))
 
 const { play, isEnabled } = useOnlineNotificationSound()
 

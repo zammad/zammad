@@ -13,6 +13,7 @@ import { useOnEmitter } from '#shared/composables/useOnEmitter.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
+import { searchFieldFocusState } from '#desktop/components/Search/searchFieldFocus.ts'
 
 const searchValue = defineModel<string>()
 
@@ -32,7 +33,13 @@ const resetInput = () => {
 }
 
 const goToSearchView = () => {
-  router.push({ name: 'Search', params: { searchTerm: searchValue.value || null } })
+  // Forced, so that searching again for the term the search view shows still asks for the focus.
+  router.push({
+    name: 'Search',
+    params: { searchTerm: searchValue.value || null },
+    state: searchFieldFocusState,
+    force: true,
+  })
   resetInput()
 }
 

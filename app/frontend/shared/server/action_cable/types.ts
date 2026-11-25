@@ -18,6 +18,8 @@ declare module '@rails/actioncable' {
 
   export interface Consumer {
     connection: Connection
+    connect: () => boolean
+    disconnect: () => void
   }
 
   export const Connection: {

@@ -30,6 +30,8 @@ import { useDragAndDropBulk } from '#desktop/components/Ticket/DragAndDropBulk/u
 import TicketBulkEditButton from '#desktop/components/Ticket/TicketBulkEditButton.vue'
 import { useTicketBulkEdit } from '#desktop/components/Ticket/TicketBulkEditFlyout/useTicketBulkEdit.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
+import { useListKeyboardNavigation } from '#desktop/composables/useListKeyboardNavigation.ts'
+import { useObjectReferenceShortcut } from '#desktop/composables/useObjectReferenceShortcut.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
 import { useTaskbarTabContext } from '#desktop/entities/user/current/composables/useTaskbarTabContext.ts'
@@ -90,6 +92,30 @@ const offset = ref(0)
 
 const scrollContainerElement = useTemplateRef('scroll-container')
 const searchControlsInstance = useTemplateRef('search-controls')
+
+const { focusList } = useListKeyboardNavigation({
+  list: scrollContainerElement,
+  onLeave: (key) => {
+    if (key !== 'ArrowUp') return false
+
+    searchControlsInstance.value?.focusSearch()
+
+    return true
+  },
+})
+
+// The results are below the search field and the entity tabs, `▼` goes down to them.
+const onSearchControlsKeydown = (event: KeyboardEvent) => {
+  if (event.key !== 'ArrowDown' || event.defaultPrevented) return
+  if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return
+  if (
+    !(event.target instanceof Element) ||
+    !event.target.matches('[role="searchbox"], [role="tab"]')
+  )
+    return
+
+  if (focusList()) event.preventDefault()
+}
 
 // Single place that writes to the URL — fires on entity switch or filter
 // value change. vue-router itself no-ops a replace to the same URL
@@ -199,6 +225,12 @@ const modelSearchTerm = computed({
 })
 
 const currentSearchTerm = computed(() => props.searchTerm ?? '')
+
+// The full route keeps the selected entity and the filters in the copied link.
+useObjectReferenceShortcut(() => ({
+  title: currentSearchTerm.value,
+  path: route.fullPath,
+}))
 
 const notVisibleSearchEntities = computed(() =>
   searchPluginNames.value.filter(
@@ -684,6 +716,7 @@ setOnSuccessCallback(() => {
         class="px-4"
         @entity-filters-changed="(entity, value) => setEntityFilters(entity, value)"
         @clear-filters="clearCurrentFilters"
+        @keydown="onSearchControlsKeydown"
       />
       <div
         :id="`tab-panel-${selectedEntity}`"

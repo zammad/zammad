@@ -25,6 +25,7 @@ import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import CommonTabGroup from '#desktop/components/CommonTabs/CommonTabGroup/CommonTabGroup.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import UserTicketBarChart from '#desktop/components/Ticket/TicketBarChart/UserTicketBarChart.vue'
+import { useObjectReferenceShortcut } from '#desktop/composables/useObjectReferenceShortcut.ts'
 import { usePage } from '#desktop/composables/usePage.ts'
 import { useScrollPosition } from '#desktop/composables/useScrollPosition.ts'
 import { useTicketByCustomerUpdatesSubscription } from '#desktop/entities/ticket/graphql/subscriptions/ticketByCustomerUpdates.api.ts'
@@ -66,6 +67,11 @@ const { userDisplayName } = useUserEntity(user)
 usePage({
   metaTitle: userDisplayName,
 })
+
+useObjectReferenceShortcut(() => ({
+  title: userDisplayName.value,
+  path: user.value && `/users/${user.value.internalId}`,
+}))
 
 const contentContainerElement = useTemplateRef('content-container')
 

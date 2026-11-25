@@ -85,6 +85,35 @@ export const useThemeStore = defineStore(
       }
     }
 
+    // The setting the next flip restores, as long as the appearance is not changed another way.
+    let themeBeforeFlip: EnumAppearanceTheme | undefined
+    let isFlipping = false
+
+    /**
+     * Switches to the explicit opposite of what is shown, and back to the setting before on the
+     *   next call: following the system, or the explicit choice the user had made.
+     */
+    const flipTheme = async () => {
+      if (savingTheme.value) return
+
+      const previousTheme = currentTheme.value
+      const targetTheme =
+        themeBeforeFlip ?? (isDarkMode.value ? EnumAppearanceTheme.Light : EnumAppearanceTheme.Dark)
+
+      isFlipping = true
+
+      try {
+        await updateTheme(targetTheme)
+      } finally {
+        isFlipping = false
+      }
+
+      // A failed save is rolled back by the store, the flip then did not happen.
+      if (currentTheme.value !== targetTheme) return
+
+      themeBeforeFlip = themeBeforeFlip ? undefined : previousTheme
+    }
+
     // sync theme in case HTML value was not up-to-date when we loaded user preferences
     const syncTheme = () => {
       if (currentTheme.value !== EnumAppearanceTheme.Auto) return saveDOMTheme(currentTheme.value)
@@ -102,6 +131,7 @@ export const useThemeStore = defineStore(
     watch(
       () => currentTheme.value,
       (newTheme) => {
+        if (!isFlipping) themeBeforeFlip = undefined
         if (newTheme) saveTheme(newTheme as AppThemeName)
       },
     )
@@ -111,6 +141,7 @@ export const useThemeStore = defineStore(
       currentTheme,
       isDarkMode,
       updateTheme,
+      flipTheme,
       syncTheme,
     }
   },

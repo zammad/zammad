@@ -16,3 +16,10 @@ export interface OrderKeyHandlerConfig {
   key: string
   beforeHandlerRuns?: () => boolean | Promise<boolean> | void
 }
+
+export interface ShortcutHandlerConfig {
+  handler: (event: KeyboardEvent) => void
+  key: string
+  // An inactive subscriber lets the press through to the one subscribed before it.
+  isActive?: () => boolean
+}

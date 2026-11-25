@@ -24,6 +24,7 @@ import {
   waitForQuickSearchQueryCalls,
 } from '../../../graphql/queries/quickSearch.mocks.ts'
 import { searchPlugins } from '../../../plugins/index.ts'
+import { consumeSearchFieldFocusRequest } from '../../../searchFieldFocus.ts'
 import QuickSearchResultList from '../QuickSearchResultList.vue'
 
 import type { SearchPlugin } from '../../../types.ts'
@@ -403,6 +404,7 @@ describe('QuickSearchResultList', () => {
     await waitFor(() => expect(router.currentRoute.value.name).toBe('Search'))
 
     expect(router.currentRoute.value.params).toEqual({ searchTerm: 'User' })
+    expect(consumeSearchFieldFocusRequest()).toBe(true)
   })
 
   it('hides customer entity from user if application not set', () => {

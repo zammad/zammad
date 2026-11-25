@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { describe, expect } from 'vitest'
-import { nextTick } from 'vue'
+import { nextTick, useTemplateRef } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
+import Form from '#shared/components/Form/Form.vue'
+
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
+import { useFormSubmitShortcut } from '#desktop/composables/useFormSubmitShortcut.ts'
 
 const html = String.raw
 
@@ -164,5 +167,44 @@ describe('CommonFlyout', () => {
         expect(flyout.emitted('action')).toHaveLength(1)
       })
     })
+  })
+})
+
+describe('submitting a form in a common flyout', () => {
+  it('submits the form with ctrl+enter from one of its fields', async () => {
+    const onSubmit = vi.fn()
+
+    const wrapper = renderComponent(
+      {
+        components: { CommonFlyout, Form },
+        template: html`
+          <CommonFlyout
+            name="form-flyout"
+            header-title="Form"
+            :form="form"
+            :footer-action-options="{ actionButton: { type: 'submit' } }"
+          >
+            <Form id="flyout-form" ref="form" :schema="schema" @submit="onSubmit" />
+          </CommonFlyout>
+        `,
+        setup: () => {
+          useFormSubmitShortcut()
+
+          return {
+            form: useTemplateRef('form'),
+            schema: [{ type: 'text', name: 'title', label: 'Title' }],
+            onSubmit,
+          }
+        },
+      },
+      { flyout: true, router: true, form: true },
+    )
+
+    await vi.waitFor(() => expect(wrapper.getByLabelText('Title')).toBeVisible())
+
+    wrapper.getByLabelText('Title').focus()
+    await wrapper.events.keyboard('{Control>}{Enter}{/Control}')
+
+    await vi.waitFor(() => expect(onSubmit).toHaveBeenCalledOnce())
   })
 })

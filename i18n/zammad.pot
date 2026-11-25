@@ -249,7 +249,7 @@ msgid "%s ended switch to |%s|!"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Search/composables/useSearchTitle.ts:10
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:204
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:224
 msgid "%s filter(s)"
 msgstr ""
 
@@ -305,7 +305,7 @@ msgstr ""
 msgid "%s months ago"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:167
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:172
 msgid "%s more"
 msgstr ""
 
@@ -474,7 +474,7 @@ msgstr ""
 msgid "%s user to %s user"
 msgstr ""
 
-#: lib/whatsapp/webhook/message.rb:53
+#: lib/whatsapp/webhook/message.rb:64
 msgid "%s via WhatsApp"
 msgstr ""
 
@@ -1631,7 +1631,7 @@ msgstr ""
 msgid "Advance to next ticket from overview"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:243
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:263
 msgid "Advanced filters"
 msgstr ""
 
@@ -1785,7 +1785,7 @@ msgid "All groups will be considered for dispatching tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:165
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:103
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:106
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:60
 msgid "All notifications will be deleted. This action cannot be undone."
 msgstr ""
@@ -2093,6 +2093,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:209
 #: db/seeds/permissions.rb:461
 msgid "Appearance"
 msgstr ""
@@ -3483,7 +3484,7 @@ msgstr ""
 msgid "Change customer"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:312
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
 #: app/frontend/shared/form/i18n/locales.ts:93
 msgid "Change date"
 msgstr ""
@@ -3757,7 +3758,7 @@ msgstr ""
 msgid "Child"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:315
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:318
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:134
 #: app/frontend/shared/form/i18n/locales.ts:89
 msgid "Choose date"
@@ -3875,21 +3876,21 @@ msgid "Clear Selection"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:6
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:121
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:122
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:62
 msgid "Clear all"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:121
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:122
 msgid "Clear all advanced filter(s)?"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:207
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:227
 msgid "Clear all filters"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:164
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:106
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:109
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:62
 msgid "Clear all notifications"
 msgstr ""
@@ -3923,7 +3924,7 @@ msgstr ""
 msgid "Clear selection"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:383
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateInput.vue:386
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateInput.vue:120
 msgid "Clear the value"
 msgstr ""
@@ -4016,6 +4017,7 @@ msgid "Close chat sessions where participants are offline."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:243
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:139
 msgid "Close current tab"
 msgstr ""
 
@@ -4058,7 +4060,7 @@ msgstr ""
 msgid "Close tab on ticket close"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:76
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:38
 msgid "Close this tab"
 msgstr ""
 
@@ -4280,6 +4282,7 @@ msgid "Confirm your #{config.product_name} account, #{user.firstname} #{user.las
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:305
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:156
 msgid "Confirm/submit dialog"
 msgstr ""
 
@@ -4545,6 +4548,7 @@ msgid "Copy codes"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:359
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:190
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
 
@@ -5047,7 +5051,7 @@ msgid "Currently processing this ticket…"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:162
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:160
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:200
 msgid "Currently, no overviews are assigned to your roles. Please contact your administrator."
 msgstr ""
 
@@ -5203,6 +5207,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/dashboard.coffee:52
 #: app/assets/javascripts/app/controllers/package.coffee:61
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:31
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:110
 #: db/seeds/permissions.rb:203
 #: db/seeds/settings.rb:5875
 msgid "Dashboard"
@@ -6287,7 +6292,7 @@ msgid "Delete User"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/online_notification.coffee:166
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:107
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:110
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:63
 msgid "Delete all"
 msgstr ""
@@ -7464,6 +7469,10 @@ msgstr ""
 msgid "Enable it in the chat channel settings."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/KeyboardShortcutsDialog/KeyboardShortcutsDialog.vue:58
+msgid "Enable keyboard shortcuts"
+msgstr ""
+
 #: db/seeds/settings.rb:6906
 msgid "Enable or disable AI generation of knowledge base answers from ticket content."
 msgstr ""
@@ -8604,10 +8613,27 @@ msgid "Format"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:607
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:308
 msgid "Format as //strikethrough//"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:656
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:348
+msgid "Format as H1 heading"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:662
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:353
+msgid "Format as H2 heading"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:668
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:358
+msgid "Format as H3 heading"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:589
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:293
 msgid "Format as _underlined_"
 msgstr ""
 
@@ -8617,18 +8643,6 @@ msgstr ""
 msgid "Format as bold"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:656
-msgid "Format as h1 heading"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:662
-msgid "Format as h2 heading"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:668
-msgid "Format as h3 heading"
-msgstr ""
-
 #: app/assets/javascripts/app/lib/mixins/richtext_bubble_menu.coffee:100
 #: app/frontend/apps/desktop/components/Form/fields/FieldEditor/useEditorActions.ts:168
 #: app/frontend/apps/mobile/components/Form/fields/FieldEditor/useEditorActions.ts:159
@@ -8636,6 +8650,7 @@ msgid "Format as italic"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:650
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:343
 msgid "Format as ordered list"
 msgstr ""
 
@@ -8657,14 +8672,17 @@ msgid "Format as underlined"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:644
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:338
 msgid "Format as unordered list"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:595
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:298
 msgid "Format as |bold|"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:601
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:303
 msgid "Format as ||italic||"
 msgstr ""
 
@@ -8755,6 +8773,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:50
 msgid "GID"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostGame.vue:91
+msgid "Game over! Press the up or down arrow key to try again."
 msgstr ""
 
 #: app/models/channel/driver/sms/massenversand.rb:43
@@ -9396,6 +9418,10 @@ msgstr ""
 msgid "High priority"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostGame.vue:101
+msgid "High score: %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:276
 msgid "High urgency"
 msgstr ""
@@ -9963,7 +9989,7 @@ msgstr ""
 msgid "Incomplete credentials"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:512
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:500
 msgid "Incomplete ticket checklist"
 msgstr ""
 
@@ -10083,18 +10109,22 @@ msgid "Inserting image not possible due to source restrictions"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:638
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:333
 msgid "Inserts a horizontal rule"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:571
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:276
 msgid "Inserts a mention for a user"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:565
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:271
 msgid "Inserts knowledge base answer"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:559
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:266
 msgid "Inserts text module"
 msgstr ""
 
@@ -10540,7 +10570,8 @@ msgstr ""
 msgid "Keyboard Shortcuts Enabled"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
+#: app/frontend/apps/desktop/components/KeyboardShortcutsDialog/KeyboardShortcutsDialog.vue:48
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:9
 msgid "Keyboard shortcuts"
 msgstr ""
 
@@ -11109,7 +11140,7 @@ msgstr ""
 msgid "LinkedIn Developer Site"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:246
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:298
 msgid "List of all user taskbar tabs"
 msgstr ""
 
@@ -11126,6 +11157,7 @@ msgid "List of self-hosted video servers. This list is used for content security
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:215
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:129
 msgid "List of shortcuts"
 msgstr ""
 
@@ -11257,6 +11289,7 @@ msgid "Logo"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:232
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:134
 msgid "Logout"
 msgstr ""
 
@@ -11264,7 +11297,7 @@ msgstr ""
 msgid "Lost Password"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:10
+#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:29
 msgid "Lost network connection"
 msgstr ""
 
@@ -11324,7 +11357,7 @@ msgstr ""
 msgid "Mailbox type"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:114
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:117
 msgid "Main sidebar"
 msgstr ""
 
@@ -12175,6 +12208,7 @@ msgid "Move down"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:344
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:173
 msgid "Move left and right"
 msgstr ""
 
@@ -12183,6 +12217,7 @@ msgid "Move up"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:340
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:167
 msgid "Move up and down"
 msgstr ""
 
@@ -12354,6 +12389,7 @@ msgid "Name of form submit button"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:549
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:254
 msgid "Navigate through article"
 msgstr ""
 
@@ -12364,6 +12400,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:139
 #: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:71
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:102
 msgid "Navigation"
 msgstr ""
 
@@ -12406,6 +12443,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:15
 msgid "Network"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:29
+msgid "Network connection restored"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/BetaUi/FeedbackDialog/FeedbackDialog.vue:66
@@ -12547,6 +12588,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:71
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:123
 msgid "New Ticket"
 msgstr ""
 
@@ -12814,7 +12856,7 @@ msgstr ""
 msgid "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:278
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:298
 msgid "No advanced filters available for %s."
 msgstr ""
 
@@ -12989,7 +13031,7 @@ msgid "No organizations found"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:159
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:157
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:197
 msgid "No overviews"
 msgstr ""
 
@@ -13022,7 +13064,7 @@ msgstr ""
 msgid "No related knowledge base answer links."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:173
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:178
 msgid "No results for this query."
 msgstr ""
 
@@ -13169,7 +13211,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:515
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:503
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -13396,6 +13438,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/mobile/pages/account/components/AccountPushNotifications.vue:48
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:118
 #: db/seeds/permissions.rb:527
 msgid "Notifications"
 msgstr ""
@@ -13759,6 +13802,7 @@ msgid "Open macro selection"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:466
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:234
 msgid "Open note box"
 msgstr ""
 
@@ -14110,7 +14154,7 @@ msgstr ""
 msgid "Overview bulk mask"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketOverviewsSidebar/TicketOverviewsList.vue:24
+#: app/frontend/apps/desktop/pages/ticket-overviews/components/TicketOverviewsSidebar/TicketOverviewsList.vue:33
 msgid "Overview navigation list"
 msgstr ""
 
@@ -14129,7 +14173,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:262
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/ticket-overviews/routes.ts:17
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:94
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:98
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:114
 #: db/seeds/permissions.rb:35
 msgid "Overviews"
 msgstr ""
@@ -14364,10 +14409,12 @@ msgid "Paste Private Key"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:613
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:313
 msgid "Paste from clipboard"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:620
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:318
 msgid "Paste from clipboard (plain text)"
 msgstr ""
 
@@ -14789,6 +14836,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:34
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:295
 msgid "Press the button below to finish the setup."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostGame.vue:90
+msgid "Press the up or down arrow key to start."
 msgstr ""
 
 #: db/seeds/settings.rb:243
@@ -15609,10 +15660,12 @@ msgid "Removed reaction from message %s from %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:674
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:363
 msgid "Removes any hyperlink"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:626
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:323
 msgid "Removes the formatting"
 msgstr ""
 
@@ -15695,6 +15748,7 @@ msgid "Reply allowed only for open tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:481
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:239
 msgid "Reply to last article"
 msgstr ""
 
@@ -15815,7 +15869,7 @@ msgstr ""
 msgid "Reset overview order"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchInput/QuickSearchInput.vue:73
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchInput/QuickSearchInput.vue:78
 msgid "Reset search"
 msgstr ""
 
@@ -15904,7 +15958,7 @@ msgstr ""
 msgid "Result:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:646
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:671
 msgid "Results"
 msgstr ""
 
@@ -16347,6 +16401,10 @@ msgstr ""
 msgid "Scopes that are included, separated by a single space character. If unset, \"openid email profile\" is used."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostGame.vue:104
+msgid "Score: %s"
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:6
 msgid "Screen"
 msgstr ""
@@ -16405,9 +16463,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:4
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:644
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:669
 #: app/frontend/apps/mobile/pages/search/routes.ts:8
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:216
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:115
 msgid "Search"
 msgstr ""
 
@@ -16433,7 +16492,7 @@ msgstr ""
 msgid "Search all"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:225
+#: app/frontend/apps/desktop/pages/search/components/SearchControls.vue:245
 msgid "Search entity"
 msgstr ""
 
@@ -16543,7 +16602,7 @@ msgstr ""
 msgid "Search or enter phone number…"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:698
+#: app/frontend/apps/desktop/pages/search/components/SearchContent.vue:724
 msgid "Search result for: %s"
 msgstr ""
 
@@ -16830,6 +16889,7 @@ msgid "Select default ticket type"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:348
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:179
 msgid "Select item"
 msgstr ""
 
@@ -16837,7 +16897,7 @@ msgstr ""
 msgid "Select locale…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/TableRow.vue:72
+#: app/frontend/apps/desktop/components/CommonTable/TableRow.vue:73
 msgid "Select table row"
 msgstr ""
 
@@ -17134,6 +17194,7 @@ msgid "Set agent limit"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:496
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:244
 msgid "Set article to internal/public"
 msgstr ""
 
@@ -17443,6 +17504,7 @@ msgid "Show more tabs"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:255
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:144
 msgid "Show next tab"
 msgstr ""
 
@@ -17450,7 +17512,7 @@ msgstr ""
 msgid "Show notifications"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
 msgid "Show original"
 msgstr ""
 
@@ -17459,6 +17521,7 @@ msgid "Show password login for users on login page. Disabling only takes effect 
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:281
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:149
 msgid "Show previous tab"
 msgstr ""
 
@@ -18410,7 +18473,7 @@ msgstr ""
 msgid "Table options"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:265
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:317
 msgid "Tabs"
 msgstr ""
 
@@ -18577,6 +18640,7 @@ msgid "Text Modules"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:580
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:285
 msgid "Text editing"
 msgstr ""
 
@@ -21279,7 +21343,7 @@ msgid "Ticket update failed."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/composables/useTicketEditTitle.ts:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:595
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:583
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:221
 msgid "Ticket updated successfully."
 msgstr ""
@@ -21344,6 +21408,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:50
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:158
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:226
 msgid "Tickets"
 msgstr ""
 
@@ -21606,6 +21671,7 @@ msgid "Toggle article meta information"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:446
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:217
 msgid "Toggle dark mode"
 msgstr ""
 
@@ -21734,7 +21800,7 @@ msgstr ""
 msgid "Translate all articles"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:64
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:58
 msgid "Translate article"
 msgstr ""
 
@@ -21750,7 +21816,7 @@ msgstr ""
 msgid "Translated by AI, some formatting may be lost."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:186
+#: app/frontend/apps/desktop/pages/ticket/composables/useArticleActionPerform.ts:62
 msgid "Translated text cannot be quoted. Show the original to quote it."
 msgstr ""
 
@@ -21876,7 +21942,7 @@ msgid "Try using your security key again."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee:373
-#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:20
+#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:50
 msgid "Trying to reconnect…"
 msgstr ""
 
@@ -22200,7 +22266,7 @@ msgstr ""
 msgid "Unsaved changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:210
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:213
 msgid "Unseen notifications count"
 msgstr ""
 
@@ -22311,6 +22377,7 @@ msgid "Update Time"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:516
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:249
 msgid "Update as closed"
 msgstr ""
 
@@ -22589,6 +22656,7 @@ msgid "Use this switch to start synchronization of your LDAP sources."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:143
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:106
 msgid "Used anywhere"
 msgstr ""
 
@@ -22605,10 +22673,12 @@ msgid "Used in"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:336
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:163
 msgid "Used in lists (views and results)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:353
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:186
 msgid "Used in object views"
 msgstr ""
 
@@ -22621,11 +22691,20 @@ msgid "Used when composing a Ticket article"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:584
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:289
 msgid "Used when composing a text"
+msgstr ""
+
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:262
+msgid "Used when composing a ticket article"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:460
 msgid "Used when viewing a Ticket"
+msgstr ""
+
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:230
+msgid "Used when viewing a ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:417
@@ -22786,7 +22865,8 @@ msgid "User mailbox"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:204
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:45
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:48
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:126
 msgid "User menu"
 msgstr ""
 
@@ -22794,7 +22874,7 @@ msgstr ""
 msgid "User successfully unlocked!"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:280
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:332
 msgid "User taskbar tabs"
 msgstr ""
 
@@ -23481,7 +23561,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:514
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:502
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -23526,6 +23606,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNewBetaUi.vue:38
 msgid "You can always re-join later."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/ConnectionLostDialog/ConnectionLostDialog.vue:43
+msgid "You can close this dialog and get back to work."
 msgstr ""
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco:7
@@ -23700,7 +23784,7 @@ msgstr ""
 msgid "You do not have permission to update"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:440
+#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:465
 msgid "You don't have more items to load."
 msgstr ""
 
@@ -23806,7 +23890,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:509
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailViewContent.vue:497
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
@@ -23837,7 +23921,7 @@ msgstr ""
 msgid "You need to subscribe to at least one topic in the settings to enable chat availability."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:436
+#: app/frontend/apps/desktop/components/CommonTable/CommonAdvancedTable.vue:461
 msgid "You reached the table limit of %s items (%s remaining)."
 msgstr ""
 
@@ -24394,7 +24478,7 @@ msgstr ""
 msgid "descending"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:127
+#: app/frontend/apps/desktop/components/Search/QuickSearch/QuickSearchResultList/QuickSearchResultList.vue:132
 msgid "detailed search"
 msgstr ""
 
@@ -25386,7 +25470,7 @@ msgstr ""
 msgid "run macro"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:121
+#: app/frontend/apps/desktop/pages/ticket-overviews/views/TicketOverviews.vue:160
 msgid "second level navigation sidebar"
 msgstr ""
 
@@ -25548,6 +25632,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:25
 msgid "theme,color,style,dark mode,night mode,light mode"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/KeyboardShortcutsDialog/KeyboardShortcutsDialogGroup.vue:33
+msgid "then"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:146
@@ -25762,14 +25850,17 @@ msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:410
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:200
 msgid "…add object link URL"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:403
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:195
 msgid "…add object title"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:632
+#: app/frontend/shared/composables/useKeyboardShortcut/keyboardShortcutCatalogue.ts:328
 msgid "…of whole text area"
 msgstr ""
 

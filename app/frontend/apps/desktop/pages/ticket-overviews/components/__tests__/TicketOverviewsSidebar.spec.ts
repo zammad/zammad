@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { within } from '@testing-library/vue'
 import { beforeEach } from 'vitest'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -74,5 +75,26 @@ describe('TicketOverviewsSidebar', () => {
     expect(wrapper.getByRole('link', { name: 'My Assigned Tickets' })).toBeInTheDocument()
 
     expect(wrapper.getByRole('link', { name: 'Unassigned & Open Tickets' })).toBeInTheDocument()
+  })
+
+  it('moves the focus over the overview links with the up and down arrow keys', async () => {
+    const wrapper = renderSidebar()
+
+    const navigation = await wrapper.findByRole('navigation', { name: 'Overview navigation list' })
+    const links = await within(navigation).findAllByRole('link')
+
+    expect(links).toHaveLength(2)
+
+    links[0].focus()
+
+    await wrapper.events.keyboard('{ArrowDown}')
+    expect(links[1]).toHaveFocus()
+
+    await wrapper.events.keyboard('{ArrowUp}')
+    expect(links[0]).toHaveFocus()
+
+    // Left and right belong to the page, which moves between the sidebar and the list.
+    await wrapper.events.keyboard('{ArrowRight}')
+    expect(links[0]).toHaveFocus()
   })
 })

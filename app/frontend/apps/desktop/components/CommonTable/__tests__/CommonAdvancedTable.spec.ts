@@ -20,6 +20,7 @@ import type { ObjectWithId } from '#shared/types/utils.ts'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
 import CommonAdvancedTable from '../CommonAdvancedTable.vue'
+import { focusTableRow } from '../useTableRowNavigation.ts'
 
 import type { AdvancedTableProps, TableAdvancedItem } from '../types.ts'
 
@@ -1075,5 +1076,223 @@ describe('CommonAdvancedTable', () => {
     })
 
     expect(wrapper.getByRole('row', { name: 'grouping11+' })).toBeInTheDocument()
+  })
+})
+
+describe('CommonAdvancedTable keyboard navigation', () => {
+  const items = [1, 2, 3].map((index) => ({
+    id: convertToGraphQLId('Ticket', index),
+    title: `Row ${index}`,
+  }))
+
+  const renderNavigableTable = (props: Partial<AdvancedTableProps> = {}) =>
+    renderTable({
+      headers: ['title'],
+      items,
+      totalItemsCount: items.length,
+      caption: 'Table caption',
+      onClickRow: vi.fn(),
+      ...props,
+    })
+
+  const getRows = (wrapper: Awaited<ReturnType<typeof renderTable>>) =>
+    wrapper.getAllByTestId('table-row')
+
+  it('moves the focus over the rows with the arrow keys, home and end', async () => {
+    const wrapper = await renderNavigableTable()
+    const rows = getRows(wrapper)
+
+    rows[0].focus()
+
+    await wrapper.events.keyboard('{ArrowDown}')
+    expect(rows[1]).toHaveFocus()
+
+    await wrapper.events.keyboard('{End}')
+    expect(rows[2]).toHaveFocus()
+
+    await wrapper.events.keyboard('{ArrowDown}')
+    expect(rows[2]).toHaveFocus()
+
+    await wrapper.events.keyboard('{Home}')
+    expect(rows[0]).toHaveFocus()
+
+    await wrapper.events.keyboard('{ArrowUp}')
+    expect(rows[0]).toHaveFocus()
+  })
+
+  it('makes the focused row the current one', async () => {
+    const wrapper = await renderNavigableTable()
+    const rows = getRows(wrapper)
+
+    rows[0].focus()
+    await wrapper.events.keyboard('{ArrowDown}')
+
+    expect(rows[1]).toHaveAttribute('data-current-row')
+    expect(rows[0]).not.toHaveAttribute('data-current-row')
+  })
+
+  it('continues from a link in a row', async () => {
+    const wrapper = await renderNavigableTable({
+      attributeExtensions: {
+        title: {
+          columnPreferences: {
+            link: {
+              internal: true,
+              getLink: (item: ObjectWithId) => `/tickets/${getIdFromGraphQLId(item.id)}`,
+            },
+          },
+        },
+      },
+    })
+
+    wrapper.getByRole('link', { name: 'Row 1' }).focus()
+    await wrapper.events.keyboard('{ArrowDown}')
+
+    expect(getRows(wrapper)[1]).toHaveFocus()
+  })
+
+  it('skips group rows', async () => {
+    const wrapper = await renderNavigableTable({
+      headers: ['title', 'customer'],
+      items: [
+        createDummyTicket({ customer: { id: convertToGraphQLId('User', 10), fullname: 'Alice' } }),
+        createDummyTicket({
+          ticketId: '2',
+          customer: { id: convertToGraphQLId('User', 11), fullname: 'Bob' },
+        }),
+      ],
+      groupBy: 'customer',
+    })
+
+    const rows = getRows(wrapper)
+
+    expect(wrapper.getAllByRole('row')).toHaveLength(5)
+
+    rows[0].focus()
+    await wrapper.events.keyboard('{ArrowDown}')
+
+    expect(rows[1]).toHaveFocus()
+  })
+
+  it('toggles the checkbox of the focused row with space', async () => {
+    const checkedItemIds = ref(new Set<string>())
+
+    const wrapper = renderComponent(CommonAdvancedTable, {
+      router: true,
+      form: true,
+      store: true,
+      props: {
+        entity: EnumObjectManagerObjects.Ticket,
+        headers: ['title'],
+        items,
+        totalItemsCount: items.length,
+        caption: 'Table caption',
+        hasBulkAction: true,
+      },
+      vModel: { checkedItemIds },
+    })
+
+    await waitForNextTick()
+
+    getRows(wrapper)[1].focus()
+    await wrapper.events.keyboard(' ')
+
+    await waitFor(() => expect(Array.from(checkedItemIds.value)).toEqual([items[1].id]))
+  })
+
+  it('leaves a key that moves nowhere to the page around the table', async () => {
+    const wrapper = await renderNavigableTable()
+
+    const handled: boolean[] = []
+    const recordKey = (event: KeyboardEvent) => handled.push(event.defaultPrevented)
+
+    window.addEventListener('keydown', recordKey)
+
+    getRows(wrapper)[0].focus()
+    await wrapper.events.keyboard('{ArrowUp}{ArrowLeft}{ArrowDown}')
+
+    window.removeEventListener('keydown', recordKey)
+
+    expect(handled).toEqual([false, false, true])
+  })
+
+  it('lets the page focus the current row, or the first one', async () => {
+    const wrapper = await renderNavigableTable()
+    const rows = getRows(wrapper)
+
+    expect(focusTableRow(wrapper.container as HTMLElement)).toBe(true)
+    expect(rows[0]).toHaveFocus()
+
+    await wrapper.events.keyboard('{ArrowDown}{ArrowDown}')
+    rows[2].blur()
+
+    focusTableRow(wrapper.container as HTMLElement)
+    expect(rows[2]).toHaveFocus()
+  })
+
+  it('opens the focused row with enter', async () => {
+    const onClickRow = vi.fn()
+    const wrapper = await renderNavigableTable({ onClickRow })
+
+    getRows(wrapper)[0].focus()
+    await wrapper.events.keyboard('{ArrowDown}{Enter}')
+
+    expect(onClickRow).toHaveBeenCalledWith(expect.objectContaining({ id: items[1].id }))
+  })
+
+  it('has no current row in a table whose rows cannot be acted on', async () => {
+    const wrapper = await renderNavigableTable({ onClickRow: undefined })
+
+    await wrapper.events.click(getRows(wrapper)[1])
+
+    expect(getRows(wrapper)[1]).not.toHaveAttribute('data-current-row')
+  })
+
+  it('leaves space to an element in the row', async () => {
+    const checkedItemIds = ref(new Set<string>())
+
+    const wrapper = renderComponent(CommonAdvancedTable, {
+      router: true,
+      form: true,
+      store: true,
+      props: {
+        entity: EnumObjectManagerObjects.Ticket,
+        headers: ['title'],
+        items,
+        totalItemsCount: items.length,
+        caption: 'Table caption',
+        hasBulkAction: true,
+        attributeExtensions: {
+          title: {
+            columnPreferences: {
+              link: {
+                internal: true,
+                getLink: (item: ObjectWithId) => `/tickets/${getIdFromGraphQLId(item.id)}`,
+              },
+            },
+          },
+        },
+      },
+      vModel: { checkedItemIds },
+    })
+
+    await waitForNextTick()
+
+    wrapper.getByRole('link', { name: 'Row 2' }).focus()
+    await wrapper.events.keyboard(' ')
+
+    expect(checkedItemIds.value.size).toBe(0)
+  })
+
+  it('starts at the first row again in another list', async () => {
+    const wrapper = await renderNavigableTable({ storageKeyId: 'first-list' })
+
+    getRows(wrapper)[0].focus()
+    await wrapper.events.keyboard('{ArrowDown}')
+    expect(getRows(wrapper)[1]).toHaveAttribute('data-current-row')
+
+    await wrapper.rerender({ storageKeyId: 'second-list' })
+
+    expect(getRows(wrapper)[1]).not.toHaveAttribute('data-current-row')
   })
 })

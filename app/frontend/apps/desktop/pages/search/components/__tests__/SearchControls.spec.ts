@@ -1,13 +1,14 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
 import { ref } from 'vue'
 
-import renderComponent from '#tests/support/components/renderComponent.ts'
-import { mockRouterHooks } from '#tests/support/mock-vue-router.ts'
+import renderComponent, { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
+
+import { searchFieldFocusState } from '#desktop/components/Search/searchFieldFocus.ts'
 
 import SearchControls from '../SearchControls.vue'
-
-mockRouterHooks()
 
 const mockWaitForConfirmation = vi.hoisted(() => vi.fn())
 
@@ -20,6 +21,7 @@ vi.mock('#shared/composables/useConfirmation.ts', () => ({
 describe('SearchControls', () => {
   it('renders the search input and tabs', async () => {
     const wrapper = renderComponent(SearchControls, {
+      router: true,
       props: {
         selectedEntityHasFiltersEnabled: true,
         searchTabs: [
@@ -49,6 +51,7 @@ describe('SearchControls', () => {
     const selectedEntity = ref('Ticket')
 
     const wrapper = renderComponent(SearchControls, {
+      router: true,
       props: {
         selectedEntityHasFiltersEnabled: true,
         searchTabs: [
@@ -80,6 +83,7 @@ describe('SearchControls', () => {
     const selectedEntity = ref('Ticket')
 
     const wrapper = renderComponent(SearchControls, {
+      router: true,
       props: {
         selectedEntityHasFiltersEnabled: true,
         searchTabs: [
@@ -106,6 +110,7 @@ describe('SearchControls', () => {
   describe('Advanced filters panel', () => {
     it('toggles the advanced filters panel when the button is clicked', async () => {
       const wrapper = renderComponent(SearchControls, {
+        router: true,
         props: {
           selectedEntityHasFiltersEnabled: true,
           searchTabs: [
@@ -128,6 +133,7 @@ describe('SearchControls', () => {
 
     it('shows badge with selected filter count', async () => {
       const wrapper = renderComponent(SearchControls, {
+        router: true,
         props: {
           selectedEntityHasFiltersEnabled: true,
           searchTabs: [
@@ -145,6 +151,7 @@ describe('SearchControls', () => {
 
     it('shows advanced filters expanded on initial load when filters are present', async () => {
       const wrapper = renderComponent(SearchControls, {
+        router: true,
         props: {
           selectedEntityHasFiltersEnabled: true,
           searchTabs: [
@@ -169,6 +176,7 @@ describe('SearchControls', () => {
 
     it('does not show badge when filterCount is 0', () => {
       const wrapper = renderComponent(SearchControls, {
+        router: true,
         props: {
           selectedEntityHasFiltersEnabled: true,
           searchTabs: [
@@ -185,6 +193,7 @@ describe('SearchControls', () => {
 
     it('opens the filter panel when the badge button is clicked', async () => {
       const wrapper = renderComponent(SearchControls, {
+        router: true,
         props: {
           selectedEntityHasFiltersEnabled: true,
           searchTabs: [
@@ -211,6 +220,7 @@ describe('SearchControls', () => {
       mockWaitForConfirmation.mockResolvedValue(true)
 
       const wrapper = renderComponent(SearchControls, {
+        router: true,
         props: {
           selectedEntityHasFiltersEnabled: true,
           searchTabs: [
@@ -232,6 +242,7 @@ describe('SearchControls', () => {
       mockWaitForConfirmation.mockResolvedValue(false)
 
       const wrapper = renderComponent(SearchControls, {
+        router: true,
         props: {
           selectedEntityHasFiltersEnabled: true,
           searchTabs: [
@@ -255,6 +266,7 @@ describe('SearchControls', () => {
 
     it('has correct aria attributes linking button and section', () => {
       const wrapper = renderComponent(SearchControls, {
+        router: true,
         props: {
           selectedEntityHasFiltersEnabled: true,
           searchTabs: [
@@ -275,6 +287,7 @@ describe('SearchControls', () => {
     describe('customer user', () => {
       it('does not render advanced filters button', () => {
         const wrapper = renderComponent(SearchControls, {
+          router: true,
           props: {
             selectedEntityHasFiltersEnabled: false,
             searchTabs: [
@@ -287,6 +300,115 @@ describe('SearchControls', () => {
 
         expect(wrapper.queryByRole('button', { name: 'Advanced filters' })).not.toBeInTheDocument()
       })
+    })
+  })
+
+  describe('focus of the search field', () => {
+    // The test router lives on across examples, with the state of its last navigation. Replacing
+    //   would keep that state, a navigation of its own starts afresh.
+    afterEach(async () => {
+      await getTestRouter().push({ path: '/' })
+    })
+
+    const renderOnSearchRoute = () =>
+      renderComponent(SearchControls, {
+        router: true,
+        routerRoutes: [
+          { path: '/search/:searchTerm?', name: 'Search', component: { template: '<div />' } },
+        ],
+        props: {
+          selectedEntityHasFiltersEnabled: true,
+          searchTabs: [{ label: 'Ticket', key: 'Ticket', count: 1 }],
+        },
+      })
+
+    it('takes the focus when the search comes from the quick search', async () => {
+      const wrapper = renderOnSearchRoute()
+      const searchField = wrapper.getByRole('searchbox', { name: 'Search…' })
+
+      await getTestRouter().push({
+        name: 'Search',
+        params: { searchTerm: 'from quick search' },
+        state: searchFieldFocusState,
+      })
+
+      await waitFor(() => expect(searchField).toHaveFocus())
+    })
+
+    it('takes the focus when the quick search repeats the search shown', async () => {
+      const wrapper = renderOnSearchRoute()
+      const searchField = wrapper.getByRole('searchbox', { name: 'Search…' })
+
+      await getTestRouter().push({ name: 'Search', params: { searchTerm: 'shown' } })
+      await waitForNextTick()
+      searchField.blur()
+
+      await getTestRouter().push({
+        name: 'Search',
+        params: { searchTerm: 'shown' },
+        state: searchFieldFocusState,
+        force: true,
+      })
+
+      await waitFor(() => expect(searchField).toHaveFocus())
+    })
+
+    it('takes the focus when the search from the quick search changes only the query', async () => {
+      const wrapper = renderOnSearchRoute()
+      const searchField = wrapper.getByRole('searchbox', { name: 'Search…' })
+
+      await getTestRouter().push({
+        name: 'Search',
+        params: { searchTerm: 'shown' },
+        query: { entity: 'User' },
+      })
+      await waitForNextTick()
+      searchField.blur()
+
+      await getTestRouter().push({
+        name: 'Search',
+        params: { searchTerm: 'shown' },
+        state: searchFieldFocusState,
+      })
+
+      await waitFor(() => expect(searchField).toHaveFocus())
+    })
+
+    it('takes the focus only once, not when going back to that search later', async () => {
+      const wrapper = renderOnSearchRoute()
+      const searchField = wrapper.getByRole('searchbox', { name: 'Search…' })
+
+      await getTestRouter().push({
+        name: 'Search',
+        params: { searchTerm: 'from quick search' },
+        state: searchFieldFocusState,
+      })
+
+      await waitFor(() => expect(searchField).toHaveFocus())
+      searchField.blur()
+
+      await getTestRouter().push({ name: 'Search', params: { searchTerm: 'another' } })
+      getTestRouter().back()
+
+      await waitFor(() =>
+        expect(getTestRouter().currentRoute.value.params.searchTerm).toBe('from quick search'),
+      )
+      await waitForNextTick()
+
+      expect(searchField).not.toHaveFocus()
+    })
+
+    it('leaves the focus alone when the view is reached another way', async () => {
+      const wrapper = renderOnSearchRoute()
+      const searchField = wrapper.getByRole('searchbox', { name: 'Search…' })
+
+      await waitForNextTick()
+      searchField.blur()
+
+      await getTestRouter().push({ name: 'Search', params: { searchTerm: 'from a tab' } })
+      await waitForNextTick()
+
+      expect(searchField).not.toHaveFocus()
     })
   })
 })

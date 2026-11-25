@@ -10,6 +10,7 @@ import StarterKit from '@tiptap/starter-kit'
 import { common, createLowlight } from 'lowlight'
 
 import AiAssistantTextTools from '#shared/components/Form/fields/FieldEditor/extensions/AiAssistantTextTools.ts'
+import FormSubmitKeys from '#shared/components/Form/fields/FieldEditor/extensions/FormSubmitKeys.ts'
 import HardBreakPlain from '#shared/components/Form/fields/FieldEditor/extensions/HardBreakPlain.ts'
 import Image, {
   EmbeddedImage,
@@ -25,6 +26,7 @@ import {
   MarginLeft,
   MarginRight,
 } from '#shared/components/Form/fields/FieldEditor/extensions/Styles.ts'
+import TextEditingKeys from '#shared/components/Form/fields/FieldEditor/extensions/TextEditingKeys.ts'
 import TextModuleSuggestion from '#shared/components/Form/fields/FieldEditor/extensions/TextModuleSuggestion.ts'
 import UserMention, {
   UserLink,
@@ -114,6 +116,7 @@ export const getPlainExtensions = (
       : {},
   ),
   HardBreakPlain,
+  FormSubmitKeys,
   Placeholder.configure({
     placeholder,
   }),
@@ -145,6 +148,7 @@ export const getReducedExtensions = (
     strike: false,
     underline: false,
   }),
+  FormSubmitKeys,
   PlainCharacterCount.configure(
     meta?.footer?.maxlength && !meta?.footer?.allowExceedMaxLength
       ? { limit: meta.footer.maxlength }
@@ -219,6 +223,8 @@ export const getHtmlExtensions = (placeholder = '', meta: FieldEditorProps['meta
       allowTableNodeSelection: true,
     },
   }),
+  TextEditingKeys,
+  FormSubmitKeys,
 ]
 
 export const getCustomExtensions = (

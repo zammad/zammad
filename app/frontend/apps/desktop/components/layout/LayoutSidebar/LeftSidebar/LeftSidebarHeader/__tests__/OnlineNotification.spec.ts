@@ -5,6 +5,7 @@ import { within } from '@testing-library/vue'
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { resetGlobalStates } from '#tests/support/mock-globalState.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import {
   holdLockFromAnotherTab,
@@ -29,6 +30,7 @@ import { getOnlineNotificationsCountSubscriptionHandler } from '#shared/entities
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
+import emitter from '#shared/utils/emitter.ts'
 
 import OnlineNotification from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue'
 import { BROWSER_NOTIFICATION_LOCK } from '#desktop/composables/useBrowserNotification.ts'
@@ -516,6 +518,29 @@ describe('OnlineNotification', () => {
     const calls = await waitForOnlineNotificationMarkAllAsSeenMutationCalls()
 
     expect(calls.at(-1)?.variables).toEqual({})
+  })
+
+  it('toggles the notifications with the a key, closing an active quick search first', async () => {
+    mockPermissions(['ticket.agent'])
+    mockNotificationList([node])
+
+    const resetQuickSearch = vi.fn()
+    emitter.on('reset-quick-search-field', resetQuickSearch)
+
+    const wrapper = renderComponent(OnlineNotification, {
+      router: true,
+    })
+
+    await wrapper.events.keyboard('a')
+
+    expect(resetQuickSearch).toHaveBeenCalledOnce()
+    emitter.off('reset-quick-search-field', resetQuickSearch)
+
+    expect(await wrapper.findByRole('button', { name: 'mark all as read' })).toBeInTheDocument()
+
+    await wrapper.events.keyboard('a')
+
+    await waitUntil(() => !wrapper.queryByRole('button', { name: 'mark all as read' }))
   })
 
   it('restores the unseen entries when marking all as read fails', async () => {

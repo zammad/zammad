@@ -675,4 +675,146 @@ describe('UserTaskbarTabs.vue', () => {
 
     expect(wrapper, 'correctly redirects to the previous route').toHaveCurrentUrl('/tickets/42')
   })
+  describe('keyboard shortcuts', () => {
+    const ticketCreateTab = {
+      __typename: 'UserTaskbarItem' as const,
+      id: convertToGraphQLId('Taskbar', 1),
+      key: 'TicketCreateScreen-999',
+      callback: EnumTaskbarEntity.TicketCreate,
+      entityAccess: EnumTaskbarEntityAccess.Granted,
+      entity: {
+        __typename: 'UserTaskbarItemEntityTicketCreate' as const,
+        uid: '999',
+        title: 'First ticket',
+        createArticleTypeKey: 'phone-in',
+      },
+      prio: 1,
+      formId: 'foo',
+      changed: false,
+      dirty: false,
+      notify: false,
+      updatedAt: '2024-07-24T15:42:28.212Z',
+    }
+
+    const ticketTab = (internalId: number, prio: number, dirty = false) => ({
+      __typename: 'UserTaskbarItem' as const,
+      id: convertToGraphQLId('Taskbar', internalId),
+      key: `Ticket-${internalId}`,
+      callback: EnumTaskbarEntity.TicketZoom,
+      entityAccess: EnumTaskbarEntityAccess.Granted,
+      entity: {
+        __typename: 'Ticket' as const,
+        id: convertToGraphQLId('Ticket', internalId),
+        internalId,
+        number: `530${internalId}`,
+        title: `Ticket ${internalId}`,
+        stateColorCode: EnumTicketStateColorCode.Open,
+        state: { __typename: 'TicketState' as const, name: 'open' },
+      },
+      prio,
+      formId: `form-${internalId}`,
+      changed: false,
+      dirty,
+      notify: false,
+      updatedAt: '2024-07-24T15:42:28.212Z',
+    })
+
+    const renderTabs = async (activeTabEntityKey?: string) => {
+      mockUserCurrentTaskbarItemListQuery({
+        userCurrentTaskbarItemList: [ticketCreateTab, ticketTab(42, 2), ticketTab(43, 3, true)],
+      })
+
+      const wrapper = await renderUserTaskbarTabs()
+
+      toRef(useUserCurrentTaskbarTabsStore(), 'activeTaskbarTabEntityKey').value =
+        activeTabEntityKey
+
+      return wrapper
+    }
+
+    it('activates the next tab with shift+right, wrapping around after the last one', async () => {
+      const wrapper = await renderTabs('Ticket-42')
+
+      await wrapper.events.keyboard('{Shift>}{ArrowRight}{/Shift}')
+      await waitFor(() => expect(wrapper).toHaveCurrentUrl('/tickets/43'))
+
+      toRef(useUserCurrentTaskbarTabsStore(), 'activeTaskbarTabEntityKey').value = 'Ticket-43'
+
+      await wrapper.events.keyboard('{Shift>}{ArrowRight}{/Shift}')
+      await waitFor(() => expect(wrapper).toHaveCurrentUrl('/tickets/create/999'))
+    })
+
+    it('activates the previous tab with shift+left, wrapping around before the first one', async () => {
+      const wrapper = await renderTabs('TicketCreateScreen-999')
+
+      await wrapper.events.keyboard('{Shift>}{ArrowLeft}{/Shift}')
+
+      await waitFor(() => expect(wrapper).toHaveCurrentUrl('/tickets/43'))
+    })
+
+    it.each<[string, `/${string}`]>([
+      ['{ArrowRight}', '/tickets/create/999'],
+      ['{ArrowLeft}', '/tickets/43'],
+    ])(
+      'starts at the outermost tab without an active one (shift+%s)',
+      async (arrow, expectedUrl) => {
+        const wrapper = await renderTabs()
+
+        await wrapper.events.keyboard(`{Shift>}${arrow}{/Shift}`)
+
+        await waitFor(() => expect(wrapper).toHaveCurrentUrl(expectedUrl))
+      },
+    )
+
+    it('does not switch tabs while text is selected', async () => {
+      const wrapper = await renderTabs('Ticket-42')
+      const router = getTestRouter()
+      const currentPath = router.currentRoute.value.fullPath
+
+      const range = document.createRange()
+      range.selectNodeContents(wrapper.getByText('Ticket 42'))
+      window.getSelection()?.addRange(range)
+
+      await wrapper.events.keyboard('{Shift>}{ArrowRight}{/Shift}')
+
+      expect(router.currentRoute.value.fullPath).toBe(currentPath)
+
+      window.getSelection()?.removeAllRanges()
+    })
+
+    it('closes the active tab with shift+w', async () => {
+      const wrapper = await renderTabs('Ticket-42')
+
+      await wrapper.events.keyboard('{Shift>}W{/Shift}')
+
+      const calls = await waitForUserCurrentTaskbarItemDeleteMutationCalls()
+
+      expect(calls.at(-1)?.variables).toEqual({ id: convertToGraphQLId('Taskbar', 42) })
+      expect(wrapper.queryByText('Ticket 42')).not.toBeInTheDocument()
+    })
+
+    it('asks before closing an active tab with unsaved changes', async () => {
+      waitForVariantConfirmationMock.mockClear()
+
+      const wrapper = await renderTabs('Ticket-43')
+
+      await wrapper.events.keyboard('{Shift>}W{/Shift}')
+
+      await waitForUserCurrentTaskbarItemDeleteMutationCalls()
+
+      expect(waitForVariantConfirmationMock).toHaveBeenCalledWith(
+        'unsaved',
+        undefined,
+        'ticket-unsaved-Ticket-43',
+      )
+    })
+
+    it('does nothing without an active tab', async () => {
+      const wrapper = await renderTabs()
+
+      await wrapper.events.keyboard('{Shift>}W{/Shift}')
+
+      expect(wrapper.getAllByRole('treeitem')).toHaveLength(3)
+    })
+  })
 })

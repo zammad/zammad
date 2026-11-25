@@ -1,15 +1,18 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { useMagicKeys } from '@vueuse/core'
+import { useEventListener, useMagicKeys } from '@vueuse/core'
 import { isArray } from 'lodash-es'
 import { effectScope, onBeforeUnmount, onDeactivated, shallowRef, watch } from 'vue'
 
 import {
   type OrderKeyHandlerConfig,
+  type ShortcutHandlerConfig,
   KeyboardKey,
 } from '#shared/composables/useKeyboardEventBus/types.ts'
 
 import { useReactivate } from '../useReactivate.ts'
+
+import { keyboardEventCombination, normalizeKeyboardCombination } from './keyboardCombination.ts'
 
 const subscribedHandlers = shallowRef<Record<string, OrderKeyHandlerConfig[]>>({})
 
@@ -106,4 +109,77 @@ export const useKeyboardEventBus = (
   })
 
   return { subscribeEvent, unsubscribeEvent, cleanup }
+}
+
+const subscribedShortcuts = shallowRef<Record<string, ShortcutHandlerConfig[]>>({})
+
+let isShortcutListenerActive = false
+
+// Shortcuts match on the keydown event itself rather than on the magic keys state above: that
+//   state is recorded passively, so a handled key could not be kept from being typed, and
+//   releasing a modifier would replay the keys still held.
+const handleShortcutKeydown = (event: KeyboardEvent) => {
+  if (event.isComposing || event.defaultPrevented) return
+
+  const combination = keyboardEventCombination(event)
+  if (!combination) return
+
+  const config = subscribedShortcuts.value[combination]?.findLast(
+    (candidate) => candidate.isActive?.() ?? true,
+  )
+  if (!config) return
+
+  event.preventDefault()
+
+  // A held key runs the shortcut once, its repeated presses are only kept from being typed.
+  if (event.repeat) return
+
+  config.handler(event)
+}
+
+/**
+ * Subscribes a handler to a key combination such as `shift+c` or `mod+enter`. Like the key
+ *   handlers above, the subscriber added last wins, and the subscription follows the component
+ *   through unmounting and through deactivation in a keep-alive cache.
+ */
+export const useKeyboardShortcutEventBus = (combination: string, config: ShortcutHandlerConfig) => {
+  const shortcutKey = normalizeKeyboardCombination(combination)
+
+  const isSubscribed = () =>
+    subscribedShortcuts.value[shortcutKey]?.some((candidate) => candidate.key === config.key)
+
+  const subscribe = () => {
+    if (isSubscribed()) return
+
+    subscribedShortcuts.value[shortcutKey] = [
+      ...(subscribedShortcuts.value[shortcutKey] ?? []),
+      config,
+    ]
+  }
+
+  const unsubscribe = () => {
+    if (!subscribedShortcuts.value[shortcutKey]) return
+
+    subscribedShortcuts.value[shortcutKey] = subscribedShortcuts.value[shortcutKey].filter(
+      (candidate) => candidate.key !== config.key,
+    )
+  }
+
+  subscribe()
+
+  if (!isShortcutListenerActive) {
+    isShortcutListenerActive = true
+
+    scope.run(() => {
+      useEventListener(window, 'keydown', handleShortcutKeydown)
+    })
+  }
+
+  onDeactivated(unsubscribe)
+
+  useReactivate(subscribe)
+
+  onBeforeUnmount(unsubscribe)
+
+  return { shortcutKey, subscribe, unsubscribe }
 }

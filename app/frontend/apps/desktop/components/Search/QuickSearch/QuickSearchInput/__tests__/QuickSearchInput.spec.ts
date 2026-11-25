@@ -7,6 +7,8 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import emitter from '#shared/utils/emitter.ts'
 
+import { consumeSearchFieldFocusRequest } from '#desktop/components/Search/searchFieldFocus.ts'
+
 import QuickSearchInput from '../QuickSearchInput.vue'
 
 const renderQuickSearchInput = () => {
@@ -96,6 +98,24 @@ describe('QuickSearchInput', () => {
     expect(router.currentRoute.value.params).toEqual({
       searchTerm: 'testExample',
     })
+
+    // The search is being typed, so the search view takes it over in its own search field.
+    expect(consumeSearchFieldFocusRequest()).toBe(true)
+  })
+
+  it('asks for the focus again when the search shown is searched once more', async () => {
+    const { wrapper, modelValue } = renderQuickSearchInput()
+
+    const router = getTestRouter()
+
+    await router.push({ name: 'Search', params: { searchTerm: 'shown' } })
+    consumeSearchFieldFocusRequest()
+
+    modelValue.value = 'shown'
+    wrapper.getByRole('searchbox').focus()
+    await wrapper.events.keyboard('{enter}')
+
+    await waitFor(() => expect(consumeSearchFieldFocusRequest()).toBe(true))
   })
 
   it('activates and prefills the search when requested via emitter', async () => {

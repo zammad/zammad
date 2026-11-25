@@ -29,7 +29,7 @@ import type { Ref } from 'vue'
 
 export const EXTENSION_NAME = 'mentionKnowledgeBase'
 
-const ACTIVATOR = '??'
+export const KNOWLEDGE_BASE_ACTIVATOR = '??'
 
 const toRelatedMention = (
   answer: MentionKnowledgeBaseRelatedAnswer,
@@ -103,7 +103,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
         () =>
         // TODO: Check if this explicit typing is still needed after the stable release of next TipTap version.
         ({ chain }: CommandProps) =>
-          chain().insertContent(` ${ACTIVATOR}`).run(),
+          chain().insertContent(` ${KNOWLEDGE_BASE_ACTIVATOR}`).run(),
       insertKnowledgeBaseAnswer:
         (translationId: ID) =>
         ({ editor, dispatch }: CommandProps) => {
@@ -148,7 +148,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
     },
   }).configure({
     suggestion: buildMentionSuggestion<MentionKnowledgeBaseItem | MentionKnowledgeBaseRelatedItem>({
-      activator: ACTIVATOR,
+      activator: KNOWLEDGE_BASE_ACTIVATOR,
       type: 'knowledge-base',
       label: __('Knowledge base articles'),
       placeholder: __('Start typing to search in knowledge base…'),
