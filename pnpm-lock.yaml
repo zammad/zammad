@@ -366,6 +366,9 @@ importers:
       vue-advanced-cropper:
         specifier: ^2.8.9
         version: 2.8.9(vue@3.5.46(typescript@6.0.3))
+      vue-drag-resize-kit:
+        specifier: 1.3.1
+        version: 1.3.1(vue@3.5.46(typescript@6.0.3))
       vue-easy-lightbox:
         specifier: 1.19.0
         version: 1.19.0(vue@3.5.46(typescript@6.0.3))
@@ -375,9 +378,6 @@ importers:
       vue-router:
         specifier: ^5.5.1
         version: 5.5.1(@vue/compiler-sfc@3.5.46)(pinia@4.1.0(@vue/devtools-api@8.2.1)(typescript@6.0.3)(vue@3.5.46(typescript@6.0.3)))(rolldown@1.2.19)(rollup@4.68.8)(vite@8.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.4)(yaml@2.9.1))(vue@3.5.46(typescript@6.0.3))
-      vue3-draggable-resizable:
-        specifier: ^1.6.5
-        version: 1.6.5
       workbox-core:
         specifier: ^7.4.1
         version: 7.4.1
@@ -6375,6 +6375,12 @@ packages:
   vue-component-type-helpers@3.3.14:
     resolution: {integrity: sha512-Pq3+OnbCiPCHk0R7KSZrx+j/XXaUn2kSQ1epxq60w8CPbByLjC1EJgV51n4WY851sTXUVzsNMuitywdkdVyKjA==}
 
+  vue-drag-resize-kit@1.3.1:
+    resolution: {integrity: sha512-0KfzDo1Frqy7ppGillxmVicj+1YrZ+JIQ9SKRDzAwTrwk/DVOjLJC3KZyuK6rW+dqrvOLU2hWNCWFcyJ5RuHJA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      vue: ^3.5.0
+
   vue-easy-lightbox@1.19.0:
     resolution: {integrity: sha512-YxLXgjEn91UF3DuK1y8u3Pyx2sJ7a/MnBpkyrBSQkvU1glzEJASyAZ7N+5yDpmxBQDVMwCsL2VmxWGIiFrWCgA==}
     engines: {node: '>=14.18.3'}
@@ -6416,9 +6422,6 @@ packages:
     hasBin: true
     peerDependencies:
       typescript: '>=5.0.0'
-
-  vue3-draggable-resizable@1.6.5:
-    resolution: {integrity: sha512-31142E31fGNnq3HKqvmFLSsqIbhck7TyGuQWhUKrDw6DOcGAuRx4ddRjaxvT6fe7dgeKH53qAh+i0ZlWtPLl2g==}
 
   vue@3.5.46:
     resolution: {integrity: sha512-0kW5CgfjMPBqmH158049SaE1muufp+K/ZyrwvSEwrwYky6QB7zL2y8kXfruneKb9O12eh0xAJL6CVSpzb9o0Kg==}
@@ -12770,6 +12773,10 @@ snapshots:
 
   vue-component-type-helpers@3.3.14: {}
 
+  vue-drag-resize-kit@1.3.1(vue@3.5.46(typescript@6.0.3)):
+    dependencies:
+      vue: 3.5.46(typescript@6.0.3)
+
   vue-easy-lightbox@1.19.0(vue@3.5.46(typescript@6.0.3)):
     dependencies:
       vue: 3.5.46(typescript@6.0.3)
@@ -12830,8 +12837,6 @@ snapshots:
       '@volar/typescript': 2.4.30(typescript@6.0.3)
       '@vue/language-core': 3.3.14
       typescript: 6.0.3
-
-  vue3-draggable-resizable@1.6.5: {}
 
   vue@3.5.46(typescript@6.0.3):
     dependencies:

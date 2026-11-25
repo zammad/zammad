@@ -1,14 +1,13 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, useTemplateRef } from 'vue'
+import { computed, ref } from 'vue'
 
+import { useFloatingForm } from '#shared/components/Form/fields/FieldEditor/composables/useFloatingForm.ts'
 import { getEditorEditorLinkFormClasses } from '#shared/components/Form/fields/FieldEditor/features/link/initializeLinkFormClasses.ts'
 import { EXTENSION_NAME as LINK_EXTENSION_NAME } from '#shared/components/Form/fields/FieldEditor/features/link/types.ts'
 import { getSelection } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import Form from '#shared/components/Form/Form.vue'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 
 import type { Editor } from '@tiptap/vue-3'
 
@@ -18,20 +17,7 @@ const props = defineProps<{
 
 const currentSelection = getSelection(props.editor!)
 
-const { form, waitForFormSettled, formSubmit, isValid } = useForm()
-
-const container = useTemplateRef('container')
-
-const { activateTabTrap } = useTrapTab(container)
-
-onMounted(async () => {
-  await nextTick()
-  activateTabTrap()
-  await waitForFormSettled()
-
-  // formkit doesn't work with autofocus, so we need to manually focus the input
-  container.value?.querySelector('input')?.focus()
-})
+const { form, formSubmit, isValid } = useFloatingForm()
 
 const getCurrentUrl = () => props.editor?.getAttributes(LINK_EXTENSION_NAME)?.href
 

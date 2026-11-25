@@ -4,20 +4,23 @@ import { getNode } from '@formkit/core'
 import { describe, expect, it } from 'vitest'
 import { page, userEvent } from 'vitest/browser'
 
-import { mockApolloClient, routeRequest } from '#tests/browser/utils.ts'
+import { routeRequest } from '#tests/browser/utils.ts'
 
-import testFlags from '#shared/utils/testFlags.ts'
-
-import { EDITOR_IMAGE, findEditor, mockImageUpload, mountEditor } from './browser-utils.ts'
+import {
+  clickBesideImage,
+  EDITOR_IMAGE,
+  editorElements,
+  expectAspectRatio,
+  findImage,
+  mountEditor,
+  mountImage,
+  savedHeight,
+  savedWidth,
+  selectImage,
+} from './browser-utils.ts'
 
 const routeAttachment = () =>
   routeRequest('**/api/v1/attachments/2062', { fixture: 'example.png', contentType: 'image/png' })
-
-const findImage = async () => {
-  await expect.poll(() => document.querySelector(EDITOR_IMAGE)).toBeTruthy()
-
-  return document.querySelector<HTMLImageElement>(EDITOR_IMAGE)!
-}
 
 const imageSize = () => {
   const { width, height } = document.querySelector(EDITOR_IMAGE)!.getBoundingClientRect()
@@ -25,66 +28,292 @@ const imageSize = () => {
   return { width, height }
 }
 
-// Synthetic events, by default at the centre of the element. The resize handle reads the
-//   `pageX`/`pageY` deltas between them.
-const triggerMouse = (element: Element, type: string, position?: { x: number; y: number }) => {
-  const rect = element.getBoundingClientRect()
-
-  element.dispatchEvent(
-    new MouseEvent(type, {
-      bubbles: true,
-      cancelable: true,
-      button: 0,
-      clientX: position?.x ?? rect.left + rect.width / 2,
-      clientY: position?.y ?? rect.top + rect.height / 2,
-    }),
-  )
-}
-
-const dragHandle = (handle: Element, position: { x: number; y: number }) => {
-  triggerMouse(handle, 'mousedown')
-  triggerMouse(handle, 'mousemove', position)
-  triggerMouse(handle, 'mouseup')
-}
+const dragHandleTo = (frame: HTMLElement, handle: string, x: number) =>
+  userEvent.dragAndDrop(frame.querySelector(`.vdr-handle-${handle}`)!, frame, {
+    force: true,
+    targetPosition: { x, y: frame.getBoundingClientRect().height / 2 },
+  })
 
 describe('resizing image within editor', () => {
-  it('can be resized', async () => {
-    mockImageUpload(mockApolloClient(), 2062)
+  it('shows the frame at the displayed size without moving the paragraph or changing the value', async () => {
+    const { image, paragraph, node } = await mountImage()
 
-    await routeAttachment()
+    const imageBefore = image.getBoundingClientRect()
+    const paragraphBefore = paragraph.getBoundingClientRect()
+    const { value } = node
 
-    await mountEditor()
+    const frame = await selectImage()
 
-    const editor = await findEditor()
-    await editor.click()
-    await page.getByTestId('action-bar').getByLabelText('Add image').click()
+    expect(frame.getBoundingClientRect().width).toBeCloseTo(imageBefore.width, 0)
+    expect(frame.getBoundingClientRect().height).toBeCloseTo(imageBefore.height, 0)
+    expect(paragraph.getBoundingClientRect().top).toBeCloseTo(paragraphBefore.top, 0)
+    expect(paragraph.getBoundingClientRect().height).toBeCloseTo(paragraphBefore.height, 0)
+    expect(getComputedStyle(frame).outlineStyle).toBe('dashed')
+    expect(node.value).toBe(value)
+  })
 
-    await userEvent.upload(
-      page.getByTestId('editor-image-input'),
-      'tests/browser/fixtures/example.png',
-    )
+  it.each(
+    ['br', 'tr'].flatMap((handle) => [undefined, 180, 900].map((width) => ({ handle, width }))),
+  )(
+    'keeps the aspect ratio and the editor width with the $handle handle (saved width: $width)',
+    async ({ handle, width }) => {
+      const { editor, paragraph, node } = await mountImage({ width })
 
-    const image = await findImage()
+      const { value } = node
+      const maxWidth = paragraph.clientWidth
 
-    // The resize frame takes its size from the load handler; opened before it ran, the frame
-    //   stays at 0x0 and every drag resizes to 0x0.
-    await expect.poll(() => testFlags.get('editor.imageResized')).toBe(true)
+      const frame = await selectImage()
+      const { top } = frame.getBoundingClientRect()
 
-    await page.elementLocator(image).click()
+      const resizeTo = (targetWidth: number) => dragHandleTo(frame, handle, targetWidth)
 
-    await expect.poll(() => document.querySelectorAll('.vdr-handle').length).toBeGreaterThan(0)
+      await resizeTo(maxWidth / 4)
 
-    const handle = Array.from(document.querySelectorAll('.vdr-handle')).at(-1)!
+      await expect.poll(() => frame.getBoundingClientRect().width).toBeCloseTo(maxWidth / 4, -1)
+      expectAspectRatio(frame)
 
-    dragHandle(handle, { x: 100, y: 100 })
+      await resizeTo(maxWidth / 2)
 
-    await expect.poll(imageSize).toEqual({ width: 83, height: 83 })
+      await expect.poll(() => frame.getBoundingClientRect().width).toBeCloseTo(maxWidth / 2, -1)
+      expectAspectRatio(frame)
+      expect(frame.getBoundingClientRect().top).toBeCloseTo(top, 0)
 
-    // Beyond the maximum width and height.
-    dragHandle(handle, { x: 600, y: 600 })
+      await resizeTo(maxWidth + 5)
 
-    // This is their max width and height.
-    await expect.poll(imageSize).toEqual({ width: 200, height: 200 })
+      await expect.poll(() => frame.getBoundingClientRect().width).toBeCloseTo(maxWidth, 0)
+      expect(frame.getBoundingClientRect().width).toBeLessThanOrEqual(maxWidth)
+      expectAspectRatio(frame)
+
+      await resizeTo(maxWidth / 2)
+
+      const resizedWidth = Math.round(frame.getBoundingClientRect().width)
+
+      await clickBesideImage(editor)
+
+      const image = page.getByRole('img', { name: 'Resize example' })
+
+      await expect.element(image).toBeVisible()
+      expect(image.element().getBoundingClientRect().width).toBeCloseTo(resizedWidth, 0)
+      expectAspectRatio(image.element())
+      expect(editorElements(EDITOR_IMAGE)).toHaveLength(1)
+
+      await expect.poll(() => node.value).not.toBe(value)
+      expect(savedWidth(node.value)).toBeCloseTo(resizedWidth, 0)
+      expect(Number.isInteger(savedWidth(node.value))).toBe(true)
+      expect(Number.isInteger(savedHeight(node.value))).toBe(true)
+
+      expect((await selectImage()).getBoundingClientRect().width).toBeCloseTo(resizedWidth, 0)
+    },
+  )
+
+  it('shows the corner handles only, as it keeps the aspect ratio', async () => {
+    await mountImage()
+
+    const frame = await selectImage()
+
+    expect(
+      [...frame.querySelectorAll<HTMLElement>('.vdr-handle')].map(({ dataset }) => dataset.handle),
+    ).toEqual(['tl', 'tr', 'bl', 'br'])
+  })
+
+  it('shrinks with a handle on the left, whose edge stays in place in left-to-right text', async () => {
+    const { paragraph } = await mountImage()
+
+    const frame = await selectImage()
+    const { left } = frame.getBoundingClientRect()
+
+    await dragHandleTo(frame, 'bl', paragraph.clientWidth / 4)
+
+    await expect
+      .poll(() => frame.getBoundingClientRect().width)
+      .toBeCloseTo((paragraph.clientWidth * 3) / 4, -1)
+    expect(frame.getBoundingClientRect().left).toBeCloseTo(left, 0)
+    expectAspectRatio(frame)
+  })
+
+  it('moves the left edge with the pointer in right-to-left text', async () => {
+    const { paragraph } = await mountImage({ dir: 'rtl' })
+
+    const frame = await selectImage()
+    const { right } = frame.getBoundingClientRect()
+
+    await dragHandleTo(frame, 'bl', paragraph.clientWidth / 2)
+
+    await expect
+      .poll(() => frame.getBoundingClientRect().width)
+      .toBeCloseTo(paragraph.clientWidth / 2, -1)
+    expect(frame.getBoundingClientRect().right).toBeCloseTo(right, 0)
+
+    const { left, width } = frame.querySelector('.vdr-handle-bl')!.getBoundingClientRect()
+
+    expect(Math.abs(left + width / 2 - frame.getBoundingClientRect().left)).toBeLessThanOrEqual(1)
+  })
+
+  it.each(['Escape', 'Enter'])(
+    'resizes with the keyboard and returns the caret after the image on %s',
+    async (key) => {
+      const { editor, node } = await mountImage({ width: 200 })
+
+      await clickBesideImage(editor)
+      await userEvent.keyboard('{Tab}{Enter}')
+
+      const frame = page.getByRole('group', { name: 'Resize example' })
+
+      await expect.element(frame).toHaveFocus()
+      await expect.element(frame).toHaveAttribute('aria-roledescription', 'resizable image')
+
+      await userEvent.keyboard('{Shift>}{ArrowLeft}{ArrowLeft}{/Shift}')
+
+      await expect.poll(() => frame.element().getBoundingClientRect().width).toBeCloseTo(180, 0)
+      await expect.element(page.getByText('180 × 57 pixels')).toBeInTheDocument()
+
+      await userEvent.keyboard(`{${key}}`)
+
+      await expect.element(frame).not.toBeInTheDocument()
+      await expect.element(page.getByRole('textbox')).toHaveFocus()
+
+      await userEvent.keyboard('x')
+
+      await expect.poll(() => String(node.value)).toMatch(/<img[^>]*>x<\/p>/)
+      expect(savedWidth(node.value)).toBe(180)
+      expect(editorElements('p')).toHaveLength(1)
+    },
+  )
+
+  it.each(
+    ['Escape', 'Enter'].flatMap((key) => [
+      { key, content: 'text', textAfter: 'tail', following: '', expected: /<img[^>]*>xtail<\/p>/ },
+      {
+        key,
+        content: 'a paragraph',
+        textAfter: '',
+        following: '<p>next</p>',
+        expected: /<img[^>]*>x<\/p><p[^>]*>next<\/p>/,
+      },
+    ]),
+  )(
+    'returns the caret directly after the image on $key, with $content after it',
+    async ({ key, textAfter, following, expected }) => {
+      const { node } = await mountImage({ width: 200, textAfter, following })
+
+      await selectImage()
+
+      const frame = page.getByRole('group', { name: 'Resize example' })
+
+      await expect.element(frame).toHaveFocus()
+
+      await userEvent.keyboard(`{${key}}`)
+
+      await expect.element(frame).not.toBeInTheDocument()
+      await expect.element(page.getByRole('textbox')).toHaveFocus()
+
+      await userEvent.keyboard('x')
+
+      await expect.poll(() => String(node.value)).toMatch(expected)
+    },
+  )
+
+  it.each(['click', 'Enter'])(
+    'types after the image in a frame opened with %s instead of replacing it',
+    async (opening) => {
+      const { editor, node } = await mountImage({ width: 200 })
+
+      if (opening === 'click') {
+        await selectImage()
+      } else {
+        await clickBesideImage(editor)
+        await userEvent.keyboard('{ArrowLeft}{Enter}')
+      }
+
+      await expect.element(page.getByRole('group', { name: 'Resize example' })).toHaveFocus()
+
+      await userEvent.keyboard('xy')
+
+      await expect.poll(() => String(node.value)).toMatch(/<img[^>]*>xy<\/p>/)
+      await expect.element(page.getByRole('textbox')).toHaveFocus()
+    },
+  )
+
+  it.each(['Backspace', 'Delete'])(
+    'deletes the image in an open frame with %s, keeping the focus in the editor',
+    async (key) => {
+      const { node } = await mountImage({ width: 200 })
+
+      await selectImage()
+      await userEvent.keyboard(`{${key}}`)
+
+      await expect.poll(() => String(node.value)).not.toContain('<img')
+      await expect.element(page.getByRole('textbox')).toHaveFocus()
+    },
+  )
+
+  it('resizes with the keyboard after selecting the image with the arrow keys', async () => {
+    const { editor, node } = await mountImage({ width: 200 })
+
+    await clickBesideImage(editor)
+    await userEvent.keyboard('{ArrowLeft}')
+
+    const imageButton = page.getByRole('button', { name: 'Resize example' }).element()
+
+    await expect.poll(() => getComputedStyle(imageButton).outlineStyle).toBe('solid')
+
+    await userEvent.keyboard('{Enter}')
+
+    const frame = page.getByRole('group', { name: 'Resize example' })
+
+    await expect.element(frame).toHaveFocus()
+
+    await userEvent.keyboard('{Shift>}{ArrowLeft}{ArrowLeft}{/Shift}{Escape}')
+
+    await expect.element(page.getByRole('textbox')).toHaveFocus()
+    await expect.poll(() => savedWidth(node.value)).toBe(180)
+    expect(editorElements('p')).toHaveLength(1)
+  })
+
+  it('marks the image selected with the arrow keys only while the editor has the focus', async () => {
+    const { editor } = await mountImage({ width: 200 })
+
+    await clickBesideImage(editor)
+    await userEvent.keyboard('{ArrowLeft}')
+
+    const imageButton = page.getByRole('button', { name: 'Resize example' }).element()
+
+    await expect.poll(() => getComputedStyle(imageButton).outlineStyle).toBe('solid')
+
+    ;(editor as HTMLElement).blur()
+
+    await expect.poll(() => getComputedStyle(imageButton).outlineStyle).toBe('none')
+  })
+
+  it('types after an image selected with the arrow keys instead of replacing it', async () => {
+    const { editor, node } = await mountImage({ width: 200 })
+
+    await clickBesideImage(editor)
+    await userEvent.keyboard('{ArrowLeft}xy')
+
+    await expect.poll(() => String(node.value)).toMatch(/<img[^>]*>xy<\/p>/)
+  })
+
+  it('deletes an image selected with the arrow keys with backspace', async () => {
+    const { editor, node } = await mountImage({ width: 200 })
+
+    await clickBesideImage(editor)
+    await userEvent.keyboard('{ArrowLeft}{Backspace}')
+
+    await expect.poll(() => String(node.value)).not.toContain('<img')
+  })
+
+  it('resizes with the keyboard after selecting the image with the pointer', async () => {
+    const { node } = await mountImage({ width: 200 })
+
+    const frame = await selectImage()
+
+    expect(document.activeElement).toBe(frame)
+
+    await userEvent.keyboard('{Shift>}{ArrowLeft}{ArrowLeft}{/Shift}')
+
+    await expect.poll(() => frame.getBoundingClientRect().width).toBeCloseTo(180, 0)
+    await expect.poll(() => savedWidth(node.value)).toBe(180)
   })
 
   it('preserves resized width/height when an article/draft body is reloaded from saved HTML', async () => {

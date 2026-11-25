@@ -8,6 +8,7 @@
 - `assets/arrow-clockwise.svg`
 - `assets/arrow-counterclockwise.svg`
 - `assets/arrow-repeat.svg`
+- `assets/arrows-angle-contract.svg`
 - `assets/arrows-collapse.svg`
 - `assets/arrows-expand.svg`
 - `assets/arrows-fullscreen.svg`

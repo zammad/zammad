@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import type { ButtonVariant } from '#shared/types/button.ts'
+
 import type { Editor } from '@tiptap/core'
 import type { Ref } from 'vue'
 
@@ -18,4 +20,14 @@ export interface FormInlineImages {
   uploads: Ref<Map<string, InlineImageUploadEntry>>
   editors: Set<Editor>
   runningUploads: number
+}
+
+export interface ImageToolbarAction {
+  key: string
+  label: string
+  icon: string
+  variant?: ButtonVariant
+  showDivider?: boolean
+  attrs?: Record<string, string | boolean | undefined>
+  onClick: () => void
 }

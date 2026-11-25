@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import Image, { type ImageOptions } from '@tiptap/extension-image'
+import { NodeSelection, Plugin, TextSelection } from '@tiptap/pm/state'
 import { VueNodeViewRenderer } from '@tiptap/vue-3'
 
 import ImageHandler from '#shared/components/Form/fields/FieldEditor/features/image-handler/ImageHandler.vue'
@@ -49,9 +50,28 @@ const insertImages =
       ])
       .run()
 
+// Typing over a selected image would replace it, only Backspace and Delete remove it.
+const typeBesideSelectedImage = (name: string) =>
+  new Plugin({
+    props: {
+      handleTextInput: (view, _from, _to, text) => {
+        const { selection, tr } = view.state
+        if (!(selection instanceof NodeSelection) || selection.node.type.name !== name) return false
+
+        tr.insertText(text, selection.to)
+        view.dispatch(tr.setSelection(TextSelection.create(tr.doc, selection.to + text.length)))
+        return true
+      },
+    },
+  })
+
 const ZammadImage = Image.extend<ImageOptions>({
   addProseMirrorPlugins() {
-    return [...(this.parent?.() || []), createInlineImageUploads(this.editor)]
+    return [
+      ...(this.parent?.() || []),
+      createInlineImageUploads(this.editor),
+      typeBesideSelectedImage(this.name),
+    ]
   },
 
   addAttributes() {
@@ -112,6 +132,18 @@ const ZammadImage = Image.extend<ImageOptions>({
   addNodeView() {
     return VueNodeViewRenderer(ImageHandler)
   },
+  addKeyboardShortcuts() {
+    return {
+      Enter: ({ editor }) => {
+        const { selection } = editor.state
+        if (!(selection instanceof NodeSelection) || selection.node.type.name !== this.name)
+          return false
+
+        editor.emit('resize-image', { position: selection.from })
+        return true
+      },
+    }
+  },
   addCommands() {
     return {
       setImages: insertImages((image) => URL.createObjectURL(dataURLToBlob(image.content))),
@@ -129,7 +161,7 @@ export default ZammadImage
 //   pasted HTML is only kept when it is embedded too, so no foreign server learns who reads it.
 export const EmbeddedImage = ZammadImage.extend({
   addProseMirrorPlugins() {
-    return []
+    return [typeBesideSelectedImage(this.name)]
   },
 
   parseHTML() {

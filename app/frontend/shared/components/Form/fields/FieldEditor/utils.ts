@@ -143,11 +143,14 @@ const autoUpdatePosition = (editor: Editor, element: HTMLElement, anchor?: HTMLE
   return setAutoUpdate(editor, element, anchor)
 }
 
+export const isInFloatingPopover = (target: Element) =>
+  !!target.closest('[data-id="floating-popover"]')
+
 const createHandleCloseOnClick = (editor: Editor, options?: SetFloatingPopoverOptions) => {
   const handleCloseOnClick = (event: MouseEvent) => {
     const target = event.target as HTMLElement
 
-    if (target.closest('[data-id="floating-popover"]')) return
+    if (isInFloatingPopover(target)) return
     // Editor handles click itself
     if (target.closest('[data-type="editor"]')) return
     // A select dropdown of the popover's own form teleports to the body, so a click in it lands
@@ -199,19 +202,17 @@ export const setFloatingPopover = <T extends object>(
   document.addEventListener('click', clickHandler)
 
   // Every caller destroys the popover when it closes, so this is where the position updates and the
-  //   click handler stop.
+  //   click handler stop, and the element leaves the body.
   const destroy = virtualComponent.destroy.bind(virtualComponent)
 
   // Callers close the popover only through editor commands, which a destroyed editor no longer runs.
-  const handleEditorDestroy = () => {
-    virtualComponent.element?.remove()
-    virtualComponent.destroy()
-  }
+  const handleEditorDestroy = () => virtualComponent.destroy()
 
   virtualComponent.destroy = () => {
     stopAutoUpdate?.()
     document.removeEventListener('click', clickHandler)
     editor.off('destroy', handleEditorDestroy)
+    virtualComponent.element?.remove()
     destroy()
   }
 

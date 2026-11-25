@@ -186,7 +186,6 @@ export default function buildMentionExtension<T>(
         }
         stopDefaultListWatch?.()
         stopDefaultListWatch = undefined
-        component?.el?.remove()
         component?.destroy()
         component = null
         listboxId = null

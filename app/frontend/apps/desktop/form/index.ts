@@ -22,6 +22,7 @@ import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 import KnowledgeBaseAnswerLinkForm from '#desktop/components/Form/fields/FieldEditor/features/knowledge-base-answer-link/KnowledgeBaseAnswerLinkForm.vue'
 import FieldEditorActionBar from '#desktop/components/Form/fields/FieldEditor/FieldEditorActionBar.vue'
 import FieldEditorActionMenu from '#desktop/components/Form/fields/FieldEditor/FieldEditorActionMenu.vue'
+import FieldEditorImageToolbar from '#desktop/components/Form/fields/FieldEditor/FieldEditorImageToolbar.vue'
 import FieldEditorSuggestionList from '#desktop/components/Form/fields/FieldEditor/FieldEditorSuggestionList.vue'
 
 import { getCoreDesktopClasses } from './theme/global/getCoreDesktopClasses.ts'
@@ -96,11 +97,21 @@ export const initializeFormFields = () => {
     tableMenu: {
       triggerButton: 'w-6 h-6 flex items-center justify-center bg-blue-800/80 text-contrast',
     },
+    imageHandler: {
+      imageButton: 'focus-visible-app-default',
+      selectedImage:
+        'in-[.ProseMirror-focused]:outline-1 in-[.ProseMirror-focused]:outline-offset-1 in-[.ProseMirror-focused]:outline-blue-800',
+      // The toolbar is centred below the image; one wider than a small image starts at its edge
+      //   instead, so it does not stick out of the editor. Only the toolbar itself takes clicks.
+      resizeFrame:
+        '[--vdr-border-color:var(--color-blue-800)] [--vdr-border-offset:0] [--vdr-handle-background:var(--color-blue-800)] [--vdr-handle-border-color:var(--color-white)] [--vdr-handle-border-width:2px] [--vdr-handle-size:10px] [--vdr-handle-hit-size:24px] [&>.vdr-toolbar]:border-0! [&>.vdr-toolbar]:bg-transparent! [&>.vdr-toolbar]:p-0! [&>.vdr-toolbar]:inset-x-0 [&>.vdr-toolbar]:w-auto! [&>.vdr-toolbar]:flex [&>.vdr-toolbar]:justify-center-safe [&>.vdr-toolbar]:pointer-events-none [&>.vdr-toolbar>*]:pointer-events-auto',
+    },
   })
 
   initializeEditorComponents({
     actionBar: FieldEditorActionBar,
     actionMenu: FieldEditorActionMenu,
+    imageToolbar: FieldEditorImageToolbar,
     suggestionList: FieldEditorSuggestionList,
     // Not async loaded: the link form is handed to a `VueRenderer`, which renders nothing when the
     //   component is still a promise at that point.

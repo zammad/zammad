@@ -133,9 +133,6 @@ export default defineConfig(async ({ mode, command }) => {
           find: '^vue-easy-lightbox$',
           replacement: 'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.esm.min.js',
         },
-        // vue3-draggable-resizable ships CommonJS, whose `require('vue')` resolves to the CJS
-        // build that includes the template compiler. The runtime build is enough.
-        ...(isBuild ? [{ find: /^vue$/, replacement: 'vue/dist/vue.runtime.esm-bundler.js' }] : []),
         // In non-test builds, alias fake-timers to a tiny shim so Vite doesn't resolve Node core deps
         ...(isTesting
           ? []

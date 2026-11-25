@@ -320,4 +320,9 @@ export type FieldEditorClass = {
   tableMenu: {
     triggerButton: string
   }
+  imageHandler: {
+    imageButton: string
+    selectedImage: string
+    resizeFrame: string
+  }
 }

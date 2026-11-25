@@ -94,7 +94,6 @@ export default Link.extend({
     const destroyLinkForm = () => {
       if (!linkComponent) return
 
-      linkComponent.element?.remove()
       linkComponent.destroy()
       linkComponent = null
 

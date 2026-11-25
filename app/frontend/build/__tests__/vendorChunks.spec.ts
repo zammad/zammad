@@ -57,8 +57,8 @@ describe('vendor chunk groups', () => {
       'vue-easy-lightbox/dist/index.js',
     ),
     pnpm(
-      'vue3-draggable-resizable@1.6.5',
-      'vue3-draggable-resizable/dist/Vue3DraggableResizable.common.js',
+      'vue-drag-resize-kit@1.1.0_vue@3.5.43_typescript@6.0.3_',
+      'vue-drag-resize-kit/dist/index.js',
     ),
     pnpm('@formkit+drag-and-drop@0.5.3', '@formkit/drag-and-drop/dist/index.mjs'),
     '/zammad/node_modules/lodash/debounce.js',

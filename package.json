@@ -180,10 +180,10 @@
     "vite-bundle-visualizer": "^1.2.1",
     "vue": "^3.5.46",
     "vue-advanced-cropper": "^2.8.9",
+    "vue-drag-resize-kit": "1.3.1",
     "vue-easy-lightbox": "1.19.0",
     "vue-echarts": "^8.3.2",
     "vue-router": "^5.5.1",
-    "vue3-draggable-resizable": "^1.6.5",
     "workbox-core": "^7.4.1",
     "workbox-window": "^7.4.1"
   },

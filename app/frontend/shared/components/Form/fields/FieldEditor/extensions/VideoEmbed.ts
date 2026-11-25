@@ -246,7 +246,6 @@ export default Extension.create({
     const destroyForm = () => {
       if (!formComponent) return
 
-      formComponent.element?.remove()
       formComponent.destroy()
       formComponent = null
     }

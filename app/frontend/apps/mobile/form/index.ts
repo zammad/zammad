@@ -86,6 +86,14 @@ export const initializeFormFields = () => {
     tableMenu: {
       triggerButton: 'w-7 h-7 flex items-center justify-center bg-blue/80 text-white',
     },
+    imageHandler: {
+      imageButton:
+        'focus:outline-transparent focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue',
+      selectedImage:
+        'in-[.ProseMirror-focused]:outline-1 in-[.ProseMirror-focused]:outline-offset-1 in-[.ProseMirror-focused]:outline-blue',
+      resizeFrame:
+        '[--vdr-border-color:var(--color-blue)] [--vdr-border-offset:0] [--vdr-handle-background:var(--color-blue)] [--vdr-handle-border-color:var(--color-white)] [--vdr-handle-border-width:2px] [--vdr-handle-size:10px] [--vdr-handle-hit-size:24px]',
+    },
   })
 
   initializeEditorComponents({

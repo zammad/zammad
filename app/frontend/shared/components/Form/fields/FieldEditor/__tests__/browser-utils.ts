@@ -173,3 +173,77 @@ export const mockImageUpload = (client: ReturnType<typeof mockApolloClient>, id:
       },
     },
   }))
+
+const IMAGE_WIDTH = 1400
+const IMAGE_HEIGHT = 440
+
+export const findImage = async () => {
+  await expect.poll(() => document.querySelector(EDITOR_IMAGE)).toBeTruthy()
+
+  return document.querySelector<HTMLImageElement>(EDITOR_IMAGE)!
+}
+
+export const mountImage = async ({
+  // Wider than any editor by default, so that the maximum size is the editor's width.
+  naturalWidth = IMAGE_WIDTH,
+  naturalHeight = IMAGE_HEIGHT,
+  width,
+  dir,
+  textAfter = '',
+  following = '',
+}: {
+  naturalWidth?: number
+  naturalHeight?: number
+  width?: number
+  dir?: 'rtl'
+  textAfter?: string
+  following?: string
+} = {}) => {
+  const canvas = document.createElement('canvas')
+  canvas.width = naturalWidth
+  canvas.height = naturalHeight
+
+  const size = width
+    ? ` width="${width}" height="${Math.round((width * naturalHeight) / naturalWidth)}"`
+    : ''
+
+  await mountEditor({
+    value: `<p${dir ? ` dir="${dir}"` : ''}><img src="${canvas.toDataURL()}" alt="Resize example"${size}>${textAfter}</p>${following}`,
+  })
+
+  const editor = (await findEditor()).element()
+  const image = await findImage()
+
+  await expect.poll(() => image.naturalWidth).toBe(naturalWidth)
+
+  return { editor, image, paragraph: editor.querySelector('p')!, node: getNode('editor')! }
+}
+
+export const selectImage = async () => {
+  await page.getByRole('img', { name: 'Resize example' }).click()
+
+  await expect.poll(() => document.querySelector('.vdr-container')).toBeTruthy()
+
+  return document.querySelector<HTMLElement>('.vdr-container')!
+}
+
+export const clickBesideImage = (editor: Element) =>
+  page.elementLocator(editor).click({ position: { x: editor.clientWidth - 2, y: 2 } })
+
+export const expectAspectRatio = (element: Element) => {
+  const { width, height } = element.getBoundingClientRect()
+
+  expect(Math.abs(height - (width * IMAGE_HEIGHT) / IMAGE_WIDTH)).toBeLessThanOrEqual(1)
+}
+
+const savedAttribute = (value: unknown, name: 'width' | 'height') =>
+  Number(
+    new DOMParser()
+      .parseFromString(String(value), 'text/html')
+      .querySelector('img')
+      ?.getAttribute(name),
+  )
+
+export const savedWidth = (value: unknown) => savedAttribute(value, 'width')
+
+export const savedHeight = (value: unknown) => savedAttribute(value, 'height')

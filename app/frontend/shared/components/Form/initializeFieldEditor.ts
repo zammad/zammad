@@ -24,6 +24,11 @@ let editorClasses: FieldEditorClass = {
   tableMenu: {
     triggerButton: '',
   },
+  imageHandler: {
+    imageButton: '',
+    selectedImage: '',
+    resizeFrame: '',
+  },
 }
 
 let editorComponents: EditorComponentMap = {
@@ -33,6 +38,8 @@ let editorComponents: EditorComponentMap = {
   // The knowledge base answer flavour of the link form. It is built on an autocomplete field only
   //   the desktop app has, so the shared link extension reaches it through here.
   knowledgeBaseAnswerLinkForm: null,
+  // The toolbar of a selected image. Mobile has none: it has no floating forms to open from it.
+  imageToolbar: null,
 }
 
 export const initializeFieldEditorClasses = (classes: FieldEditorClass) => {

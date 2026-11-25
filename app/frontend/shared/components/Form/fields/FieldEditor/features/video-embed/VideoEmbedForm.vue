@@ -1,8 +1,9 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, toRef, useTemplateRef } from 'vue'
+import { computed, ref, toRef } from 'vue'
 
+import { useFloatingForm } from '#shared/components/Form/fields/FieldEditor/composables/useFloatingForm.ts'
 import { getEditorEditorLinkFormClasses } from '#shared/components/Form/fields/FieldEditor/features/link/initializeLinkFormClasses.ts'
 import {
   detectVideo,
@@ -12,8 +13,6 @@ import {
   type VideoServer,
 } from '#shared/components/Form/fields/FieldEditor/features/video-embed/videoEmbed.ts'
 import Form from '#shared/components/Form/Form.vue'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import type { FormKitNode } from '@formkit/core'
@@ -23,20 +22,7 @@ const props = defineProps<{
   editor?: Editor
 }>()
 
-const { form, waitForFormSettled, formSubmit, isValid } = useForm()
-
-const container = useTemplateRef('container')
-
-const { activateTabTrap } = useTrapTab(container)
-
-onMounted(async () => {
-  await nextTick()
-  activateTabTrap()
-  await waitForFormSettled()
-
-  // FormKit does not honour autofocus, so the input is focused by hand, like the link form does.
-  container.value?.querySelector('input')?.focus()
-})
+const { form, formSubmit, isValid } = useFloatingForm()
 
 const applicationConfig = toRef(useApplicationStore(), 'config')
 
