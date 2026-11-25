@@ -32,17 +32,24 @@ if Ticket.none?
     content_type: 'text/html',
     from:         'Zammad Feedback <feedback@zammad.org>',
     body:         '<p>Hi, I\'m Nicole Braun,</p>
+<p></p>
 <p>I\'m an example user here to show you what a ticket can look like.</p>
+<p></p>
 <p>A ticket displays the full conversation of a request, made up of articles. Articles are messages or notes shown in tickets like this one. You can reply and add any information needed to help close the request.</p>
+<p></p>
 <p>Explore these links for more insight into Zammad:</p>
 <ul>
 <li><a href="https://admin-docs.zammad.org/en/latest" target="_blank">Zammad Admin Documentation</a></li>
 <li><a href="https://user-docs.zammad.org/en/latest" target="_blank">Zammad User Documentation</a></li>
 <li><a href="https://support.zammad.com/help" target="_blank">Zammad Knowledge Base</a></li>
 </ul>
+<p></p>
 <p>Feel free to use this ticket to explore and get comfortable with Zammad.</p>
+<p></p>
 <p>You can even reply to me—I\'m looking forward to hearing from you. 👋</p>
+<p></p>
 <p>And don\'t forget, our friendly team is always <a href="https://zammad.com/en/company/contact" target="_blank">happy to help</a> with any questions.</p>
+<p></p>
 <p>Have fun! 🚀<br>Nicole Braun</p>',
     internal:     false,
   )
