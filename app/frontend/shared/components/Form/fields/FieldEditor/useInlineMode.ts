@@ -57,20 +57,19 @@ export const useInlineMode = (
     handler: handleCancel,
   }
 
-  const { subscribeEvent, unsubscribeEvent } = useKeyboardEventBus(
-    KeyboardKey.Escape,
-    handlerConfig,
-  )
+  if (isInlineMode.value) {
+    const { subscribeEvent, unsubscribeEvent } = useKeyboardEventBus(
+      KeyboardKey.Escape,
+      handlerConfig,
+    )
 
-  const { stop } = watch(isEditing, () => {
-    if (isEditing.value) {
-      subscribeEvent(handlerConfig)
-    } else {
-      unsubscribeEvent(handlerConfig)
-    }
-  })
+    // The bus subscribes right away, but Escape only cancels while the inline editor is being edited.
+    unsubscribeEvent(handlerConfig)
 
-  if (!isInlineMode.value) stop()
+    watch(isEditing, (editing) =>
+      editing ? subscribeEvent(handlerConfig) : unsubscribeEvent(handlerConfig),
+    )
+  }
 
   onClickOutside(
     wrapperElement,

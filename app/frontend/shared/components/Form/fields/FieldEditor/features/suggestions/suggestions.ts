@@ -282,6 +282,8 @@ export default function buildMentionExtension<T>(
 
         onKeyDown(props) {
           if (props.event.key === 'Escape') {
+            // Closing the list is all this Escape does, it must not also close an enclosing flyout.
+            props.event.stopPropagation()
             removeAndCleanupPopover()
             return true
           }
