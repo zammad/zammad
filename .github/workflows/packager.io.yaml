@@ -7,7 +7,8 @@ on:
       - develop-*
   schedule:
     # Build for develop only once per workday to save space in packagehall.
-    - cron:  '20 6 * * 1-5'
+    # Finish before the GitLab nightly (05:00 Europe/Berlin) tests the package, so its scenarios match.
+    - cron:  '20 1 * * 2-6'
   workflow_dispatch:
 
 permissions:
