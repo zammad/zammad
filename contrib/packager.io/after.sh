@@ -5,8 +5,8 @@
 
 PATH=$(pwd)/bin:$(pwd)/vendor/bundle/bin:$(pwd)/.heroku/node/bin:$PATH
 
-SYFT_VERSION=1.56.0
-SYFT_SHA256=1c2493cfcf52d3367d6cb25780d9190c111c2219c34c820574c43e8bae15c528
+SYFT_VERSION=1.57.2
+SYFT_SHA256=ad92bd3ec1b94a3df01d4d0aec199afa9c42b72e86da436ff5f837914d32706b
 
 set -eux
 
