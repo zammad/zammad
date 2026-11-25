@@ -7,15 +7,6 @@
     - !reference [.scripts, zammad_ci_test_prepare]
     - bundle exec rspec --require ./spec/rspec_extensions.rb --fail-fast -t ~integration -t ~searchindex spec/system
 
-.template_browser-core_capybara_chrome:
-  extends:
-    - .template_browser-core_capybara
-    - .variables_selenium_chrome
-  services:
-    - !reference [.services, postgresql]
-    - !reference [.services, selenium-chrome]
-    - !reference [.services, redis]
-
 .template_browser-core_capybara_firefox:
   extends:
     - .template_browser-core_capybara
@@ -26,7 +17,7 @@
     - !reference [.services, selenium-firefox]
     - !reference [.services, redis]
 
-.template_browser-core_capybara_playwright:
+.template_browser-core_capybara_chromium:
   extends:
     - .template_browser-core_capybara
     - .variables_playwright

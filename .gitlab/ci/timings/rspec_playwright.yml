@@ -2,7 +2,7 @@
 ---
 # Measured runtime per spec file in seconds under the Playwright driver, used by
 #   spec/rspec_extensions.rb (via CI_TEST_TIMINGS_FILE, see .variables_playwright)
-#   to distribute the spec files evenly over the parallel capybara:playwright jobs.
+#   to distribute the spec files evenly over the parallel capybara:chromium jobs.
 #   The lane needs its own measurements: per-file runtimes differ between the
 #   drivers, so packing it with the Selenium timings from rspec.yml leaves the
 #   shards unbalanced.

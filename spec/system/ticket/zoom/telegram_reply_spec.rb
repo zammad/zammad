@@ -17,7 +17,8 @@ RSpec.describe 'Ticket Zoom > Telegram reply', authenticated_as: :user, type: :s
       find(:richtext).send_keys('Hello', :enter, '1', :enter, :enter, '2')
       click '.js-submit'
 
-      expect(page).to have_css('.textBubble', text: "Hello\n1\n\n2")
+      # Playwright reports three line breaks around the empty line (<div><br></div>), Selenium two.
+      expect(page).to have_css('.textBubble', text: %r{Hello\n1\n{2,3}2})
     end
 
     expect(Ticket::Article.last).to have_attributes(

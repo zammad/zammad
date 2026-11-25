@@ -8,17 +8,6 @@
     SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
     SE_OPTS: '--log /builds/selenium.log'
 
-.variables_selenium_chrome:
-  variables:
-    SELENIUM_REMOTE_URL: 'http://selenium-chrome:4444/wd/hub'
-    SELENIUM_BROWSER: chrome
-    SELENIUM_BROWSER_HEADLESS: 'true'
-    START_XVFB: 'false' # not needed for headless mode
-    SE_NODE_MAX_SESSIONS: '5'
-    SE_NODE_OVERRIDE_MAX_SESSIONS: 'true'
-    SE_OPTS: '--log /builds/selenium.log'
-    CHROME_LOG_FILE: '/builds/chrome.log'
-
 .variables_playwright:
   variables:
     PLAYWRIGHT_SERVER_URL: 'ws://playwright:4444/'
@@ -75,16 +64,13 @@
     name: $CI_REGISTRY/docker/zammad-elasticsearch:$ELASTICSEARCH_TAG
     alias: elasticsearch
 
-  selenium-chrome:
-    name: $CI_REGISTRY/docker/zammad-selenium-chrome:stable
-    alias: selenium-chrome
-
   selenium-firefox:
     name: $CI_REGISTRY/docker/zammad-selenium-firefox:stable
     alias: selenium-firefox
 
   playwright:
-    name: $CI_REGISTRY/docker/zammad-playwright:stable
+    # Must ship the Playwright version the client gem expects, see PLAYWRIGHT_VERSION.
+    name: $CI_REGISTRY/docker/zammad-playwright:$PLAYWRIGHT_VERSION
     alias: playwright
     variables:
       # Lets the server accept the Chromium args the driver passes via the

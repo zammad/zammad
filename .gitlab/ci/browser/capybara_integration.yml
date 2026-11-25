@@ -1,12 +1,12 @@
 capybara:integration:other:
   extends:
-    - .template_browser-core_capybara_chrome
+    - .template_browser-core_capybara_chromium
     - .job_rules_manual_in_mr
     - .variables_idoit
     - .variables_proxy
   services:
     - !reference [.services, postgresql]
-    - !reference [.services, selenium-chrome]
+    - !reference [.services, playwright]
     - !reference [.services, redis]
     - !reference [.services, idoit]
     - !reference [.services, imap]
@@ -17,12 +17,12 @@ capybara:integration:other:
 
 capybara:integration:saml:
   extends:
-    - .template_browser-core_capybara_chrome
+    - .template_browser-core_capybara_chromium
     - .job_rules_manual_in_mr
     - .variables_auth
   services:
     - !reference [.services, postgresql]
-    - !reference [.services, selenium-chrome]
+    - !reference [.services, playwright]
     - !reference [.services, redis]
     - !reference [.services, auth]
   script:
@@ -31,13 +31,13 @@ capybara:integration:saml:
 
 .template_capybara_integration_otrs:
   extends:
-    - .template_browser-core_capybara_chrome
+    - .template_browser-core_capybara_chromium
     - .job_rules_manual_in_mr
   variables:
     IMPORT_OTRS_ENDPOINT: "http://zammad-ci-otrsimport-app/otrs/public.pl?Action=ZammadMigrator"
   services:
     - !reference [.services, postgresql]
-    - !reference [.services, selenium-chrome]
+    - !reference [.services, playwright]
     - !reference [.services, redis]
     - name: $CI_REGISTRY/docker/zammad-ci-otrsimport-db:otrs6
       alias: zammad-ci-otrsimport-db
