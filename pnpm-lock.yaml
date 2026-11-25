@@ -187,34 +187,34 @@ importers:
         specifier: ^1.8.0
         version: 1.8.0
       '@formkit/core':
-        specifier: ^2.8.1
+        specifier: ^2.9.0
         version: 2.9.0
       '@formkit/dev':
-        specifier: ^2.8.1
+        specifier: ^2.9.0
         version: 2.9.0
       '@formkit/drag-and-drop':
         specifier: ^0.7.0
         version: 0.7.0
       '@formkit/i18n':
-        specifier: ^2.8.1
+        specifier: ^2.9.0
         version: 2.9.0
       '@formkit/inputs':
-        specifier: ^2.8.1
+        specifier: ^2.9.0
         version: 2.9.0
       '@formkit/rules':
-        specifier: ^2.8.1
+        specifier: ^2.9.0
         version: 2.9.0
       '@formkit/themes':
-        specifier: ^2.8.1
+        specifier: ^2.9.0
         version: 2.9.0
       '@formkit/utils':
-        specifier: ^2.8.1
+        specifier: ^2.9.0
         version: 2.9.0
       '@formkit/validation':
-        specifier: ^2.8.1
+        specifier: ^2.9.0
         version: 2.9.0
       '@formkit/vue':
-        specifier: ^2.8.1
+        specifier: ^2.9.0
         version: 2.9.0(vue@3.5.46(typescript@6.0.3))
       '@rails/actioncable':
         specifier: ~8.1.401
