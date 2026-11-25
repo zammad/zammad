@@ -6625,10 +6625,6 @@ msgstr ""
 msgid "Disable the banner for the BETA switch"
 msgstr ""
 
-#: db/seeds/settings.rb:1402
-msgid "Disables user creation on logon with a third-party application."
-msgstr ""
-
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:23
 msgid "Disabling the notifications from all groups will turn off the limit. Instead, to disable the notifications use the settings above."
 msgstr ""
@@ -13127,10 +13123,6 @@ msgstr ""
 msgid "No unread notifications."
 msgstr ""
 
-#: db/seeds/settings.rb:1399
-msgid "No user creation on logon"
-msgstr ""
-
 #: app/services/service/knowledge_base/create_answer_from_ai_result.rb:27
 msgid "No valid knowledge base category provided."
 msgstr ""
@@ -17696,6 +17688,14 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTimeAccountingDialog.vue:90
 msgid "Skip"
+msgstr ""
+
+#: db/seeds/settings.rb:1399
+msgid "Skip user creation on logon"
+msgstr ""
+
+#: db/seeds/settings.rb:1402
+msgid "Skips creating users when they sign in via a third-party application."
 msgstr ""
 
 #: app/models/webhook/pre_defined/slack.rb:5

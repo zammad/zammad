@@ -1397,10 +1397,10 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
-  title:       __('No user creation on logon'),
+  title:       __('Skip user creation on logon'),
   name:        'auth_third_party_no_create_user',
   area:        'Security::ThirdPartyAuthentication',
-  description: __('Disables user creation on logon with a third-party application.'),
+  description: __('Skips creating users when they sign in via a third-party application.'),
   options:     {
     form: [
       {
