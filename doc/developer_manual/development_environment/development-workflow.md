@@ -97,7 +97,9 @@ if that gets in the way.
 
 - `rails generate zammad:translation_catalog` – Regenerate the translation catalog
 - `rails generate zammad:translation_catalog --full` – Update template files from translations
-- `rails zammad:translations:sync` – Synchronize latest translations from `i18n/*.po` to the database
+- `rails zammad:translations:sync` – Synchronize latest translations from `i18n/*.po` to the database (skips locales
+  with unchanged translation files)
+- `rails "zammad:translations:sync[force]"` – Synchronize all locales, including those with unchanged files
 
 ## Useful Scripts
 
