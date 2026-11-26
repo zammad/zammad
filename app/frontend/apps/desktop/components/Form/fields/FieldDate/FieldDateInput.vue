@@ -191,6 +191,14 @@ const panelStyle = computed(() => {
   return style
 })
 
+// The panel shown alongside the input follows the group being edited: a time group brings up
+// the time panel, a date group the calendar.
+const followActiveSegment = () => {
+  const kind = segmented.activeSegment.value?.kind
+
+  if (kind) panelComponent.value?.showPanelFor(kind)
+}
+
 let stopClickOutside: (() => void) | undefined
 
 const {
@@ -206,6 +214,7 @@ const {
   },
   onOpened: () => {
     if (isModal.value) panelComponent.value?.focusActive()
+    else followActiveSegment()
     stopClickOutside = onClickOutside(panelElement, () => close(), {
       ignore: [wrapperElement],
     })
@@ -218,25 +227,27 @@ const {
 
 // Without `focusPanel` the input keeps the focus, so typing into the groups and picking in the
 // panel can be mixed. Tab is not trapped and the panel is not modal then: the focus never enters
-// the panel.
+// the panel. A panel already shown alongside takes the focus when asked to.
 const open = ({ focusPanel = true } = {}) => {
-  if (isOpen.value) return
+  // The blur settles a pending entry first, the focus would land on a day the commit removes.
+  if (focusPanel) inputElement.value?.blur()
 
   isModal.value = focusPanel
-  openPanel()
+
+  if (!isOpen.value) openPanel()
+  else if (focusPanel) panelComponent.value?.focusActive()
 }
 
-// The panel shown alongside the input follows the group being edited: a time group brings up
-// the time panel, a date group the calendar.
 watch(
   () => segmented.activeSegment.value?.kind,
-  (kind) => {
-    if (isOpen.value && kind) panelComponent.value?.showPanelFor(kind)
+  () => {
+    if (isOpen.value) followActiveSegment()
   },
 )
 
+// The button closes only a panel holding the focus, one shown alongside takes the focus instead.
 const toggle = () => {
-  if (isOpen.value) close({ refocus: true })
+  if (isOpen.value && isModal.value) close({ refocus: true })
   else open()
 }
 
@@ -257,7 +268,12 @@ const onInputKeydown = announceSegmentChange((event: KeyboardEvent) => {
     return
   }
 
-  if (event.key === 'Enter' || (event.key === 'ArrowDown' && event.altKey)) {
+  const opensPanel =
+    event.key === 'Enter' ||
+    (event.key === 'ArrowDown' && event.altKey) ||
+    (event.key === ' ' && !segmented.expectsSeparator())
+
+  if (opensPanel) {
     stopEvent(event)
     open()
     return
@@ -277,19 +293,31 @@ const isOverGroups = (event: MouseEvent) => {
   return !groups?.width || event.clientX <= groups.right
 }
 
-// The text ends well before the icon. A click in the blank part behind it starts at the first
-// group and shows the panel alongside, rather than selecting the last group from far away.
+// A click shows the panel alongside the group it hit. The text ends well before the icon: a click
+// in the blank part behind it starts at the first group, rather than selecting the last group
+// from far away. A click on the label moves the focus into the panel, like the icon.
 const onInputClick = announceSegmentChange((event: MouseEvent) => {
-  if (segmented.hasManualSelection()) return
-
-  if (isOverGroups(event)) {
-    segmented.onClick()
+  if (!segmented.consumePointerDown()) {
+    open()
     return
   }
 
-  segmented.selectFirst()
+  // The input took the focus, so a panel already open is no longer modal.
+  if (segmented.hasManualSelection()) {
+    isModal.value = false
+    return
+  }
+
+  if (isOverGroups(event)) segmented.onClick()
+  else segmented.selectFirst()
+
   open({ focusPanel: false })
 })
+
+// The box around the input and the icons reacts like the icon, a click beside it is no miss.
+const onWrapperClick = (event: MouseEvent) => {
+  if (event.target === event.currentTarget) toggle()
+}
 
 const onInputBlur = (event: FocusEvent) => {
   segmented.onBlur()
@@ -320,11 +348,12 @@ const iconClasses =
 </script>
 
 <template>
-  <!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
+  <!-- eslint-disable vuejs-accessibility/no-static-element-interactions, vuejs-accessibility/click-events-have-key-events -->
   <div
     ref="wrapper"
     class="relative flex w-full items-center"
     data-test-id="field-date"
+    @click="onWrapperClick"
     @focusout="onFieldFocusout"
   >
     <!-- The groups are painted by the layer underneath, the input keeps the caret and paints the
