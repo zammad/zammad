@@ -396,7 +396,8 @@ class HtmlSanitizer
 
         # Callers apply CGI.unescape once (e.g. %252e%252e → %2e%2e); a second pass here
         # resolves any remaining percent-encoded dot-segments (%2e%2e → ..) before the check.
-        string = CGI.unescape(string)
+        # It can yield invalid UTF-8 again (%25FF → %FF → \xFF), which String#tr would raise on.
+        string = CGI.unescape(string).scrub
 
         # browsers treat \ as a path separator in special-scheme URLs, so normalize before checking
         string = string.tr('\\', '/')

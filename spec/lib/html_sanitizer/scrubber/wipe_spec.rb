@@ -853,6 +853,18 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
       end
     end
 
+    context 'when src decodes to invalid UTF-8 on the second pass' do
+      let(:input) { '<img src="/assets/%25FF">' }
+
+      it { is_expected.to include('/assets/%25FF') }
+    end
+
+    context 'when srcset decodes to invalid UTF-8 on the second pass' do
+      let(:input) { '<img srcset="/assets/%25FF 1x">' }
+
+      it { is_expected.to include('/assets/%25FF 1x') }
+    end
+
     context 'when src is a safe path-absolute URL' do
       let(:input) { "<img src='/assets/images/logo.png'>" }
 
@@ -998,6 +1010,11 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
       # non-api paths
       '/users/image/abc123'                                 => false,
       '/assets/images/logo.png'                             => false,
+
+      # second decode yields invalid UTF-8
+      '/assets/%FF'                                         => false,
+      '/api/v1/signout%FF'                                  => true,
+      '/api/v1/attachments/%FF/../signout'                  => true,
     }.each do |test_path, expected_unsafe|
       context "with #{test_path.inspect}" do
         let(:path) { test_path }
