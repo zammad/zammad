@@ -1026,7 +1026,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     panel = date_picker_panel
     hour  = twelve_hour_clock?(panel) ? datetime.strftime('%I') : datetime.strftime('%H')
 
-    # The number inputs apply their value once they are left.
+    # A time input applies its value once it is complete or left.
     panel.find('input[aria-label="Hours"]').fill_in(with: hour).send_keys(:tab)
     panel.find('input[aria-label="Minutes"]').fill_in(with: datetime.strftime('%M')).send_keys(:tab)
 

@@ -2,17 +2,17 @@
 
 <script setup lang="ts">
 import { isSameMonth, isToday } from 'date-fns'
-import { ref, useTemplateRef, watch } from 'vue'
+import { computed, ref, useTemplateRef } from 'vue'
 
 import {
   TIME_KINDS,
+  timeSegmentSpec,
   type SegmentKind,
 } from '#shared/components/Form/fields/FieldDate/dateFormat.ts'
 import FieldDateGrid from '#shared/components/Form/fields/FieldDate/FieldDateGrid.vue'
 import {
   MONTH_CELL_FORMAT,
   MONTH_TITLE_FORMAT,
-  padTime,
   useCalendarPanel,
   weekNumber,
   YEAR_FORMAT,
@@ -20,6 +20,8 @@ import {
 } from '#shared/components/Form/fields/FieldDate/useCalendarPanel.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+
+import { useTimeFieldEntry } from './useTimeFieldEntry.ts'
 
 interface Props extends CalendarPanelProps {
   // A leading column with the calendar week of each row.
@@ -105,42 +107,36 @@ const onPointerDown = () => {
   keyboardCursor.value = false
 }
 
-// What the user types stays untouched by re-renders until it is applied; the drafts follow the
-// applied time, and a refused entry snaps back to it.
-const hoursDraft = ref(hoursDisplay.value)
-const minutesDraft = ref(minutesDisplay.value)
+const hoursInput = useTemplateRef('hours-input')
+const minutesInput = useTemplateRef('minutes-input')
 
-watch(hoursDisplay, (value) => {
-  hoursDraft.value = value
+const hoursSpec = computed(() => timeSegmentSpec('hour', props.is24))
+const minutesSpec = computed(() => timeSegmentSpec('minute', props.is24))
+
+const hours = useTimeFieldEntry({
+  el: hoursInput,
+  spec: hoursSpec,
+  display: hoursDisplay,
+  apply: commitDisplayHour,
+  onComplete: () => minutesInput.value?.focus(),
+  onMove: (direction) => {
+    if (direction > 0) minutesInput.value?.focus()
+  },
 })
 
-watch(minutesDisplay, (value) => {
-  minutesDraft.value = value
+const minutes = useTimeFieldEntry({
+  el: minutesInput,
+  spec: minutesSpec,
+  display: minutesDisplay,
+  apply: (value) => commitTime(timeBase.value.getHours(), value),
+  onMove: (direction) => {
+    if (direction < 0) hoursInput.value?.focus()
+  },
 })
 
-const applyHours = () => {
-  const value = Number.parseInt(hoursDraft.value, 10)
-  const valid = props.is24 ? value >= 0 && value <= 23 : value >= 1 && value <= 12
-
-  if (Number.isNaN(value) || !valid) {
-    hoursDraft.value = hoursDisplay.value
-    return
-  }
-
-  commitDisplayHour(value)
-  hoursDraft.value = padTime(value)
-}
-
-const applyMinutes = () => {
-  const value = Number.parseInt(minutesDraft.value, 10)
-
-  if (Number.isNaN(value) || value < 0 || value > 59) {
-    minutesDraft.value = minutesDisplay.value
-    return
-  }
-
-  commitTime(timeBase.value.getHours(), value)
-  minutesDraft.value = padTime(value)
+const finishAndClose = (field: typeof hours) => {
+  field.finish()
+  emit('done')
 }
 
 const navigationButtonClasses = [
@@ -149,7 +145,7 @@ const navigationButtonClasses = [
 ]
 
 const timeInputClasses =
-  'w-16 rounded-md bg-blue-200 px-2 py-1 text-center text-sm text-contrast focus:outline-1 focus:-outline-offset-1 focus:outline-blue-800 dark:bg-gray-700'
+  'w-16 rounded-md bg-blue-200 px-2 py-1 text-center text-sm text-contrast tabular-nums focus:outline-1 focus:-outline-offset-1 focus:outline-blue-800 dark:bg-gray-700'
 </script>
 
 <template>
@@ -237,26 +233,50 @@ const timeInputClasses =
     <div v-else class="flex flex-col items-center gap-3 py-1">
       <div class="flex items-center gap-1.5">
         <input
-          v-model="hoursDraft"
+          ref="hours-input"
+          :value="hours.draft.value"
           :aria-label="$t('Hours')"
-          type="number"
-          :min="is24 ? 0 : 1"
-          :max="is24 ? 23 : 12"
+          type="text"
+          role="spinbutton"
+          inputmode="numeric"
+          autocomplete="off"
+          spellcheck="false"
+          :aria-valuemin="hoursSpec.min"
+          :aria-valuemax="hoursSpec.max"
+          :aria-valuenow="hours.valueNow.value"
           data-focus-target="true"
           :class="timeInputClasses"
-          @change="applyHours"
-          @keydown.enter.prevent="(applyHours(), emit('done'))"
+          @keydown="hours.onKeydown"
+          @keydown.enter.exact.prevent="finishAndClose(hours)"
+          @beforeinput="hours.onBeforeInput"
+          @paste="hours.onPaste"
+          @mousedown="hours.onMousedown"
+          @click="hours.onClick"
+          @focus="hours.onFocus"
+          @blur="hours.onBlur"
         />
         <span aria-hidden="true">:</span>
         <input
-          v-model="minutesDraft"
+          ref="minutes-input"
+          :value="minutes.draft.value"
           :aria-label="$t('Minutes')"
-          type="number"
-          min="0"
-          max="59"
+          type="text"
+          role="spinbutton"
+          inputmode="numeric"
+          autocomplete="off"
+          spellcheck="false"
+          :aria-valuemin="minutesSpec.min"
+          :aria-valuemax="minutesSpec.max"
+          :aria-valuenow="minutes.valueNow.value"
           :class="timeInputClasses"
-          @change="applyMinutes"
-          @keydown.enter.prevent="(applyMinutes(), emit('done'))"
+          @keydown="minutes.onKeydown"
+          @keydown.enter.exact.prevent="finishAndClose(minutes)"
+          @beforeinput="minutes.onBeforeInput"
+          @paste="minutes.onPaste"
+          @mousedown="minutes.onMousedown"
+          @click="minutes.onClick"
+          @focus="minutes.onFocus"
+          @blur="minutes.onBlur"
         />
         <button
           v-if="!is24"
