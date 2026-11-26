@@ -43,15 +43,15 @@ class EmailHelper
           config_set_verify_ssl(settings[:outbound], params)
 
           # probe inbound
-          Rails.logger.debug { "INBOUND PROBE PROVIDER: #{settings[:inbound].inspect}" }
+          Rails.logger.debug { "INBOUND PROBE PROVIDER: #{filter_for_log(settings[:inbound]).inspect}" }
           result_inbound = EmailHelper::Probe.inbound(settings[:inbound])
-          Rails.logger.debug { "INBOUND RESULT PROVIDER: #{result_inbound.inspect}" }
+          Rails.logger.debug { "INBOUND RESULT PROVIDER: #{filter_for_log(result_inbound).inspect}" }
           next if result_inbound[:result] != 'ok'
 
           # probe outbound
-          Rails.logger.debug { "OUTBOUND PROBE PROVIDER: #{settings[:outbound].inspect}" }
+          Rails.logger.debug { "OUTBOUND PROBE PROVIDER: #{filter_for_log(settings[:outbound]).inspect}" }
           result_outbound = EmailHelper::Probe.outbound(settings[:outbound], params[:email])
-          Rails.logger.debug { "OUTBOUND RESULT PROVIDER: #{result_outbound.inspect}" }
+          Rails.logger.debug { "OUTBOUND RESULT PROVIDER: #{filter_for_log(result_outbound).inspect}" }
           next if result_outbound[:result] != 'ok'
 
           return {
@@ -83,9 +83,9 @@ class EmailHelper
         # Add SSL verification flag to configuration, if needed.
         config_set_verify_ssl(config, params)
 
-        Rails.logger.debug { "INBOUND PROBE GUESS: #{config.inspect}" }
+        Rails.logger.debug { "INBOUND PROBE GUESS: #{filter_for_log(config).inspect}" }
         result_inbound = EmailHelper::Probe.inbound(config)
-        Rails.logger.debug { "INBOUND RESULT GUESS: #{result_inbound.inspect}" }
+        Rails.logger.debug { "INBOUND RESULT GUESS: #{filter_for_log(result_inbound).inspect}" }
 
         next if result_inbound[:result] != 'ok'
 
@@ -115,9 +115,9 @@ class EmailHelper
         # Add SSL verification flag to configuration, if needed.
         config_set_verify_ssl(config, params)
 
-        Rails.logger.debug { "OUTBOUND PROBE GUESS: #{config.inspect}" }
+        Rails.logger.debug { "OUTBOUND PROBE GUESS: #{filter_for_log(config).inspect}" }
         result_outbound = EmailHelper::Probe.outbound(config, params[:email])
-        Rails.logger.debug { "OUTBOUND RESULT GUESS: #{result_outbound.inspect}" }
+        Rails.logger.debug { "OUTBOUND RESULT GUESS: #{filter_for_log(result_outbound).inspect}" }
 
         next if result_outbound[:result] != 'ok'
 
@@ -133,7 +133,7 @@ class EmailHelper
           reason: 'outbound failed',
         }
       end
-      Rails.logger.debug { "PROBE FULL SUCCESS: #{result.inspect}" }
+      Rails.logger.debug { "PROBE FULL SUCCESS: #{filter_for_log(result).inspect}" }
       result
     end
 
@@ -333,6 +333,13 @@ class EmailHelper
         'Connection refused'                           => __('The connection was refused.'),
       }
     end
+
+    def self.filter_for_log(value)
+      return value if !value.is_a?(Hash)
+
+      ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters).filter(value)
+    end
+    private_class_method :filter_for_log
 
     def self.config_set_verify_ssl(config, params)
       return if !config[:options]

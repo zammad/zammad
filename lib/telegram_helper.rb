@@ -258,7 +258,7 @@ returns
 
   def to_user(params)
     Rails.logger.debug { 'Create user from message...' }
-    Rails.logger.debug { params.inspect }
+    Rails.logger.debug { filter_for_log(params).inspect }
 
     # do message_user lookup
     message_user = user(params)
@@ -306,7 +306,7 @@ returns
     UserInfo.current_user_id = user.id
 
     Rails.logger.debug { 'Create ticket from message...' }
-    Rails.logger.debug { params.inspect }
+    Rails.logger.debug { filter_for_log(params).inspect }
     Rails.logger.debug { user.inspect }
     Rails.logger.debug { group_id.inspect }
 
@@ -381,7 +381,7 @@ returns
     else
       Rails.logger.debug { 'Create article from message...' }
     end
-    Rails.logger.debug { params.inspect }
+    Rails.logger.debug { filter_for_log(params).inspect }
     Rails.logger.debug { user.inspect }
     Rails.logger.debug { ticket.inspect }
 
@@ -834,6 +834,14 @@ returns
     return false if !result.success? || !result.body
 
     true
+  end
+
+  private
+
+  def filter_for_log(params)
+    ActiveSupport::ParameterFilter
+      .new(Rails.application.config.filter_parameters)
+      .filter(params.try(:to_unsafe_h) || params)
   end
 
 end

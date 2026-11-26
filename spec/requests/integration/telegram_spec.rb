@@ -179,6 +179,20 @@ RSpec.describe 'Telegram Webhook Integration', type: :request do
           expect(ticket.articles.first.content_type).to eq('text/plain')
         end
 
+        it 'does not write the callback token into the debug log' do
+          channel.options[:callback_token] = 'webhook-callback-secret'
+          channel.save!
+
+          debug_log = []
+          allow(Rails.logger).to receive(:debug) { |*args, &block| debug_log << (block ? block.call : args.first).to_s }
+
+          post "/api/v1/channels_telegram_webhook/webhook-callback-secret?bid=#{bot_id}", params: read_message('private', 'text'), as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(debug_log).to include(a_string_including('Hello, I need your Help'))
+          expect(debug_log).to all(not_include('webhook-callback-secret'))
+        end
+
         it 'notes the Telegram username on a new user' do
           post callback_url, params: read_message('private', 'text'), as: :json
 

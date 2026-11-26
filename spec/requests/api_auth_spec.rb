@@ -438,6 +438,17 @@ RSpec.describe 'Api Auth', type: :request do
       expect(json_response.dig('data', 'currentUser', 'id')).to eq(Gql::ZammadSchema.id_from_object(agent))
     end
 
+    it 'does not write the token into the debug log', :aggregate_failures do
+      debug_log = []
+      allow(Rails.logger).to receive(:debug) { |*args, &block| debug_log << (block ? block.call : args.first).to_s }
+
+      get '/api/v1/tickets', headers: bearer_headers(access_token.plaintext_token), as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(debug_log).to be_present
+      expect(debug_log).to all(not_include(access_token.plaintext_token))
+    end
+
     it 'does oauth2 auth - expired token', :aggregate_failures do
       access_token.update!(created_at: 3.hours.ago)
 
