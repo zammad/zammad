@@ -17,13 +17,21 @@ RSpec.describe 'GraphQL', type: :request do
     let(:private_key_string) { 'private string to be redacted' }
     let(:password_string)    { 'testpassword' }
     let(:idp_cert_string)    { 'idp_cert_value' }
+    let(:otp_secret_string)  { 'OTPSECRETVALUE' }
 
     let(:variables) do
       {
-        testing:     testing_string,
-        privateKey:  private_key_string,
-        newPassword: password_string,
-        idpCert:     idp_cert_string
+        testing:        testing_string,
+        privateKey:     private_key_string,
+        newPassword:    password_string,
+        idpCert:        idp_cert_string,
+        configuration:  {
+          secret:           otp_secret_string,
+          provisioning_uri: "otpauth://totp/Zammad:agent?secret=#{otp_secret_string}&issuer=Zammad",
+        },
+        twoFactorSetup: {
+          provisioningUri: "otpauth://totp/Zammad:agent?secret=#{otp_secret_string}&issuer=Zammad",
+        },
       }
     end
 
@@ -38,6 +46,7 @@ RSpec.describe 'GraphQL', type: :request do
           .and(not_include(private_key_string))
           .and(not_include(password_string))
           .and(not_include(idp_cert_string))
+          .and(not_include(otp_secret_string))
       end
     end
   end

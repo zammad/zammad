@@ -120,6 +120,7 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
       end
 
       Setting.set('two_factor_authentication_recovery_codes', recover_codes_enabled)
+      allow(Rails.logger).to receive(:info).and_call_original
       post '/api/v1/users/two_factor/verify_configuration', params: params, as: :json
     end
 
@@ -137,6 +138,12 @@ RSpec.describe 'User', current_user_id: 1, performs_jobs: true, type: :request d
           payload:       verification_code,
           configuration: configuration,
         }
+      end
+
+      it 'does not log the authenticator app secret', :aggregate_failures do
+        expect(Rails.logger).to have_received(:info).with(%r{Parameters:}) do |message|
+          expect(message).to include('provisioning_uri').and(not_include(configuration[:secret]))
+        end
       end
 
       context 'with wrong verification code' do

@@ -18,6 +18,7 @@ Rails.application.config.filter_parameters += %i[
 Rails.application.config.filter_parameters += [
   %r{.+key}i,  # privateKey, apiKey, ...
   %r{.+cert}i, # idp_cert, idpCert, …
+  %r{provisioning_?uri}i, # otpauth:// URI carrying the authenticator app secret
 ]
 
 # NOTE: Besides this global logging filter, Zammad also masks/unmasks sensitive parameters in controllers,
