@@ -103,11 +103,11 @@ To execute this manually, just paste the following into the browser console
     request_origin = header_value('Origin')
 
     if request_origin.blank?
-      Rails.logger.warn 'WebSocket login ignored the session cookie, because the handshake carried no Origin header. Please make sure that the reverse proxy forwards it.'
+      Rails.logger.error 'WebSocket login ignored the session cookie, because the handshake carried no Origin header. Please make sure that the reverse proxy forwards it.'
       return
     end
 
-    Rails.logger.warn "WebSocket login ignored the session cookie, because the origin #{request_origin.inspect} does not match the configured origins (#{Zammad::WebSocketOrigins.configured.join(', ')}). Please check the settings http_type, fqdn and alternative_fqdn."
+    Rails.logger.error "WebSocket login ignored the session cookie, because the origin #{request_origin.inspect} does not match the configured origins (#{Zammad::WebSocketOrigins.configured.join(', ')}). Please check the settings http_type, fqdn and alternative_fqdn."
   end
 
   def session_cookie_value
