@@ -13,6 +13,7 @@ Rails.application.config.filter_parameters += %i[
 Rails.application.config.filter_parameters += %i[
   bind_pw credentials passphrase
   state.body state.article.body article.body article.attachments.data attachments.data body
+  state_current.value
 ]
 Rails.application.config.filter_parameters += [
   %r{.+key}i,  # privateKey, apiKey, ...

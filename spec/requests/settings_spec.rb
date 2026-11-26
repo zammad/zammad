@@ -204,6 +204,20 @@ RSpec.describe 'Settings', type: :request do
       expect(json_response.find { it['name'] == 'user_lost_password' }['state_current']['value']).to be(true)
     end
 
+    it 'does not log the value of a setting update', :aggregate_failures do
+      setting = Setting.find_by(name: 'proxy_password')
+
+      authenticated_as(admin)
+      allow(Rails.logger).to receive(:info)
+      put "/api/v1/settings/#{setting.id}", params: { id: setting.id, state_current: { value: 'logged_password' } }, as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(Setting.get('proxy_password')).to eq('logged_password')
+      expect(Rails.logger).to have_received(:info).with(%r{Parameters:}) do |message|
+        expect(message).to not_include('logged_password')
+      end
+    end
+
     # The key is only masked because it is spelled `api_key`, so a rename would leak it to every
     # reader of this endpoint without anything else failing.
     it 'masks the API key of LibreTranslate but not its URL' do
