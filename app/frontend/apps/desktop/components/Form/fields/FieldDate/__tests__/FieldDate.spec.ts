@@ -301,7 +301,7 @@ describe('Fields - FieldDate', () => {
 
       expect(emittedValues(view)).toEqual(['2021-04-15T08:00:00Z'])
       expect(view.getByLabelText('Date')).toHaveDisplayValue('2021-04-15 08:00')
-      expect(view.getByLabelText('Hours')).toHaveValue(8)
+      expect(view.getByLabelText('Hours')).toHaveDisplayValue('08')
     })
 
     it('picks today with the button', async () => {
@@ -1572,67 +1572,274 @@ describe('Fields - FieldDate', () => {
   })
 
   describe('time panel', () => {
-    it('defaults a picked date to the morning and adjusts the time', async () => {
+    const selection = (element: HTMLElement) => {
+      const input = element as HTMLInputElement
+
+      return [input.selectionStart, input.selectionEnd]
+    }
+
+    const pickDay = async (view: Awaited<ReturnType<typeof renderDateField>>) => {
+      await openPanel(view)
+      await view.events.click(view.getByRole('button', { name: 'Thursday, April 15th, 2021' }))
+      await waitForNextTick()
+    }
+
+    it('defaults a picked date to the morning and replaces the time by typing', async () => {
       const view = await renderDateField({ type: 'datetime' })
 
-      const input = view.getByLabelText('Date')
-
-      expect(input).toHaveDisplayValue('YYYY-MM-DD hh:mm')
-
-      await view.events.click(view.getByRole('button', { name: 'Choose date' }))
-      await view.events.click(view.getByRole('button', { name: 'Thursday, April 15th, 2021' }))
+      await pickDay(view)
 
       expect(emittedValues(view)).toEqual(['2021-04-15T08:00:00Z'])
-      expect(input).toHaveDisplayValue('2021-04-15 08:00')
-      expect(view.getByRole('dialog')).toBeInTheDocument()
+
+      const hours = view.getByLabelText('Hours')
+      const minutes = view.getByLabelText('Minutes')
+
+      expect(hours).toHaveDisplayValue('08')
+      expect(minutes).toHaveDisplayValue('00')
+      expect(hours).toHaveFocus()
+      expect(selection(hours)).toEqual([0, 2])
+
+      await view.events.keyboard('14')
+      await waitForNextTick()
+
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T14:00:00Z')
+      expect(hours).toHaveDisplayValue('14')
+      expect(minutes).toHaveFocus()
+      expect(selection(minutes)).toEqual([0, 2])
+
+      await view.events.keyboard('30')
+      await waitForNextTick()
+
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T14:30:00Z')
+      expect(minutes).toHaveDisplayValue('30')
+      expect(minutes).toHaveFocus()
+      expect(selection(minutes)).toEqual([0, 2])
+
+      await view.events.keyboard('{Enter}')
+
+      expect(view.getByLabelText('Date')).toHaveDisplayValue('2021-04-15 14:30')
+      expect(view.queryByRole('dialog')).not.toBeInTheDocument()
+    })
+
+    it('focuses the hours with the value selected after picking today', async () => {
+      const view = await renderDateField({ type: 'datetime' })
+
+      await openPanel(view)
+      await view.events.click(view.getByRole('button', { name: 'Today' }))
+      await waitForNextTick()
 
       const hours = view.getByLabelText('Hours')
 
-      expect(hours).toHaveValue(8)
-      expect(view.getByLabelText('Minutes')).toHaveValue(0)
+      expect(hours).toHaveFocus()
+      expect(selection(hours)).toEqual([0, 2])
+    })
 
+    it('completes a single digit and starts over on a digit beyond the range', async () => {
+      const view = await renderDateField({ type: 'datetime', value: '2021-04-10T15:30:00Z' })
+
+      await pickDay(view)
+
+      const hours = view.getByLabelText('Hours')
+      const minutes = view.getByLabelText('Minutes')
+
+      await view.events.keyboard('9')
+      await waitForNextTick()
+
+      expect(hours).toHaveDisplayValue('09')
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T09:30:00Z')
+      expect(minutes).toHaveFocus()
+
+      await view.events.keyboard('{ArrowLeft}')
       await waitForNextTick()
 
       expect(hours).toHaveFocus()
+      expect(selection(hours)).toEqual([0, 2])
 
-      await view.events.clear(hours)
-      await view.events.type(hours, '17')
+      await view.events.keyboard('2')
 
-      const minutes = view.getByLabelText('Minutes')
+      expect(hours).toHaveDisplayValue('02')
+      expect(hours).toHaveFocus()
 
-      await view.events.clear(minutes)
+      await view.events.keyboard('5')
+      await waitForNextTick()
 
-      expect(emittedValues(view).at(-1)).toBe('2021-04-15T17:00:00Z')
-      expect(hours).toHaveValue(17)
-
-      await view.events.type(minutes, '45{Enter}')
-
-      expect(emittedValues(view).at(-1)).toBe('2021-04-15T17:45:00Z')
-      expect(input).toHaveDisplayValue('2021-04-15 17:45')
-      expect(view.queryByRole('dialog')).not.toBeInTheDocument()
+      expect(hours).toHaveDisplayValue('05')
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T05:30:00Z')
+      expect(minutes).toHaveFocus()
     })
 
-    it('refuses an impossible time and keeps the applied one', async () => {
-      const view = await renderDateField({
-        type: 'datetime',
-        value: '2021-04-10T15:30:00Z',
-      })
+    it('completes a pending digit on a typed separator', async () => {
+      const view = await renderDateField({ type: 'datetime' })
 
-      await view.events.click(view.getByRole('button', { name: 'Change date, 2021-04-10 15:30' }))
-      await view.events.click(view.getByRole('button', { name: 'Thursday, April 15th, 2021' }))
+      await pickDay(view)
+      await view.events.keyboard('1:30')
+      await waitForNextTick()
+
+      expect(view.getByLabelText('Hours')).toHaveDisplayValue('01')
+      expect(view.getByLabelText('Minutes')).toHaveDisplayValue('30')
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T01:30:00Z')
+    })
+
+    it('completes a pending digit when the field is clicked again', async () => {
+      const view = await renderDateField({ type: 'datetime' })
+
+      await pickDay(view)
 
       const hours = view.getByLabelText('Hours')
 
-      await view.events.clear(hours)
-      await view.events.type(hours, '99')
-      await view.events.click(view.getByRole('button', { name: 'Done' }))
+      await view.events.keyboard('1')
+      await view.events.click(hours)
+      await waitForNextTick()
 
-      expect(hours).toHaveValue(15)
-      expect(emittedValues(view).at(-1)).toBe('2021-04-15T15:30:00Z')
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T01:00:00Z')
+      expect(hours).toHaveFocus()
+      expect(selection(hours)).toEqual([0, 2])
+
+      await view.events.keyboard('5')
+      await waitForNextTick()
+
+      expect(hours).toHaveDisplayValue('05')
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T05:00:00Z')
+    })
+
+    it('takes pasted text as if typed and drops what follows a complete value', async () => {
+      const view = await renderDateField({ type: 'datetime' })
+
+      await pickDay(view)
+      await view.events.paste('14:30')
+      await waitForNextTick()
+
+      expect(view.getByLabelText('Hours')).toHaveDisplayValue('14')
+      expect(view.getByLabelText('Minutes')).toHaveDisplayValue('00')
+      expect(view.getByLabelText('Minutes')).toHaveFocus()
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T14:00:00Z')
+    })
+
+    it('steps with the arrow keys, wraps at the bounds and keeps the value selected', async () => {
+      const view = await renderDateField({ type: 'datetime', value: '2021-04-10T23:59:00Z' })
+
+      await pickDay(view)
+
+      const hours = view.getByLabelText('Hours')
+      const minutes = view.getByLabelText('Minutes')
+
+      await view.events.keyboard('{ArrowUp}')
+      await waitForNextTick()
+
+      expect(hours).toHaveDisplayValue('00')
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T00:59:00Z')
+      expect(selection(hours)).toEqual([0, 2])
+
+      await view.events.keyboard('{ArrowRight}')
+      await waitForNextTick()
+
+      expect(minutes).toHaveFocus()
+      expect(selection(minutes)).toEqual([0, 2])
+
+      await view.events.keyboard('{ArrowUp}')
+      await waitForNextTick()
+
+      expect(minutes).toHaveDisplayValue('00')
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T00:00:00Z')
+
+      await view.events.keyboard('{ArrowDown}')
+      await waitForNextTick()
+
+      expect(minutes).toHaveDisplayValue('59')
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T00:59:00Z')
+      expect(selection(minutes)).toEqual([0, 2])
+    })
+
+    it('selects the value when a field is clicked', async () => {
+      const view = await renderDateField({ type: 'datetime' })
+
+      await pickDay(view)
+
+      const minutes = view.getByLabelText('Minutes')
+
+      await view.events.click(minutes)
+
+      expect(minutes).toHaveFocus()
+      expect(selection(minutes)).toEqual([0, 2])
+
+      // A browser would collapse the selection after a press into it; jsdom never does.
+      expect(
+        minutes.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true })),
+      ).toBe(false)
+
+      await view.events.click(minutes)
+
+      expect(minutes).toHaveFocus()
+      expect(selection(minutes)).toEqual([0, 2])
+    })
+
+    it('keeps a time moved by the bounds selected, if futureOnly present', async () => {
+      const view = await renderDateField({ type: 'datetime', futureOnly: true })
+
+      await openPanel(view)
+      await view.events.click(view.getByRole('button', { name: 'Tuesday, April 13th, 2021' }))
+      await waitForNextTick()
+
+      const hours = view.getByLabelText('Hours')
+
+      expect(emittedValues(view)).toEqual(['2021-04-13T11:10:00Z'])
+
+      await view.events.keyboard('{ArrowDown}')
+      await waitForNextTick()
+
+      expect(hours).toHaveDisplayValue('11')
+      expect(selection(hours)).toEqual([0, 2])
+      expect(emittedValues(view).at(-1)).toBe('2021-04-13T11:10:00Z')
+    })
+
+    it('applies a half-typed value on enter', async () => {
+      const view = await renderDateField({ type: 'datetime' })
+
+      await pickDay(view)
+      await view.events.keyboard('1{Enter}')
+
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T01:00:00Z')
       expect(view.queryByRole('dialog')).not.toBeInTheDocument()
     })
 
-    it('keeps the half of the day when an hour is entered on a 12-hour clock', async () => {
+    it('exposes the value shown as the value of the spinbutton', async () => {
+      const view = await renderDateField({ type: 'datetime' })
+
+      await pickDay(view)
+
+      const hours = view.getByRole('spinbutton', { name: 'Hours' })
+
+      expect(hours).toHaveAttribute('aria-valuenow', '8')
+
+      await view.events.keyboard('1')
+
+      expect(hours).toHaveDisplayValue('01')
+      expect(hours).toHaveAttribute('aria-valuenow', '1')
+
+      await view.events.keyboard('{Backspace}')
+
+      expect(hours).toHaveDisplayValue('')
+      expect(hours).not.toHaveAttribute('aria-valuenow')
+    })
+
+    it('restores an emptied value once the field is left', async () => {
+      const view = await renderDateField({ type: 'datetime', value: '2021-04-10T15:30:00Z' })
+
+      await pickDay(view)
+
+      const hours = view.getByLabelText('Hours')
+
+      await view.events.keyboard('{Backspace}')
+
+      expect(hours).toHaveDisplayValue('')
+
+      await view.events.tab()
+
+      expect(hours).toHaveDisplayValue('15')
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T15:30:00Z')
+    })
+
+    it('keeps the half of the day and refuses a zero hour on a 12-hour clock', async () => {
       i18n.setTranslationMap(new Map([['FORMAT_DATETIME', 'mm/dd/yyyy l:MM P']]))
 
       const view = await renderDateField({ type: 'datetime', value: '2021-04-10T15:30:00Z' })
@@ -1641,11 +1848,19 @@ describe('Fields - FieldDate', () => {
         view.getByRole('button', { name: 'Change date, 04/10/2021 03:30 pm' }),
       )
       await view.events.click(view.getByRole('button', { name: 'Thursday, April 15th, 2021' }))
+      await waitForNextTick()
 
       const hours = view.getByLabelText('Hours')
 
-      await view.events.clear(hours)
-      await view.events.type(hours, '12')
+      await view.events.keyboard('00')
+      await waitForNextTick()
+
+      expect(hours).toHaveDisplayValue('03')
+      expect(hours).toHaveFocus()
+      expect(selection(hours)).toEqual([0, 2])
+      expect(emittedValues(view).at(-1)).toBe('2021-04-15T15:30:00Z')
+
+      await view.events.keyboard('12')
       await view.events.click(view.getByRole('button', { name: 'Done' }))
 
       expect(emittedValues(view).at(-1)).toBe('2021-04-15T12:30:00Z')

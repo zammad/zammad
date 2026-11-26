@@ -38,6 +38,28 @@ const SEGMENT_SPECS: Record<string, SegmentSpec> = {
 SEGMENT_SPECS.m = SEGMENT_SPECS.mm
 SEGMENT_SPECS.d = SEGMENT_SPECS.dd
 
+// The groups of the time panel, which has an hour and a minute input of its own.
+export const timeSegmentSpec = (kind: 'hour' | 'minute', is24: boolean) => {
+  if (kind === 'minute') return SEGMENT_SPECS.MM
+
+  return is24 ? SEGMENT_SPECS.HH : SEGMENT_SPECS.l
+}
+
+// The digits typed into a group so far, extended by one. A digit that would leave the range
+// starts the entry over, and the entry is complete once it cannot take another digit.
+export const enterDigit = (spec: SegmentSpec, typed: string, digit: string) => {
+  let entry = typed + digit
+  if (Number(entry) > spec.max) entry = digit
+
+  return { entry, complete: entry.length >= spec.length || Number(entry) * 10 > spec.max }
+}
+
+export const wrap = (value: number, min: number, max: number) => {
+  if (value > max) return min
+  if (value < min) return max
+  return value
+}
+
 const TOKEN_PATTERN = /yyyy|yy|mm|dd|HH|MM|SS|m|d|l|P/g
 
 export const buildFormatParts = (localeFormat: string) => {

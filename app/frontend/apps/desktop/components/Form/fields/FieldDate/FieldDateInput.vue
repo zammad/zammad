@@ -362,14 +362,16 @@ const iconClasses =
     <!-- The groups are painted by the layer underneath, the input keeps the caret and paints the
       selection over it. The selection colors are opaque and explicit: the system ones are
       translucent on some platforms, letting the layer underneath show through, and their text
-      color differs, transparent on macOS. -->
+      color differs, transparent on macOS. Kerning is off in both: the layer underneath sets every
+      group apart, which drops the kerning pairs between them and lets it drift from the input. The
+      figures are tabular, so a changed digit does not shift the groups after it. -->
     <input
       :id="context.id"
       ref="input"
       :name="context.node.name"
       :class="[
         context.classes.input,
-        'relative z-1 grow text-transparent caret-black selection:bg-blue-800 selection:text-white dark:caret-white',
+        'relative z-1 grow text-transparent tabular-nums caret-black [font-kerning:none] selection:bg-blue-800 selection:text-white dark:caret-white',
       ]"
       type="text"
       role="spinbutton"
@@ -399,7 +401,7 @@ const iconClasses =
     <span
       v-if="segmented.text.value"
       ref="groups"
-      class="pointer-events-none absolute inset-y-0 inset-s-0 flex items-center overflow-hidden px-2.5 whitespace-pre text-contrast"
+      class="pointer-events-none absolute inset-y-0 inset-s-0 flex items-center overflow-hidden px-2.5 whitespace-pre text-contrast tabular-nums [font-kerning:none]"
       aria-hidden="true"
       data-test-id="field-date-groups"
     >

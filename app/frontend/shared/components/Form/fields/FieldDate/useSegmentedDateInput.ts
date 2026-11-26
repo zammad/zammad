@@ -6,8 +6,10 @@ import { computed, ref, watch, type Ref } from 'vue'
 import {
   buildFormatParts,
   completeYear,
+  enterDigit,
   TIME_KINDS,
   toDateFnsFormat,
+  wrap,
   type SegmentKind,
   type SegmentSpec,
   type YearWindow,
@@ -44,12 +46,6 @@ const defaultTimeValue = (spec: SegmentSpec, time: TimeOfDay) => {
   if (!TIME_KINDS.has(spec.kind)) return null
 
   return formatDate(new Date(2000, 0, 1, time.hours, time.minutes), spec.token)
-}
-
-const wrap = (value: number, min: number, max: number) => {
-  if (value > max) return min
-  if (value < min) return max
-  return value
 }
 
 export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => {
@@ -299,13 +295,12 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
 
     if (spec.kind === 'meridiem') return
 
-    let candidate = typed + digit
-    if (Number(candidate) > spec.max) candidate = digit
+    const { entry, complete } = enterDigit(spec, typed, digit)
 
-    values.value[index] = candidate
-    typed = candidate
+    values.value[index] = entry
+    typed = entry
 
-    if (candidate.length >= spec.length || Number(candidate) * 10 > spec.max) advance()
+    if (complete) advance()
     else selectActive()
   }
 

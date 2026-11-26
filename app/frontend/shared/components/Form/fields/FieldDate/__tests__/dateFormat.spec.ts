@@ -1,6 +1,14 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { buildFormatParts, completeYear, expandYear, toDateFnsFormat } from '../dateFormat.ts'
+import {
+  buildFormatParts,
+  completeYear,
+  enterDigit,
+  expandYear,
+  timeSegmentSpec,
+  toDateFnsFormat,
+  wrap,
+} from '../dateFormat.ts'
 
 describe('dateFormat', () => {
   it('splits a locale format into groups and literals', () => {
@@ -59,5 +67,32 @@ describe('dateFormat', () => {
     expect(parts.flatMap((part) => (part.type === 'segment' ? [part.spec.length] : []))).toEqual([
       2, 2, 4,
     ])
+  })
+
+  it('takes the hour and minute groups of the time panel from the clock', () => {
+    expect(timeSegmentSpec('hour', true)).toMatchObject({ min: 0, max: 23 })
+    expect(timeSegmentSpec('hour', false)).toMatchObject({ min: 1, max: 12 })
+    expect(timeSegmentSpec('minute', false)).toMatchObject({ min: 0, max: 59 })
+  })
+
+  it('completes a typed group once it cannot take another digit', () => {
+    const hour = timeSegmentSpec('hour', true)
+
+    expect(enterDigit(hour, '', '1')).toEqual({ entry: '1', complete: false })
+    expect(enterDigit(hour, '1', '4')).toEqual({ entry: '14', complete: true })
+    expect(enterDigit(hour, '', '9')).toEqual({ entry: '9', complete: true })
+    expect(enterDigit(hour, '2', '5')).toEqual({ entry: '5', complete: true })
+
+    const twelveHour = timeSegmentSpec('hour', false)
+
+    expect(enterDigit(twelveHour, '', '2')).toEqual({ entry: '2', complete: true })
+    expect(enterDigit(twelveHour, '1', '3')).toEqual({ entry: '3', complete: true })
+  })
+
+  it('wraps a stepped value at the bounds', () => {
+    expect(wrap(24, 0, 23)).toBe(0)
+    expect(wrap(-1, 0, 59)).toBe(59)
+    expect(wrap(13, 1, 12)).toBe(1)
+    expect(wrap(7, 0, 23)).toBe(7)
   })
 })
