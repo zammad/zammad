@@ -90,8 +90,8 @@ QUnit.test('audit log diff stringifies non-string and empty values', assert => {
   var removed = el.find('.audit-log-diff-line--removed').map(function() { return $(this).text() }).get()
   var added   = el.find('.audit-log-diff-line--added').map(function() { return $(this).text() }).get()
 
-  assert.deepEqual(removed, ['-active: true', '-note: ', '-preferences: {"vip":false}'], 'non-string values are stringified in removed lines')
-  assert.deepEqual(added, ['+active: false', '+note: VIP', '+preferences: {"vip":true}'], 'non-string values are stringified in added lines')
+  assert.deepEqual(removed, ['-active: true', '-note: ', '-preferences.vip: false'], 'non-string values are stringified in removed lines')
+  assert.deepEqual(added, ['+active: false', '+note: VIP', '+preferences.vip: true'], 'non-string values are stringified in added lines')
 });
 
 QUnit.test('audit log diff shows empty state without changes', assert => {
@@ -164,4 +164,121 @@ QUnit.test('audit log diff sorts keys case-insensitively', assert => {
   var added = el.find('.audit-log-diff-line--added').map(function() { return $(this).text() }).get()
 
   assert.deepEqual(added, ['+admin team: ["read"]', '+Backoffice: ["change"]', '+Sales: ["full"]'], 'keys are sorted case-insensitively')
+});
+
+QUnit.test('audit log diff shows only changed nested values of hashes', assert => {
+  $('#forms').append('<hr><h1>audit log diff nested values</h1><form id="form8"></form>')
+
+  var el = $('#form8')
+
+  new App.ControllerForm({
+    el: el,
+    model: {
+      configure_attributes: [
+        { name: 'diff', display: 'Changes', tag: 'audit_log_diff', null: true },
+      ]
+    },
+    params: {
+      value_from: {
+        name:        'Example LDAP',
+        preferences: {
+          host:           'ldap.example.com',
+          ssl:            'starttls',
+          group_role_map: { 'cn=admins,dc=example,dc=com': [1], 'cn=agents,dc=example,dc=com': [2], 'cn=old,dc=example,dc=com': [3] },
+          user_attributes: ['uid', 'mail'],
+        },
+      },
+      value_to: {
+        name:        'Example LDAP',
+        preferences: {
+          host:           'ldap.example.com',
+          ssl:            'ssl',
+          group_role_map: { 'cn=admins,dc=example,dc=com': [1], 'cn=agents,dc=example,dc=com': [2, 3], 'cn=new,dc=example,dc=com': [3] },
+          user_attributes: ['uid', 'mail'],
+        },
+      },
+      preferences: { changed_attributes: ['preferences'] },
+    },
+    autofocus: false
+  });
+
+  var removed = el.find('.audit-log-diff-line--removed').map(function() { return $(this).text() }).get()
+  var added   = el.find('.audit-log-diff-line--added').map(function() { return $(this).text() }).get()
+
+  assert.deepEqual(removed, ['-preferences.group_role_map.cn=agents,dc=example,dc=com: [2]', '-preferences.group_role_map.cn=old,dc=example,dc=com: [3]', '-preferences.ssl: starttls'], 'only changed nested values are rendered as removed')
+  assert.deepEqual(added, ['+preferences.group_role_map.cn=agents,dc=example,dc=com: [2,3]', '+preferences.group_role_map.cn=new,dc=example,dc=com: [3]', '+preferences.ssl: ssl'], 'only changed nested values are rendered as added')
+});
+
+QUnit.test('audit log diff shows only the masked nested values if nothing else changed', assert => {
+  $('#forms').append('<hr><h1>audit log diff masked nested values</h1><form id="form9"></form>')
+
+  var el = $('#form9')
+
+  new App.ControllerForm({
+    el: el,
+    model: {
+      configure_attributes: [
+        { name: 'diff', display: 'Changes', tag: 'audit_log_diff', null: true },
+      ]
+    },
+    params: {
+      value_from:  { preferences: { host: 'ldap.example.com', bind_pw: '**********', group_role_map: { 'cn=admins,dc=example,dc=com': [1] } } },
+      value_to:    { preferences: { host: 'ldap.example.com', bind_pw: '**********', group_role_map: { 'cn=admins,dc=example,dc=com': [1] } } },
+      preferences: { changed_attributes: ['preferences'] },
+    },
+    autofocus: false
+  });
+
+  assert.equal(el.find('.audit-log-diff-line').length, 2, 'only the masked nested value is rendered')
+  assert.equal(el.find('.audit-log-diff-line--removed').text(), '-preferences.bind_pw: **********', 'removed line shows the masked old value')
+  assert.equal(el.find('.audit-log-diff-line--added').text(), '+preferences.bind_pw: **********', 'added line shows the masked new value')
+});
+
+QUnit.test('audit log diff shows the whole hash if neither visible nor masked nested values changed', assert => {
+  $('#forms').append('<hr><h1>audit log diff unchanged nested values</h1><form id="form10"></form>')
+
+  var el = $('#form10')
+
+  new App.ControllerForm({
+    el: el,
+    model: {
+      configure_attributes: [
+        { name: 'diff', display: 'Changes', tag: 'audit_log_diff', null: true },
+      ]
+    },
+    params: {
+      value_from:  { preferences: { host: 'ldap.example.com' } },
+      value_to:    { preferences: { host: 'ldap.example.com' } },
+      preferences: { changed_attributes: ['preferences'] },
+    },
+    autofocus: false
+  });
+
+  assert.equal(el.find('.audit-log-diff-line--removed').text(), '-preferences: {"host":"ldap.example.com"}', 'removed line shows the whole old value')
+  assert.equal(el.find('.audit-log-diff-line--added').text(), '+preferences: {"host":"ldap.example.com"}', 'added line shows the whole new value')
+});
+
+QUnit.test('audit log diff shows only the visible nested values if masked values changed as well', assert => {
+  $('#forms').append('<hr><h1>audit log diff masked and visible nested values</h1><form id="form11"></form>')
+
+  var el = $('#form11')
+
+  new App.ControllerForm({
+    el: el,
+    model: {
+      configure_attributes: [
+        { name: 'diff', display: 'Changes', tag: 'audit_log_diff', null: true },
+      ]
+    },
+    params: {
+      value_from:  { preferences: { host: 'ldap.example.com', bind_pw: '**********' } },
+      value_to:    { preferences: { host: 'ldap2.example.com', bind_pw: '**********' } },
+      preferences: { changed_attributes: ['preferences'] },
+    },
+    autofocus: false
+  });
+
+  assert.equal(el.find('.audit-log-diff-line').length, 2, 'only the visible nested value is rendered')
+  assert.equal(el.find('.audit-log-diff-line--removed').text(), '-preferences.host: ldap.example.com', 'removed line shows the old visible value')
+  assert.equal(el.find('.audit-log-diff-line--added').text(), '+preferences.host: ldap2.example.com', 'added line shows the new visible value')
 });
