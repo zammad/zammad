@@ -139,8 +139,7 @@ end
 RSpec.configure do |config|
   config.include PlaywrightNative::Page, type: :playwright
 
-  # have_text compares the whole text, so parts of it go through contain_text. playwright-ruby-client
-  #   1.64 still matches a part with have_text as well (YusukeIwaki/playwright-ruby-client#401).
+  # have_text compares the whole text, so parts of it go through contain_text.
   config.include Playwright::Test::Matchers, type: :playwright
 
   config.before(:each, type: :playwright) do |example|

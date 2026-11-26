@@ -10,7 +10,7 @@ require 'capybara/playwright'
 # The patches below reach into gem internals, so they are written against this
 #   exact version. On an upgrade: check whether they were fixed upstream, drop
 #   what is obsolete, then bump the pin here.
-if Gem.loaded_specs['capybara-playwright-driver'].version != Gem::Version.new('0.5.14')
+if Gem.loaded_specs['capybara-playwright-driver'].version != Gem::Version.new('0.5.15')
   raise 'capybara-playwright-driver was updated - re-evaluate the patches in ' \
         "#{__FILE__} against the new version, then adjust the version pin."
 end
