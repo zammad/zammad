@@ -1,6 +1,8 @@
 # Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Mutations
+  # Unlike the other two-factor mutations, this one needs no password revalidation token: the default
+  #   method is only preselected in the login form, login accepts every configured method.
   class User::Current::TwoFactor::SetDefaultMethod < BaseMutation
     description 'Sets given two factor authentication method as default'
 

@@ -3,6 +3,8 @@
 class User::TwoFactorsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
+  # The default method is only preselected in the login form, login accepts every configured method,
+  #   so changing it needs no password re-authentication.
   before_action :validate_token!, except: %i[personal_configuration default_authentication_method]
 
   def remove_authentication_method

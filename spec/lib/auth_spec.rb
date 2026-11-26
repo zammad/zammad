@@ -175,6 +175,20 @@ RSpec.describe Auth do
               expect(instance.valid!).to be true
             end
           end
+
+          # Setting the default method needs no password re-authentication only as long as this holds.
+          context 'when another method is the default' do
+            before do
+              Setting.set('two_factor_authentication_method_security_keys', true)
+              create(:user_two_factor_preference, :security_keys, user: user)
+              user.reload.preferences[:two_factor_authentication][:default] = 'security_keys'
+              user.save!
+            end
+
+            it 'allows the log-in' do
+              expect(instance.valid!).to be true
+            end
+          end
         end
 
       end
