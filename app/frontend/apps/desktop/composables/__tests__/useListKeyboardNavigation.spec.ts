@@ -3,14 +3,9 @@
 import { useTemplateRef } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
-import { getTestRouter } from '#tests/support/components/renderComponent.ts'
-
-import {
-  getOverlayContainerMeta,
-  getRouteIdentifier,
-} from '#desktop/composables/useOverlayContainer.ts'
 
 import { useListKeyboardNavigation } from '../useListKeyboardNavigation.ts'
+import { useCoveringOverlay } from '../useOverlayCoverage.ts'
 
 const renderList = (onLeave = vi.fn((_key: string) => true)) => {
   const wrapper = renderComponent(
@@ -35,16 +30,20 @@ const renderList = (onLeave = vi.fn((_key: string) => true)) => {
   return { wrapper, rows: wrapper.getAllByRole('row'), onLeave }
 }
 
-describe('useListKeyboardNavigation', () => {
-  const { opened: openedDialogs, options: dialogOptions } = getOverlayContainerMeta('dialog')
-
-  const pageIdentifier = () => getRouteIdentifier(getTestRouter().currentRoute.value)
-
-  afterEach(() => {
-    openedDialogs.value.clear()
-    dialogOptions.clear()
+const renderOverlay = (isShown: boolean) =>
+  renderComponent({
+    template: '<div />',
+    setup: () => {
+      useCoveringOverlay({
+        id: 'dialog-overlay',
+        element: null,
+        isShown,
+        coversApplication: false,
+      })
+    },
   })
 
+describe('useListKeyboardNavigation', () => {
   it('enters the list with the arrow keys while nothing has the focus', async () => {
     const { wrapper, rows } = renderList()
 
@@ -53,30 +52,20 @@ describe('useListKeyboardNavigation', () => {
     expect(rows[0]).toHaveFocus()
   })
 
-  it.each([
-    ['of the page', () => `some-dialog_${pageIdentifier()}`],
-    ['shown globally', () => 'global-dialog'],
-  ])('does not enter the list while a dialog %s is open', async (_, dialogName) => {
+  it('does not enter the list while a dialog or side panel covers the page', async () => {
     const { wrapper, rows } = renderList()
 
-    await getTestRouter().isReady()
-
-    dialogOptions.set('global-dialog', {
-      name: 'global-dialog',
-      component: vi.fn().mockResolvedValue({}),
-      global: true,
-    })
-    openedDialogs.value.add(dialogName())
+    renderOverlay(true)
 
     await wrapper.events.keyboard('{ArrowDown}')
 
     expect(rows[0]).not.toHaveFocus()
   })
 
-  it('enters the list while only a dialog of another page is open', async () => {
+  it('enters the list while only an overlay of a page in the background is open', async () => {
     const { wrapper, rows } = renderList()
 
-    openedDialogs.value.add('some-dialog_TicketDetailView_42')
+    renderOverlay(false)
 
     await wrapper.events.keyboard('{ArrowDown}')
 

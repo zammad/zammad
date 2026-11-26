@@ -8,6 +8,8 @@ import { imageViewerOptions } from '#shared/composables/useImageViewer.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
+import { useOverlayCoverage } from '#desktop/composables/useOverlayCoverage.ts'
+
 import CommonImageViewer from '../CommonImageViewer.vue'
 
 const images = [
@@ -48,6 +50,26 @@ describe('CommonImageViewer', () => {
     await wrapper.events.click(await wrapper.findByRole('button', { name: 'Close image preview' }))
 
     expect(imageViewerOptions.value.visible).toBe(false)
+  })
+
+  it('covers the whole application while an image is shown', async () => {
+    renderComponent(CommonImageViewer)
+
+    const { shownOverlays } = useOverlayCoverage()
+
+    expect(shownOverlays.value).toEqual([])
+
+    imageViewerOptions.value = { visible: true, index: 0, images }
+
+    await waitFor(() =>
+      expect(shownOverlays.value).toEqual([
+        expect.objectContaining({ id: 'image-viewer', coversApplication: true }),
+      ]),
+    )
+
+    imageViewerOptions.value = { ...imageViewerOptions.value, visible: false }
+
+    await waitFor(() => expect(shownOverlays.value).toEqual([]))
   })
 
   describe('image navigation', () => {

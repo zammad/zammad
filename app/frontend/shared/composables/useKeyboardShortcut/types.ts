@@ -10,6 +10,10 @@ export type KeyboardShortcutPlatform = 'mac' | 'other'
 
 export type KeyboardShortcutPlatformValue<T> = Record<KeyboardShortcutPlatform, T>
 
+// What a key press acts on, which an open dialog or side panel may cover: the navigation of the
+//   application, the page shown, the element with the focus, or nothing that can be covered.
+export type KeyboardShortcutReach = 'application' | 'page' | 'focus' | 'anywhere'
+
 // Stated on a row every user may use, and on a row whose `show` is the whole gate. A row
 //   without a permission does not exist, so that adding one forces the decision.
 export const EVERY_USER = '*'
@@ -37,6 +41,8 @@ export interface KeyboardShortcutEntry<
   // The steps to press one after another, each with the keys shown side by side.
   displayKeys: KeyboardShortcutPlatformValue<string[][]>
   governedBySwitch: GovernedBySwitch
+  // Stated by every row the registry binds, see `registryShortcut`.
+  reach?: KeyboardShortcutReach
 }
 
 interface KeyboardShortcutSubGroup {
@@ -64,6 +70,7 @@ export type BoundEntryOptions<Key extends string> = BaseEntryOptions<Key> & {
   //   Otherwise the row shows as its first combination.
   sideBySide?: boolean
   displayKeys?: never
+  reach?: KeyboardShortcutReach
 }
 
 // A row without a binding of its own has nothing to derive its keys from.
@@ -71,6 +78,7 @@ export type UnboundEntryOptions<Key extends string> = BaseEntryOptions<Key> & {
   combinations?: never
   sideBySide?: never
   displayKeys: string[][]
+  reach?: never
 }
 
 export type UnboundEntry<
@@ -105,3 +113,16 @@ export interface KeyboardShortcutPress {
 }
 
 export type KeyboardShortcutHandler = (press: KeyboardShortcutPress) => void
+
+/**
+ * Knows what currently covers the screen, which only the app does. Without one, every shortcut
+ *   reaches what it acts on.
+ */
+export interface KeyboardShortcutReachGuard {
+  isReachable: (reach: KeyboardShortcutReach) => boolean
+  // Runs before the handler of a reachable shortcut, to take away what lies over its target.
+  beforeRun?: (
+    key: RegistryKeyboardShortcutKey,
+    reach: KeyboardShortcutReach,
+  ) => Promise<void> | void
+}

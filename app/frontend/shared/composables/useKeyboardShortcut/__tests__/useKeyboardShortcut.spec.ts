@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
+import { provide, ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -8,6 +8,7 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 
+import { KEYBOARD_SHORTCUT_REACH_GUARD } from '../keyboardShortcutReach.ts'
 import { REPEATED_PRESS_WINDOW, useKeyboardShortcut } from '../useKeyboardShortcut.ts'
 import { KEYBOARD_SHORTCUTS_STORAGE_KEY } from '../useKeyboardShortcutsEnabled.ts'
 
@@ -16,6 +17,7 @@ import { changeStoredFlag } from './support/changeStoredFlag.ts'
 import type {
   KeyboardShortcutHandler,
   KeyboardShortcutOptions,
+  KeyboardShortcutReachGuard,
   RegistryKeyboardShortcutKey,
 } from '../types.ts'
 
@@ -389,6 +391,88 @@ describe('useKeyboardShortcut', () => {
       await wrapper.events.keyboard('.')
 
       expect(counts(handler)).toEqual([1, 1, 1])
+    })
+  })
+
+  describe('reach guard', () => {
+    const mountGuardedShortcut = (
+      key: RegistryKeyboardShortcutKey,
+      handler: KeyboardShortcutHandler,
+      guard: KeyboardShortcutReachGuard,
+    ) =>
+      renderComponent(
+        {
+          components: {
+            Shortcut: {
+              template: '<div />',
+              setup: () => {
+                useKeyboardShortcut(key, handler)
+              },
+            },
+          },
+          template: '<Shortcut />',
+          setup: () => {
+            provide(KEYBOARD_SHORTCUT_REACH_GUARD, guard)
+          },
+        },
+        { store: true },
+      )
+
+    it('leaves the key alone while what the shortcut acts on is out of reach', async () => {
+      const handler = vi.fn()
+      const isReachable = vi.fn(() => false)
+      const wrapper = mountGuardedShortcut('update-as-closed', handler, { isReachable })
+
+      const pressed: boolean[] = []
+      const recordKey = (event: KeyboardEvent) => {
+        if (event.key.toLowerCase() === 'c') pressed.push(event.defaultPrevented)
+      }
+      window.addEventListener('keydown', recordKey)
+
+      await wrapper.events.keyboard('{Shift>}c{/Shift}')
+
+      window.removeEventListener('keydown', recordKey)
+
+      expect(isReachable).toHaveBeenCalledWith('page')
+      expect(handler).not.toHaveBeenCalled()
+      expect(pressed).toEqual([false])
+    })
+
+    it('runs the handler once what lies over its target is taken away', async () => {
+      const handler = vi.fn()
+
+      let clearWay = () => {}
+      const beforeRun = vi.fn(
+        () =>
+          new Promise<void>((resolve) => {
+            clearWay = resolve
+          }),
+      )
+
+      const wrapper = mountGuardedShortcut('dashboard', handler, {
+        isReachable: () => true,
+        beforeRun,
+      })
+
+      await wrapper.events.keyboard('h')
+
+      expect(beforeRun).toHaveBeenCalledWith('dashboard', 'application')
+      expect(handler).not.toHaveBeenCalled()
+
+      clearWay()
+      await vi.waitFor(() => expect(handler).toHaveBeenCalledOnce())
+    })
+
+    it('runs the handler right away when nothing lies over its target', async () => {
+      const handler = vi.fn()
+      const wrapper = mountGuardedShortcut('dashboard', handler, {
+        isReachable: () => true,
+        beforeRun: () => undefined,
+      })
+
+      await wrapper.events.keyboard('h')
+
+      expect(handler).toHaveBeenCalledOnce()
     })
   })
 })

@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { useEventListener } from '@vueuse/core'
-import { effectScope, toValue } from 'vue'
+import { effectScope, hasInjectionContext, inject, toValue } from 'vue'
 
 import { useKeyboardShortcutEventBus } from '#shared/composables/useKeyboardEventBus/useKeyboardEventBus.ts'
 import getUuid from '#shared/utils/getUuid.ts'
@@ -17,6 +17,7 @@ import {
   getKeyboardShortcutCombinations,
   isKeyboardShortcutAvailable,
 } from './keyboardShortcutCatalogue.ts'
+import { KEYBOARD_SHORTCUT_REACH_GUARD } from './keyboardShortcutReach.ts'
 import { useKeyboardShortcutsEnabled } from './useKeyboardShortcutsEnabled.ts'
 
 import type {
@@ -79,9 +80,16 @@ export const useKeyboardShortcut = (
 
   const entry = getKeyboardShortcut(key)
 
+  const reachGuard = hasInjectionContext()
+    ? inject(KEYBOARD_SHORTCUT_REACH_GUARD, undefined)
+    : undefined
+
+  const { reach } = entry
+
   const isActive = () => {
     if (!isEnabled.value) return false
     if (!isKeyboardShortcutAvailable(entry)) return false
+    if (reachGuard && reach && !reachGuard.isReachable(reach)) return false
     if (options.onlyOutsideInputs && isTextEntry()) return false
     if (options.onlyWithoutSelection && hasSelection()) return false
     if (options.enabled !== undefined && !toValue(options.enabled)) return false
@@ -93,7 +101,13 @@ export const useKeyboardShortcut = (
     const { shortcutKey } = useKeyboardShortcutEventBus(combination, {
       key: getUuid(),
       isActive,
-      handler: (event) => handler({ event, count: countPress(shortcutKey) }),
+      handler: (event) => {
+        const press = { event, count: countPress(shortcutKey) }
+        const preparation = reach && reachGuard?.beforeRun?.(key, reach)
+
+        if (preparation) preparation.then(() => handler(press))
+        else handler(press)
+      },
     })
   })
 

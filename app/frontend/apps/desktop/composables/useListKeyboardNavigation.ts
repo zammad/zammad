@@ -2,13 +2,9 @@
 
 import { useEventListener } from '@vueuse/core'
 import { onActivated, onDeactivated, toValue, type MaybeRefOrGetter } from 'vue'
-import { useRouter } from 'vue-router'
 
 import { focusTableRow } from '#desktop/components/CommonTable/useTableRowNavigation.ts'
-import {
-  getOverlayContainerMeta,
-  getRouteIdentifier,
-} from '#desktop/composables/useOverlayContainer.ts'
+import { useOverlayCoverage } from '#desktop/composables/useOverlayCoverage.ts'
 
 type LeavingKey = 'ArrowLeft' | 'ArrowRight' | 'ArrowUp'
 
@@ -27,17 +23,6 @@ const isLeavingKey = (key: string): key is LeavingKey =>
   key === 'ArrowLeft' || key === 'ArrowRight' || key === 'ArrowUp'
 
 const isNothingFocused = () => !document.activeElement || document.activeElement === document.body
-
-// A dialog or flyout over the page keeps the keys, also where nothing in it has the focus. Those
-//   of pages kept alive in the background stay open but are not shown.
-const isOverlayOverPage = (pageIdentifier: string) =>
-  (['dialog', 'flyout'] as const).some((type) => {
-    const { opened, options } = getOverlayContainerMeta(type)
-
-    return Array.from(opened.value).some(
-      (name) => name.endsWith(`_${pageIdentifier}`) || !!options.get(name)?.global,
-    )
-  })
 
 /**
  * Lets the arrow keys reach the rows of the page's list: while nothing has the focus, `▲` and
@@ -60,15 +45,15 @@ export const useListKeyboardNavigation = ({
     isPageShown = false
   })
 
-  const router = useRouter()
+  // A dialog or side panel over the page keeps the keys, also where nothing in it has the focus.
+  const { isPageCovered } = useOverlayCoverage()
 
   const focusList = () => focusTableRow(toValue(list))
 
   useEventListener(window, 'keydown', (event: KeyboardEvent) => {
     if (!isPageShown || event.defaultPrevented || hasModifier(event)) return
     if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return
-    if (!isNothingFocused() || isOverlayOverPage(getRouteIdentifier(router.currentRoute.value)))
-      return
+    if (!isNothingFocused() || isPageCovered.value) return
 
     if (focusList() || onEmpty?.()) event.preventDefault()
   })

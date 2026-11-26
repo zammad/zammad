@@ -1,7 +1,11 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-withDefaults(
+import { useAttrs, useId, useTemplateRef } from 'vue'
+
+import { useCoveringOverlay } from '#desktop/composables/useOverlayCoverage.ts'
+
+const props = withDefaults(
   defineProps<{
     /**
      * The selector of the element to teleport the backdrop to.
@@ -25,10 +29,19 @@ withDefaults(
 defineEmits<{
   'click-background': []
 }>()
+
+const fallbackId = useId()
+
+useCoveringOverlay({
+  id: String(useAttrs().id ?? fallbackId),
+  element: useTemplateRef<HTMLElement>('container'),
+  isShown: () => props.showBackdrop,
+  coversApplication: () => props.fullscreen,
+})
 </script>
 
 <template>
-  <component :is="tag" :role="tag === 'div' ? 'dialog' : 'complementary'">
+  <component :is="tag" ref="container" :role="tag === 'div' ? 'dialog' : 'complementary'">
     <slot />
 
     <Teleport

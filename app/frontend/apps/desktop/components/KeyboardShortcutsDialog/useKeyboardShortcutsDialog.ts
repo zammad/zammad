@@ -14,24 +14,27 @@ import {
 export const KEYBOARD_SHORTCUTS_DIALOG_NAME = 'keyboard-shortcuts'
 
 export const openKeyboardShortcutsDialog = async () => {
-  // The user menu stays reachable by its shortcut while the dialog is open.
   if (isDialogOpened(KEYBOARD_SHORTCUTS_DIALOG_NAME)) return
 
   return openDialog(KEYBOARD_SHORTCUTS_DIALOG_NAME, {}, true)
 }
 
-export const toggleKeyboardShortcutsDialog = () => {
-  if (isDialogOpened(KEYBOARD_SHORTCUTS_DIALOG_NAME))
-    return closeDialog(KEYBOARD_SHORTCUTS_DIALOG_NAME, true)
+// Nothing to wait for while the dialog is closed.
+export const closeKeyboardShortcutsDialog = () =>
+  isDialogOpened(KEYBOARD_SHORTCUTS_DIALOG_NAME)
+    ? closeDialog(KEYBOARD_SHORTCUTS_DIALOG_NAME, true)
+    : undefined
 
-  return openKeyboardShortcutsDialog()
-}
+export const toggleKeyboardShortcutsDialog = () =>
+  isDialogOpened(KEYBOARD_SHORTCUTS_DIALOG_NAME)
+    ? closeKeyboardShortcutsDialog()
+    : openKeyboardShortcutsDialog()
 
 // This should only be called once from AppDesktop.vue
 export const initializeKeyboardShortcutsDialog = () => {
   // The dialog is shown on every route, so it would stay open over the login after a logout.
   watch(toRef(useAuthenticationStore(), 'authenticated'), (authenticated) => {
-    if (!authenticated) closeDialog(KEYBOARD_SHORTCUTS_DIALOG_NAME, true)
+    if (!authenticated) closeKeyboardShortcutsDialog()
   })
 
   useDialog({

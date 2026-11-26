@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
+import { ref, toValue } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
@@ -8,11 +9,18 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 import Form from '#shared/components/Form/Form.vue'
 
 import { useFormSubmitShortcut } from '#desktop/composables/useFormSubmitShortcut.ts'
+import { useOverlayCoverage } from '#desktop/composables/useOverlayCoverage.ts'
 
 import CommonDialog from '../CommonDialog.vue'
 import { getDialogMeta, useDialog } from '../useDialog.ts'
 
 const html = String.raw
+
+const { isSmallScreen } = vi.hoisted(() => ({ isSmallScreen: { value: false } }))
+
+vi.mock('#desktop/composables/responsiveness/useAppBreakpoints.ts', () => ({
+  useAppBreakpoints: () => ({ isSmallScreen: ref(isSmallScreen.value) }),
+}))
 
 describe('visuals for common dialog', () => {
   beforeEach(() => {
@@ -330,5 +338,55 @@ describe('submitting a form in a common dialog', () => {
     await wrapper.events.keyboard('{Control>}{Enter}{/Control}')
 
     await vi.waitFor(() => expect(onSubmit).toHaveBeenCalledOnce())
+  })
+})
+
+describe('coverage of common dialog', () => {
+  beforeEach(() => {
+    isSmallScreen.value = false
+
+    getDialogMeta().dialogsOptions.set('dialog', {
+      name: 'dialog',
+      component: vi.fn().mockResolvedValue({}),
+      refocus: true,
+    })
+  })
+
+  const renderDialog = (fullscreen = false) =>
+    renderComponent(CommonDialog, {
+      props: { name: 'dialog', fullscreen },
+      global: { stubs: { teleport: true } },
+      dialog: true,
+      router: true,
+    })
+
+  const coverage = () =>
+    useOverlayCoverage().shownOverlays.value.map(({ id, coversApplication }) => ({
+      id,
+      coversApplication: toValue(coversApplication),
+    }))
+
+  it('covers the page while it is open', async () => {
+    const wrapper = renderDialog()
+
+    expect(coverage()).toEqual([{ id: 'dialog-dialog', coversApplication: false }])
+
+    wrapper.unmount()
+
+    expect(coverage()).toEqual([])
+  })
+
+  it('covers the whole application in full screen', () => {
+    renderDialog(true)
+
+    expect(coverage()).toEqual([{ id: 'dialog-dialog', coversApplication: true }])
+  })
+
+  it('covers the whole application on a small screen', () => {
+    isSmallScreen.value = true
+
+    renderDialog()
+
+    expect(coverage()).toEqual([{ id: 'dialog-dialog', coversApplication: true }])
   })
 })

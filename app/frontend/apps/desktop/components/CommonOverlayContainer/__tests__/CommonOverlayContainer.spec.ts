@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { afterEach, expect } from 'vitest'
+import { toValue } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
+import { useOverlayCoverage } from '#desktop/composables/useOverlayCoverage.ts'
 
 const html = String.raw
 
@@ -100,5 +102,21 @@ describe('CommonOverlayContainer', () => {
     })
 
     expect(mainElement.children).include(dialog.baseElement)
+  })
+
+  it('covers what lies under its backdrop', async () => {
+    const { shownOverlays } = useOverlayCoverage()
+    const coversApplication = () => toValue(shownOverlays.value.at(0)?.coversApplication)
+
+    expect(shownOverlays.value).toHaveLength(1)
+    expect(coversApplication()).toBe(true)
+
+    await wrapper.rerender({ fullscreen: false, teleportTo: '#app' })
+
+    expect(coversApplication()).toBe(false)
+
+    await wrapper.rerender({ showBackdrop: false })
+
+    expect(shownOverlays.value).toHaveLength(0)
   })
 })

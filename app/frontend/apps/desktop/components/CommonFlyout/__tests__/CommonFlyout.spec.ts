@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
 import { describe, expect } from 'vitest'
-import { nextTick, useTemplateRef } from 'vue'
+import { nextTick, toValue, useTemplateRef } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
@@ -9,6 +9,7 @@ import Form from '#shared/components/Form/Form.vue'
 
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import { useFormSubmitShortcut } from '#desktop/composables/useFormSubmitShortcut.ts'
+import { useOverlayCoverage } from '#desktop/composables/useOverlayCoverage.ts'
 
 const html = String.raw
 
@@ -206,5 +207,36 @@ describe('submitting a form in a common flyout', () => {
     await wrapper.events.keyboard('{Control>}{Enter}{/Control}')
 
     await vi.waitFor(() => expect(onSubmit).toHaveBeenCalledOnce())
+  })
+
+  describe('coverage', () => {
+    const coverage = () =>
+      useOverlayCoverage().shownOverlays.value.map(({ id, coversApplication }) => ({
+        id,
+        coversApplication: toValue(coversApplication),
+      }))
+
+    it.each([false, true])(
+      'covers the page with its backdrop, in full screen %s the whole application',
+      (fullscreen) => {
+        renderComponent(CommonFlyout, {
+          props: { name: 'covering', fullscreen },
+          flyout: true,
+          router: true,
+        })
+
+        expect(coverage()).toEqual([{ id: 'flyout-covering', coversApplication: fullscreen }])
+      },
+    )
+
+    it('leaves the page reachable without a backdrop', () => {
+      renderComponent(CommonFlyout, {
+        props: { name: 'uncovering', showBackdrop: false },
+        flyout: true,
+        router: true,
+      })
+
+      expect(coverage()).toEqual([])
+    })
   })
 })

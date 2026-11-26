@@ -20,6 +20,7 @@ import type {
   KeyboardShortcutKey,
   KeyboardShortcutPlatform,
   KeyboardShortcutPlatformValue,
+  KeyboardShortcutReach,
   UnboundEntry,
   UnboundEntryOptions,
 } from './types.ts'
@@ -54,12 +55,13 @@ const buildEntry = <GovernedBySwitch extends boolean>(governedBySwitch: Governed
     setting,
     permission,
     show,
+    reach,
     ...keys
   }: BoundEntryOptions<Key> | UnboundEntryOptions<Key>): KeyboardShortcutEntry<
     Key,
     GovernedBySwitch
   > {
-    const base = { key, description, setting, permission, show, governedBySwitch }
+    const base = { key, description, setting, permission, show, reach, governedBySwitch }
 
     if (!keys.combinations)
       return {
@@ -88,8 +90,14 @@ const buildEntry = <GovernedBySwitch extends boolean>(governedBySwitch: Governed
   return build
 }
 
-// Bound through `useKeyboardShortcut`, which the shortcut switch turns off.
-const registryShortcut = buildEntry(true)
+// Bound through `useKeyboardShortcut`, which the shortcut switch turns off. A row with a binding
+//   states its reach, which `useKeyboardShortcut` checks against the open dialogs and side panels.
+const registryShortcut: {
+  <Key extends string>(
+    options: BoundEntryOptions<Key> & { reach: KeyboardShortcutReach },
+  ): KeyboardShortcutEntry<Key, true>
+  <Key extends string>(options: UnboundEntryOptions<Key>): UnboundEntry<Key, true>
+} = buildEntry(true)
 
 // Handled by the editor or the list itself, which the shortcut switch does not reach.
 const nativeShortcut = buildEntry(false)
@@ -149,6 +157,7 @@ export const catalogue = [
         entries: [
           registryShortcut({
             key: 'dashboard',
+            reach: 'application',
             description: __('Dashboard'),
             combinations: ['h'],
             setting: 'dashboard',
@@ -156,24 +165,28 @@ export const catalogue = [
           }),
           registryShortcut({
             key: 'overviews',
+            reach: 'application',
             description: __('Overviews'),
             combinations: ['o'],
             permission: TICKET_ACCESS,
           }),
           registryShortcut({
             key: 'search',
+            reach: 'application',
             description: __('Search'),
             combinations: ['s'],
             permission: EVERY_USER,
           }),
           registryShortcut({
             key: 'notifications',
+            reach: 'application',
             description: __('Notifications'),
             combinations: ['a'],
             permission: 'ticket.agent',
           }),
           registryShortcut({
             key: 'new-ticket',
+            reach: 'application',
             description: __('New Ticket'),
             combinations: ['n'],
             permission: TICKET_ACCESS,
@@ -181,36 +194,42 @@ export const catalogue = [
           }),
           registryShortcut({
             key: 'user-menu',
+            reach: 'application',
             description: __('User menu'),
             combinations: ['u'],
             permission: EVERY_USER,
           }),
           registryShortcut({
             key: 'list-of-shortcuts',
+            reach: 'application',
             description: __('List of shortcuts'),
             combinations: ['?'],
             permission: EVERY_USER,
           }),
           registryShortcut({
             key: 'logout',
+            reach: 'application',
             description: __('Logout'),
             combinations: ['shift+l'],
             permission: EVERY_USER,
           }),
           registryShortcut({
             key: 'close-current-tab',
+            reach: 'application',
             description: __('Close current tab'),
             combinations: ['shift+w'],
             permission: EVERY_USER,
           }),
           registryShortcut({
             key: 'show-next-tab',
+            reach: 'application',
             description: __('Show next tab'),
             combinations: ['shift+arrowright'],
             permission: EVERY_USER,
           }),
           registryShortcut({
             key: 'show-previous-tab',
+            reach: 'application',
             description: __('Show previous tab'),
             combinations: ['shift+arrowleft'],
             permission: EVERY_USER,
@@ -219,6 +238,7 @@ export const catalogue = [
           //   delivers `ctrl+enter` there.
           registryShortcut({
             key: 'submit-form',
+            reach: 'focus',
             description: __('Confirm/submit dialog'),
             combinations: { mac: ['mod+enter', 'control+enter'], other: ['control+enter'] },
             permission: EVERY_USER,
@@ -258,6 +278,7 @@ export const catalogue = [
           //   themselves.
           registryShortcut({
             key: 'copy-object-number',
+            reach: 'page',
             description: __('Copy current object number (e. g. Ticket#) to clipboard'),
             combinations: ['.'],
             permission: EVERY_USER,
@@ -288,6 +309,7 @@ export const catalogue = [
         entries: [
           registryShortcut({
             key: 'toggle-dark-mode',
+            reach: 'anywhere',
             description: __('Toggle dark mode'),
             combinations: ['d'],
             permission: 'user_preferences.appearance',
@@ -306,30 +328,35 @@ export const catalogue = [
         entries: [
           registryShortcut({
             key: 'open-note-box',
+            reach: 'page',
             description: __('Open note box'),
             combinations: ['x'],
             permission: 'ticket.agent',
           }),
           registryShortcut({
             key: 'reply-to-last-article',
+            reach: 'page',
             description: __('Reply to last article'),
             combinations: ['r'],
             permission: 'ticket.agent',
           }),
           registryShortcut({
             key: 'toggle-article-internal',
+            reach: 'page',
             description: __('Set article to internal/public'),
             combinations: ['i'],
             permission: 'ticket.agent',
           }),
           registryShortcut({
             key: 'update-as-closed',
+            reach: 'page',
             description: __('Update as closed'),
             combinations: ['shift+c'],
             permission: TICKET_ACCESS,
           }),
           registryShortcut({
             key: 'navigate-articles',
+            reach: 'page',
             description: __('Navigate through article'),
             combinations: ['arrowleft', 'arrowright'],
             sideBySide: true,

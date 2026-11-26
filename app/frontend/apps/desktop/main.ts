@@ -24,6 +24,7 @@ import { initializeDesktopVisuals } from '#desktop/initializer/desktopVisuals.ts
 import { initializeDesktopIcons } from '#desktop/initializer/initializeDesktopIcons.ts'
 import { initializeGlobalComponentStyles } from '#desktop/initializer/initializeGlobalComponentStyles.ts'
 import initializeGlobalDirectives from '#desktop/initializer/initializeGlobalDirectives.ts'
+import { initializeKeyboardShortcutReach } from '#desktop/initializer/initializeKeyboardShortcutReach.ts'
 import { ensureAfterAuth } from '#desktop/pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
 import initializeRouter from '#desktop/router/index.ts'
 import initializeApolloClient from '#desktop/server/apollo/index.ts'
@@ -58,6 +59,7 @@ export const mountApp = async () => {
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
   initializeGlobalDirectives(app)
+  initializeKeyboardShortcutReach(app)
   initializeStoreSubscriptions()
   initializeDesktopVisuals()
   initializeTwoFactorPlugins(twoFactorConfigurationPluginLookup)

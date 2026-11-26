@@ -157,13 +157,13 @@ RSpec.describe 'Desktop > Keyboard shortcuts', app: :desktop_view, type: :playwr
         expect(cheat_sheet).to be_hidden
       end
 
-      it 'stays open while a listed shortcut navigates' do
+      it 'gives way to a listed shortcut that navigates' do
         open_cheat_sheet
 
         press('o')
 
         expect(page).to have_url(%r{/desktop/tickets/view})
-        expect_cheat_sheet_open
+        expect(cheat_sheet).to be_hidden
       end
 
       it 'closes when the listed shortcut signs out' do
@@ -532,6 +532,127 @@ RSpec.describe 'Desktop > Keyboard shortcuts', app: :desktop_view, type: :playwr
         press('Shift+W')
 
         expect(page.get_by_role('dialog', name: 'Unsaved changes')).to be_visible
+      end
+    end
+
+    context 'with a side panel over the ticket' do
+      let(:default_close_state) { Ticket::State.find_by(name: 'closed') }
+
+      before do
+        create(:ticket_article, ticket:)
+        default_close_state.update!(default_close: true)
+
+        open_ticket_for_shortcuts(ticket)
+      end
+
+      def open_side_panel
+        content_sidebar.get_by_role('button', name: 'Action menu button').click
+        page.get_by_role('menuitem', name: 'Change customer').click
+        expect(flyout('Change customer')).to be_visible
+
+        page.evaluate('() => document.activeElement.blur()')
+      end
+
+      it 'leaves the ticket behind it alone' do
+        open_side_panel
+        record_handled_keys
+
+        press('Shift+C')
+        press('x')
+
+        # Shift goes down on its own first.
+        expect(handled_keys).to eq([false, false, false])
+        expect(flyout('Change customer')).to be_visible
+        expect(ticket.reload.state).not_to eq(default_close_state)
+      end
+
+      it 'navigates from the sidebar and finds the side panel again on return' do
+        open_side_panel
+
+        press('o')
+        expect(page).to have_url(%r{/desktop/tickets/view})
+
+        main_sidebar.get_by_role('treeitem').filter(hasText: 'First ticket').click
+        expect(flyout('Change customer')).to be_visible
+      end
+
+      it 'asks before closing the tab with unsaved changes' do
+        press('x')
+        type_in_editor('Text', 'Unsaved note')
+
+        open_side_panel
+        press('Shift+W')
+
+        expect(page.get_by_role('dialog', name: 'Unsaved changes')).to be_visible
+      end
+    end
+
+    context 'with an image open in the viewer' do
+      let(:default_close_state) { Ticket::State.find_by(name: 'closed') }
+      let(:cid)                 { '20261126.1001@zammad.example.com' }
+
+      before do
+        article = create(:ticket_article, :inbound_email, ticket:, content_type: 'text/html', body: "<p>Screenshot:</p><p><img src=\"cid:#{cid}\" alt=\"Screenshot image\"></p>")
+        create(:store,
+               object:      'Ticket::Article',
+               o_id:        article.id,
+               data:        Rails.root.join('spec/fixtures/files/image/small.png').binread,
+               filename:    'screenshot.png',
+               preferences: {
+                 'Content-Type'        => 'image/png',
+                 'Mime-Type'           => 'image/png',
+                 'Content-ID'          => "<#{cid}>",
+                 'Content-Disposition' => 'inline',
+               })
+        default_close_state.update!(default_close: true)
+
+        open_ticket_for_shortcuts(ticket)
+        ticket_article('Screenshot:').get_by_role('img', name: 'Screenshot image').click
+        page.get_by_role('toolbar', name: 'Image actions').wait_for(state: 'visible')
+      end
+
+      it 'leaves the ticket and the sidebar behind it alone' do
+        record_handled_keys
+
+        press('Shift+C')
+        press('o')
+
+        # Shift goes down on its own first.
+        expect(handled_keys).to eq([false, false, false])
+        expect(page).to have_url(%r{/desktop/tickets/#{ticket.id}$})
+        expect(ticket.reload.state).not_to eq(default_close_state)
+      end
+    end
+
+    context 'with a side panel over a page without a tab' do
+      before do
+        create(:taskbar, :with_ticket, ticket:, user_id: agent.id, app: 'desktop', prio: 1)
+
+        open_desktop('/personal-setting/token-access')
+        main_content.get_by_role('button', name: 'New personal access token').click
+        flyout('New personal access token').wait_for(state: 'visible')
+
+        page.evaluate('() => document.activeElement.blur()')
+      end
+
+      it 'shows the next tab from the sidebar' do
+        press('Shift+ArrowRight')
+
+        expect(page).to have_url(%r{/desktop/tickets/#{ticket.id}$})
+      end
+
+      context 'when the side panel covers the whole screen', screen_size: :tablet do
+        it 'leaves the sidebar alone' do
+          record_handled_keys
+
+          press('Shift+ArrowRight')
+          press('o')
+
+          # Shift goes down on its own first.
+          expect(handled_keys).to eq([false, false, false])
+          expect(page).to have_url(%r{/desktop/personal-setting/token-access})
+          expect(flyout('New personal access token')).to be_visible
+        end
       end
     end
   end

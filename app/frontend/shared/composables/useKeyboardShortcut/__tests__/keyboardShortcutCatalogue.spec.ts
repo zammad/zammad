@@ -213,6 +213,35 @@ describe('keyboardShortcutCatalogue', () => {
     expect(new Set(governance)).toEqual(new Set([governed]))
   })
 
+  it('states what every bound shortcut of the registry acts on, which an overlay may cover', () => {
+    const boundEntries = entries.filter(
+      (entry) => entry.governedBySwitch && entry.combinations.other.length,
+    )
+
+    expect(entries.filter((entry) => entry.reach && !boundEntries.includes(entry))).toEqual([])
+    expect(Object.fromEntries(boundEntries.map((entry) => [entry.key, entry.reach]))).toEqual({
+      dashboard: 'application',
+      overviews: 'application',
+      search: 'application',
+      notifications: 'application',
+      'new-ticket': 'application',
+      'user-menu': 'application',
+      'list-of-shortcuts': 'application',
+      logout: 'application',
+      'close-current-tab': 'application',
+      'show-next-tab': 'application',
+      'show-previous-tab': 'application',
+      'submit-form': 'focus',
+      'copy-object-number': 'page',
+      'toggle-dark-mode': 'anywhere',
+      'open-note-box': 'page',
+      'reply-to-last-article': 'page',
+      'toggle-article-internal': 'page',
+      'update-as-closed': 'page',
+      'navigate-articles': 'page',
+    })
+  })
+
   it('lists no shortcut that exists only in the old desktop view', () => {
     expect(entries.map((entry) => entry.description)).not.toContain(
       'Enable/disable inline translations',

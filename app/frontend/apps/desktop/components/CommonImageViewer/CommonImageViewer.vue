@@ -2,13 +2,14 @@
 
 <script setup lang="ts">
 import { clamp } from 'lodash-es'
-import { computed, ref, toRef, watch } from 'vue'
+import { computed, ref, toRef, useTemplateRef, watch } from 'vue'
 import VueEasyLightbox from 'vue-easy-lightbox'
 
 import { imageViewerOptions } from '#shared/composables/useImageViewer.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useCoveringOverlay } from '#desktop/composables/useOverlayCoverage.ts'
 
 import FloatingToolbar from './FloatingToolbar.vue'
 
@@ -37,10 +38,20 @@ const isLastImage = computed(() => currentIndex.value >= imageViewerOptions.valu
 const localeData = toRef(useLocaleStore(), 'localeData')
 
 const isRtl = computed(() => localeData.value?.dir === 'rtl')
+
+const viewerInstance = useTemplateRef('viewer')
+
+useCoveringOverlay({
+  id: 'image-viewer',
+  element: () => viewerInstance.value?.$el as HTMLElement | undefined,
+  isShown: () => imageViewerOptions.value.visible,
+  coversApplication: true,
+})
 </script>
 
 <template>
   <VueEasyLightbox
+    ref="viewer"
     data-test-id="imageViewer"
     :imgs="imageViewerOptions.images"
     :index="imageViewerOptions.index"
