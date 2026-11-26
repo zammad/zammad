@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useTicketSidebarContainer } from '../../composables/useTicketSidebarContainer.ts'
+
 import TicketSidebarButton from './TicketSidebarButton.vue'
 
 import type { TicketSidebarWrapperProps } from '../../types/sidebar.ts'
@@ -10,6 +12,8 @@ defineProps<TicketSidebarWrapperProps>()
 defineEmits<{
   click: [string]
 }>()
+
+const container = useTicketSidebarContainer()
 </script>
 
 <template>
@@ -24,7 +28,7 @@ defineEmits<{
       :update-indicator="updateIndicator"
       @click="$emit('click', $event)"
     />
-    <Teleport v-if="selected" to="#ticketSidebar">
+    <Teleport v-if="selected && container" :to="container">
       <slot />
     </Teleport>
   </div>

@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useTemplateRef } from 'vue'
+
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
@@ -8,6 +10,7 @@ import { SidebarName } from '#desktop/components/layout/types.ts'
 import { useSidebarDisplay } from '#desktop/components/layout/useSidebarDisplay.ts'
 
 import { useTicketSidebar } from '../composables/useTicketSidebar.ts'
+import { provideTicketSidebarContainer } from '../composables/useTicketSidebarContainer.ts'
 
 import type { TicketSidebarContext } from '../types/sidebar.ts'
 
@@ -28,6 +31,8 @@ const {
   switchSidebar,
 } = useTicketSidebar()
 
+provideTicketSidebarContainer(useTemplateRef<HTMLElement>('container'))
+
 const maybeToggleAndSwitchSidebar = (newSidebar: string) => {
   if (isSidebarCollapsed.value) toggleSidebar()
 
@@ -39,7 +44,12 @@ const { isTouchDevice } = useTouchDevice()
 
 <template>
   <div class="flex h-full justify-end">
-    <div v-show="!isSidebarCollapsed" id="ticketSidebar" class="flex grow flex-col" />
+    <div
+      v-show="!isSidebarCollapsed"
+      id="ticketSidebar"
+      ref="container"
+      class="flex grow flex-col"
+    />
     <div
       class="flex flex-col items-center gap-2.5 border-neutral-100 px-2.5 py-3 transition-[border] dark:border-gray-900"
       :class="{ 'border-s': !isSidebarCollapsed }"
