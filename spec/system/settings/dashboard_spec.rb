@@ -101,6 +101,7 @@ RSpec.describe 'Manage > Settings > Dashboard', type: :system do
 
     it 'shows an activity stream change from another session' do
       wait_for_authenticated_session
+      ensure_websocket_push_delivery
 
       within :active_content do
         expect(page).to have_select('dashboard_activity_stream', selected: 'All activities')
