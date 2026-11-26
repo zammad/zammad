@@ -34,6 +34,26 @@ const openPanel = async (view: Awaited<ReturnType<typeof renderDateField>>) => {
   await view.events.click(view.getByRole('button', { name: /^(Choose|Change) date/ }))
 }
 
+const mockGroupsWidth = (view: Awaited<ReturnType<typeof renderDateField>>) => {
+  const groups = view.container.querySelector('[data-test-id="field-date-groups"]')!
+
+  vi.spyOn(groups, 'getBoundingClientRect').mockReturnValue({
+    width: 80,
+    right: 90,
+  } as DOMRect)
+}
+
+// A click at a horizontal position, which user-event cannot set.
+const clickInputAt = async (input: HTMLInputElement, clientX: number) => {
+  await fireEvent.mouseDown(input)
+
+  input.focus()
+  input.setSelectionRange(0, 0)
+
+  await fireEvent.click(input, { clientX })
+  await waitForNextTick()
+}
+
 // The announcer writes its message a moment after the call.
 const announced = () => {
   vi.advanceTimersByTime(100)
@@ -99,6 +119,7 @@ describe('Fields - FieldDate', () => {
 
       expect(emittedValues(view)).toEqual([null])
       expect(input).toHaveDisplayValue('YYYY-MM-DD')
+      expect(view.queryByRole('dialog')).not.toBeInTheDocument()
     })
 
     it('names the clear and the open button with a tooltip', async () => {
@@ -1072,26 +1093,49 @@ describe('Fields - FieldDate', () => {
       expect(view.getAllByRole('rowheader')[0]).toHaveClass('cursor-default', 'font-bold')
     })
 
+    it('shows the panel alongside the clicked group on a click on the groups', async () => {
+      const view = await renderDateField({ value: '2021-04-12' })
+
+      const input = view.getByLabelText('Date') as HTMLInputElement
+
+      await view.events.pointer({ target: input, offset: 9, keys: '[MouseLeft]' })
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog', { name: 'Choose date' })).not.toHaveAttribute('aria-modal')
+      expect(input).toHaveFocus()
+      expect([input.selectionStart, input.selectionEnd]).toEqual([8, 10])
+
+      await view.events.keyboard('15')
+
+      expect(emittedValues(view)).toEqual(['2021-04-15'])
+      expect(
+        view.container.ownerDocument.querySelector('td[aria-selected="true"]'),
+      ).toHaveTextContent('15')
+    })
+
+    it('shows the time panel alongside a clicked time group', async () => {
+      const view = await renderDateField({
+        type: 'datetime',
+        value: '2021-04-12T09:30:00Z',
+      })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.pointer({ target: input, offset: 15, keys: '[MouseLeft]' })
+      await waitForNextTick()
+
+      expect(view.getByLabelText('Hours')).toBeInTheDocument()
+      expect(input).toHaveFocus()
+    })
+
     it('starts at the first group with the panel alongside on a click behind the groups', async () => {
       const view = await renderDateField()
 
       const input = view.getByLabelText('Date') as HTMLInputElement
-      const groups = view.container.querySelector('[data-test-id="field-date-groups"]')!
 
-      vi.spyOn(groups, 'getBoundingClientRect').mockReturnValue({
-        width: 80,
-        right: 90,
-      } as DOMRect)
+      mockGroupsWidth(view)
 
-      input.focus()
-      input.setSelectionRange(0, 0)
-      await fireEvent.click(input, { clientX: 60 })
-
-      expect(view.queryByRole('dialog')).not.toBeInTheDocument()
-
-      input.setSelectionRange(0, 0)
-      await fireEvent.click(input, { clientX: 200 })
-      await waitForNextTick()
+      await clickInputAt(input, 200)
 
       expect(view.getByRole('dialog', { name: 'Choose date' })).toBeInTheDocument()
       expect(input).toHaveFocus()
@@ -1118,17 +1162,10 @@ describe('Fields - FieldDate', () => {
       })
 
       const input = view.getByLabelText('Date') as HTMLInputElement
-      const groups = view.container.querySelector('[data-test-id="field-date-groups"]')!
 
-      vi.spyOn(groups, 'getBoundingClientRect').mockReturnValue({
-        width: 80,
-        right: 90,
-      } as DOMRect)
+      mockGroupsWidth(view)
 
-      input.focus()
-      input.setSelectionRange(0, 0)
-      await fireEvent.click(input, { clientX: 200 })
-      await waitForNextTick()
+      await clickInputAt(input, 200)
 
       expect(view.getByRole('grid', { name: 'April 2021' })).toBeInTheDocument()
 
@@ -1147,16 +1184,8 @@ describe('Fields - FieldDate', () => {
       const view = await renderDateField()
 
       const input = view.getByLabelText('Date')
-      const groups = view.container.querySelector('[data-test-id="field-date-groups"]')!
 
-      vi.spyOn(groups, 'getBoundingClientRect').mockReturnValue({
-        width: 80,
-        right: 90,
-      } as DOMRect)
-
-      input.focus()
-      ;(input as HTMLInputElement).setSelectionRange(0, 0)
-      await fireEvent.click(input, { clientX: 200 })
+      await view.events.pointer({ target: input, offset: 0, keys: '[MouseLeft]' })
       await waitForNextTick()
 
       expect(view.getByRole('dialog')).toBeInTheDocument()
@@ -1204,12 +1233,6 @@ describe('Fields - FieldDate', () => {
       const view = await renderDateField()
 
       const input = view.getByLabelText('Date') as HTMLInputElement
-      const groups = view.container.querySelector('[data-test-id="field-date-groups"]')!
-
-      vi.spyOn(groups, 'getBoundingClientRect').mockReturnValue({
-        width: 80,
-        right: 90,
-      } as DOMRect)
 
       await openPanel(view)
 
@@ -1217,19 +1240,270 @@ describe('Fields - FieldDate', () => {
 
       await view.events.keyboard('{Escape}')
 
-      input.focus()
-      input.setSelectionRange(0, 0)
-      await fireEvent.click(input, { clientX: 200 })
+      await view.events.click(input)
       await waitForNextTick()
 
       expect(view.getByRole('dialog')).not.toHaveAttribute('aria-modal')
       expect(input).toHaveFocus()
     })
 
+    it('hands the focus back to the input on a click into it', async () => {
+      const view = await renderDateField()
+
+      const input = view.getByLabelText('Date')
+
+      await openPanel(view)
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+
+      await view.events.click(input)
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).not.toHaveAttribute('aria-modal')
+      expect(input).toHaveFocus()
+    })
+
+    it('moves the focus into the panel on a click on the label', async () => {
+      const view = await renderDateField()
+
+      await view.events.click(view.getByText('Date'))
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+      expect(document.activeElement).toHaveAccessibleName('Tuesday, April 13th, 2021')
+    })
+
+    it.each([
+      {
+        control: 'label',
+        find: (view: Awaited<ReturnType<typeof renderDateField>>) => view.getByText('Date'),
+      },
+      {
+        control: 'button',
+        find: (view: Awaited<ReturnType<typeof renderDateField>>) =>
+          view.getByRole('button', { name: 'Choose date' }),
+      },
+    ])(
+      'moves the focus into the panel shown alongside on a click on the $control',
+      async ({ find }) => {
+        const view = await renderDateField()
+
+        await view.events.click(view.getByLabelText('Date'))
+        await waitForNextTick()
+
+        expect(view.getByRole('dialog')).not.toHaveAttribute('aria-modal')
+
+        await view.events.click(find(view))
+        await waitForNextTick()
+
+        expect(view.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+        expect(document.activeElement).toHaveAccessibleName('Tuesday, April 13th, 2021')
+      },
+    )
+
+    it('keeps a stretch selected by hand while the panel holds the focus', async () => {
+      const view = await renderDateField({ value: '2021-04-12' })
+
+      const input = view.getByLabelText('Date') as HTMLInputElement
+
+      await openPanel(view)
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+
+      await view.events.pointer([
+        { target: input, offset: 0, keys: '[MouseLeft>]' },
+        { offset: 10 },
+        { keys: '[/MouseLeft]' },
+      ])
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).not.toHaveAttribute('aria-modal')
+      expect(input).toHaveFocus()
+      expect([input.selectionStart, input.selectionEnd]).toEqual([0, 10])
+    })
+
+    it('recognizes a click on the label after a stretch was selected by hand', async () => {
+      const view = await renderDateField({ value: '2021-04-12' })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.pointer([
+        { target: input, offset: 0, keys: '[MouseLeft>]' },
+        { offset: 10 },
+        { keys: '[/MouseLeft]' },
+      ])
+
+      expect(view.queryByRole('dialog')).not.toBeInTheDocument()
+
+      // The click a label passes on, where the input kept the focus in between.
+      await fireEvent.click(input)
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+    })
+
+    it('stays closed when the field is focused with the keyboard', async () => {
+      const view = await renderDateField()
+
+      await view.events.tab()
+
+      expect(view.getByLabelText('Date')).toHaveFocus()
+      expect(view.queryByRole('dialog')).not.toBeInTheDocument()
+    })
+
+    it.each(['{Enter}', ' '])(
+      'moves the focus into the panel shown alongside with the key "%s"',
+      async (key) => {
+        const view = await renderDateField()
+
+        await view.events.click(view.getByLabelText('Date'))
+        await waitForNextTick()
+
+        expect(view.getByRole('dialog')).not.toHaveAttribute('aria-modal')
+
+        await view.events.keyboard(key)
+        await waitForNextTick()
+
+        expect(view.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+        expect(document.activeElement).toHaveAccessibleName('Tuesday, April 13th, 2021')
+      },
+    )
+
+    it('opens with the space key on a group', async () => {
+      const view = await renderDateField()
+
+      await view.events.tab()
+      await view.events.keyboard(' ')
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+      expect(document.activeElement).toHaveAccessibleName('Tuesday, April 13th, 2021')
+    })
+
+    it('takes a space behind a typed character for the separator of the format', async () => {
+      const view = await renderDateField({ type: 'datetime' })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.tab()
+      await view.events.keyboard('2021-04-12 09:30')
+
+      expect(view.queryByRole('dialog')).not.toBeInTheDocument()
+      expect(input).toHaveDisplayValue('2021-04-12 09:30')
+
+      await view.events.keyboard('  ')
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).toBeInTheDocument()
+    })
+
+    it.each([
+      {
+        type: 'date',
+        format: ['FORMAT_DATE', 'yyyy. mm. dd.'],
+        typed: '2021. 04. 12.',
+        shown: '2021. 04. 12.',
+      },
+      {
+        type: 'datetime',
+        format: ['FORMAT_DATETIME', 'd.m.yyyy. HH:MM'],
+        typed: '12.4.2021. 09:30',
+        shown: '12.04.2021. 09:30',
+      },
+      {
+        type: 'datetime',
+        format: ['FORMAT_DATETIME', 'dd.mm.yyyy, HH:MM'],
+        typed: '12.04.2021, 09:30',
+        shown: '12.04.2021, 09:30',
+      },
+    ])(
+      'takes a space behind a typed mark for the separator "$format.1"',
+      async ({ type, format, typed, shown }) => {
+        i18n.setTranslationMap(new Map([format as [string, string]]))
+
+        const view = await renderDateField({ type })
+
+        await view.events.tab()
+        await view.events.keyboard(typed)
+        await waitForNextTick()
+
+        expect(view.queryByRole('dialog')).not.toBeInTheDocument()
+        expect(view.getByLabelText('Date')).toHaveDisplayValue(shown)
+      },
+    )
+
+    it('opens with the space key once the typed group was left', async () => {
+      const view = await renderDateField()
+
+      await view.events.tab()
+      await view.events.keyboard('2021{ArrowLeft} ')
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).toBeInTheDocument()
+    })
+
+    it('takes a space behind a typed half of the day for the separator of the format', async () => {
+      i18n.setTranslationMap(new Map([['FORMAT_DATETIME', 'mm/dd/yyyy l:MM P']]))
+
+      const view = await renderDateField({
+        type: 'datetime',
+        value: '2021-04-12T09:30:00Z',
+      })
+
+      await view.events.tab()
+      await view.events.keyboard('{End}p ')
+      await waitForNextTick()
+
+      expect(view.getByLabelText('Date')).toHaveDisplayValue('04/12/2021 09:30 pm')
+      expect(view.queryByRole('dialog')).not.toBeInTheDocument()
+    })
+
+    it('moves the focus onto the day the input settles on, with a time still missing', async () => {
+      const view = await renderDateField({ type: 'datetime' })
+
+      await view.events.tab()
+      await view.events.keyboard('20210512{Enter}')
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+      expect(document.activeElement).toHaveAccessibleName('Wednesday, May 12th, 2021')
+    })
+
+    it('moves the focus onto the day the input settles on, from the panel shown alongside', async () => {
+      const view = await renderDateField()
+
+      await view.events.pointer({
+        target: view.getByLabelText('Date'),
+        offset: 0,
+        keys: '[MouseLeft]',
+      })
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).not.toHaveAttribute('aria-modal')
+
+      await view.events.keyboard('2021051{Enter}')
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+      expect(document.activeElement).toHaveAccessibleName('Saturday, May 1st, 2021')
+    })
+
+    it('opens on a click into the box beside the icons', async () => {
+      const view = await renderDateField()
+
+      await view.events.click(view.getByTestId('field-date'))
+      await waitForNextTick()
+
+      expect(view.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+    })
+
     it('does not open while disabled', async () => {
       const view = await renderDateField({ disabled: true })
 
       await view.events.click(view.getByRole('button', { name: 'Choose date' }))
+      await view.events.click(view.getByTestId('field-date'))
 
       expect(view.queryByRole('dialog')).not.toBeInTheDocument()
     })

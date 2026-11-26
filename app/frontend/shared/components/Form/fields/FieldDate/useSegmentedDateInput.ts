@@ -88,6 +88,9 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
   // The focus came from a pointer, so the click that follows picks the group.
   let pointerFocus = false
 
+  // A character was just typed, so a space that follows is the separator of the format.
+  let separatorDue = false
+
   const display = (index: number) => {
     const spec = segments.value[index]
     const value = values.value[index]
@@ -252,6 +255,8 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
   }
 
   const activate = (index: number) => {
+    separatorDue = false
+
     const pending = finishPendingGroup()
 
     activeIndex.value = Math.min(Math.max(index, 0), lastIndex.value)
@@ -311,10 +316,14 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
 
   const inputCharacter = (character: string) => {
     const spec = segments.value[activeIndex.value]
+    const isMeridiem = spec.kind === 'meridiem' && /[ap]/i.test(character)
+
+    // A mark keeps the separator due, the space of a separator like `. ` or `, ` follows it.
+    if (/[a-z0-9 ]/i.test(character)) separatorDue = /\d/.test(character) || isMeridiem
 
     if (/\d/.test(character)) {
       inputDigit(character)
-    } else if (spec.kind === 'meridiem' && /[ap]/i.test(character)) {
+    } else if (isMeridiem) {
       inputMeridiem(character)
     } else if (typed && !/[a-z0-9]/i.test(character)) {
       // A typed separator finishes the group, like in the native date input.
@@ -439,6 +448,7 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
         return
     }
 
+    separatorDue = false
     event.preventDefault()
   }
 
@@ -467,6 +477,8 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
 
     const pasted = event.clipboardData?.getData('text').trim()
     if (!pasted) return
+
+    separatorDue = false
 
     fillFromText(pasted)
     typed = ''
@@ -499,6 +511,17 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
       if (hasFocus()) activate(backwards ? lastIndex.value : 0)
     })
   }
+
+  // The label passes its click on to the input, which got no mousedown of its own then.
+  const consumePointerDown = () => {
+    const pointerDown = pointerFocus
+
+    pointerFocus = false
+
+    return pointerDown
+  }
+
+  const expectsSeparator = () => separatorDue
 
   const hasManualSelection = () => {
     const element = options.el.value
@@ -579,6 +602,8 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
     onKeydown,
     onMousedown,
     onPaste,
+    consumePointerDown,
+    expectsSeparator,
     hasManualSelection,
     selectFirst,
   }

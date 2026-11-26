@@ -1058,7 +1058,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   # The segmented input takes the digits group by group from the first one, a trailing tab leaves
-  #   the field and settles the entry. Keys only: a click behind the groups would open the panel.
+  #   the field and settles the entry. Keys only: a click would open the panel.
   def type_date_segments(text)
     raise 'Typing into date fields is not supported on the mobile view, use select_date or select_datetime instead' if !desktop_view?
 
