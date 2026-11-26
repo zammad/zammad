@@ -367,23 +367,37 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
 
     if (direct) {
       values.value = segments.value.map((spec) => formatDate(direct, spec.token))
-      return
+      return true
     }
 
     const numbers = pasted.match(/\d+/g) ?? []
     const meridiem = pasted.match(/am|pm/i)?.[0].toLowerCase()
     let position = 0
 
-    values.value = segments.value.map((spec) => {
+    // A number longer than its group, a date copied without separators say, goes on into the
+    // groups that follow, each filled to its length.
+    let rest = ''
+
+    const filled = segments.value.map((spec) => {
       if (spec.kind === 'meridiem') return meridiem ?? null
 
-      const number = numbers[position]
-      position += 1
+      if (!rest) {
+        rest = numbers[position] ?? ''
+        position += 1
+      }
 
-      if (number === undefined) return null
+      if (!rest) return null
+
+      const number = rest.slice(0, spec.length)
+      rest = rest.slice(spec.length)
 
       return completeYear(spec, number, options.yearWindow?.value)
     })
+
+    if (rest) return false
+
+    values.value = filled
+    return true
   }
 
   const segmentAt = (caret: number) => {
@@ -475,7 +489,9 @@ export const useSegmentedDateInput = (options: UseSegmentedDateInputOptions) => 
 
     separatorDue = false
 
-    fillFromText(pasted)
+    // Digits left over once every group is filled match no date, so the groups stay as they were.
+    if (!fillFromText(pasted)) return
+
     typed = ''
     selectActive()
     apply()

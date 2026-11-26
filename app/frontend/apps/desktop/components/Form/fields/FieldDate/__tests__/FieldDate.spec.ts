@@ -857,7 +857,7 @@ describe('Fields - FieldDate', () => {
 
       await view.events.paste('5/6/2022')
 
-      expect(input).toHaveDisplayValue('2005-06-2022')
+      expect(input).toHaveDisplayValue('2021-04-12')
       expect(emittedValues(view).at(-1)).toBe('2021-04-12')
 
       await view.events.paste('2022-06-05T10:00:00Z')
@@ -881,6 +881,53 @@ describe('Fields - FieldDate', () => {
 
       expect(input).toHaveDisplayValue('2021-04-12')
       expect(emittedValues(view).at(-1)).toBe('2021-04-12')
+    })
+
+    it('spreads a pasted date without separators over the groups', async () => {
+      i18n.setTranslationMap(new Map([['FORMAT_DATE', 'dd.mm.yyyy']]))
+
+      const view = await renderDateField()
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      await view.events.paste('27052026')
+
+      expect(input).toHaveDisplayValue('27.05.2026')
+      expect(emittedValues(view).at(-1)).toBe('2026-05-27')
+
+      await view.events.paste('120421')
+
+      expect(input).toHaveDisplayValue('12.04.2021')
+      expect(emittedValues(view).at(-1)).toBe('2021-04-12')
+    })
+
+    it('spreads a pasted date and time without separators over the groups', async () => {
+      i18n.setTranslationMap(new Map([['FORMAT_DATETIME', 'mm/dd/yyyy l:MM P']]))
+
+      const view = await renderDateField({ type: 'datetime' })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      await view.events.paste('052720260230 pm')
+
+      expect(input).toHaveDisplayValue('05/27/2026 02:30 pm')
+      expect(emittedValues(view).at(-1)).toBe('2026-05-27T14:30:00Z')
+    })
+
+    it('ignores a paste with more digits than the groups take', async () => {
+      i18n.setTranslationMap(new Map([['FORMAT_DATE', 'dd.mm.yyyy']]))
+
+      const view = await renderDateField({ value: '2021-04-12' })
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      await view.events.paste('270520261')
+
+      expect(input).toHaveDisplayValue('12.04.2021')
+      expect(emittedValues(view)).toBeUndefined()
     })
 
     it('moves through the groups with tab and leaves the field after the last one', async () => {
