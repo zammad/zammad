@@ -53,6 +53,13 @@
     - eval $(ssh-agent -s)
     - echo "$FTP_ZAMMAD_COM_SSH_PRIVATE_KEY" | ssh-add -
     - ssh-add -l
+  variables:
+    SOURCE_ARCHIVES_DIR: tmp/source_archives
   script:
-    - script/build/deploy_archives.sh
+    - script/build/deploy_archives.sh "$SOURCE_ARCHIVES_DIR"
   after_script: []
+  artifacts:
+    expire_in: 1 week
+    when: on_success
+    paths:
+      - $SOURCE_ARCHIVES_DIR/
