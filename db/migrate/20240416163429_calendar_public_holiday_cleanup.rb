@@ -7,6 +7,8 @@ class CalendarPublicHolidayCleanup < ActiveRecord::Migration[7.0]
 
     Calendar.find_each do |calendar|
       next if calendar.public_holidays.blank? && calendar.ical_url.present?
+      # A local file feed can no longer be fetched to restore the removed entries, and fails validation.
+      next if calendar.ical_url.present? && !calendar.ical_url.match?(%r{\Ahttps?://}i)
 
       cache_key = "CalendarIcal::#{calendar.id}"
       Rails.cache.delete(cache_key) if Rails.cache.exist?(cache_key)

@@ -65,4 +65,21 @@ RSpec.describe CalendarPublicHolidayCleanup, type: :db_migration do
   it 'does remove duplicates but keeps custom entries' do
     expect { migrate }.to change { calendar_with_custom_public_holiday.reload.public_holidays }.from(public_holidays_non_uniq_custom).to(public_holidays_uniq_custom)
   end
+
+  context 'with a calendar that still uses a local file as feed' do
+    let(:local_path)      { '/var/lib/zammad/holidays.ics' }
+    let(:legacy_calendar) { create(:calendar) }
+    let(:legacy_feed)     { Digest::MD5.hexdigest(local_path) }
+
+    before do
+      legacy_calendar.update_columns(
+        ical_url:        local_path,
+        public_holidays: { '2019-01-01' => { 'active' => true, 'feed' => legacy_feed, 'summary' => 'Neujahrstag' } },
+      )
+    end
+
+    it 'migrates without failing and keeps its public holidays' do
+      expect { migrate }.to not_change { legacy_calendar.reload.public_holidays }
+    end
+  end
 end
