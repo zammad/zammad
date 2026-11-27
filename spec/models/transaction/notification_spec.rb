@@ -1034,6 +1034,8 @@ RSpec.describe Transaction::Notification, type: :model do
     end
 
     context 'with notification_config matrix preferences' do
+      let(:other_group) { create(:group) }
+
       around do |example|
         ApplicationHandleInfo.use('scheduler.postmaster') { example.run }
       end
@@ -1142,7 +1144,7 @@ RSpec.describe Transaction::Notification, type: :model do
 
       it 'does not notify an agent whose group filter excludes the ticket group', :aggregate_failures do
         configure_matrix(agent1, owned_by_me: true, all_tickets: true, group_ids: [group.id.to_s])
-        configure_matrix(agent2, owned_by_me: false, all_tickets: true, group_ids: [99])
+        configure_matrix(agent2, owned_by_me: false, all_tickets: true, group_ids: [other_group.id])
 
         ticket = create_customer_ticket
 
@@ -1154,8 +1156,8 @@ RSpec.describe Transaction::Notification, type: :model do
       end
 
       it 'notifies the owner even if the group filter excludes the ticket group', :aggregate_failures do
-        configure_matrix(agent1, owned_by_me: true, all_tickets: true, group_ids: [999])
-        configure_matrix(agent2, owned_by_me: true, all_tickets: true, group_ids: [999])
+        configure_matrix(agent1, owned_by_me: true, all_tickets: true, group_ids: [other_group.id])
+        configure_matrix(agent2, owned_by_me: true, all_tickets: true, group_ids: [other_group.id])
 
         ticket = create_customer_ticket(owner: agent1)
 
@@ -1169,8 +1171,8 @@ RSpec.describe Transaction::Notification, type: :model do
       end
 
       it 'notifies only via the enabled channels', :aggregate_failures do
-        configure_matrix(agent1, owned_by_me: true, all_tickets: true, group_ids: [999], channel: { 'email' => false, 'online' => true })
-        configure_matrix(agent2, owned_by_me: true, all_tickets: true, group_ids: [999], channel: { 'email' => false, 'online' => true })
+        configure_matrix(agent1, owned_by_me: true, all_tickets: true, group_ids: [other_group.id], channel: { 'email' => false, 'online' => true })
+        configure_matrix(agent2, owned_by_me: true, all_tickets: true, group_ids: [other_group.id], channel: { 'email' => false, 'online' => true })
 
         ticket = create_customer_ticket(owner: agent1)
 
