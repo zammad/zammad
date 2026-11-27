@@ -2,6 +2,14 @@
 
 set -e
 
+ARTIFACTS_DIR="$1"
+if [ -z "$ARTIFACTS_DIR" ]
+then
+  echo "Usage: $0 <artifacts directory>"
+  exit 1
+fi
+
+# The archives are built outside of the checkout, as they would contain themselves otherwise.
 TEMPDIR=$(mktemp -d)
 trap 'rm -rf $TEMPDIR' EXIT
 
@@ -49,6 +57,10 @@ echo "# MD5 sums for the release notes"
 echo "#"
 (cd "$TEMPDIR"; md5sum -- *; echo '#'; ls -lah -- *; echo '#')
 
+# Created only now, so that the archives of the checkout don't contain it.
+mkdir -p "$ARTIFACTS_DIR"
+mv "$TEMPDIR"/* "$ARTIFACTS_DIR"/
+
 #
 # Upload to FTP Server
 #
@@ -58,4 +70,4 @@ then
   exit 1
 fi
 echo "Upload files to ${FTP_ZAMMAD_COM_SCP_TARGET}…"
-scp "$TEMPDIR"/* "$FTP_ZAMMAD_COM_SCP_TARGET"
+scp "$ARTIFACTS_DIR"/* "$FTP_ZAMMAD_COM_SCP_TARGET"
