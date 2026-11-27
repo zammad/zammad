@@ -77,7 +77,7 @@ class CoreWorkflow::Result
     set_payload_customer_id_default
 
     @result[:restrict_values] = {}
-    %i[request_id visibility mandatory readonly select fill_in eval matched_workflows rerun_count].each do |group|
+    %i[request_id visibility mandatory readonly select fill_in matched_workflows rerun_count].each do |group|
       @result[group] = attributes.send(:"#{group}_default")
     end
 

@@ -251,13 +251,6 @@ class App.FormHandlerCoreWorkflow
     for key, value of data
       ui.setFlag(key, value)
 
-  # executes individual js commands of the Core Workflow engine
-  @executeEval: (form, ui, data) ->
-    return if _.isEmpty(data)
-
-    for statement in data
-      eval(statement)
-
   # runs callbacks which are defined for the controller form
   @runCallbacks: (ui) ->
     callbacks = ui?.core_workflow?.callbacks || []
@@ -274,7 +267,6 @@ class App.FormHandlerCoreWorkflow
     App.FormHandlerCoreWorkflow.changeMandatory(form, ui, data.mandatory, data.visibility)
     App.FormHandlerCoreWorkflow.changeReadonly(form, ui, data.readonly)
     App.FormHandlerCoreWorkflow.changeFlags(form, ui, data.flags)
-    App.FormHandlerCoreWorkflow.executeEval(form, ui, data.eval)
     App.FormHandlerCoreWorkflow.runCallbacks(ui)
     console.timeEnd("runWorkflow/#{classname}/#{ui.model.className}/#{ui.screen}") if @DEBUG
 

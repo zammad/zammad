@@ -207,10 +207,6 @@ class CoreWorkflow::Attributes
     @result_object.result[:fill_in] || {}
   end
 
-  def eval_default
-    []
-  end
-
   def matched_workflows_default
     @result_object.result[:matched_workflows] || []
   end

@@ -116,6 +116,24 @@ instead.
 
 ## 7.4
 
+### The `eval` group of the Core Workflow result was removed
+
+**Who is affected?** Developers of third-party packages, patches or add-ons with custom Core Workflow
+backends that add JavaScript statements to `result[:eval]`, or with frontend code that calls
+`App.FormHandlerCoreWorkflow.executeEval`.
+
+The Core Workflow result contained an `eval` group, a list of JavaScript statements that the form handler
+of the old desktop interface executed in the browser. Zammad itself never filled the group, and the new
+desktop and mobile interfaces never processed it. The group, `CoreWorkflow::Attributes#eval_default` and
+`App.FormHandlerCoreWorkflow.executeEval` were removed, so the response of
+`POST /api/v1/core_workflows/perform` no longer contains the `eval` key and statements written to
+`result[:eval]` are no longer executed.
+
+⚠️ Move such logic into the frontend code of the package, for example into a form handler, and control it
+through the remaining result groups of the Core Workflow.
+
+**Related issue:** [#6608](https://github.com/zammad/zammad/issues/6608)
+
 ### The outbound check of email channels no longer accepts rejected test emails
 
 **Who is affected?** Admins whose mail server answers the test email of the outbound check with
