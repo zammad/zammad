@@ -91,7 +91,7 @@
     "eslint-plugin-vuejs-accessibility": "^2.6.3",
     "eslint-plugin-zammad": "file:.eslint-plugin-zammad",
 
-    "fallow": "3.46.0",
+    "fallow": "3.48.0",
     "jsdom": "^31.0.1",
     "markdownlint-cli2": "^0.24.2",
     "mock-apollo-client": "^2.0.0",
