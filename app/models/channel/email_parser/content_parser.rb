@@ -9,6 +9,7 @@ class Channel::EmailParser::ContentParser
 
   def message_body_hash
     (body, content_type, sanitized_body_info) = Channel::EmailParser::MessageWalker.new(mail).process_message_body
+    body = pgp_mime_ciphertext if body.blank?
 
     content_type = 'text/plain' if body.blank?
 
@@ -21,6 +22,20 @@ class Channel::EmailParser::ContentParser
   end
 
   private
+
+  def pgp_mime_ciphertext
+    return if mail.mime_type != 'multipart/encrypted'
+    return if mail.content_type_parameters[:protocol] != 'application/pgp-encrypted'
+    return if mail.parts.size != 2
+
+    version_part, encrypted_part = mail.parts
+
+    return if version_part.mime_type != 'application/pgp-encrypted'
+    return if version_part.body.decoded.exclude?('Version: 1') # rubocop:disable Zammad/DetectTranslatableString -- MIME protocol marker.
+    return if encrypted_part.mime_type != 'application/octet-stream'
+
+    encrypted_part.body.decoded
+  end
 
   def collect_attachments
     [
