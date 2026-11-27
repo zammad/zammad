@@ -629,6 +629,7 @@ RSpec.describe 'Desktop > Keyboard shortcuts', app: :desktop_view, type: :playwr
         create(:taskbar, :with_ticket, ticket:, user_id: agent.id, app: 'desktop', prio: 1)
 
         open_desktop('/personal-setting/token-access')
+        main_sidebar.get_by_role('treeitem').filter(hasText: 'First ticket').wait_for(state: 'visible')
         main_content.get_by_role('button', name: 'New personal access token').click
         flyout('New personal access token').wait_for(state: 'visible')
 
