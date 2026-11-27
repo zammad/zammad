@@ -39,9 +39,21 @@ class Channel::Filter::BaseIdentifyUser
         user.name_from_channel_import = true
         user.update!(attrs.slice(:firstname))
       end
-    elsif (user = User.create!(attrs.merge(name_from_channel_import: true)))
-      user.update!(updated_by_id: user.id, created_by_id: user.id)
+
+      return user
     end
+
+    # With a valid address, a login from an X-Zammad-Customer-Login header is matched case-sensitively
+    #   like in IdentifySender, and the user keeps their name: the sender's is not theirs.
+    if attrs[:email].present? && (user = User.by_login_case_sensitive(attrs[:login]).take)
+      return user
+    end
+
+    # Logins are stored downcased, so a header login that differs from a taken one only in case cannot be used.
+    attrs.delete(:login) if User.by_login(attrs[:login]).exists?
+
+    user = User.create!(attrs.merge(name_from_channel_import: true))
+    user.update!(updated_by_id: user.id, created_by_id: user.id)
 
     user
   end

@@ -106,6 +106,41 @@ RSpec.describe Channel::Filter::IdentifySessionUser, type: :channel_filter do
       end
     end
 
+    context 'when x-zammad-customer-login names an existing user with another address' do
+      let!(:user)     { create(:customer) }
+      let(:mail_hash) { { 'x-zammad-customer-login': login, from_email: from_email, from_display_name: from_name } }
+
+      context 'with the stored login' do
+        let(:login) { user.login }
+
+        it 'uses that user', :aggregate_failures do
+          expect { filter(mail_hash) }.not_to change(User, :count)
+
+          expect(mail_hash[:'x-zammad-session-user-id']).to eq(user.id)
+        end
+
+        context 'when that user has no name' do
+          let!(:user) { create(:customer, firstname: '', lastname: '', login: 'nameless', email: 'nameless@example.com') }
+
+          it 'does not name the user after the sender' do
+            filter(mail_hash)
+
+            expect(user.reload).to have_attributes(firstname: '', lastname: '')
+          end
+        end
+      end
+
+      context 'with the stored login in another case' do
+        let(:login) { user.login.upcase }
+
+        it 'creates a new customer with the address as login', :aggregate_failures do
+          expect { filter(mail_hash) }.to change(User, :count).by(1)
+
+          expect(User.find(mail_hash[:'x-zammad-session-user-id'])).to have_attributes(login: from_email, email: from_email)
+        end
+      end
+    end
+
     context 'when the mail has no FROM' do
       let(:mail_hash) { Channel::EmailParser.new.parse(<<~RAW.chomp, allow_missing_attribute_exceptions: false) }
         To: #{to_email}
