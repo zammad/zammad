@@ -63,6 +63,7 @@ RSpec.describe 'Popover', type: :system do
     ensure_websocket do
       visit "#ticket/zoom/#{Ticket.first.id}"
     end
+    wait_for_authenticated_session
 
     allow_any_instance_of(Taskbar).to receive(:update_preferences_infos)
 
