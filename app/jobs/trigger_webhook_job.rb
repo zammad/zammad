@@ -8,6 +8,13 @@ class TriggerWebhookJob < ApplicationJob
     executions * 10.seconds
   }
 
+  # Runs for every reason a job is given up, also for a removed record, where there is no trigger to name.
+  after_discard do |job, e|
+    next if !e.is_a?(TriggerWebhookJob::RequestError)
+
+    Rails.logger.error "Can't execute Webhook with ID #{job.webhook_id} for #{job.trigger.class.name} '#{job.trigger.name}' with ID #{job.trigger.id} and Ticket with ID #{job.ticket.id}: request failed on all #{job.executions} attempts"
+  end
+
   discard_on(ActiveJob::DeserializationError) do |_job, e|
     Rails.logger.info 'Trigger, Ticket or Article may got removed before TriggerWebhookJob could be executed. Discarding job. See exception for further details.'
     Rails.logger.info e
@@ -32,7 +39,7 @@ class TriggerWebhookJob < ApplicationJob
 
     raise TriggerWebhookJob::RequestError
   rescue HostnameSafetyCheck::SafetyError => e
-    Rails.logger.error "Can't execute Webhook with ID #{@webhook_id} for Trigger '#{trigger.name}' with ID #{trigger.id}: #{e.message}"
+    Rails.logger.error "Can't execute Webhook with ID #{@webhook_id} for #{trigger.class.name} '#{trigger.name}' with ID #{trigger.id}: #{e.message}"
   end
 
   private
@@ -59,11 +66,11 @@ class TriggerWebhookJob < ApplicationJob
   end
 
   def log_wrong_trigger_config
-    Rails.logger.error "Can't find webhook_id for Trigger '#{trigger.name}' with ID #{trigger.id}"
+    Rails.logger.error "Can't find webhook_id for #{trigger.class.name} '#{trigger.name}' with ID #{trigger.id}"
   end
 
   def log_not_existing_webhook
-    Rails.logger.error "Can't find Webhook for ID #{webhook_id} configured in Trigger '#{trigger.name}' with ID #{trigger.id}"
+    Rails.logger.error "Can't find Webhook for ID #{webhook_id} configured in #{trigger.class.name} '#{trigger.name}' with ID #{trigger.id}"
   end
 
   def request

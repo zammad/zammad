@@ -219,6 +219,41 @@ RSpec.describe TriggerWebhookJob, type: :job do
       it 'enqueues job again' do
         expect(described_class).to have_been_enqueued
       end
+
+      it 'does not log a final failure yet' do
+        expect(Rails.logger).not_to have_received(:error).with(a_string_including('request failed on all'))
+      end
+
+      context 'when all attempts failed' do
+        def perform_remaining_attempts
+          4.times do
+            retried_job = enqueued_jobs.last
+            enqueued_jobs.clear
+            ActiveJob::Base.execute retried_job
+          end
+        end
+
+        it 'fails the job and logs which webhook, trigger and ticket are affected', :aggregate_failures do
+          expect { perform_remaining_attempts }.to raise_error(TriggerWebhookJob::RequestError)
+
+          expect(Rails.logger)
+            .to have_received(:error)
+            .with("Can't execute Webhook with ID #{webhook.id} for Trigger '#{trigger.name}' with ID #{trigger.id} and Ticket with ID #{ticket.id}: request failed on all 5 attempts")
+            .once
+        end
+
+        context 'when a scheduler runs the webhook' do
+          let(:trigger) { create(:job, perform: { 'notification.webhook' => { 'webhook_id' => webhook.id } }) }
+
+          it 'names the scheduler by its class', :aggregate_failures do
+            expect { perform_remaining_attempts }.to raise_error(TriggerWebhookJob::RequestError)
+
+            expect(Rails.logger)
+              .to have_received(:error)
+              .with("Can't execute Webhook with ID #{webhook.id} for Job '#{trigger.name}' with ID #{trigger.id} and Ticket with ID #{ticket.id}: request failed on all 5 attempts")
+          end
+        end
+      end
     end
 
     it 'attributes the HTTP log to the webhook' do
