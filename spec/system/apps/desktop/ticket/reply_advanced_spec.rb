@@ -128,6 +128,14 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
     block.evaluate('(block) => block.getBoundingClientRect().height')
   end
 
+  # An empty line made of line breaks lies within the block above it, not in the gap below.
+  def distance_between_tops(first, second)
+    page.evaluate(
+      '([first, second]) => second.getBoundingClientRect().top - first.getBoundingClientRect().top',
+      arg: [first.element_handle, second.element_handle],
+    )
+  end
+
   context 'with an empty line in the article' do
     let(:closing_line) { 'Closing line after an empty one.' }
 
@@ -158,6 +166,36 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
 
     expect(gap_between(first_line, second_line)).to be_within(0.5).of(0)
     expect(gap_between(second_line, third_line)).to be_within(0.5).of(line_height_of(second_line))
+  end
+
+  context 'with a text module of several paragraphs' do
+    let(:paragraphs_text_module) do
+      create(:text_module, name: 'delivery-date', keywords: 'delivery', content: '<p>Delivery line one.</p><p>Delivery line two.</p>')
+    end
+
+    before { paragraphs_text_module }
+
+    it 'sends the empty line typed with line breaks before the text module as the editor shows it' do
+      add_internal_note_button.click
+      type_in_editor('Text', 'Greeting line.', :'Shift+Enter', :'Shift+Enter', '::delivery')
+      page.get_by_role('listbox', name: 'Text modules').get_by_role('option', name: paragraphs_text_module.name).click
+
+      greeting    = editor('Text').get_by_text('Greeting line.', exact: true)
+      module_line = editor('Text').get_by_text('Delivery line one.', exact: true)
+
+      expect(distance_between_tops(greeting, module_line)).to be_within(0.5).of(2 * line_height_of(module_line))
+
+      page.get_by_role('button', name: 'Update', exact: true).click
+      wait_for_form_to_settle('form-ticket-time-accounting')
+      flyout('Time accounting').get_by_role('button', name: 'Skip', exact: true).click
+
+      wait_until('Internal note not created') { ticket.articles.reload.count == 2 }
+
+      greeting    = ticket_article('Greeting line.').get_by_text('Greeting line.', exact: true)
+      module_line = ticket_article('Greeting line.').get_by_text('Delivery line one.', exact: true)
+
+      expect(distance_between_tops(greeting, module_line)).to be_within(0.5).of(2 * line_height_of(module_line))
+    end
   end
 
   it 'keeps the editor toolbar reachable while scrolling the draft' do

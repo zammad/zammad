@@ -134,7 +134,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         end
         let(:current_text) { %r{On .+, #{article.created_by.fullname} wrote:\s+#{article.body}\s+#{agent.firstname}\nSignature!} }
         let(:result_text)  do
-          msg = '<p dir="auto">This is a note<br dir="auto"></p>'
+          msg = '<p dir="auto">This is a note<br dir="auto"><br></p>'
           msg += '<blockquote dir="auto" type="cite">'
           msg += "<p dir=\"auto\">On .+, #{article.created_by.fullname} wrote:</p><p dir=\"auto\"></p>"
           msg += "<p dir=\"auto\">#{article.body}</p>"
@@ -167,7 +167,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         end
         let(:current_text) { "#{article.body}\n\n#{agent.firstname}\nSignature!" }
         let(:result_text)  do
-          start_with("<p dir=\"auto\">This is a note<br dir=\"auto\"></p><blockquote dir=\"auto\" type=\"cite\"><p dir=\"auto\">#{article.body}</p></blockquote><p dir=\"auto\"></p>#{signature_html}")
+          start_with("<p dir=\"auto\">This is a note<br dir=\"auto\"><br></p><blockquote dir=\"auto\" type=\"cite\"><p dir=\"auto\">#{article.body}</p></blockquote><p dir=\"auto\"></p>#{signature_html}")
         end
       end
     end
@@ -200,7 +200,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
 
         let(:current_text) { "#{article.body}\n\nText before replying\n\n#{agent.firstname}\nSignature!" }
         let(:result_text)  do
-          start_with("<p dir=\"auto\">This is a note<br dir=\"auto\"></p><blockquote dir=\"auto\" type=\"cite\"><p dir=\"auto\">#{article.body}</p></blockquote><p dir=\"auto\"></p><p dir=\"auto\">Text before replying</p><p dir=\"auto\"></p>#{signature_html}")
+          start_with("<p dir=\"auto\">This is a note<br dir=\"auto\"><br></p><blockquote dir=\"auto\" type=\"cite\"><p dir=\"auto\">#{article.body}</p></blockquote><p dir=\"auto\"></p><p dir=\"auto\">Text before replying</p><p dir=\"auto\"></p>#{signature_html}")
         end
       end
     end
@@ -305,7 +305,7 @@ RSpec.describe 'Mobile > Ticket > Article actions', app: :mobile, authenticated_
         msg += "<p dir=\"auto\">Subject: #{article_subject}<br dir=\"auto\">"
         msg += 'Date: \\d{2}/\\d{2}/\\d{4} \\d{1,2}:\\d{1,2} (am|pm)<br dir=\"auto\">'
         msg += "From: #{escape_html_wo_single_quotes(text_from)}<br dir=\"auto\">"
-        msg += "To: #{escape_html_wo_single_quotes(text_to)}<br dir=\"auto\"></p>"
+        msg += "To: #{escape_html_wo_single_quotes(text_to)}<br dir=\"auto\"><br></p>"
         msg += "<p dir=\"auto\">#{article.body}</p>"
         msg += '</blockquote>'
         msg += '<p dir="auto"></p>'

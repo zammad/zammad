@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { createNodeFromContent, isProseMirrorFragment } from '@tiptap/core'
+import HardBreak from '@tiptap/extension-hard-break'
 import { PluginKey } from '@tiptap/pm/state'
 import { VueRenderer } from '@tiptap/vue-3'
 import { watch, type WatchSource, type WatchStopHandle } from 'vue'
@@ -14,7 +16,7 @@ import type { MentionType } from '#shared/components/Form/fields/FieldEditor/typ
 import { setFloatingPopover } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import { getEditorComponents } from '#shared/components/Form/initializeFieldEditor.ts'
 
-import type { Content, Editor, EditorEvents } from '@tiptap/core'
+import type { CommandProps, Content, Editor, EditorEvents } from '@tiptap/core'
 import type { SuggestionOptions, SuggestionProps } from '@tiptap/suggestion'
 
 interface MentionOptions<T> {
@@ -50,6 +52,29 @@ enum Type {
 
 let listboxIdCounter = 0
 
+// Parsed as `insertContentAt` parses it.
+const startsWithBlock = (editor: Editor, content: Content) => {
+  const parsed = createNodeFromContent(content, editor.schema, {
+    parseOptions: { preserveWhitespace: 'full', ...editor.options.parseOptions },
+  })
+  const first = isProseMirrorFragment(parsed) ? parsed.firstChild : parsed
+
+  return !!first?.isBlock
+}
+
+// The list opens for an activator at the start of a text or after a space. Right after a word, it
+//   gets a space before it, which stays between the word and the inserted content.
+export const openSuggestion =
+  (activator: string) =>
+  ({ chain, state }: CommandProps) => {
+    const { nodeBefore } = state.selection.$from
+    const isAfterWord = !!nodeBefore?.isText && !nodeBefore.text?.endsWith(' ')
+
+    return chain()
+      .insertContent(isAfterWord ? ` ${activator}` : activator)
+      .run()
+  }
+
 const setEditorAttr = (editor: Editor, name: string, value: string | null) => {
   const dom = editor?.view?.dom
   if (!dom) return
@@ -82,19 +107,8 @@ export default function buildMentionExtension<T>(
     items,
     pluginKey: new PluginKey(options.type),
     command({ editor, range, props }) {
-      // increase range.to by one when the next node is of type "text"
-      // and starts with a space character
-      const { nodeAfter } = editor.view.state.selection.$to
-      const overrideSpace = nodeAfter?.text?.startsWith(' ')
-
-      // Activators start with a space, so the replaced range starts one earlier. A copy: the range
-      //   belongs to the open list, which stays open for another pick when the content is refused.
-      let replacedRange = {
-        from: range.from - 1,
-        to: overrideSpace ? range.to + 1 : range.to,
-      }
-
-      // The search itself: the replaced range may outlive it with the space before it.
+      // Only the search is replaced, the spaces around it stay, as in the legacy editor. A copy: the
+      //   range belongs to the open list, which stays open for another pick when the content is refused.
       let searchRange = { from: range.from, to: range.to }
 
       const insert = (content: Content, takeFocus = true) => {
@@ -103,14 +117,20 @@ export default function buildMentionExtension<T>(
         if (typeof content === 'string' && inlineImageUploadsPluginKey.get(editor.state))
           claimInlineImages(getEditorFormId(editor), content)
 
-        const chain = takeFocus ? editor.chain().focus() : editor.chain()
+        const { nodeBefore } = editor.state.doc.resolve(searchRange.from)
 
-        // Where the search opens a line, the range starts before the line, and text written at its
-        //   start while the content loaded lies in between. That text stays.
-        const from =
-          searchRange.from - replacedRange.from > 1 ? searchRange.from : replacedRange.from
+        const chain = (takeFocus ? editor.chain().focus() : editor.chain()).insertContentAt(
+          { ...searchRange },
+          content,
+        )
 
-        chain.insertContentAt({ from, to: replacedRange.to }, content).run()
+        // Content that starts with a block ends the line before it, so a line break right before
+        //   would end that line twice. Deleted on its own: replaced along with the search, a break
+        //   that opens its paragraph would take the paragraph with it.
+        if (nodeBefore?.type.name === HardBreak.name && startsWithBlock(editor, content))
+          chain.deleteRange({ from: searchRange.from - 1, to: searchRange.from })
+
+        chain.run()
       }
 
       // Nothing left to replace once the search text is gone, e.g. deleted or sent, or the editor is.
@@ -123,18 +143,13 @@ export default function buildMentionExtension<T>(
         return
       }
 
-      // While the content loads, the ranges follow what is written meanwhile; text typed at either
-      //   edge stays outside of them.
+      // While the content loads, the range follows what is written meanwhile; text typed at either
+      //   edge stays outside of it.
       const trackRange = ({ transaction, appendedTransactions }: EditorEvents['transaction']) => {
-        const follow = ({ from, to }: typeof replacedRange, { mapping }: typeof transaction) => {
-          const mappedFrom = mapping.map(from)
+        ;[transaction, ...appendedTransactions].forEach(({ mapping }) => {
+          const from = mapping.map(searchRange.from)
 
-          return { from: mappedFrom, to: Math.max(mappedFrom, mapping.map(to, -1)) }
-        }
-
-        ;[transaction, ...appendedTransactions].forEach((tr) => {
-          replacedRange = follow(replacedRange, tr)
-          searchRange = follow(searchRange, tr)
+          searchRange = { from, to: Math.max(from, mapping.map(searchRange.to, -1)) }
         })
       }
 

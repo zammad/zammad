@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { getNode } from '@formkit/core'
 import { describe, expect, it, onTestFinished } from 'vitest'
 import { page, userEvent } from 'vitest/browser'
 
@@ -102,5 +103,38 @@ describe('Testing "user mention" popup: "@@" command', () => {
 
     await expect.element(popup).toMatchTextContent('Start typing to search for users…')
     expect(seen.join(' ')).not.toContain('Loading…')
+  })
+
+  it('keeps the line break before a mention', async () => {
+    const suggestions = mockMentionSuggestionsQuery({
+      mentionSuggestions: [
+        {
+          id: convertToGraphQLId('User', '3'),
+          internalId: 3,
+          fullname: 'Bob Wance',
+          email: 'bob@mail.com',
+        },
+      ],
+    })
+
+    await mountEditor(
+      { groupId: '1' },
+      {
+        permissions: ['ticket.agent'],
+        config: { fqdn: 'example.zammad.com', http_type: 'http' },
+      },
+    )
+
+    const editor = await findEditor()
+    await userEvent.type(editor, 'Hello{Shift>}{Enter}{/Shift}@@Bo')
+    await waitForLastSearch(suggestions, { query: 'Bo', groupId: convertToGraphQLId('Group', '1') })
+
+    await page
+      .getByTestId('mention-user')
+      .getByText(/Bob Wance/)
+      .click()
+
+    await expect.element(editor.getByRole('link')).toMatchTextContent('Bob Wance')
+    await expect.poll(() => String(getNode('editor')?.value)).toMatch(/<p[^>]*>Hello<br[^>]*><a /)
   })
 })

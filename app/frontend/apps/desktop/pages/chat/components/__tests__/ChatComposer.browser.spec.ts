@@ -390,8 +390,8 @@ describe('ChatComposer in the browser', () => {
         await userEvent.keyboard('{Control>}{Home}{/Control}Hi ')
         await deliver()
 
-        // The search goes with the space before it, as for every pick.
-        await expect.poll(() => field.element().textContent).toBe('Hi HelloAnswer')
+        // The space before the search stays, as for every pick.
+        await expect.poll(() => field.element().textContent).toBe('Hi Hello Answer')
       })
 
       it('keeps text written meanwhile at the start of the line the search opens', async () => {
