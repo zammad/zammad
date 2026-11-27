@@ -668,7 +668,7 @@ RSpec.describe SecureMailing::PGP, :aggregate_failures do
         end
 
         it 'fails' do
-          expect(mail[:body]).to include('no visible content')
+          expect(mail[:body]).to include('-----BEGIN PGP MESSAGE-----')
           expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be false
           expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to be_nil
           expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false

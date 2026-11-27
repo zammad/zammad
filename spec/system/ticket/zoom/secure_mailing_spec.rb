@@ -196,7 +196,7 @@ RSpec.describe 'Ticket zoom > Secure mailing', authenticated_as: :authenticate, 
         it 'does retry successfully' do
           parsed_mail = Channel::EmailParser.new.parse(mail.to_s)
           ticket, article, _user, _mail = Channel::EmailParser.new.process({ group_id: group.id }, parsed_mail['raw'])
-          expect(Ticket::Article.find(article.id).body).to eq('no visible content')
+          expect_unreadable_body(article)
 
           create(secure_mailing_factory_name, fixture: sender_email_address)
           create(secure_mailing_factory_name, :with_private, fixture: system_email_address)
@@ -215,12 +215,20 @@ RSpec.describe 'Ticket zoom > Secure mailing', authenticated_as: :authenticate, 
         it 'does fail on retry (S/MIME function buttons no longer working in tickets #3957)' do
           parsed_mail = Channel::EmailParser.new.parse(mail.to_s)
           ticket, article, _user, _mail = Channel::EmailParser.new.process({ group_id: group.id }, parsed_mail['raw'])
-          expect(Ticket::Article.find(article.id).body).to eq('no visible content')
+          expect_unreadable_body(article)
 
           visit "#ticket/zoom/#{ticket.id}"
           expect(page).to have_no_css('.article-content', text: 'somebody with some text')
           click '.js-securityRetryProcess'
           expect(page).to have_css('#notify', text: secure_mailing_decryption_failed_message)
+        end
+
+        def expect_unreadable_body(article)
+          if secure_mailing_type_name == 'PGP'
+            expect(article.reload.body).to include('-----BEGIN PGP MESSAGE-----')
+          else
+            expect(article.reload.body).to eq('no visible content')
+          end
         end
       end
     end
