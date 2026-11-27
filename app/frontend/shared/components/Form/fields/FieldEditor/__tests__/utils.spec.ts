@@ -10,6 +10,7 @@ import { h } from 'vue'
 import Link from '#shared/components/Form/fields/FieldEditor/extensions/Link.ts'
 import {
   setFloatingPopover,
+  transformEditorHtml,
   updatePosition,
 } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 
@@ -199,5 +200,37 @@ describe('setFloatingPopover after the editor is gone', () => {
     editor.destroy()
 
     expect(stopAutoUpdate).toHaveBeenCalledOnce()
+  })
+})
+
+describe('transformEditorHtml', () => {
+  it('keeps the empty line the editor shows after a line break that ends a paragraph', () => {
+    expect(transformEditorHtml('<p>Hello<br></p><p>World</p>')).toBe(
+      '<p>Hello<br><br></p><p>World</p>',
+    )
+    expect(transformEditorHtml('<p>Hello<br><br></p>')).toBe('<p>Hello<br><br><br></p>')
+    expect(transformEditorHtml('<p><br></p>')).toBe('<p><br><br></p>')
+  })
+
+  it('keeps the empty line after a formatted line break that ends a paragraph', () => {
+    expect(transformEditorHtml('<p><strong>Hello<br></strong></p>')).toBe(
+      '<p><strong>Hello<br><br></strong></p>',
+    )
+    expect(transformEditorHtml('<p><em><u>Hello<br></u></em></p>')).toBe(
+      '<p><em><u>Hello<br><br></u></em></p>',
+    )
+  })
+
+  it('keeps the empty line after a line break that ends a heading or a nested paragraph', () => {
+    expect(transformEditorHtml('<h2>Title<br></h2>')).toBe('<h2>Title<br><br></h2>')
+    expect(transformEditorHtml('<ul><li><p>Item<br></p></li></ul>')).toBe(
+      '<ul><li><p>Item<br><br></p></li></ul>',
+    )
+  })
+
+  it('leaves paragraphs alone that do not end in a line break', () => {
+    const html = '<p>Hello<br>World</p><p></p><p>Text <strong>bold</strong></p>'
+
+    expect(transformEditorHtml(html)).toBe(html)
   })
 })

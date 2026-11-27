@@ -152,6 +152,43 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
     )
   end
 
+  context 'with a text module of several paragraphs' do
+    let(:paragraphs_text_module) do
+      create(:text_module, name: 'delivery-date', keywords: 'delivery', content: '<p>Delivery line one.</p><p>Delivery line two.</p>')
+    end
+
+    before { paragraphs_text_module }
+
+    it 'sends the empty line typed with line breaks before the text module as the editor shows it' do
+      click_button_when_centered('Add internal note')
+
+      editor = find_editor('Text')
+      wait_for_editor_ready(editor)
+
+      editor.input_element.click
+      editor.input_element.send_keys('Greeting line.', %i[shift enter], %i[shift enter], '::delivery')
+
+      within '[data-test-id="mention-text"]' do
+        find('li[role="option"]', text: paragraphs_text_module.name).click
+      end
+
+      expect_empty_line_after_greeting('#ticketArticleReplyForm [role="textbox"]')
+
+      click_on 'Update'
+
+      expect(page).to have_css('#flyout-ticket-time-accounting', text: 'Time accounting')
+      wait_for_form_to_settle('form-ticket-time-accounting')
+
+      within '#flyout-ticket-time-accounting' do
+        click_on 'Skip'
+      end
+
+      expect(page).to have_text('Ticket updated successfully.')
+
+      expect_empty_line_after_greeting("#article-#{ticket.articles.reload.last.id} .inner-article-body")
+    end
+  end
+
   # TipTap on macOS does not bind Cmd+Up / Cmd+Down to "start/end of
   # document", so sending those shortcuts leaves the caret wherever the click
   # landed. Drive ProseMirror's selection directly via the DOM Selection API.
@@ -246,6 +283,20 @@ RSpec.describe 'Desktop > Ticket > Editor and Advanced Features', app: :desktop_
 
   def editor_content
     page.evaluate_script(%(document.querySelector('#ticketArticleReplyForm [role="textbox"]').innerHTML))
+  end
+
+  # An empty line made of line breaks lies within the paragraph above it. Heights leave out the
+  #   margins between paragraphs.
+  def expect_empty_line_after_greeting(container)
+    greeting    = find("#{container} p", exact_text: 'Greeting line.')
+    module_line = find("#{container} p", exact_text: 'Delivery line one.')
+
+    greeting_height, line_height = page.evaluate_script(
+      '[arguments[0], arguments[1]].map((paragraph) => paragraph.getBoundingClientRect().height)',
+      greeting.native, module_line.native
+    )
+
+    expect(greeting_height).to be_within(0.5).of(2 * line_height)
   end
 
   # Click an editor toolbar action by its accessible label, falling back to the

@@ -9,6 +9,20 @@ import { convertFileList } from '#shared/utils/files.ts'
 
 import type { Component } from 'vue'
 
+// The editor shows a line after a line break that ends a block, HTML does not: there, the last
+//   break of a block starts no line. `htmlCleanup` removes the added break where HTML enters the editor.
+const addTrailingLineBreaks = (container: HTMLDivElement) => {
+  container.querySelectorAll('p, h1, h2, h3, h4, h5, h6').forEach((block) => {
+    // The break may be formatted, inside the marks around the end of the line.
+    let last = block.lastChild
+    while (last?.lastChild) last = last.lastChild
+
+    if (last?.nodeName === 'BR') last.after(document.createElement('br'))
+  })
+
+  return container
+}
+
 const addTableClasses = (container: HTMLDivElement) => {
   container.querySelectorAll('table').forEach((table) => {
     // Skip tables that are nested within blockquote elements.
@@ -28,6 +42,7 @@ export const transformEditorHtml = (htmlContent: string): string => {
 
   container.innerHTML = htmlContent
 
+  container = addTrailingLineBreaks(container)
   container = addTableClasses(container)
 
   return container.innerHTML

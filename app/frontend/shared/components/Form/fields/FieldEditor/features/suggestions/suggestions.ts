@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2026 Zammad Foundation, https://zammad-foundation.org/
 
+import { createNodeFromContent, isProseMirrorFragment } from '@tiptap/core'
+import HardBreak from '@tiptap/extension-hard-break'
 import { PluginKey } from '@tiptap/pm/state'
 import { VueRenderer } from '@tiptap/vue-3'
 import { watch, type WatchSource, type WatchStopHandle } from 'vue'
@@ -12,7 +14,7 @@ import type { MentionType } from '#shared/components/Form/fields/FieldEditor/typ
 import { setFloatingPopover } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import { getEditorComponents } from '#shared/components/Form/initializeFieldEditor.ts'
 
-import type { Content, Editor } from '@tiptap/core'
+import type { CommandProps, Content, Editor } from '@tiptap/core'
 import type { SuggestionOptions, SuggestionProps } from '@tiptap/suggestion'
 
 interface MentionOptions<T> {
@@ -44,6 +46,29 @@ enum Type {
 
 let listboxIdCounter = 0
 
+// Parsed as `insertContentAt` parses it.
+const startsWithBlock = (editor: Editor, content: Content) => {
+  const parsed = createNodeFromContent(content, editor.schema, {
+    parseOptions: { preserveWhitespace: 'full', ...editor.options.parseOptions },
+  })
+  const first = isProseMirrorFragment(parsed) ? parsed.firstChild : parsed
+
+  return !!first?.isBlock
+}
+
+// The list opens for an activator at the start of a text or after a space. Right after a word, it
+//   gets a space before it, which stays between the word and the inserted content.
+export const openSuggestion =
+  (activator: string) =>
+  ({ chain, state }: CommandProps) => {
+    const { nodeBefore } = state.selection.$from
+    const isAfterWord = !!nodeBefore?.isText && !nodeBefore.text?.endsWith(' ')
+
+    return chain()
+      .insertContent(isAfterWord ? ` ${activator}` : activator)
+      .run()
+  }
+
 const setEditorAttr = (editor: Editor, name: string, value: string | null) => {
   const dom = editor?.view?.dom
   if (!dom) return
@@ -60,22 +85,22 @@ export default function buildMentionExtension<T>(
     items: options.items,
     pluginKey: new PluginKey(options.type),
     command({ editor, range, props }) {
-      // increase range.to by one when the next node is of type "text"
-      // and starts with a space character
-      const { nodeAfter } = editor.view.state.selection.$to
-      const overrideSpace = nodeAfter?.text?.startsWith(' ')
-
-      // activators start with a space, so we need to decrease the range
-      range.from -= 1
-      if (overrideSpace) {
-        range.to += 1
-      }
-
+      // Only the search is replaced, the spaces around it stay, as in the legacy editor.
       const insert = (content: Content) => {
         // Images of an inserted text module or answer belong to this draft, like pasted ones.
         if (typeof content === 'string') claimInlineImages(getEditorFormId(editor), content)
 
-        editor.chain().focus().insertContentAt(range, content).run()
+        const { nodeBefore } = editor.state.doc.resolve(range.from)
+
+        const chain = editor.chain().focus().insertContentAt(range, content)
+
+        // Content that starts with a block ends the line before it, so a line break right before
+        //   would end that line twice. Deleted on its own: replaced along with the search, a break
+        //   that opens its paragraph would take the paragraph with it.
+        if (nodeBefore?.type.name === HardBreak.name && startsWithBlock(editor, content))
+          chain.deleteRange({ from: range.from - 1, to: range.from })
+
+        chain.run()
       }
 
       const content = options.insert(props)

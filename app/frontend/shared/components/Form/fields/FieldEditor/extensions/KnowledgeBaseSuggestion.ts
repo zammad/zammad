@@ -7,7 +7,9 @@ import {
   claimInlineImages,
   getEditorFormId,
 } from '#shared/components/Form/fields/FieldEditor/features/image-handler/inlineImageUploads.ts'
-import buildMentionSuggestion from '#shared/components/Form/fields/FieldEditor/features/suggestions/suggestions.ts'
+import buildMentionSuggestion, {
+  openSuggestion,
+} from '#shared/components/Form/fields/FieldEditor/features/suggestions/suggestions.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
 import type { StoredFile } from '#shared/graphql/types.ts'
@@ -101,11 +103,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   return Mention.extend({
     name: EXTENSION_NAME,
     addCommands: () => ({
-      openKnowledgeBaseMention:
-        () =>
-        // TODO: Check if this explicit typing is still needed after the stable release of next TipTap version.
-        ({ chain }: CommandProps) =>
-          chain().insertContent(` ${ACTIVATOR}`).run(),
+      openKnowledgeBaseMention: () => openSuggestion(ACTIVATOR),
       insertKnowledgeBaseAnswer:
         (translationId: ID) =>
         ({ editor, dispatch }: CommandProps) => {

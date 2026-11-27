@@ -7,7 +7,12 @@ import { mockKnowledgeBaseAnswerSuggestionContentTransformMutation } from '#shar
 import { mockKnowledgeBaseAnswerSuggestionsQuery } from '#shared/components/Form/fields/FieldEditor/graphql/queries/knowledgeBase/answerSuggestions.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { findEditor, mountEditorWithAttachments, waitForLastSearch } from './browser-utils.ts'
+import {
+  editorElements,
+  findEditor,
+  mountEditorWithAttachments,
+  waitForLastSearch,
+} from './browser-utils.ts'
 
 describe('Testing "knowledge base" popup: "??" command', () => {
   it('inserts a knowledge base mention', async () => {
@@ -70,5 +75,37 @@ describe('Testing "knowledge base" popup: "??" command', () => {
 
     await expect.element(page.getByText('Zammad.png')).toBeInTheDocument()
     await expect.element(page.getByText('923 KB')).toBeInTheDocument()
+  })
+
+  it('starts an answer of paragraphs on the line of the search, after a line break', async () => {
+    const suggestions = mockKnowledgeBaseAnswerSuggestionsQuery({
+      knowledgeBaseAnswerSuggestions: [
+        {
+          id: convertToGraphQLId('KnowledgeBase::Answer::Translation', 1),
+          title: 'How to create a ticket?',
+          categoryTreeTranslation: [],
+        },
+      ],
+    })
+
+    mockKnowledgeBaseAnswerSuggestionContentTransformMutation({
+      knowledgeBaseAnswerSuggestionContentTransform: {
+        body: '<p>knowledge base answer body</p>',
+        attachments: [],
+      },
+    })
+
+    await mountEditorWithAttachments({}, { permissions: ['ticket.agent'] })
+
+    const editor = await findEditor()
+
+    await userEvent.type(editor, 'Hello{Shift>}{Enter}{/Shift}??How')
+    await waitForLastSearch(suggestions, { query: 'How' })
+
+    await page.getByTestId('mention-knowledge-base').getByText('How to create a ticket?').click()
+
+    await expect
+      .poll(() => editorElements('p').map((paragraph) => paragraph.innerHTML))
+      .toEqual(['Hello', 'knowledge base answer body'])
   })
 })

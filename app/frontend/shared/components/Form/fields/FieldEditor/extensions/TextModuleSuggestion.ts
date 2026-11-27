@@ -3,7 +3,9 @@
 import Mention, { type MentionOptions } from '@tiptap/extension-mention'
 import { type Ref } from 'vue'
 
-import buildMentionSuggestion from '#shared/components/Form/fields/FieldEditor/features/suggestions/suggestions.ts'
+import buildMentionSuggestion, {
+  openSuggestion,
+} from '#shared/components/Form/fields/FieldEditor/features/suggestions/suggestions.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
 import { ensureGraphqlId } from '#shared/graphql/utils.ts'
@@ -13,7 +15,6 @@ import { debouncedQuery, htmlCleanup } from '#shared/utils/helpers.ts'
 import { useTextModuleSuggestionsLazyQuery } from '../graphql/queries/textModule/textModuleSuggestions.api.ts'
 
 import type { FieldEditorProps, MentionTextItem } from '../types.ts'
-import type { CommandProps } from '@tiptap/core'
 
 export const EXTENSION_NAME = 'mentionText'
 
@@ -56,11 +57,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   return Mention.extend({
     name: EXTENSION_NAME,
     addCommands: () => ({
-      openTextMention:
-        () =>
-        // TODO: Check if this explicit typing is still needed after the stable release of next TipTap version.
-        ({ chain }: CommandProps) =>
-          chain().insertContent(` ${ACTIVATOR}`).run(),
+      openTextMention: () => openSuggestion(ACTIVATOR),
     }),
     addOptions() {
       return {

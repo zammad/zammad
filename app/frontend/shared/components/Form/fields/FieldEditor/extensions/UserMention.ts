@@ -6,7 +6,9 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import buildMentionSuggestion from '#shared/components/Form/fields/FieldEditor/features/suggestions/suggestions.ts'
+import buildMentionSuggestion, {
+  openSuggestion,
+} from '#shared/components/Form/fields/FieldEditor/features/suggestions/suggestions.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
 import { ensureGraphqlId } from '#shared/graphql/utils.ts'
@@ -17,7 +19,7 @@ import { debouncedQuery } from '#shared/utils/helpers.ts'
 import { useMentionSuggestionsLazyQuery } from '../graphql/queries/mention/mentionSuggestions.api.ts'
 
 import type { FieldEditorProps, MentionUserItem } from '../types.ts'
-import type { CommandProps, MarkConfig, ParentConfig } from '@tiptap/core'
+import type { MarkConfig, ParentConfig } from '@tiptap/core'
 import type { Ref } from 'vue'
 
 export const EXTENSION_NAME = 'mentionUser'
@@ -47,11 +49,7 @@ export default (context: Ref<FormFieldContext<FieldEditorProps>>) => {
   return Mention.extend({
     name: EXTENSION_NAME,
     addCommands: () => ({
-      openUserMention:
-        () =>
-        // TODO: Check if this explicit typing is still needed after the release of TipTap version. > ^3.3
-        ({ chain }: CommandProps) =>
-          chain().insertContent(` ${ACTIVATOR}`).run(),
+      openUserMention: () => openSuggestion(ACTIVATOR),
     }),
     addOptions() {
       return {
