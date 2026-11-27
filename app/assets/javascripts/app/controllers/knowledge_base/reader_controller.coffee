@@ -150,6 +150,10 @@ class App.KnowledgeBaseReaderController extends App.Controller
       @calendarView(e)
     )
 
+    @answerAttachments
+      .off('dragstart.attachment')
+      .on('dragstart.attachment', '[data-type=attachment]', App.Utils.attachmentDragStart)
+
   imageView: (e) ->
     e.preventDefault()
     e.stopPropagation()

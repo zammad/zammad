@@ -11,6 +11,7 @@ import {
   canPreviewFile,
   allowedImageTypes,
   convertFileList,
+  getFileDownloadDragData,
 } from '#shared/utils/files.ts'
 
 describe('files utility', () => {
@@ -105,6 +106,62 @@ describe('files utility', () => {
     it('returns undefined when input is undefined', () => {
       const result = sanitizedContentType(undefined)
       expect(result).toBeUndefined()
+    })
+  })
+
+  describe('getFileDownloadDragData', () => {
+    it('returns the content type, the file name and the absolute url', () => {
+      expect(
+        getFileDownloadDragData(
+          'report.pdf',
+          'application/pdf',
+          '/api/attachments/1?disposition=attachment',
+        ),
+      ).toBe(
+        `application/pdf:report.pdf:${window.location.origin}/api/attachments/1?disposition=attachment`,
+      )
+    })
+
+    it('drops the parameters of the content type', () => {
+      expect(
+        getFileDownloadDragData('notes.txt', 'text/plain; charset=UTF-8', '/api/attachments/2'),
+      ).toBe(`text/plain:notes.txt:${window.location.origin}/api/attachments/2`)
+    })
+
+    it('keeps subtypes with dots, dashes and plus signs', () => {
+      expect(
+        getFileDownloadDragData('table.xls', 'application/vnd.ms-excel', 'https://example.com/xls'),
+      ).toBe('application/vnd.ms-excel:table.xls:https://example.com/xls')
+      expect(getFileDownloadDragData('logo.svg', 'image/svg+xml', 'https://example.com/svg')).toBe(
+        'image/svg+xml:logo.svg:https://example.com/svg',
+      )
+    })
+
+    it('falls back to a generic content type', () => {
+      expect(getFileDownloadDragData('blob', null, 'https://example.com/file')).toBe(
+        'application/octet-stream:blob:https://example.com/file',
+      )
+    })
+
+    it('replaces the colons in the file name', () => {
+      expect(
+        getFileDownloadDragData('Re: 10:30 meeting.ics', 'text/calendar', '/api/attachments/3'),
+      ).toBe(`text/calendar:Re_ 10_30 meeting.ics:${window.location.origin}/api/attachments/3`)
+    })
+
+    it('returns nothing for an html file, which is never downloaded', () => {
+      expect(
+        getFileDownloadDragData('mail.html', 'text/html; charset=UTF-8', '/api/attachments/4'),
+      ).toBeUndefined()
+    })
+
+    it('returns nothing for a file without a name or a downloadable url', () => {
+      expect(getFileDownloadDragData('', 'image/png', '/api/attachments/5')).toBeUndefined()
+      expect(getFileDownloadDragData('image.png', 'image/png', 'http://[x')).toBeUndefined()
+      expect(getFileDownloadDragData('image.png', 'image/png', '')).toBeUndefined()
+      expect(
+        getFileDownloadDragData('image.png', 'image/png', 'data:image/png;base64,iVBORw0KGgo='),
+      ).toBeUndefined()
     })
   })
 

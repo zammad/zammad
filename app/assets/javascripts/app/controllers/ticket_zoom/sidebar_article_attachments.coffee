@@ -50,6 +50,7 @@ class SidebarArticleAttachments extends App.Controller
     @el.html(html)
     @el.find('.js-attachments img').click(@imageView)
     @el.find('.file-calendar .js-preview').click(@calendarView)
+    @el.find('[data-type=attachment]').on('dragstart', App.Utils.attachmentDragStart)
 
   imageView: (e) ->
     e.preventDefault()

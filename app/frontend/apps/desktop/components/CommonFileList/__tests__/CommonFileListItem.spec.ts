@@ -189,4 +189,70 @@ describe('CommonFileListItem', () => {
       expect(view.getByTestId('file-list-item-actions')).not.toHaveClass('opacity-0')
     })
   })
+
+  describe('dragging out', () => {
+    const dragStart = async (element: HTMLElement) => {
+      const dataTransfer = { setData: vi.fn() }
+
+      await fireEvent.dragStart(element, { dataTransfer })
+
+      return dataTransfer.setData
+    }
+
+    it('hands the file to the browser as a download', async () => {
+      const view = renderItem(table)
+
+      const row = view.getByRole('link', { name: 'Download SomeTableFile.csv' })
+      expect(row).toHaveAttribute('draggable', 'true')
+      expect(await dragStart(row)).toHaveBeenCalledWith(
+        'DownloadURL',
+        `text/csv:SomeTableFile.csv:${window.location.origin}/api/attachments/3?disposition=attachment`,
+      )
+    })
+
+    it('drags a previewable file instead of its thumbnail', async () => {
+      const view = renderItem(image)
+
+      expect(view.getByAltText('Image name: IMG_1234.png')).toHaveAttribute('draggable', 'false')
+
+      const preview = view.getByRole('button', { name: 'Preview IMG_1234.png' })
+      expect(preview).toHaveAttribute('draggable', 'true')
+
+      const setData = await dragStart(preview)
+      expect(setData).toHaveBeenCalledWith(
+        'DownloadURL',
+        `image/png:IMG_1234.png:${window.location.origin}/api/attachments/1?disposition=attachment`,
+      )
+
+      // Browsers without `DownloadURL` still get the link from the button.
+      expect(setData).toHaveBeenCalledWith(
+        'text/uri-list',
+        `${window.location.origin}/api/attachments/1?disposition=attachment`,
+      )
+    })
+
+    it('hands the file over from the download icon as well', async () => {
+      const view = renderItem(image)
+
+      expect(
+        await dragStart(view.getByRole('link', { name: 'Download file: IMG_1234.png' })),
+      ).toHaveBeenCalledWith('DownloadURL', expect.stringContaining('IMG_1234.png'))
+    })
+
+    it('does not offer a file that opens in a new tab', async () => {
+      const view = renderItem({ ...table, name: 'page.html', type: 'text/html' })
+
+      const row = view.getByRole('link', { name: 'Open page.html' })
+      expect(row).not.toHaveAttribute('draggable')
+      expect(await dragStart(row)).not.toHaveBeenCalled()
+    })
+
+    it('does not offer a file that is not uploaded yet', async () => {
+      const view = renderItem({ ...table, downloadUrl: 'data:text/csv;base64,YSxi' })
+
+      const row = view.getByRole('link', { name: 'Download SomeTableFile.csv' })
+      expect(row).not.toHaveAttribute('draggable')
+      expect(await dragStart(row)).not.toHaveBeenCalled()
+    })
+  })
 })

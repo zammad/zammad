@@ -3882,3 +3882,30 @@ QUnit.test("safeUrl", assert => {
   assert.equal(App.Utils.safeUrl(undefined), '')
   assert.equal(App.Utils.safeUrl(null), '')
 })
+
+QUnit.test("fileDownloadDragData", assert => {
+  var origin = window.location.origin
+
+  // Relative urls are resolved, the parameters of the content type are dropped.
+  assert.equal(App.Utils.fileDownloadDragData('report.pdf', 'application/pdf', '/api/v1/ticket_attachment/1/2/3?disposition=attachment'), 'application/pdf:report.pdf:' + origin + '/api/v1/ticket_attachment/1/2/3?disposition=attachment')
+  assert.equal(App.Utils.fileDownloadDragData('notes.txt', 'text/plain; charset=UTF-8', 'https://example.com/notes'), 'text/plain:notes.txt:https://example.com/notes')
+
+  // Subtypes with dots, dashes and plus signs are kept as they are.
+  assert.equal(App.Utils.fileDownloadDragData('table.xls', 'application/vnd.ms-excel', 'https://example.com/xls'), 'application/vnd.ms-excel:table.xls:https://example.com/xls')
+  assert.equal(App.Utils.fileDownloadDragData('logo.svg', 'image/svg+xml', 'https://example.com/svg'), 'image/svg+xml:logo.svg:https://example.com/svg')
+
+  // A missing content type falls back to a generic one.
+  assert.equal(App.Utils.fileDownloadDragData('blob', undefined, 'https://example.com/blob'), 'application/octet-stream:blob:https://example.com/blob')
+
+  // Colons separate the parts, so they are replaced in the file name.
+  assert.equal(App.Utils.fileDownloadDragData('Re: 10:30 meeting.ics', 'text/calendar', 'https://example.com/ics'), 'text/calendar:Re_ 10_30 meeting.ics:https://example.com/ics')
+
+  // HTML attachments are never downloaded.
+  assert.equal(App.Utils.fileDownloadDragData('mail.html', 'text/html; charset=UTF-8', 'https://example.com/html'), undefined)
+
+  // Nothing to drag without a file name or a downloadable url.
+  assert.equal(App.Utils.fileDownloadDragData(undefined, 'image/png', 'https://example.com/png'), undefined)
+  assert.equal(App.Utils.fileDownloadDragData('image.png', 'image/png', ''), undefined)
+  assert.equal(App.Utils.fileDownloadDragData('image.png', 'image/png', 'http://[x'), undefined)
+  assert.equal(App.Utils.fileDownloadDragData('image.png', 'image/png', 'data:image/png;base64,iVBORw0KGgo='), undefined)
+})

@@ -1361,6 +1361,34 @@ class App.Utils
     contentType = contentType.replace(/^(.+?\/.+?)(\b|\s).+?$/, '$1')
     contentType
 
+  # The value of the `DownloadURL` drag format, with which Chromium-based browsers save a
+  #   dragged file wherever it is dropped (desktop, file manager, mail client). Other
+  #   browsers ignore the format and keep dragging the plain link.
+  @fileDownloadDragData: (filename, contentType, url) ->
+    return if !filename || !url
+
+    # Not `contentTypeCleanup`, it cuts subtypes such as `vnd.ms-excel` at the first dot.
+    contentType = contentType?.split(';')[0].trim() || 'application/octet-stream'
+
+    # HTML attachments are only ever opened in a new tab, never downloaded.
+    return if contentType is 'text/html'
+
+    try
+      absoluteUrl = new URL(url, window.location.origin)
+    catch
+      return
+    return if absoluteUrl.protocol isnt 'http:' && absoluteUrl.protocol isnt 'https:'
+
+    # The parts are separated by colons, so one in the file name would cut it short.
+    "#{contentType}:#{filename.replace(/:/g, '_')}:#{absoluteUrl.href}"
+
+  @attachmentDragStart: (e) ->
+    link = e.currentTarget
+    data = App.Utils.fileDownloadDragData(link.dataset.filename, link.dataset.contentType, link.href)
+    return if !data
+
+    e.originalEvent.dataTransfer.setData('DownloadURL', data)
+
   @getRecipientArticle: (ticket, article, article_created_by, type, email_addresses = [], all) ->
 
     # empty form
