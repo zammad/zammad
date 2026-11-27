@@ -28,6 +28,29 @@ RSpec.describe Ticket::Article::AddsMetadataGeneral do
         expect(article.from).not_to include agent.email
       end
     end
+
+    context 'with origin_by_id' do
+      subject(:article) { create(:ticket_article, :outbound_phone, ticket:, origin_by_id:, created_by_id: agent.id, updated_by_id: agent.id) }
+
+      let(:ticket) { create(:ticket) }
+      let(:agent)  { create(:agent, groups: [ticket.group]) }
+
+      context 'when origin_by_id is the agent' do
+        let(:origin_by_id) { agent.id }
+
+        it 'keeps sender Agent' do
+          expect(article.sender.name).to eq('Agent')
+        end
+      end
+
+      context 'when origin_by_id is another user' do
+        let(:origin_by_id) { ticket.customer_id }
+
+        it 'sets sender to Customer' do
+          expect(article.sender.name).to eq('Customer')
+        end
+      end
+    end
   end
 
   context 'when Agent-Customer in shared organization creates Article' do
