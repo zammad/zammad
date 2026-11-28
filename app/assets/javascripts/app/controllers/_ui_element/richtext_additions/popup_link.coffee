@@ -18,17 +18,9 @@ class App.UiElement.richtext.additions.RichTextToolPopupLink extends App.UiEleme
 
     dom
 
-  ensureProtocol: (input) ->
-    input = input.trim()
-
-    if @isWithProtocol(input) || @isRelativePath(input) || @isMailto(input)
-      input
-    else
-      'http://' + input
-
   apply: (callback) ->
     input = @el.find('input').val()
-    url = @ensureProtocol(input)
+    url = App.UiElement.richtext.ensureProtocol(input)
 
     textEditor = $(@event.currentTarget).closest('.richtext.form-control').find('[contenteditable]')
 
@@ -58,12 +50,3 @@ class App.UiElement.richtext.additions.RichTextToolPopupLink extends App.UiEleme
     switch @selection.type
       when 'existing'
         $(@selection.dom).contents().unwrap()
-
-  isWithProtocol: (input) ->
-    /^\S+\:\/\//.test(input)
-
-  isMailto: (input) ->
-    /^mailto\:\S+@\S/.test(input)
-
-  isRelativePath: (input) ->
-    input[0] is '/'
