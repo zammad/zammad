@@ -21,12 +21,13 @@ class App.TicketZoomArticleActions extends App.Controller
     ticket       = App.Ticket.fullLocal(ticket.id)
     article      = App.TicketArticle.fullLocal(article.id)
     actionConfig = App.Config.get('TicketZoomArticleAction')
+    hiddenActions = App.Config.get('ui_ticket_hide_article_actions') || []
     keys         = _.keys(actionConfig).sort()
     actions      = []
 
     for key in keys
       config = actionConfig[key]
-      if config
+      if config && !hiddenActions.includes(config.name)
         actions = config.action(actions, ticket, article, @)
     actions
 
@@ -39,11 +40,12 @@ class App.TicketZoomArticleActions extends App.Controller
     article = App.TicketArticle.fullLocal(@article.id)
 
     actionConfig = App.Config.get('TicketZoomArticleAction')
+    hiddenActions = App.Config.get('ui_ticket_hide_article_actions') || []
     keys = _.keys(actionConfig).sort()
     actions = []
     for key in keys
       config = actionConfig[key]
-      if config
+      if config && !hiddenActions.includes(config.name)
         return if !config.perform(articleContainer, type, ticket, article, @)
 
   scrollToCompose: =>

@@ -48,8 +48,9 @@ class App.TicketZoomArticleNew extends App.Controller
     @internalSelector = false
     @setPossibleArticleTypes()
     @type = @normalizeArticleType(@defaults['type'] || 'note')
+    hiddenActions = App.Config.get('ui_ticket_hide_article_actions') || []
 
-    if @ticket.currentView() is 'agent'
+    if @ticket.currentView() is 'agent' && !hiddenActions.includes('InternalNew')
       @internalSelector = true
 
     @textareaHeight =
@@ -905,11 +906,12 @@ class App.TicketZoomArticleNew extends App.Controller
 
   actions: ->
     actionConfig = App.Config.get('TicketZoomArticleAction')
+    hiddenActions = App.Config.get('ui_ticket_hide_article_actions') || []
     keys = _.keys(actionConfig).sort()
     actions = []
     for key in keys
       localConfig = actionConfig[key]
-      if localConfig
+      if localConfig && !hiddenActions.includes(localConfig.name)
         actions.push localConfig
     actions
 
