@@ -25,9 +25,9 @@ Data Privacy tasks will be executed every 10 minutes. The execution might take s
     return if !item.created_by
 
     if item.type is 'create'
-      return App.i18n.translateContent('%s created data privacy task to delete user ID |%s|', item.created_by.displayName(), item.objectNative.deletable_id)
+      return App.i18n.translateContent('%s created data privacy task to delete user ID |%s|', item.created_by.activityName(), item.objectNative.deletable_id)
     else if item.type is 'update'
-      return App.i18n.translateContent('%s updated data privacy task to delete user ID |%s|', item.created_by.displayName(), item.objectNative.deletable_id)
+      return App.i18n.translateContent('%s updated data privacy task to delete user ID |%s|', item.created_by.activityName(), item.objectNative.deletable_id)
     else if item.type is 'completed'
-      return App.i18n.translateContent('%s completed data privacy task to delete user ID |%s|', item.created_by.displayName(), item.objectNative.deletable_id)
+      return App.i18n.translateContent('%s completed data privacy task to delete user ID |%s|', item.created_by.activityName(), item.objectNative.deletable_id)
     return "Unknown action for (#{@objectDisplayName()}/#{item.type}), extend activityMessage() of model."

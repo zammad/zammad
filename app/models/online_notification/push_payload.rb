@@ -191,6 +191,8 @@ class OnlineNotification::PushPayload
   end
 
   def actor_name
+    return translate(__('System')) if notification.created_by_id == 1
+
     notification.created_by&.fullname.presence || '-'
   end
 

@@ -40,6 +40,14 @@ RSpec.describe OnlineNotification::PushPayload do
     end
   end
 
+  context 'when the system user is the actor' do
+    let(:actor) { User.find(1) }
+
+    it 'names it System like the ticket history' do
+      expect(payload[:body]).to eq('System updated ticket "Printer is on fire"')
+    end
+  end
+
   context 'with an article' do
     let(:article)      { create(:ticket_article, ticket:) }
     let(:article_type) { 'create' }
